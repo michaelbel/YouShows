@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+@SuppressWarnings("all")
 public class ItemTouchHelperSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
     private ItemBehavior listener;
@@ -20,11 +21,12 @@ public class ItemTouchHelperSimpleCallback extends ItemTouchHelper.SimpleCallbac
             final int swipeFlags = 0;
             return makeMovementFlags(dragFlags, swipeFlags);
         } else {
-            if (viewHolder instanceof BottomCellHolder) {
+            if (viewHolder instanceof BottomCellHolder/* || viewHolder instanceof Holder*/) {
                 return 0;
             }
 
-            final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            final int dragFlags = 0;
+            //final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
             final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
             return makeMovementFlags(dragFlags, swipeFlags);
         }
@@ -40,13 +42,7 @@ public class ItemTouchHelperSimpleCallback extends ItemTouchHelper.SimpleCallbac
             return false;
         }
 
-        boolean mozhno = false;
-        if (mozhno) {
-            listener.onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-            return true;
-        }
-
-        //listener.onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        listener.onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         return false;
     }
 

@@ -1,5 +1,6 @@
 package org.michaelbel.ui.adapter;
 
+@SuppressWarnings("all")
 public interface ItemBehavior {
 
     void onItemSwiped(int position);
