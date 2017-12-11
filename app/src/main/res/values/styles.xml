@@ -1,0 +1,30 @@
+<resources>
+    <style name="AppTheme.Start" parent="@android:style/Theme.Material">
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="ThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#4CAF50</item>
+        <item name="colorPrimaryDark">#388E3C</item>
+        <item name="colorAccent">#4CAF50</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ThemeNight" parent="Theme.AppCompat">
+        <item name="colorPrimary">#4CAF50</item>
+        <item name="colorPrimaryDark">#388E3C</item>
+        <item name="colorAccent">#4CAF50</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--AlertDialog-->
+    <style name="AlertThemeLight" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/foregroundColor</item>
+    </style>
+
+    <style name="AlertThemeNight" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/night_foregroundColor</item>
+    </style>
+</resources>

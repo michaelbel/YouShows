@@ -1,0 +1,33 @@
+<resources>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorAccent">#4CAF50</color>
+
+    <!--<color name="primary">@color/md_teal_500</color>
+    <color name="primary_dark">@color/md_teal_700</color>
+    <color name="accent">@color/md_red_A200</color>-->
+
+    <!--LIGHT THEME-->
+    <color name="primaryTextColor">#DE000000</color>
+    <color name="secondaryTextColor">#8A000000</color>
+    <color name="disabledHintTextColor">#61000000</color>
+    <color name="dividerColor">#1F000000</color>
+    <color name="iconActiveColor">#8A000000</color>
+    <color name="iconInactiveColor">#61000000</color>
+    <color name="statusBarColor">@color/md_grey_300</color>
+    <color name="appBarColor">@color/md_grey_100</color>
+    <color name="backgroundColor">#FFF0F0F0</color><!--Google recommended #FAFAFA-->
+    <color name="foregroundColor">#FFFFFFFF</color>
+
+    <!--NIGHT THEME-->
+    <color name="night_primaryTextColor">#FFFFFFFF</color>
+    <color name="night_secondaryTextColor">#B3FFFFFF</color>
+    <color name="night_disabledHintTextColor">#80FFFFFF</color>
+    <color name="night_dividerColor">#1FFFFFFF</color>
+    <color name="night_iconActiveColor">#FFFFFFFF</color>
+    <color name="night_iconInactiveColor">#80FFFFFF</color>
+    <color name="night_statusBarColor">@color/md_black</color>
+    <color name="night_appBarColor">@color/md_grey_900</color>
+    <color name="night_backgroundColor">#303030</color>
+    <color name="night_foregroundColor">@color/md_grey_800</color>
+</resources>

@@ -1,0 +1,58 @@
+<resources>
+    <string name="AppName">Series Picker</string>
+    <string name="AppNameBeta">Series Picker Beta</string>
+    <!--main-->
+    <string name="Done">Done</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Remove">Remove</string>
+    <string name="Search">Search</string>
+    <string name="SeasonCount">%1$d Season</string>
+    <string name="SeasonsCount">%1$d Seasons</string>
+    <string name="EpisodeCount">%1$d Episode</string>
+    <string name="EpisodesCount">%1$d Episodes</string>
+    <string name="AddNewSeries">Add new Series</string>
+    <string name="UpdateSeries">Update Series</string>
+    <string name="RemoveSeries">Remove Series</string>
+    <string name="SeriesTitle">Series Title</string>
+    <string name="Seasons">Seasons</string>
+    <string name="Episodes">Episodes</string>
+    <string name="NoEpisodes">No Episodes</string>
+    <string name="NoSeries">No Series</string>
+    <string name="NumberSeasons">Number of Seasons</string>
+    <string name="NumberEpisodes">Number of Episodes</string>
+    <string name="SeriesTitleEmpty">Series Title is empty!</string>
+    <string name="NumberSeasonsEmpty">Number of Seasons is empty!</string>
+    <string name="BackdropTextHolder">Enter a name of Series to upload backdrop image</string>
+    <string name="SeriesAdded">New Series has been added</string>
+    <string name="SeriesDeleted">Series \'%1$s\' was deleted</string>
+    <string name="SeriesUpdated">Series \'%1$s\' was updated</string>
+    <string name="SeriesCount">%1$d Series</string>
+    <!--settings-->
+    <string name="Settings">Settings</string>
+    <string name="Themes">Themes</string>
+    <string name="ThemeLight">Light</string>
+    <string name="ThemeNight">Night</string>
+    <string name="InAppBrowser">In-App Browser</string>
+    <string name="InAppBrowserInfo">Open external links within the app</string>
+    <string name="ImageQuality">Image Quality</string>
+    <string name="ImageQualityLow">Low</string>
+    <string name="ImageQualityMedium">Medium</string>
+    <string name="ImageQualityHigh">High</string>
+    <string name="ImageQualityOriginal">Original</string>
+    <string name="BottomCounter">Bottom Counter</string>
+    <!--about-->
+    <string name="About">About</string>
+    <string name="RateGooglePlay">Rate on Google Play</string>
+    <string name="ForkGithub">Fork on Github</string>
+    <string name="Feedback">Feedback</string>
+    <string name="OpenSourceLibs">Open-source Libraries</string>
+    <string name="ShareWithFriends">Share with Friends</string>
+    <string name="SupportDevelopment">Support Development</string>
+    <string name="ContributeTranslations">Contribute Translations</string>
+    <string name="EnableAnalytics">Enable Analytics</string>
+    <string name="ShareApp">Share App</string>
+    <string name="AppNameForAndroid">%1$s for Android</string>
+    <string name="VersionBuild">Version %1$s (Build %2$d)</string>
+    <string name="ProjectInfo">%1$s is an open source project maintained by one develop. You can help improve the project in one of the following ways:</string>
+    <string name="AnalyticsInfo">The application sends anonymous usage reports. You can disable this feature.</string>
+</resources>
