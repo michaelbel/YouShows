@@ -21,13 +21,14 @@ public class ItemTouchHelperSimpleCallback extends ItemTouchHelper.SimpleCallbac
             final int swipeFlags = 0;
             return makeMovementFlags(dragFlags, swipeFlags);
         } else {
-            if (viewHolder instanceof BottomCellHolder/* || viewHolder instanceof Holder*/) {
+            if (viewHolder instanceof BottomCellHolder) {
                 return 0;
             }
 
             final int dragFlags = 0;
+            final int swipeFlags = 0;
             //final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-            final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+            //final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
             return makeMovementFlags(dragFlags, swipeFlags);
         }
     }
