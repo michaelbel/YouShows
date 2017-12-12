@@ -4,6 +4,7 @@ import org.michaelbel.util.AppUtils;
 
 @SuppressWarnings("all")
 public class Url {
+
     public static final String GSON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     public static final String TMDB_API = "https://api.themoviedb.org/3/";
     public static final String TMDB_API_KEY = AppUtils.getProperty("TMDbApiKey");
