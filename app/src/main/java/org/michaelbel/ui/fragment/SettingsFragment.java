@@ -23,7 +23,6 @@ import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.Holder;
 import org.michaelbel.ui.cell.EmptyCell;
-import org.michaelbel.ui.cell.HeaderCell;
 import org.michaelbel.ui.cell.TextCell;
 import org.michaelbel.ui.cell.TextDetailCell;
 import org.michaelbel.ui.view.RecyclerListView;
@@ -39,6 +38,7 @@ public class SettingsFragment extends Fragment {
     private int imageQualityRow;
     private int inAppBrowserRow;
     private int bottomCounterRow;
+    private int shortNamesRow;
     private int emptyRow2;
 
     private ListAdapter adapter;
@@ -70,6 +70,7 @@ public class SettingsFragment extends Fragment {
         imageQualityRow = rowCount++;
         inAppBrowserRow = rowCount++;
         bottomCounterRow = rowCount++;
+        shortNamesRow = rowCount++;
         emptyRow2 = rowCount++;
 
         adapter = new ListAdapter();
@@ -85,21 +86,23 @@ public class SettingsFragment extends Fragment {
             } else if (position == viewTypeRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setDarkTheme(!Theme.getTheme());
-                builder.setItems(new CharSequence[] { "List", "Cards" }, (dialogInterface, i) -> {
+                builder.setCellHeight(ScreenUtils.dp(52));
+                builder.setItems(new int[] { R.string.ViewList, R.string.ViewCards }, (dialogInterface, i) -> {
                     SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putInt("view_type", i);
                     editor.apply();
 
                     if (view instanceof TextDetailCell) {
-                        ((TextDetailCell) view).setValue(i == 0 ? "List" : "Cards");
+                        ((TextDetailCell) view).setValue(i == 0 ? R.string.ViewList : R.string.ViewCards);
                     }
                 });
                 builder.show();
             } else if (position == sortRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setDarkTheme(!Theme.getTheme());
-                builder.setItems(new CharSequence[] { "By Added Date", "By Title", "By Seasons" }, (dialogInterface, i) -> {
+                builder.setCellHeight(ScreenUtils.dp(52));
+                builder.setItems(new int[] { R.string.SortByAdded, R.string.SortByTitle, R.string.SortBySeasons }, (dialogInterface, i) -> {
                     SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putInt("sort", i);
@@ -107,11 +110,11 @@ public class SettingsFragment extends Fragment {
 
                     if (view instanceof TextDetailCell) {
                         if (i == 0) {
-                            ((TextDetailCell) view).setValue("By Added Date");
+                            ((TextDetailCell) view).setValue(R.string.SortByAdded);
                         } else if (i == 1) {
-                            ((TextDetailCell) view).setValue("By Title");
+                            ((TextDetailCell) view).setValue(R.string.SortByTitle);
                         } else if (i == 2) {
-                            ((TextDetailCell) view).setValue("By Seasons");
+                            ((TextDetailCell) view).setValue(R.string.SortBySeasons);
                         }
                     }
                 });
@@ -119,6 +122,7 @@ public class SettingsFragment extends Fragment {
             } else if (position == imageQualityRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setDarkTheme(!Theme.getTheme());
+                builder.setCellHeight(ScreenUtils.dp(52));
                 builder.setItems(new int[] { R.string.ImageQualityLow, R.string.ImageQualityMedium, R.string.ImageQualityHigh, R.string.ImageQualityOriginal}, (dialogInterface, i) -> {
                     String imageQuality;
                     String imageQualityBackdrop;
@@ -166,11 +170,20 @@ public class SettingsFragment extends Fragment {
             } else if (position == bottomCounterRow) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                boolean counter = prefs.getBoolean("bottom_counter", false);
-                editor.putBoolean("bottom_counter", !counter);
+                boolean enable = prefs.getBoolean("bottom_counter", false);
+                editor.putBoolean("bottom_counter", !enable);
                 editor.apply();
                 if (view instanceof TextDetailCell) {
-                    ((TextDetailCell) view).setChecked(!counter);
+                    ((TextDetailCell) view).setChecked(!enable);
+                }
+            } else if (position == shortNamesRow) {
+                SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                boolean enable = prefs.getBoolean("short_names", false);
+                editor.putBoolean("short_names", !enable);
+                editor.apply();
+                if (view instanceof TextDetailCell) {
+                    ((TextDetailCell) view).setChecked(!enable);
                 }
             }
         });
@@ -203,10 +216,8 @@ public class SettingsFragment extends Fragment {
             View cell;
 
             if (type == 0) {
-                cell = new HeaderCell(activity);
-            } else if (type == 1) {
                 cell = new EmptyCell(activity);
-            } else if (type == 2) {
+            } else if (type == 1) {
                 cell = new TextDetailCell(activity);
             } else {
                 cell = new TextCell(activity);
@@ -220,73 +231,63 @@ public class SettingsFragment extends Fragment {
             int type = getItemViewType(position);
 
             if (type == 0) {
-                HeaderCell cell = (HeaderCell) holder.itemView;
-                cell.changeLayoutParams();
-            } else if (type == 1) {
                 EmptyCell cell = (EmptyCell) holder.itemView;
 
                 if (position == emptyRow || position == emptyRow2) {
                     cell.setMode(EmptyCell.MODE_DEFAULT);
                     cell.setHeight(ScreenUtils.dp(12));
                 }
-            } else if (type == 2) {
+            } else if (type == 1) {
                 TextDetailCell cell = (TextDetailCell) holder.itemView;
-                cell.setMode(TextDetailCell.MODE_VALUE_TEXT | TextDetailCell.MODE_SWITCH);
                 cell.changeLayoutParams();
 
                 if (position == viewTypeRow) {
                     int viewType = prefs.getInt("view_type", 1);
-                    cell.setMode(TextCell.MODE_VALUE_TEXT);
-                    cell.setText("View Type");
-                    cell.setValue(viewType == 1 ? "Cards" : "List");
+                    cell.setText(R.string.ViewType);
+                    cell.setValue(viewType == 1 ? R.string.ViewCards : R.string.ViewList);
                     cell.setDivider(true);
                 } else if (position == sortRow) {
                     int sort = prefs.getInt("sort", 0);
-                    cell.setMode(TextCell.MODE_VALUE_TEXT);
-                    cell.setText("Sort");
+                    cell.setText(R.string.Sort);
                     if (sort == 0) {
-                        cell.setValue("By Added Date");
+                        cell.setValue(R.string.SortByAdded);
                     } else if (sort == 1) {
-                        cell.setValue("By Title");
+                        cell.setValue(R.string.SortByTitle);
                     } else if (sort == 2) {
-                        cell.setValue("By Seasons");
+                        cell.setValue(R.string.SortBySeasons);
                     }
                     cell.setDivider(true);
                 } else if (position == imageQualityRow) {
                     String imageQuality = prefs.getString("image_quality", getString(R.string.ImageQualityMedium));
-                    cell.setMode(TextCell.MODE_VALUE_TEXT);
                     cell.setText(R.string.ImageQuality);
                     cell.setValue(imageQuality);
                     cell.setDivider(true);
                 } else if (position == inAppBrowserRow) {
-                    cell.setMode(TextCell.MODE_VALUE_TEXT | TextDetailCell.MODE_SWITCH);
+                    cell.setMode(TextDetailCell.MODE_SWITCH);
                     cell.setText(R.string.InAppBrowser);
                     cell.setValue(R.string.InAppBrowserInfo);
                     cell.setChecked(prefs.getBoolean("in_app_browser", true));
                     cell.setDivider(true);
                 } else if (position == bottomCounterRow) {
-                    cell.setMode(TextCell.MODE_VALUE_TEXT | TextDetailCell.MODE_SWITCH);
+                    cell.setMode(TextDetailCell.MODE_SWITCH);
                     cell.setText(R.string.BottomCounter);
-                    cell.setValue("Show line with series count");
+                    cell.setValue(R.string.BottomCounterInfo);
                     cell.setChecked(prefs.getBoolean("bottom_counter", false));
+                    cell.setDivider(true);
+                } else if (position == shortNamesRow) {
+                    cell.setMode(TextDetailCell.MODE_SWITCH);
+                    cell.setText("Patterns Names"); // show in series guide
+                    cell.setValue("Use short names for seasons and episodes");
+                    cell.setChecked(prefs.getBoolean("short_names", false));
                 }
             } else {
                 TextCell cell = (TextCell) holder.itemView;
                 cell.changeLayoutParams();
 
                 if (position == themesRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setHeight(ScreenUtils.dp(52));
                     cell.setText(R.string.Themes);
                 }
-
-                /*if (position == bottomCounterRow) {
-                    boolean counter = prefs.getBoolean("bottom_counter", false);
-                    cell.setMode(TextCell.MODE_SWITCH);
-                    cell.setText(R.string.BottomCounter);
-                    cell.setChecked(counter);
-                    cell.setDivider(true);
-                }*/
             }
         }
 
@@ -297,15 +298,13 @@ public class SettingsFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            if (position == -10002 || position == -20002) {
+            if (position == emptyRow || position == emptyRow2) {
                 return 0;
-            } else if (position == emptyRow || position == emptyRow2) {
-                return 1;
             } else if (position == inAppBrowserRow || position == viewTypeRow || position == sortRow ||
-                    position == imageQualityRow || position == bottomCounterRow) {
-                return 2;
+                    position == imageQualityRow || position == bottomCounterRow || position == shortNamesRow) {
+                return 1;
             } else {
-                return 3;
+                return 2;
             }
         }
     }

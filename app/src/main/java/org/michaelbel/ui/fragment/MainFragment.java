@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,7 +65,6 @@ public class MainFragment extends Fragment {
 
     private TextView emptyView;
     private FloatingActionButton floatingButton;
-    private ItemBehavior moveAndSwipedListener;
 
     @Nullable
     @Override
@@ -157,14 +157,14 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        addList();
+        fillList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         activity.toolbar.setNavigationIcon(null);
-        addList();
+        fillList();
 
         ((AppLoader) activity.getApplication()).bus().toObservable().subscribe(new Consumer<Object>() {
             @Override
@@ -185,7 +185,8 @@ public class MainFragment extends Fragment {
         inflater.inflate(R.menu.fragment_main, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        //SearchView searchView = (SearchView) searchItem.getActionView();
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint(getString(R.string.Search));
         searchView.setMaxWidth(getResources().getDisplayMetrics().widthPixels);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -240,7 +241,7 @@ public class MainFragment extends Fragment {
                 });*/
     }
 
-    private void addList() {
+    private void fillList() {
         DatabaseHelper database = DatabaseHelper.getInstance(activity);
         if (database.getList().isEmpty()) {
             emptyView.setText(R.string.NoSeries);
@@ -250,27 +251,38 @@ public class MainFragment extends Fragment {
             }
             list.addAll(database.getList());
 
-            SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-            int sort = prefs.getInt("sort", 0);
-            if (sort == 0) {
-                Collections.reverse(list);
-            } else if (sort == 1) {
-                Collections.sort(list, (series1, series2) ->
-                        series1.title.compareTo(series2.title)
-                );
-            } else if (sort == 2) {
-                Collections.sort(list, (series1, series2) ->
-                        Integer.compare(series1.seasonCount, series2.seasonCount)
-                );
-            }
+            sortList();
 
             adapter.notifyDataSetChanged();
 
+            SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
             if (prefs.getBoolean("bottom_counter", false)) {
                 list.add(new Series(database.getCount()));
             }
 
             onLoadSuccessful();
+        }
+        database.close();
+    }
+
+    private void sortList() {
+        SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        int sort = prefs.getInt("sort", 0);
+
+        switch (sort) {
+            case 0:
+                Collections.reverse(list);
+                break;
+            case 1:
+                Collections.sort(list, (series1, series2) ->
+                        series1.title.compareTo(series2.title)
+                );
+                break;
+            case 2:
+                Collections.sort(list, (series1, series2) ->
+                        Integer.compare(series1.seasonCount, series2.seasonCount)
+                );
+                break;
         }
     }
 
@@ -304,6 +316,7 @@ public class MainFragment extends Fragment {
 
             DatabaseHelper database = DatabaseHelper.getInstance(activity);
             database.removeSeries(adapter.seriesFilteredList.get(position));
+            database.close();
 
             seriesFilteredList.remove(position);
             notifyItemRemoved(position);

@@ -25,6 +25,7 @@ import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
 import org.michaelbel.util.ThemeUtils;
 
+@SuppressWarnings("all")
 public class SeriesView extends FrameLayout {
 
     private ImageView backdropImageView;
@@ -32,14 +33,13 @@ public class SeriesView extends FrameLayout {
     private TextView seasonsCountTextView;
     private TextView episodeCountTextView;
     private LinearLayout linearLayout;
-    private ImageView menuImageView;
+    /*private ImageView menuImageView;*/
 
     private Paint paint;
     private boolean divider;
-    private Rect rect = new Rect();
-
     private int seasonsCounter;
     private int episodesCounter;
+    private Rect rect = new Rect();
 
     public SeriesView(@NonNull Context context) {
         super(context);
@@ -107,13 +107,13 @@ public class SeriesView extends FrameLayout {
                 Gravity.START | Gravity.CENTER_VERTICAL, 12, 0, 12, 2));
         linearLayout2.addView(episodeCountTextView);
 
-        menuImageView = new ImageView(context);
+        /*menuImageView = new ImageView(context);
         menuImageView.setFocusable(false);
         menuImageView.setScaleType(ImageView.ScaleType.CENTER);
         menuImageView.setImageResource(R.drawable.ic_dots_menu);
         menuImageView.setBackground(ThemeUtils.selectableItemBackgroundDrawable());
         menuImageView.setLayoutParams(LayoutHelper.makeFrame(40, 40, Gravity.END | Gravity.TOP));
-        //addView(menuImageView);
+        addView(menuImageView);*/
     }
 
     public void setDivider(boolean divider) {
@@ -141,13 +141,24 @@ public class SeriesView extends FrameLayout {
     public void setSeasons(int count) {
         seasonsCounter = count;
 
-        if (seasonsCounter == 1) {
-            seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
-        } else {
-            if (episodesCounter <= 0) {
-                seasonsCountTextView.setText(getContext().getString(R.string.SeasonsCount, seasonsCounter));
+        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean style = prefs.getBoolean("short_names", false);
+
+        if (style) {
+            if (seasonsCounter <= 9) {
+                seasonsCountTextView.setText("S0" + seasonsCounter);
             } else {
+                seasonsCountTextView.setText("S" + seasonsCounter);
+            }
+        } else {
+            if (seasonsCounter == 1) {
                 seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
+            } else {
+                if (episodesCounter <= 0) {
+                    seasonsCountTextView.setText(getContext().getString(R.string.SeasonsCount, seasonsCounter));
+                } else {
+                    seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
+                }
             }
         }
     }
@@ -155,19 +166,34 @@ public class SeriesView extends FrameLayout {
     public void setEpisodes(int count) {
         episodesCounter = count;
 
-        if (count <= 0) {
-            episodeCountTextView.setText("");
-            if (seasonsCounter == 1) {
+        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean style = prefs.getBoolean("short_names", false);
+
+        if (style) {
+            if (count <= 0) {
+                episodeCountTextView.setText("");
+            } else {
+                if (episodesCounter <= 9) {
+                    episodeCountTextView.setText("E0" + episodesCounter);
+                } else {
+                    episodeCountTextView.setText("E" + episodesCounter);
+                }
+            }
+        } else {
+            if (count <= 0) {
+                episodeCountTextView.setText("");
+                if (seasonsCounter == 1) {
+                    seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
+                } else {
+                    seasonsCountTextView.setText(getContext().getString(R.string.SeasonsCount, seasonsCounter));
+                }
+            } else if (count == 1) {
+                episodeCountTextView.setText(getContext().getString(R.string.EpisodeCount, count));
                 seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
             } else {
-                seasonsCountTextView.setText(getContext().getString(R.string.SeasonsCount, seasonsCounter));
+                episodeCountTextView.setText(getContext().getString(R.string.EpisodesCount, count));
+                seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
             }
-        } else if (count == 1) {
-            episodeCountTextView.setText(getContext().getString(R.string.EpisodeCount, count));
-            seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
-        } else {
-            episodeCountTextView.setText(getContext().getString(R.string.EpisodesCount, count));
-            seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
         }
     }
 

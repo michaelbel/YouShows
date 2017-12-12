@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -33,15 +32,11 @@ public class SeriesCompatView extends FrameLayout {
     private TextView titleTextView;
     private TextView seasonsCountTextView;
     private TextView episodeCountTextView;
-    private ImageView menuImageView;
-
-    private Rect rect = new Rect();
+    /*private ImageView menuImageView;*/
 
     private int seasonsCounter;
     private int episodesCounter;
-
-    //@GlideModule
-    //public final class MyAppGlideModule extends AppGlideModule {}
+    private Rect rect = new Rect();
 
     public SeriesCompatView(Context context) {
         super(context);
@@ -110,13 +105,13 @@ public class SeriesCompatView extends FrameLayout {
                 Gravity.START | Gravity.CENTER_VERTICAL, 12, 0, 12, 2));
         linearLayout2.addView(episodeCountTextView);
 
-        menuImageView = new ImageView(context);
+        /*menuImageView = new ImageView(context);
         menuImageView.setFocusable(false);
         menuImageView.setScaleType(ImageView.ScaleType.CENTER);
         menuImageView.setImageResource(R.drawable.ic_dots_menu);
         menuImageView.setBackground(ThemeUtils.selectableItemBackgroundDrawable());
         menuImageView.setLayoutParams(LayoutHelper.makeFrame(40, 40, Gravity.END | Gravity.TOP));
-        //cardView.addView(menuImageView);
+        cardView.addView(menuImageView);*/
     }
 
     public void setBackdrop(@NonNull String path) {
@@ -139,13 +134,24 @@ public class SeriesCompatView extends FrameLayout {
     public void setSeasons(int count) {
         seasonsCounter = count;
 
-        if (seasonsCounter == 1) {
-            seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
-        } else {
-            if (episodesCounter <= 0) {
-                seasonsCountTextView.setText(getContext().getString(R.string.SeasonsCount, seasonsCounter));
+        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean style = prefs.getBoolean("short_names", false);
+
+        if (style) {
+            if (seasonsCounter <= 9) {
+                seasonsCountTextView.setText("S0" + seasonsCounter);
             } else {
+                seasonsCountTextView.setText("S" + seasonsCounter);
+            }
+        } else {
+            if (seasonsCounter == 1) {
                 seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
+            } else {
+                if (episodesCounter <= 0) {
+                    seasonsCountTextView.setText(getContext().getString(R.string.SeasonsCount, seasonsCounter));
+                } else {
+                    seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
+                }
             }
         }
     }
@@ -153,19 +159,34 @@ public class SeriesCompatView extends FrameLayout {
     public void setEpisodes(int count) {
         episodesCounter = count;
 
-        if (count <= 0) {
-            episodeCountTextView.setText("");
-            if (seasonsCounter == 1) {
+        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean style = prefs.getBoolean("short_names", false);
+
+        if (style) {
+            if (count <= 0) {
+                episodeCountTextView.setText("");
+            } else {
+                if (episodesCounter <= 9) {
+                    episodeCountTextView.setText("E0" + episodesCounter);
+                } else {
+                    episodeCountTextView.setText("E" + episodesCounter);
+                }
+            }
+        } else {
+            if (count <= 0) {
+                episodeCountTextView.setText("");
+                if (seasonsCounter == 1) {
+                    seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
+                } else {
+                    seasonsCountTextView.setText(getContext().getString(R.string.SeasonsCount, seasonsCounter));
+                }
+            } else if (count == 1) {
+                episodeCountTextView.setText(getContext().getString(R.string.EpisodeCount, count));
                 seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
             } else {
-                seasonsCountTextView.setText(getContext().getString(R.string.SeasonsCount, seasonsCounter));
+                episodeCountTextView.setText(getContext().getString(R.string.EpisodesCount, count));
+                seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
             }
-        } else if (count == 1) {
-            episodeCountTextView.setText(getContext().getString(R.string.EpisodeCount, count));
-            seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
-        } else {
-            episodeCountTextView.setText(getContext().getString(R.string.EpisodesCount, count));
-            seasonsCountTextView.setText(getContext().getString(R.string.SeasonCount, seasonsCounter));
         }
     }
 
@@ -189,12 +210,12 @@ public class SeriesCompatView extends FrameLayout {
             }
         }
 
-        if (Build.VERSION.SDK_INT >= 21 && getBackground() != null) {
+        /*if (Build.VERSION.SDK_INT >= 21 && getBackground() != null) {
             menuImageView.getHitRect(rect);
             if (rect.contains((int) event.getX(), (int) event.getY())) {
                 return true;
             }
-        }
+        }*/
 
         return super.onTouchEvent(event);
     }
