@@ -28,6 +28,7 @@ import org.michaelbel.ui.cell.TextDetailCell;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
+@SuppressWarnings("all")
 public class SettingsFragment extends Fragment {
 
     private int rowCount;

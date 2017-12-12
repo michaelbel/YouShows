@@ -2,6 +2,14 @@ package org.michaelbel.seriespicker;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.lang.reflect.Field;
 
 @SuppressWarnings("all")
 public class Theme {
@@ -49,5 +57,81 @@ public class Theme {
 
     public static int alertTheme() {
         return getTheme() ? R.style.AlertThemeLight : R.style.AlertThemeNight;
+    }
+
+    public static int selectableItemBackground() {
+        int[] attrs = new int[] {
+                R.attr.selectableItemBackground
+        };
+
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
+    public static int selectableItemBackgroundBorderless() {
+        int[] attrs = new int[] {
+                R.attr.selectableItemBackgroundBorderless
+        };
+
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
+    public static Drawable selectableItemBackgroundDrawable() {
+        int[] attrs = new int[] {
+                android.R.attr.selectableItemBackground
+        };
+
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs);
+        Drawable drawableFromTheme = typedArray.getDrawable(0);
+        typedArray.recycle();
+
+        return drawableFromTheme;
+    }
+
+    public static Drawable selectableItemBackgroundBorderlessDrawable() {
+        int[] attrs = new int[] {
+                android.R.attr.selectableItemBackgroundBorderless
+        };
+
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs);
+        Drawable drawableFromTheme = typedArray.getDrawable(0);
+        typedArray.recycle();
+
+        return drawableFromTheme;
+    }
+
+    public static Drawable getIcon(@DrawableRes int resource, int colorFilter) {
+        return getIcon(resource, colorFilter, PorterDuff.Mode.MULTIPLY);
+    }
+
+    public static Drawable getIcon(@DrawableRes int resource, int colorFilter, PorterDuff.Mode mode) {
+        Drawable iconDrawable = getContext().getResources().getDrawable(resource, null);
+
+        if (iconDrawable != null) {
+            iconDrawable.clearColorFilter();
+            iconDrawable.mutate().setColorFilter(colorFilter, mode);
+        }
+
+        return iconDrawable;
+    }
+
+    public static void clearCursorDrawable(EditText editText) {
+        if (editText == null) {
+            return;
+        }
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.setInt(editText, 0);
+        } catch (Exception e) {
+
+        }
     }
 }

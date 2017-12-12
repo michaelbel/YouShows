@@ -29,28 +29,31 @@ import org.michaelbel.ui.cell.TextDetailCell;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("all")
 public class LibsFragment extends Fragment {
 
-    private final String bottomSheetUrl = "https://github.com/michaelbel/BottomSheet";
-    private final String retrofitUrl = "https://square.github.io/retrofit";
-    private final String rxJavaUrl = "https://github.com/ReactiveX/RxJava";
-    private final String rxAndroidUrl = "https://github.com/ReactiveX/RxAndroid";
-    private final String glideUrl = "https://bumptech.github.io/glide/";
-
-    private int rowCount;
-    private int bottomSheetRow;
-    private int retrofitRow;
-    private int rxJavaRow;
-    private int rxAndroidRow;
-    private int glideRow;
-
-    private String url;
     private ListAdapter adapter;
     private MainActivity activity;
     private LinearLayoutManager layoutManager;
+    private List<Source> list = new ArrayList<>();
 
     private RecyclerListView recyclerView;
+
+    private class Source {
+
+        public String url;
+        public String name;
+        public String license;
+
+        public Source(String name, String url, String license) {
+            this.url = url;
+            this.name = name;
+            this.license = license;
+        }
+    }
 
     @Nullable
     @Override
@@ -64,12 +67,11 @@ public class LibsFragment extends Fragment {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
         activity.toolbarTextView.setText(R.string.OpenSourceLibs);
 
-        rowCount = 0;
-        bottomSheetRow = rowCount++;
-        retrofitRow = rowCount++;
-        rxJavaRow = rowCount++;
-        rxAndroidRow = rowCount++;
-        glideRow = rowCount++;
+        list.add(new Source("BottomSheet", "https://github.com/michaelbel/bottomsheet", "Apache License v2.0"));
+        list.add(new Source("Retrofit", "https://square.github.io/retrofit", "Apache License v2.0"));
+        list.add(new Source("RxJava", "https://github.com/reactivex/rxjava", "Apache License v2.0"));
+        list.add(new Source("RxAndroid", "https://github.com/reactivex/rxjava", "Apache License v2.0"));
+        list.add(new Source("Glide", "https://bumptech.github.io/glide/", "BSD, MIT and Apache License v2.0"));
 
         adapter = new ListAdapter();
         layoutManager = new LinearLayoutManager(activity);
@@ -79,47 +81,19 @@ public class LibsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view1, position) -> {
-            String url = null;
-
-            if (position == bottomSheetRow) {
-                url = bottomSheetUrl;
-            } else if (position == retrofitRow) {
-                url = retrofitUrl;
-            } else if (position == rxJavaRow) {
-                url = rxJavaUrl;
-            } else if (position == rxAndroidRow) {
-                url = rxAndroidUrl;
-            } else if (position == glideRow) {
-                url = glideUrl;
-            }
-
-            if (url != null) {
-                Browser.openUrl(url);
-            }
+            Browser.openUrl(activity, list.get(position).url);
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {
-            if (position == bottomSheetRow) {
-                url = bottomSheetUrl;
-            } else if (position == retrofitRow) {
-                url = retrofitUrl;
-            } else if (position == rxJavaRow) {
-                url = rxJavaUrl;
-            } else if (position == rxAndroidRow) {
-                url = rxAndroidUrl;
-            } else if (position == glideRow) {
-                url = glideUrl;
-            }
-
             BottomSheet.Builder builder = new BottomSheet.Builder(activity);
-            builder.setTitle(url);
+            builder.setTitle(list.get(position).url);
             builder.setDarkTheme(!Theme.getTheme());
             builder.setCellHeight(ScreenUtils.dp(52));
             builder.setItems(new int[] { R.string.Open, R.string.CopyLink }, (dialogInterface, i) -> {
                 if (i == 0) {
-                    Browser.openUrl(url);
+                    Browser.openUrl(activity, list.get(position).url);
                 } else if (i == 1) {
                     ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("Link", url);
+                    ClipData clip = ClipData.newPlainText("Link", list.get(position).url);
                     if (clipboard != null) {
                         clipboard.setPrimaryClip(clip);
                     }
@@ -155,59 +129,23 @@ public class LibsFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-            View cell = null;
-
-            if (type == 0) {
-                cell = new TextDetailCell(activity);
-            }
-
-            return new Holder(cell);
+            return new Holder(new TextDetailCell(activity));
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            int type = getItemViewType(position);
+            Source source = list.get(position);
 
-            if (type == 0) {
-                TextDetailCell cell = (TextDetailCell) holder.itemView;
-                cell.changeLayoutParams();
-
-                if (position == bottomSheetRow) {
-                    cell.setText("BottomSheet");
-                    cell.setValue("Apache License v2.0");
-                    cell.setDivider(true);
-                } else if (position == retrofitRow) {
-                    cell.setText("Retrofit");
-                    cell.setValue("Apache License v2.0");
-                    cell.setDivider(true);
-                } else if (position == rxJavaRow) {
-                    cell.setText("RxJava");
-                    cell.setValue("Apache License v2.0");
-                    cell.setDivider(true);
-                } else if (position == rxAndroidRow) {
-                    cell.setText("RxAndroid");
-                    cell.setValue("Apache License v2.0");
-                    cell.setDivider(true);
-                } else if (position == glideRow) {
-                    cell.setText("Glide");
-                    cell.setValue("BSD, MIT and Apache License v2.0");
-                }
-            }
+            TextDetailCell cell = (TextDetailCell) holder.itemView;
+            cell.changeLayoutParams();
+            cell.setText(source.name);
+            cell.setValue(source.license);
+            cell.setDivider(position != list.size() - 1);
         }
 
         @Override
         public int getItemCount() {
-            return rowCount;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            if (position == bottomSheetRow || position == retrofitRow || position == rxJavaRow ||
-                    position == rxAndroidRow || position == glideRow) {
-                return 0;
-            } else {
-                return 1;
-            }
+            return list != null ? list.size() : 0;
         }
     }
 }

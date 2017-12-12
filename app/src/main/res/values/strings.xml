@@ -19,16 +19,15 @@
     <string name="Episodes">Episodes</string>
     <string name="NoEpisodes">No Episodes</string>
     <string name="NoSeries">No Series</string>
-    <string name="NumberSeasons">Number of Seasons</string>
-    <string name="NumberEpisodes">Number of Episodes</string>
-    <string name="SeriesTitleEmpty">Series Title is empty!</string>
-    <string name="NumberSeasonsEmpty">Number of Seasons is empty!</string>
+    <string name="NumberSeasons">Seasons</string>
+    <string name="NumberEpisodes">Episodes</string>
     <string name="BackdropTextHolder">Enter a name of Series to upload backdrop image</string>
     <string name="SeriesAdded">New Series has been added</string>
     <string name="SeriesDeleted">Series \'%1$s\' was deleted</string>
     <string name="SeriesUpdated">Series \'%1$s\' was updated</string>
     <string name="SeriesCount">%1$d Series</string>
     <string name="EditTitle">Edit Title</string>
+    <string name="NoImage">No Image</string>
     <!--settings-->
     <string name="Settings">Settings</string>
     <string name="Themes">Themes</string>

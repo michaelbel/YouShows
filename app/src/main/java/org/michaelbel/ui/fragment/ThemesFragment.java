@@ -17,6 +17,7 @@ import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.cell.RadioCell;
 
+@SuppressWarnings("all")
 public class ThemesFragment extends Fragment implements View.OnClickListener {
 
     private MainActivity activity;

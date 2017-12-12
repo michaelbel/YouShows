@@ -20,7 +20,6 @@ import android.widget.TextView;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
-import org.michaelbel.util.ThemeUtils;
 
 public class TextDetailCell extends FrameLayout {
 
@@ -50,7 +49,7 @@ public class TextDetailCell extends FrameLayout {
         super(context);
 
         setElevation(ScreenUtils.dp(1));
-        setForeground(ThemeUtils.selectableItemBackgroundDrawable());
+        setForeground(Theme.selectableItemBackgroundDrawable());
         setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         if (paint == null) {

@@ -2,7 +2,6 @@ package org.michaelbel.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -37,25 +36,26 @@ import org.michaelbel.ui.cell.TextCell;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
+@SuppressWarnings("all")
 public class AboutFragment extends Fragment {
 
     private int rowCount;
-    private int headerRow;
-    private int rateGooglePlayRow;
+    private int infoRow;
+    private int libsRow;
     private int forkGithubRow;
-    private int pleaseHelpRow;
+    private int helpRow;
     private int feedbackRow;
-    private int librariesRow;
+    private int emptyRow;
+
+    /*private int rateGooglePlayRow;
     private int shareFriendsRow;
     private int supportDevRow;
     private int translationsRow;
     private int analyticsInfoRow;
-    private int analyticsRow;
-    private int emptyRow;
+    private int analyticsRow;*/
 
     private AboutAdapter adapter;
     private MainActivity activity;
-    private SharedPreferences prefs;
     private LinearLayoutManager layoutManager;
 
     private RecyclerListView recyclerView;
@@ -70,25 +70,25 @@ public class AboutFragment extends Fragment {
         setHasOptionsMenu(true);
 
         adapter = new AboutAdapter();
-        prefs = activity.getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
         activity.toolbarTextView.setText(R.string.About);
 
         rowCount = 0;
-        headerRow = rowCount++;
-        //rateGooglePlayRow = rowCount++;
-        //forkGithubRow = rowCount++;
-        librariesRow = rowCount++;
-        pleaseHelpRow = rowCount++;
+        infoRow = rowCount++;
+        libsRow = rowCount++;
+        forkGithubRow = rowCount++;
+        helpRow = rowCount++;
         feedbackRow = rowCount++;
-        //shareFriendsRow = rowCount++;
+        emptyRow = rowCount++;
+
+        //rateGooglePlayRow = rowCount++;
+        // shareFriendsRow = rowCount++;
         //supportDevRow = rowCount++;
         //translationsRow = rowCount++;
         //analyticsInfoRow = rowCount++;
         //analyticsRow = rowCount++;
-        emptyRow = rowCount++;
 
         layoutManager = new LinearLayoutManager(activity);
 
@@ -97,23 +97,10 @@ public class AboutFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view1, position) -> {
-            if (position == rateGooglePlayRow) {
-                /*try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setList(Uri.parse("market://details?id=" + activity.getPackageName()));
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setList(Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
-                    startActivity(intent);
-                    Log.e("moviesapp", e.getMessage());
-                }*/
+            if (position == libsRow) {
+                activity.startFragment(new LibsFragment(), "libsFragment");
             } else if (position == forkGithubRow) {
-                /*if (prefs.getBoolean("in_app_browser", true)) {
-                    Browser.openUrl(activity, "https://github.com/michaelbel/moviesapp");
-                } else {
-                    Browser.openBrowserUrl(activity, "https://github.com/michaelbel/moviesapp");
-                }*/
+                Browser.openUrl(activity, "https://github.com/michaelbel/seriespicker");
             } else if (position == feedbackRow) {
                 try {
                     PackageManager packageManager = activity.getPackageManager();
@@ -124,40 +111,25 @@ public class AboutFragment extends Fragment {
                     } else {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/plain");
-                        intent.putExtra(Intent.EXTRA_EMAIL, "michaelbel@protonmail.com");
+                        intent.putExtra(Intent.EXTRA_EMAIL, "michael-bel@outlook.com");
                         intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
                         intent.putExtra(Intent.EXTRA_TEXT, "");
                         startActivity(Intent.createChooser(intent, "Feedback"));
                     }
                 } catch (PackageManager.NameNotFoundException e) {
-                    //FirebaseCrash.report(e);
+                    // todo report
                 }
-            } else if (position == librariesRow) {
-                activity.startFragment(new LibsFragment(), "libsFragment");
-            } else if (position == shareFriendsRow) {
+            }
+
+            /*if (position == shareFriendsRow) {
                 try {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_TEXT, "Link on Google Play");
-                    //startActivity(Intent.createChooser(intent, LocaleController.getString("ShareApp", R.string.ShareApp)));
+                    startActivity(Intent.createChooser(intent, getString(R.string.ShareApp)));
                 } catch (Exception e) {
-                    //FirebaseCrash.report(e);
+                    // report
                 }
-            } else if (position == supportDevRow) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"email@example.com"});
-                intent.putExtra(Intent.EXTRA_SUBJECT, "subject here");
-                intent.putExtra(Intent.EXTRA_TEXT, "body text");
-                /*File file = FLog.getInstance().getFile();
-                if (!file.exists() || !file.canRead()) {
-                    return;
-                }
-                Uri uri = Uri.parse("file://" + file);
-                intent.putExtra(Intent.EXTRA_STREAM, uri);
-                startActivity(Intent.createChooser(intent, "Send email..."));*/
-            } else if (position == translationsRow) {
-                Browser.openUrl("https://transfex.com/seriespicker");
             } else if (position == analyticsRow) {
                 SharedPreferences.Editor editor = prefs.edit();
                 boolean analytics = prefs.getBoolean("analytics", true);
@@ -166,10 +138,9 @@ public class AboutFragment extends Fragment {
                 if (view1 instanceof TextCell) {
                     ((TextCell) view1).setChecked(!analytics);
                 }
-            }
+            }*/
         });
         fragmentView.addView(recyclerView);
-
         return fragmentView;
     }
 
@@ -197,7 +168,7 @@ public class AboutFragment extends Fragment {
             View view;
 
             if (type == 0) {
-                view = new AboutHeaderView(activity);
+                view = new InfoView(activity);
             } else if (type == 1) {
                 view = new EmptyCell(activity);
             } else {
@@ -215,32 +186,34 @@ public class AboutFragment extends Fragment {
                 EmptyCell cell = (EmptyCell) holder.itemView;
                 cell.changeLayoutParams();
 
-                if (position == pleaseHelpRow) {
+                if (position == helpRow) {
                     cell.setMode(EmptyCell.MODE_TEXT);
                     cell.setText(getString(R.string.ProjectInfo, getString(R.string.AppName)));
-                } else if (position == analyticsInfoRow) {
-                    cell.setMode(EmptyCell.MODE_TEXT);
-                    cell.setText(R.string.AnalyticsInfo);
                 } else if (position == emptyRow) {
                     cell.setMode(EmptyCell.MODE_DEFAULT);
                     cell.setHeight(ScreenUtils.dp(12));
-                }
+                } /*else if (position == analyticsInfoRow) {
+                    cell.setMode(EmptyCell.MODE_TEXT);
+                    cell.setText(R.string.AnalyticsInfo);
+                }*/
             } else if (type == 2) {
                 TextCell cell = (TextCell) holder.itemView;
                 cell.changeLayoutParams();
 
-                if (position == rateGooglePlayRow) {
-                    cell.setText(R.string.RateGooglePlay);
-                    cell.setDivider(true);
+                if (position == libsRow) {
+                    cell.setHeight(ScreenUtils.dp(52));
+                    cell.setText(R.string.OpenSourceLibs);
                 } else if (position == forkGithubRow) {
                     cell.setText(R.string.ForkGithub);
                     cell.setDivider(true);
                 } else if (position == feedbackRow) {
                     cell.setHeight(ScreenUtils.dp(52));
                     cell.setText(R.string.Feedback);
-                } else if (position == librariesRow) {
-                    cell.setHeight(ScreenUtils.dp(52));
-                    cell.setText(R.string.OpenSourceLibs);
+                }
+
+                /*if (position == rateGooglePlayRow) {
+                    cell.setText(R.string.RateGooglePlay);
+                    cell.setDivider(true);
                 } else if (position == shareFriendsRow) {
                     cell.setText(R.string.ShareWithFriends);
                     cell.setDivider(true);
@@ -253,7 +226,7 @@ public class AboutFragment extends Fragment {
                     cell.setMode(TextCell.MODE_SWITCH);
                     cell.setText(R.string.EnableAnalytics);
                     cell.setChecked(prefs.getBoolean("analytics", true));
-                }
+                }*/
             }
         }
 
@@ -264,9 +237,9 @@ public class AboutFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            if (position == headerRow) {
+            if (position == infoRow) {
                 return 0;
-            } else if (position == pleaseHelpRow || position == analyticsInfoRow || position == emptyRow) {
+            } else if (position == helpRow || position == emptyRow) {
                 return 1;
             } else {
                 return 2;
@@ -274,13 +247,13 @@ public class AboutFragment extends Fragment {
         }
     }
 
-    public class AboutHeaderView extends LinearLayout {
+    public class InfoView extends LinearLayout {
 
         private ImageView iconImageView;
         private TextView nameTextView;
         private TextView versionTextView;
 
-        public AboutHeaderView(Context context) {
+        public InfoView(Context context) {
             super(context);
 
             setOrientation(VERTICAL);
@@ -316,7 +289,7 @@ public class AboutFragment extends Fragment {
                 nameTextView.setText(getString(R.string.AppNameForAndroid, getString(R.string.AppName)));
                 versionTextView.setText(getString(R.string.VersionBuild, packageInfo.versionName, packageInfo.versionCode));
             } catch (Exception e) {
-                //FirebaseCrash.report(e);
+                //todo report
             }
         }
 

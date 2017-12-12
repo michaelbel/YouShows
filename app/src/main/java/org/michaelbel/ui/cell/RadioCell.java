@@ -17,7 +17,6 @@ import android.widget.TextView;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
-import org.michaelbel.util.ThemeUtils;
 
 public class RadioCell extends FrameLayout {
 
@@ -41,7 +40,7 @@ public class RadioCell extends FrameLayout {
         }
 
         setElevation(ScreenUtils.dp(1));
-        setForeground(ThemeUtils.selectableItemBackgroundDrawable());
+        setForeground(Theme.selectableItemBackgroundDrawable());
         setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         textView = new TextView(context);

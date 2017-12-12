@@ -1,6 +1,5 @@
 package org.michaelbel.seriespicker;
 
-import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -19,29 +18,21 @@ public class Browser {
 
     private static final String TAG = Browser.class.getSimpleName();
 
-    private static Context getContext() {
-        return AppLoader.AppContext;
-    }
+    public static void openUrl(Context context, @NonNull String url) {
+        SharedPreferences prefs = context.getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
 
-    private static boolean getBrowser() {
-        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
-        return prefs.getBoolean("in_app_browser", true);
-    }
-
-    public static void openUrl(@NonNull String url) {
-        if (getBrowser()) {
-            openUrl(getContext(), url);
+        if (prefs.getBoolean("in_app_browser", true)) {
+            openUrl2(context, url);
         } else {
-            openBrowserUrl(getContext(), url);
+            openBrowserUrl(context, url);
         }
     }
 
-    @SuppressLint("PrivateResource")
-    private static void openUrl(@NonNull Context context, String url) {
+    private static void openUrl2(@NonNull Context context, String url) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
-            intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", Utils.getAttrColor(context, org.michaelbel.material.R.attr.colorPrimary));
+            intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", Utils.getAttrColor(context, R.attr.colorPrimary));
             intent.putExtra("android.support.customtabs.extra.TITLE_VISIBILITY", 1);
             Intent actionIntent = new Intent(Intent.ACTION_SEND);
             actionIntent.setType("text/plain");
