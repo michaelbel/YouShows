@@ -40,7 +40,7 @@ public class TextCell extends FrameLayout {
             MODE_CHECKBOX,
             MODE_COLOR
     })
-    public @interface Mode {}
+    private @interface Mode {}
 
     protected TextView textView;
     protected TextView valueText;
@@ -70,7 +70,9 @@ public class TextCell extends FrameLayout {
         }
 
         textView = new AppCompatTextView(context);
+        textView.setLines(1);
         textView.setMaxLines(1);
+        textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
@@ -78,7 +80,9 @@ public class TextCell extends FrameLayout {
         addView(textView);
 
         valueText = new AppCompatTextView(context);
+        valueText.setLines(1);
         valueText.setMaxLines(1);
+        valueText.setSingleLine();
         valueText.setVisibility(INVISIBLE);
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         valueText.setTextColor(ContextCompat.getColor(context, R.color.accent));
@@ -101,6 +105,8 @@ public class TextCell extends FrameLayout {
         checkBox.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
+
+        setMode(currentMode);
     }
 
     public void setText(@NonNull String text) {

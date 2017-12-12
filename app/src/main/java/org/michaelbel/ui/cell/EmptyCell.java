@@ -22,8 +22,8 @@ public class EmptyCell extends FrameLayout {
     public static final int MODE_TEXT = 11;
     public static final int MODE_LOADING = 12;
 
-    @IntDef({MODE_DEFAULT, MODE_TEXT, MODE_LOADING})
-    public @interface Mode {}
+    @IntDef({ MODE_DEFAULT, MODE_TEXT, MODE_LOADING })
+    private @interface Mode {}
 
     private int mHeight = 8;
     private int currentMode = MODE_DEFAULT;

@@ -27,7 +27,9 @@ public class HeaderCell extends FrameLayout {
         setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         textView = new TextView(context);
+        textView.setLines(1);
         textView.setMaxLines(1);
+        textView.setSingleLine();
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14.5F);
         textView.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));

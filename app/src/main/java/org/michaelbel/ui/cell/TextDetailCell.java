@@ -25,19 +25,15 @@ import org.michaelbel.util.ThemeUtils;
 public class TextDetailCell extends FrameLayout {
 
     public static final int MODE_DEFAULT = 100;
-    public static final int MODE_VALUE_TEXT = 200;
-    public static final int MODE_SWITCH = 300;
-    public static final int MODE_CHECKBOX = 400;
+    public static final int MODE_SWITCH = 200;
+    public static final int MODE_CHECKBOX = 300;
 
     @IntDef({
             MODE_DEFAULT,
-            MODE_VALUE_TEXT,
             MODE_SWITCH,
-            MODE_CHECKBOX,
-            MODE_VALUE_TEXT | MODE_SWITCH,
-            MODE_VALUE_TEXT | MODE_CHECKBOX
+            MODE_CHECKBOX
     })
-    public @interface Mode {}
+    private @interface Mode {}
 
     protected TextView textView;
     protected TextView valueText;
@@ -64,7 +60,9 @@ public class TextDetailCell extends FrameLayout {
         }
 
         textView = new TextView(context);
+        textView.setLines(1);
         textView.setMaxLines(1);
+        textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
@@ -72,7 +70,9 @@ public class TextDetailCell extends FrameLayout {
         addView(textView);
 
         valueText = new TextView(context);
+        valueText.setLines(1);
         valueText.setMaxLines(1);
+        valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
@@ -94,6 +94,8 @@ public class TextDetailCell extends FrameLayout {
         checkBox.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
+
+        setMode(currentMode);
     }
 
     public void setText(@NonNull String text) {
@@ -113,9 +115,9 @@ public class TextDetailCell extends FrameLayout {
     }
 
     public void setChecked(boolean value) {
-        if (currentMode == MODE_SWITCH || currentMode == (MODE_VALUE_TEXT | MODE_SWITCH)) {
+        if (currentMode == MODE_SWITCH) {
             switchCompat.setChecked(value);
-        } else if (currentMode == MODE_CHECKBOX || currentMode == (MODE_VALUE_TEXT | MODE_CHECKBOX)) {
+        } else if (currentMode == MODE_CHECKBOX) {
             checkBox.setChecked(value);
         }
     }
@@ -124,26 +126,14 @@ public class TextDetailCell extends FrameLayout {
         currentMode = mode;
 
         if (currentMode == MODE_DEFAULT) {
-            valueText.setVisibility(GONE);
-            switchCompat.setVisibility(GONE);
-            checkBox.setVisibility(GONE);
-        } else if (currentMode == MODE_VALUE_TEXT) {
             valueText.setVisibility(VISIBLE);
             switchCompat.setVisibility(GONE);
             checkBox.setVisibility(GONE);
         } else if (currentMode == MODE_SWITCH) {
-            switchCompat.setVisibility(VISIBLE);
-            valueText.setVisibility(GONE);
-            checkBox.setVisibility(GONE);
-        } else if (currentMode == MODE_CHECKBOX) {
-            checkBox.setVisibility(VISIBLE);
-            valueText.setVisibility(GONE);
-            switchCompat.setVisibility(GONE);
-        } else if (currentMode == (MODE_VALUE_TEXT | MODE_SWITCH)) {
             valueText.setVisibility(VISIBLE);
             switchCompat.setVisibility(VISIBLE);
             checkBox.setVisibility(GONE);
-        } else if (currentMode == (MODE_VALUE_TEXT | MODE_CHECKBOX)) {
+        } else if (currentMode == MODE_CHECKBOX) {
             valueText.setVisibility(VISIBLE);
             checkBox.setVisibility(VISIBLE);
             switchCompat.setVisibility(GONE);
@@ -166,7 +156,7 @@ public class TextDetailCell extends FrameLayout {
         } else {
             valueText.setLines(1);
             valueText.setMaxLines(1);
-            valueText.setSingleLine(true);
+            valueText.setSingleLine();
             valueText.setPadding(0, 0, 0, 0);
         }
     }
