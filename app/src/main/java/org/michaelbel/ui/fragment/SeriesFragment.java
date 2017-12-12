@@ -1,5 +1,6 @@
 package org.michaelbel.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -35,6 +37,7 @@ import org.michaelbel.util.ScreenUtils;
 
 import java.util.Objects;
 
+@SuppressWarnings("all")
 public class SeriesFragment extends Fragment implements View.OnClickListener {
 
     private static final String SERIES_ID = "id";
@@ -103,7 +106,7 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
 
         TextView seasonsTextView = new TextView(activity);
         seasonsTextView.setText(R.string.NumberSeasons);
-        seasonsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        seasonsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         seasonsTextView.setTextColor(ContextCompat.getColor(activity, Theme.secondaryTextColor()));
         seasonsTextView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
                 Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL));
@@ -123,7 +126,7 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
 
         TextView episodesTextView = new TextView(activity);
         episodesTextView.setText(R.string.NumberEpisodes);
-        episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        episodesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         episodesTextView.setTextColor(ContextCompat.getColor(activity, Theme.secondaryTextColor()));
         episodesTextView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
                 Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL));
@@ -166,12 +169,12 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
                 .setOnMenuItemClickListener(menuItem -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertTheme());
                     editText = new EditText(activity);
-                    editText.setHint("Title");
                     editText.setText(title);
-                    editText.requestFocus();
                     editText.setLines(1);
                     editText.setMaxLines(1);
                     editText.setSingleLine();
+                    editText.setHint(R.string.SeriesTitle);
+                    editText.setSelection(editText.getText().length());
                     editText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
                             24, 0, 24, 0));
 
@@ -192,6 +195,7 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.primaryColor()));
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.primaryColor()));
 
+                    showKeyboard.run();
                     return true;
                 });
 
@@ -281,4 +285,14 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
             ((AppLoader) activity.getApplication()).bus().send(new Events.UpdateSeries(currentSeries.title));
         }
     }
+
+    private Runnable showKeyboard = new Runnable() {
+        @Override
+        public void run() {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.showSoftInput(editText, 0);
+            }
+        }
+    };
 }

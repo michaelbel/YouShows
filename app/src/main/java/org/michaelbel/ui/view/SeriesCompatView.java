@@ -23,12 +23,12 @@ import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
-import org.michaelbel.util.ThemeUtils;
 
 public class SeriesCompatView extends FrameLayout {
 
     private CardView cardView;
     private ImageView backdropImageView;
+    private TextView placeHolderTextView;
     private TextView titleTextView;
     private TextView seasonsCountTextView;
     private TextView episodeCountTextView;
@@ -45,7 +45,7 @@ public class SeriesCompatView extends FrameLayout {
         cardView.setRadius(ScreenUtils.dp(4));
         cardView.setUseCompatPadding(true);
         cardView.setPreventCornerOverlap(false);
-        cardView.setForeground(ThemeUtils.selectableItemBackgroundBorderlessDrawable());
+        cardView.setForeground(Theme.selectableItemBackgroundBorderlessDrawable());
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
         cardView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT,
                 LayoutHelper.MATCH_PARENT));
@@ -53,9 +53,17 @@ public class SeriesCompatView extends FrameLayout {
 
         backdropImageView = new ImageView(context);
         backdropImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        backdropImageView.setImageResource(R.drawable.place_holder);
         backdropImageView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, 200, Gravity.TOP));
         cardView.addView(backdropImageView);
+
+        placeHolderTextView = new TextView(context);
+        placeHolderTextView.setVisibility(INVISIBLE);
+        placeHolderTextView.setText(R.string.NoImage);
+        placeHolderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        placeHolderTextView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        placeHolderTextView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
+                Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0, 0, 32));
+        cardView.addView(placeHolderTextView);
 
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setBackgroundColor(0x8A000000);
@@ -82,7 +90,7 @@ public class SeriesCompatView extends FrameLayout {
         titleTextView.setTextColor(ContextCompat.getColor(context, R.color.md_white));
         titleTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         titleTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.START | Gravity.CENTER_VERTICAL, 12, 3, 12, 0));
+                Gravity.START | Gravity.CENTER_VERTICAL, 12, 4, 12, 0));
         linearLayout1.addView(titleTextView);
 
         seasonsCountTextView = new TextView(context);
@@ -115,14 +123,18 @@ public class SeriesCompatView extends FrameLayout {
     }
 
     public void setBackdrop(@NonNull String path) {
-        if (path == null) {
-            backdropImageView.setImageResource(R.drawable.place_holder);
+        if (path == null || path.isEmpty()) {
+            backdropImageView.setVisibility(INVISIBLE);
+            placeHolderTextView.setVisibility(VISIBLE);
         } else {
+            backdropImageView.setVisibility(VISIBLE);
+            placeHolderTextView.setVisibility(INVISIBLE);
+
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-            String imageQuality = prefs.getString("image_quality_backdrop", "w780");
+            String quality = prefs.getString("image_quality_backdrop", "w780");
 
             Glide.with(getContext())
-                 .load("http://image.tmdb.org/t/p/" + imageQuality +"/" + path)
+                 .load("http://image.tmdb.org/t/p/" + quality +"/" + path)
                  .into(backdropImageView);
         }
     }

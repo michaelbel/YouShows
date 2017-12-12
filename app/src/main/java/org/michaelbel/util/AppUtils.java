@@ -7,29 +7,13 @@ import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import org.michaelbel.seriespicker.AppLoader;
 
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.Properties;
 
 public class AppUtils {
-
-    public static void clearCursorDrawable(EditText editText) {
-        if (editText == null) {
-            return;
-        }
-        try {
-            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
-            mCursorDrawableRes.setAccessible(true);
-            mCursorDrawableRes.setInt(editText, 0);
-        } catch (Exception e) {
-            //FileLog.e(e);
-        }
-    }
 
     public static String getProperty(String key) {
         try {

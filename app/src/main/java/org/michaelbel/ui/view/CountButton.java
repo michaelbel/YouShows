@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import org.michaelbel.material.util.Utils;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
+import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
-import org.michaelbel.util.ThemeUtils;
 
 public class CountButton extends FrameLayout {
 
@@ -23,7 +23,7 @@ public class CountButton extends FrameLayout {
     public CountButton(@NonNull Context context) {
         super(context);
 
-        setForeground(ThemeUtils.selectableItemBackgroundDrawable());
+        setForeground(Theme.selectableItemBackgroundDrawable());
 
         numberImage = new ImageView(context);
         numberImage.setScaleType(ImageView.ScaleType.CENTER);

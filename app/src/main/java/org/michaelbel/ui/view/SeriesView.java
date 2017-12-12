@@ -23,12 +23,13 @@ import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
-import org.michaelbel.util.ThemeUtils;
 
 @SuppressWarnings("all")
 public class SeriesView extends FrameLayout {
 
     private ImageView backdropImageView;
+    private TextView placeHolderTextView;
+
     private TextView titleTextView;
     private TextView seasonsCountTextView;
     private TextView episodeCountTextView;
@@ -44,7 +45,7 @@ public class SeriesView extends FrameLayout {
     public SeriesView(@NonNull Context context) {
         super(context);
 
-        setForeground(ThemeUtils.selectableItemBackgroundDrawable());
+        setForeground(Theme.selectableItemBackgroundDrawable());
         setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         if (paint == null) {
@@ -55,9 +56,17 @@ public class SeriesView extends FrameLayout {
 
         backdropImageView = new ImageView(context);
         backdropImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        backdropImageView.setImageResource(R.drawable.place_holder);
         backdropImageView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, 200));
         addView(backdropImageView);
+
+        placeHolderTextView = new TextView(context);
+        placeHolderTextView.setVisibility(INVISIBLE);
+        placeHolderTextView.setText(R.string.NoImage);
+        placeHolderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        placeHolderTextView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        placeHolderTextView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
+                Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0, 0, 32));
+        addView(placeHolderTextView);
 
         linearLayout = new LinearLayout(context);
         linearLayout.setBackgroundColor(0x8A000000);
@@ -84,7 +93,7 @@ public class SeriesView extends FrameLayout {
         titleTextView.setTextColor(ContextCompat.getColor(context, R.color.md_white));
         titleTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         titleTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.START | Gravity.CENTER_VERTICAL, 12, 3, 12, 0));
+                Gravity.START | Gravity.CENTER_VERTICAL, 12, 4, 12, 0));
         linearLayout1.addView(titleTextView);
 
         seasonsCountTextView = new TextView(context);
@@ -122,14 +131,18 @@ public class SeriesView extends FrameLayout {
     }
 
     public void setBackdrop(@NonNull String path) {
-        if (path == null) {
-            backdropImageView.setImageResource(R.drawable.place_holder);
+        if (path == null || path.isEmpty()) {
+            backdropImageView.setVisibility(INVISIBLE);
+            placeHolderTextView.setVisibility(VISIBLE);
         } else {
+            backdropImageView.setVisibility(VISIBLE);
+            placeHolderTextView.setVisibility(INVISIBLE);
+
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-            String imageQuality = prefs.getString("image_quality_backdrop", "w780");
+            String quality = prefs.getString("image_quality_backdrop", "w780");
 
             Glide.with(getContext())
-                 .load("http://image.tmdb.org/t/p/" + imageQuality +"/" + path)
+                 .load("http://image.tmdb.org/t/p/" + quality +"/" + path)
                  .into(backdropImageView);
         }
     }

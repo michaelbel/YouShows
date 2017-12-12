@@ -29,11 +29,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import org.michaelbel.ui.view.NumberPicker;
 import org.michaelbel.api.SEARCH;
 import org.michaelbel.database.DatabaseHelper;
 import org.michaelbel.model.Results;
@@ -49,18 +47,21 @@ import org.michaelbel.seriespicker.Url;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.cell.TextCell;
 import org.michaelbel.ui.view.LayoutContainer;
-import org.michaelbel.util.AppUtils;
+import org.michaelbel.ui.view.NumberPicker;
 import org.michaelbel.util.ScreenUtils;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings("all")
 public class AddFragment extends Fragment implements View.OnClickListener {
 
     private int seasons = 0;
     private int episodes = 0;
-    private String backdropPath;
+    private String backdropPath = null;
 
     private MainActivity activity;
 
@@ -72,6 +73,10 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private TextView placeHolderTextView;
     private ProgressBar progressBar;
     private FloatingActionButton doneButton;
+
+    private ImageView titleDoneIcon;
+    private ImageView seasonsDoneIcon;
+    private ImageView episodesDoneIcon;
 
     @Nullable
     @Override
@@ -93,7 +98,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
         FrameLayout imageFrameLayout = new FrameLayout(activity);
         imageFrameLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 180,
-                Gravity.START | Gravity.TOP, 24, 24, 24, 0));
+                Gravity.START | Gravity.TOP, 24, 24, 24, 24));
         linearLayout.addView(imageFrameLayout);
 
         backdropImageView = new ImageView(activity);
@@ -104,23 +109,21 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         placeHolderTextView = new TextView(activity);
         placeHolderTextView.setGravity(Gravity.CENTER);
         placeHolderTextView.setText(R.string.BackdropTextHolder);
-        placeHolderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        placeHolderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         placeHolderTextView.setTextColor(ContextCompat.getColor(activity, Theme.secondaryTextColor()));
         placeHolderTextView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 12, 0, 12, 0));
+                Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL));
         imageFrameLayout.addView(placeHolderTextView);
 
         progressBar = new ProgressBar(activity);
         progressBar.setVisibility(View.INVISIBLE);
-        progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0, 0, 16));
+        progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         imageFrameLayout.addView(progressBar);
 
-        LayoutContainer frameLayout = new LayoutContainer(activity);
-        frameLayout.setDivider(true);
-        frameLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
-                0, 24, 0, 0));
-        linearLayout.addView(frameLayout);
+        LayoutContainer titleLayout = new LayoutContainer(activity);
+        titleLayout.setDivider(true);
+        titleLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        linearLayout.addView(titleLayout);
 
         titleEditText = new EditText(activity);
         titleEditText.requestFocus();
@@ -128,6 +131,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         titleEditText.setMaxLines(1);
         titleEditText.setSingleLine();
         titleEditText.setBackgroundDrawable(null);
+        //AppUtils.clearCursorDrawable(titleEditText);
         titleEditText.setHint(R.string.SeriesTitle);
         titleEditText.setTypeface(Typeface.DEFAULT);
         titleEditText.setEllipsize(TextUtils.TruncateAt.END);
@@ -136,10 +140,12 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         titleEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         titleEditText.setTextColor(ContextCompat.getColor(activity, Theme.primaryTextColor()));
         titleEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.START | Gravity.CENTER_VERTICAL, 13, 0, 13, 0));
+                Gravity.START | Gravity.CENTER_VERTICAL, 13, 0, 53, 0));
         titleEditText.setOnEditorActionListener((textView, actionId, event) -> {
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                downloadImage();
+                if (backdropPath == null) {
+                    downloadImage();
+                }
             }
             return false;
         });
@@ -152,14 +158,16 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().isEmpty()) {
-                    if (seasons != 0) {
-                        doneButton.show();
-                    }
+                    titleDoneIcon.setVisibility(View.INVISIBLE);
+                    doneButton.hide();
                 } else {
+                    titleDoneIcon.setVisibility(View.VISIBLE);
                     if (seasons != 0) {
                         doneButton.show();
                     }
                 }
+
+                downloadImage();
             }
 
             @Override
@@ -172,9 +180,14 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         titleEditText.setOnFocusChangeListener((view, hasFocus) ->
                 setImeVisibility(hasFocus)
         );
-        frameLayout.addView(titleEditText);
+        titleLayout.addView(titleEditText);
 
-        AppUtils.clearCursorDrawable(titleEditText);
+        titleDoneIcon = new ImageView(activity);
+        titleDoneIcon.setVisibility(View.INVISIBLE);
+        titleDoneIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(activity, R.color.colorPrimary)));
+        titleDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
+                Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        titleLayout.addView(titleDoneIcon);
 
         seasonsCell = new TextCell(activity);
         seasonsCell.setText(R.string.NumberSeasons);
@@ -184,12 +197,26 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         seasonsCell.setDivider(true);
         linearLayout.addView(seasonsCell);
 
+        seasonsDoneIcon = new ImageView(activity);
+        seasonsDoneIcon.setVisibility(View.INVISIBLE);
+        seasonsDoneIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(activity, R.color.colorPrimary)));
+        seasonsDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
+                Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        seasonsCell.addView(seasonsDoneIcon);
+
         episodesCell = new TextCell(activity);
         episodesCell.setText(R.string.NumberEpisodes);
         episodesCell.setTextColor(Theme.hintTextColor());
         episodesCell.setHeight(ScreenUtils.dp(52));
         episodesCell.setOnClickListener(this);
         linearLayout.addView(episodesCell);
+
+        episodesDoneIcon = new ImageView(activity);
+        episodesDoneIcon.setVisibility(View.INVISIBLE);
+        episodesDoneIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(activity, R.color.colorPrimary)));
+        episodesDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
+                Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        episodesCell.addView(episodesDoneIcon);
 
         doneButton = new FloatingActionButton(activity);
         doneButton.setImageResource(R.drawable.ic_done);
@@ -236,10 +263,13 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                     seasonsCell.setText(activity.getString(R.string.SeasonsCount, numberPicker.getValue()));
                 }
 
+                seasonsDoneIcon.setVisibility(View.VISIBLE);
                 seasonsCell.setTextColor(Theme.primaryTextColor());
                 seasons = numberPicker.getValue();
 
-                if (!titleEditText.getText().toString().isEmpty()) {
+                if (titleEditText.getText().toString().isEmpty()) {
+                    doneButton.hide();
+                } else {
                     doneButton.show();
                 }
             } else {
@@ -251,6 +281,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                     episodesCell.setText(activity.getString(R.string.EpisodesCount, numberPicker.getValue()));
                 }
 
+                episodesDoneIcon.setVisibility(View.VISIBLE);
                 episodesCell.setTextColor(Theme.primaryTextColor());
                 episodes = numberPicker.getValue();
             }
@@ -268,20 +299,16 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         series.episodeCount = episodes;
         series.backdropPath = backdropPath;
 
-        if (series.title.isEmpty()) {
-            Toast.makeText(activity, R.string.SeriesTitleEmpty, Toast.LENGTH_SHORT).show();
-        } else if (series.seasonCount == 0) {
-            Toast.makeText(activity, R.string.NumberSeasonsEmpty, Toast.LENGTH_SHORT).show();
-        } else {
-            DatabaseHelper database = DatabaseHelper.getInstance(activity);
-            database.addSeries(series);
+        DatabaseHelper database = DatabaseHelper.getInstance(activity);
+        database.addSeries(series);
+        database.close();
 
-            activity.finishFragment();
-            ((AppLoader) activity.getApplication()).bus().send(new Events.AddSeries());
-        }
+        ((AppLoader) activity.getApplication()).bus().send(new Events.AddSeries());
+        activity.finishFragment();
     }
 
     private void downloadImage() {
+        placeHolderTextView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
 
         String finalTitle = titleEditText.getText().toString().trim().replace(" ", "-");
@@ -292,13 +319,19 @@ public class AddFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
                 if (response.isSuccessful()) {
-                    if (response.body().list.isEmpty()) {
-                        loadImage(null);
-                    } else {
-                        TVShow show = response.body().list.get(0);
-                        if (show != null) {
-                            loadImage(show.backdropPath);
+                    try {
+                        List<TVShow> list = response.body().list;
+
+                        if (list.isEmpty()) {
+                            loadImage(null);
+                        } else {
+                            /*if (!Objects.equals(backdropPath, list.get(0).backdropPath)) {
+                                loadImage(list.get(0).backdropPath);
+                            }*/
+                            loadImage(list.get(0).backdropPath);
                         }
+                    } catch (Exception e) {
+                        // todo something
                     }
                 } else {
                     loadImage(null);
@@ -313,22 +346,27 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadImage(String path) {
-        if (path != null) {
-            backdropPath = path;
+        backdropPath = path;
 
-            SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-            String imageQuality = prefs.getString("image_quality_backdrop", "w780");
+        if (backdropPath != null) {
+            SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+            String quality = prefs.getString("image_quality_backdrop", "w780");
 
             Glide.with(this)
-                    .load("http://image.tmdb.org/t/p/" + imageQuality +"/" + backdropPath)
+                    .load("http://image.tmdb.org/t/p/" + quality +"/" + backdropPath)
                     .into(backdropImageView);
+
+            placeHolderTextView.setVisibility(View.INVISIBLE);
         } else {
-            backdropPath = null;
-            placeHolderTextView.setText("No image");
-            //backdropImageView.setImageResource(R.drawable.place_holder);
+            backdropImageView.setImageDrawable(null);
+            placeHolderTextView.setVisibility(View.VISIBLE);
+            if (titleEditText.getText().toString().isEmpty()) {
+                placeHolderTextView.setText(R.string.BackdropTextHolder);
+            } else {
+                placeHolderTextView.setText(R.string.NoImage);
+            }
         }
 
-        placeHolderTextView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
     }
 
