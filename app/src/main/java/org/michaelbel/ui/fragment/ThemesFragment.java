@@ -88,8 +88,7 @@ public class ThemesFragment extends Fragment implements View.OnClickListener {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(0xFF00796B);*/
 
-        activity.toolbar.setPopupTheme(Theme.popupTheme());
-
+        activity.toolbar.setPopupTheme(Theme.popupTheme()); // fixme: do not work
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
         radioCell1.changeTheme();
         radioCell2.changeTheme();

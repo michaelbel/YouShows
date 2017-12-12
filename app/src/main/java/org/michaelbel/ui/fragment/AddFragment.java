@@ -56,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddFragment extends Fragment {
+public class AddFragment extends Fragment implements View.OnClickListener {
 
     private int seasons = 0;
     private int episodes = 0;
@@ -65,8 +65,8 @@ public class AddFragment extends Fragment {
     private MainActivity activity;
 
     private EditText titleEditText;
-    private TextCell seasonsTextView;
-    private TextCell episodesTextView;
+    private TextCell seasonsCell;
+    private TextCell episodesCell;
     private NumberPicker numberPicker;
     private ImageView backdropImageView;
     private TextView placeHolderTextView;
@@ -104,6 +104,7 @@ public class AddFragment extends Fragment {
         placeHolderTextView = new TextView(activity);
         placeHolderTextView.setGravity(Gravity.CENTER);
         placeHolderTextView.setText(R.string.BackdropTextHolder);
+        placeHolderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         placeHolderTextView.setTextColor(ContextCompat.getColor(activity, Theme.secondaryTextColor()));
         placeHolderTextView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
                 Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 12, 0, 12, 0));
@@ -122,9 +123,10 @@ public class AddFragment extends Fragment {
         linearLayout.addView(frameLayout);
 
         titleEditText = new EditText(activity);
+        titleEditText.requestFocus();
         titleEditText.setLines(1);
         titleEditText.setMaxLines(1);
-        titleEditText.requestFocus();
+        titleEditText.setSingleLine();
         titleEditText.setBackgroundDrawable(null);
         titleEditText.setHint(R.string.SeriesTitle);
         titleEditText.setTypeface(Typeface.DEFAULT);
@@ -174,35 +176,27 @@ public class AddFragment extends Fragment {
 
         AppUtils.clearCursorDrawable(titleEditText);
 
-        seasonsTextView = new TextCell(activity);
-        seasonsTextView.setMode(TextCell.MODE_DEFAULT);
-        seasonsTextView.setText(R.string.NumberSeasons);
-        seasonsTextView.setTextColor(Theme.hintTextColor());
-        seasonsTextView.setHeight(ScreenUtils.dp(52));
-        seasonsTextView.setDivider(true);
-        seasonsTextView.setOnClickListener(view -> {
-            showPicker(true);
-        });
-        linearLayout.addView(seasonsTextView);
+        seasonsCell = new TextCell(activity);
+        seasonsCell.setText(R.string.NumberSeasons);
+        seasonsCell.setTextColor(Theme.hintTextColor());
+        seasonsCell.setHeight(ScreenUtils.dp(52));
+        seasonsCell.setOnClickListener(this);
+        seasonsCell.setDivider(true);
+        linearLayout.addView(seasonsCell);
 
-        episodesTextView = new TextCell(activity);
-        episodesTextView.setMode(TextCell.MODE_DEFAULT);
-        episodesTextView.setText(R.string.NumberEpisodes);
-        episodesTextView.setTextColor(Theme.hintTextColor());
-        episodesTextView.setHeight(ScreenUtils.dp(52));
-        episodesTextView.setOnClickListener(view -> {
-            showPicker(false);
-        });
-        linearLayout.addView(episodesTextView);
+        episodesCell = new TextCell(activity);
+        episodesCell.setText(R.string.NumberEpisodes);
+        episodesCell.setTextColor(Theme.hintTextColor());
+        episodesCell.setHeight(ScreenUtils.dp(52));
+        episodesCell.setOnClickListener(this);
+        linearLayout.addView(episodesCell);
 
         doneButton = new FloatingActionButton(activity);
         doneButton.setImageResource(R.drawable.ic_done);
         doneButton.setVisibility(View.INVISIBLE);
+        doneButton.setOnClickListener(this);
         doneButton.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
                 Gravity.END | Gravity.BOTTOM, 0, 0, 16, 16));
-        doneButton.setOnClickListener(view ->
-                addSeries()
-        );
         fragmentView.addView(doneButton);
 
         return fragmentView;
@@ -212,6 +206,17 @@ public class AddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         showKeyboard.run();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == seasonsCell) {
+            showPicker(true);
+        } else if (view == episodesCell) {
+            showPicker(false);
+        } else if (view == doneButton) {
+            addSeries();
+        }
     }
 
     private void showPicker(boolean value) {
@@ -226,12 +231,12 @@ public class AddFragment extends Fragment {
         builder.setPositiveButton(R.string.Done, (dialog, which) -> {
             if (value) {
                 if (numberPicker.getValue() == 1) {
-                    seasonsTextView.setText(activity.getString(R.string.SeasonCount, numberPicker.getValue()));
+                    seasonsCell.setText(activity.getString(R.string.SeasonCount, numberPicker.getValue()));
                 } else {
-                    seasonsTextView.setText(activity.getString(R.string.SeasonsCount, numberPicker.getValue()));
+                    seasonsCell.setText(activity.getString(R.string.SeasonsCount, numberPicker.getValue()));
                 }
 
-                seasonsTextView.setTextColor(Theme.primaryTextColor());
+                seasonsCell.setTextColor(Theme.primaryTextColor());
                 seasons = numberPicker.getValue();
 
                 if (!titleEditText.getText().toString().isEmpty()) {
@@ -239,14 +244,14 @@ public class AddFragment extends Fragment {
                 }
             } else {
                 if (numberPicker.getValue() == 0) {
-                    episodesTextView.setText(R.string.NoEpisodes);
+                    episodesCell.setText(R.string.NoEpisodes);
                 } else if (numberPicker.getValue() == 1) {
-                    episodesTextView.setText(activity.getString(R.string.EpisodeCount, numberPicker.getValue()));
+                    episodesCell.setText(activity.getString(R.string.EpisodeCount, numberPicker.getValue()));
                 } else {
-                    episodesTextView.setText(activity.getString(R.string.EpisodesCount, numberPicker.getValue()));
+                    episodesCell.setText(activity.getString(R.string.EpisodesCount, numberPicker.getValue()));
                 }
 
-                episodesTextView.setTextColor(Theme.primaryTextColor());
+                episodesCell.setTextColor(Theme.primaryTextColor());
                 episodes = numberPicker.getValue();
             }
         });
@@ -309,16 +314,18 @@ public class AddFragment extends Fragment {
 
     private void loadImage(String path) {
         if (path != null) {
+            backdropPath = path;
+
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
             String imageQuality = prefs.getString("image_quality_backdrop", "w780");
 
             Glide.with(this)
-                    .load("http://image.tmdb.org/t/p/" + imageQuality +"/" + path)
+                    .load("http://image.tmdb.org/t/p/" + imageQuality +"/" + backdropPath)
                     .into(backdropImageView);
-            backdropPath = path;
         } else {
-            backdropImageView.setImageResource(R.drawable.place_holder);
             backdropPath = null;
+            placeHolderTextView.setText("No image");
+            //backdropImageView.setImageResource(R.drawable.place_holder);
         }
 
         placeHolderTextView.setVisibility(View.INVISIBLE);

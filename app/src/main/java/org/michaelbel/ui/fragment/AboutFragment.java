@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.michaelbel.material.widget.Browser;
+import org.michaelbel.seriespicker.Browser;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
@@ -157,11 +157,7 @@ public class AboutFragment extends Fragment {
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
                 startActivity(Intent.createChooser(intent, "Send email..."));*/
             } else if (position == translationsRow) {
-                if (prefs.getBoolean("in_app_browser", true)) {
-                    Browser.openUrl(activity, "https://transfex.com/movieapp");
-                } else {
-                    Browser.openBrowserUrl(activity, "https://transfex.com/movieapp");
-                }
+                Browser.openUrl("https://transfex.com/seriespicker");
             } else if (position == analyticsRow) {
                 SharedPreferences.Editor editor = prefs.edit();
                 boolean analytics = prefs.getBoolean("analytics", true);
@@ -234,31 +230,24 @@ public class AboutFragment extends Fragment {
                 cell.changeLayoutParams();
 
                 if (position == rateGooglePlayRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.RateGooglePlay);
                     cell.setDivider(true);
                 } else if (position == forkGithubRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.ForkGithub);
                     cell.setDivider(true);
                 } else if (position == feedbackRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setHeight(ScreenUtils.dp(52));
                     cell.setText(R.string.Feedback);
                 } else if (position == librariesRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setHeight(ScreenUtils.dp(52));
                     cell.setText(R.string.OpenSourceLibs);
                 } else if (position == shareFriendsRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.ShareWithFriends);
                     cell.setDivider(true);
                 } else if (position == supportDevRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.SupportDevelopment);
                     cell.setDivider(true);
                 } else if (position == translationsRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.ContributeTranslations);
                 } else if (position == analyticsRow) {
                     cell.setMode(TextCell.MODE_SWITCH);

@@ -1,10 +1,8 @@
 package org.michaelbel.ui.fragment;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -21,18 +19,17 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import org.michaelbel.bottomsheet.BottomSheet;
-import org.michaelbel.material.widget.Browser;
+import org.michaelbel.seriespicker.Browser;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.Holder;
-import org.michaelbel.ui.cell.EmptyCell;
-import org.michaelbel.ui.cell.HeaderCell;
-import org.michaelbel.ui.cell.TextCell;
 import org.michaelbel.ui.cell.TextDetailCell;
 import org.michaelbel.ui.view.RecyclerListView;
+import org.michaelbel.util.ScreenUtils;
 
+@SuppressWarnings("all")
 public class LibsFragment extends Fragment {
 
     private final String bottomSheetUrl = "https://github.com/michaelbel/BottomSheet";
@@ -82,7 +79,6 @@ public class LibsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view1, position) -> {
-            SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
             String url = null;
 
             if (position == bottomSheetRow) {
@@ -97,15 +93,11 @@ public class LibsFragment extends Fragment {
                 url = glideUrl;
             }
 
-            if (prefs.getBoolean("in_app_browser", true)) {
-                Browser.openUrl(activity, url);
-            } else {
-                Browser.openBrowserUrl(activity, url);
+            if (url != null) {
+                Browser.openUrl(url);
             }
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {
-            SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-
             if (position == bottomSheetRow) {
                 url = bottomSheetUrl;
             } else if (position == retrofitRow) {
@@ -121,13 +113,10 @@ public class LibsFragment extends Fragment {
             BottomSheet.Builder builder = new BottomSheet.Builder(activity);
             builder.setTitle(url);
             builder.setDarkTheme(!Theme.getTheme());
-            builder.setItems(new CharSequence[] { "Open", "Copy Link" }, (dialogInterface, i) -> {
+            builder.setCellHeight(ScreenUtils.dp(52));
+            builder.setItems(new int[] { R.string.Open, R.string.CopyLink }, (dialogInterface, i) -> {
                 if (i == 0) {
-                    if (prefs.getBoolean("in_app_browser", true)) {
-                        Browser.openUrl(activity, url);
-                    } else {
-                        Browser.openBrowserUrl(activity, url);
-                    }
+                    Browser.openUrl(url);
                 } else if (i == 1) {
                     ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("Link", url);
@@ -135,7 +124,7 @@ public class LibsFragment extends Fragment {
                         clipboard.setPrimaryClip(clip);
                     }
 
-                    Toast.makeText(activity, "Link copied to clipboard", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
                 }
             });
             builder.show();
@@ -166,16 +155,10 @@ public class LibsFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-            View cell;
+            View cell = null;
 
             if (type == 0) {
-                cell = new HeaderCell(activity);
-            } else if (type == 1) {
-                cell = new EmptyCell(activity);
-            } else if (type == 2) {
                 cell = new TextDetailCell(activity);
-            } else {
-                cell = new TextCell(activity);
             }
 
             return new Holder(cell);
@@ -186,14 +169,7 @@ public class LibsFragment extends Fragment {
             int type = getItemViewType(position);
 
             if (type == 0) {
-                HeaderCell cell = (HeaderCell) holder.itemView;
-                cell.changeLayoutParams();
-            } else if (type == 1) {
-                EmptyCell cell = (EmptyCell) holder.itemView;
-                cell.setMode(EmptyCell.MODE_DEFAULT);
-            } else if (type == 2) {
                 TextDetailCell cell = (TextDetailCell) holder.itemView;
-                cell.setMode(TextDetailCell.MODE_VALUE_TEXT);
                 cell.changeLayoutParams();
 
                 if (position == bottomSheetRow) {
@@ -216,9 +192,6 @@ public class LibsFragment extends Fragment {
                     cell.setText("Glide");
                     cell.setValue("BSD, MIT and Apache License v2.0");
                 }
-            } else {
-                TextCell cell = (TextCell) holder.itemView;
-                cell.changeLayoutParams();
             }
         }
 
@@ -229,15 +202,11 @@ public class LibsFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            if (position == -999283237) {
-                return 0;
-            } else if (position == -583748943) {
-                return 1;
-            } else if (position == bottomSheetRow || position == retrofitRow || position == rxJavaRow ||
+            if (position == bottomSheetRow || position == retrofitRow || position == rxJavaRow ||
                     position == rxAndroidRow || position == glideRow) {
-                return 2;
+                return 0;
             } else {
-                return 3;
+                return 1;
             }
         }
     }

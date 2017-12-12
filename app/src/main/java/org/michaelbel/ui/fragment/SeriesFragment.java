@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +33,8 @@ import org.michaelbel.ui.view.LayoutContainer;
 import org.michaelbel.ui.view.SeriesView;
 import org.michaelbel.util.ScreenUtils;
 
+import java.util.Objects;
+
 public class SeriesFragment extends Fragment implements View.OnClickListener {
 
     private static final String SERIES_ID = "id";
@@ -38,13 +42,16 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
     private int seriesId;
     private int seasons;
     private int episodes;
+    private String title;
 
     private int oldSeasons;
     private int oldEpisodes;
+    private String oldTitle;
 
     private Series currentSeries;
     private MainActivity activity;
 
+    private EditText editText;
     private CountButton[] buttons;
     private SeriesView currentSeriesView;
     private FloatingActionButton doneButton;
@@ -153,6 +160,41 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, final MenuInflater inflater) {
+        menu.add(R.string.EditTitle)
+                .setIcon(R.drawable.ic_edit)
+                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+                .setOnMenuItemClickListener(menuItem -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertTheme());
+                    editText = new EditText(activity);
+                    editText.setHint("Title");
+                    editText.setText(title);
+                    editText.requestFocus();
+                    editText.setLines(1);
+                    editText.setMaxLines(1);
+                    editText.setSingleLine();
+                    editText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
+                            24, 0, 24, 0));
+
+                    LinearLayout layout = new LinearLayout(activity);
+                    layout.addView(editText);
+
+                    builder.setTitle(R.string.EditTitle);
+                    builder.setView(layout);
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.Done, (dialogInterface, i) -> {
+                        if (!editText.getText().toString().isEmpty()) {
+                            title = editText.getText().toString();
+                            currentSeriesView.setTitle(title);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.primaryColor()));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.primaryColor()));
+
+                    return true;
+                });
+
         menu.add(R.string.RemoveSeries)
                 .setIcon(R.drawable.ic_delete)
                 .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
@@ -160,7 +202,6 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
                     DatabaseHelper database = DatabaseHelper.getInstance(activity);
                     database.removeSeries(currentSeries);
                     activity.finishFragment();
-
                     ((AppLoader) activity.getApplication()).bus().send(new Events.DeleteSeries(currentSeries.title));
                     return true;
                 });
@@ -217,9 +258,11 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
 
         seasons = currentSeries.seasonCount;
         episodes = currentSeries.episodeCount;
+        title = currentSeries.title;
 
         oldSeasons = seasons;
         oldEpisodes = episodes;
+        oldTitle = title;
     }
 
     private void updateSeries() {
@@ -227,13 +270,14 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
 
         series.seasonCount = seasons;
         series.episodeCount = episodes;
+        series.title = title;
 
         DatabaseHelper database = DatabaseHelper.getInstance(activity);
         database.updateSeries(series);
 
         activity.finishFragment();
 
-        if (seasons != oldSeasons || episodes != oldEpisodes) {
+        if (seasons != oldSeasons || episodes != oldEpisodes || !Objects.equals(title, oldTitle)) {
             ((AppLoader) activity.getApplication()).bus().send(new Events.UpdateSeries(currentSeries.title));
         }
     }
