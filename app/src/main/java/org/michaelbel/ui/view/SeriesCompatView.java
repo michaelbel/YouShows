@@ -24,6 +24,7 @@ import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
 
+@SuppressWarnings("all")
 public class SeriesCompatView extends FrameLayout {
 
     private CardView cardView;
@@ -147,13 +148,13 @@ public class SeriesCompatView extends FrameLayout {
         seasonsCounter = count;
 
         SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-        boolean style = prefs.getBoolean("short_names", false);
+        boolean style = prefs.getBoolean("short_format", false);
 
         if (style) {
             if (seasonsCounter <= 9) {
-                seasonsCountTextView.setText("S0" + seasonsCounter);
+                seasonsCountTextView.setText(getContext().getString(R.string.SCount, seasonsCounter));
             } else {
-                seasonsCountTextView.setText("S" + seasonsCounter);
+                seasonsCountTextView.setText(getContext().getString(R.string.SsCount, seasonsCounter));
             }
         } else {
             if (seasonsCounter == 1) {
@@ -172,16 +173,16 @@ public class SeriesCompatView extends FrameLayout {
         episodesCounter = count;
 
         SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-        boolean style = prefs.getBoolean("short_names", false);
+        boolean style = prefs.getBoolean("short_format", false);
 
         if (style) {
             if (count <= 0) {
                 episodeCountTextView.setText("");
             } else {
                 if (episodesCounter <= 9) {
-                    episodeCountTextView.setText("E0" + episodesCounter);
+                    episodeCountTextView.setText(getContext().getString(R.string.ECount, episodesCounter));
                 } else {
-                    episodeCountTextView.setText("E" + episodesCounter);
+                    episodeCountTextView.setText(getContext().getString(R.string.EeCount, episodesCounter));
                 }
             }
         } else {
