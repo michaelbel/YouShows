@@ -41,8 +41,8 @@ public class AboutFragment extends Fragment {
 
     private int rowCount;
     private int infoRow;
-    private int libsRow;
     private int forkGithubRow;
+    private int libsRow;
     private int helpRow;
     private int feedbackRow;
     private int emptyRow;
@@ -77,14 +77,14 @@ public class AboutFragment extends Fragment {
 
         rowCount = 0;
         infoRow = rowCount++;
-        libsRow = rowCount++;
         forkGithubRow = rowCount++;
+        libsRow = rowCount++;
         helpRow = rowCount++;
         feedbackRow = rowCount++;
         emptyRow = rowCount++;
 
         //rateGooglePlayRow = rowCount++;
-        // shareFriendsRow = rowCount++;
+        //shareFriendsRow = rowCount++;
         //supportDevRow = rowCount++;
         //translationsRow = rowCount++;
         //analyticsInfoRow = rowCount++;
@@ -97,10 +97,10 @@ public class AboutFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view1, position) -> {
-            if (position == libsRow) {
-                activity.startFragment(new LibsFragment(), "libsFragment");
-            } else if (position == forkGithubRow) {
+            if (position == forkGithubRow) {
                 Browser.openUrl(activity, "https://github.com/michaelbel/seriespicker");
+            } else if (position == libsRow) {
+                activity.startFragment(new LibsFragment(), "libsFragment");
             } else if (position == feedbackRow) {
                 try {
                     PackageManager packageManager = activity.getPackageManager();
@@ -200,13 +200,13 @@ public class AboutFragment extends Fragment {
                 TextCell cell = (TextCell) holder.itemView;
                 cell.changeLayoutParams();
 
-                if (position == libsRow) {
-                    cell.setHeight(ScreenUtils.dp(52));
-                    cell.setText(R.string.OpenSourceLibs);
-                } else if (position == forkGithubRow) {
+                if (position == forkGithubRow) {
                     cell.setText(R.string.ForkGithub);
                     cell.setDivider(true);
-                } else if (position == feedbackRow) {
+                } else if (position == libsRow) {
+                    cell.setHeight(ScreenUtils.dp(52));
+                    cell.setText(R.string.OpenSourceLibs);
+                }  else if (position == feedbackRow) {
                     cell.setHeight(ScreenUtils.dp(52));
                     cell.setText(R.string.Feedback);
                 }

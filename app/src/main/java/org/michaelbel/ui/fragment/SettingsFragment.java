@@ -180,8 +180,8 @@ public class SettingsFragment extends Fragment {
             } else if (position == shortNamesRow) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                boolean enable = prefs.getBoolean("short_names", false);
-                editor.putBoolean("short_names", !enable);
+                boolean enable = prefs.getBoolean("short_format", false);
+                editor.putBoolean("short_format", !enable);
                 editor.apply();
                 if (view instanceof TextDetailCell) {
                     ((TextDetailCell) view).setChecked(!enable);
@@ -241,6 +241,7 @@ public class SettingsFragment extends Fragment {
             } else if (type == 1) {
                 TextDetailCell cell = (TextDetailCell) holder.itemView;
                 cell.changeLayoutParams();
+                cell.changeSwitchTheme();
 
                 if (position == viewTypeRow) {
                     int viewType = prefs.getInt("view_type", 1);
@@ -277,9 +278,9 @@ public class SettingsFragment extends Fragment {
                     cell.setDivider(true);
                 } else if (position == shortNamesRow) {
                     cell.setMode(TextDetailCell.MODE_SWITCH);
-                    cell.setText("Patterns Names"); // show in series guide
-                    cell.setValue("Use short names for seasons and episodes");
-                    cell.setChecked(prefs.getBoolean("short_names", false));
+                    cell.setText(R.string.ShortNumberFormat);
+                    cell.setValue(R.string.ShortNumberFormatInfo);
+                    cell.setChecked(prefs.getBoolean("short_format", false));
                 }
             } else {
                 TextCell cell = (TextCell) holder.itemView;

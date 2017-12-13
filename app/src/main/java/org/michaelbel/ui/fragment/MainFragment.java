@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import org.michaelbel.ui.adapter.SeriesAdapter;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -176,7 +178,6 @@ public class MainFragment extends Fragment {
         inflater.inflate(R.menu.fragment_main, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        //SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setQueryHint(getString(R.string.Search));
         searchView.setMaxWidth(getResources().getDisplayMetrics().widthPixels);
@@ -195,15 +196,17 @@ public class MainFragment extends Fragment {
             }
         });
 
-        /*EditText etSearch = ((EditText) searchItem.findViewById(android.support.v7.appcompat.R.id.search_src_text));
+        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        Theme.clearCursorDrawable(searchTextView);
         try {
-            Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
-            f.setAccessible(true);
-            f.set(etSearch, null);// set textCursorDrawable to null
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, null);
+            // mCursorDrawableRes.set(searchTextView, R.drawable.cursor);
+            // Theme.clearCursorDrawable(searchTextView);
         } catch (Exception e) {
-            e.printStackTrace();
         }
-        etSearch.setTextColor(ContextCompat.getColor(activity, R.color.foregroundColor));*/
+        searchTextView.setTextColor(ContextCompat.getColor(activity, R.color.foregroundColor));
 
         MenuItem settingsItem = menu.findItem(R.id.action_settings);
         settingsItem.setOnMenuItemClickListener(menuItem -> {
