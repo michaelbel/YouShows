@@ -56,7 +56,25 @@ public class Theme {
     }
 
     public static int alertTheme() {
-        return getTheme() ? R.style.AlertThemeLight : R.style.AlertThemeNight;
+        return getTheme() ? R.style.PopupMenuLight : R.style.PopupMenuNight;
+    }
+
+    // Switch
+
+    public static int thumbOnColor() {
+        return getTheme() ? R.color.switch_thumbOn : R.color.night_switch_thumbOn;
+    }
+
+    public static int thumbOffColor() {
+        return getTheme() ? R.color.switch_thumbOff : R.color.night_switch_thumbOff;
+    }
+
+    public static int trackOnColor() {
+        return getTheme() ? R.color.switch_trackOn : R.color.night_switch_trackOn;
+    }
+
+    public static int trackOffColor() {
+        return getTheme() ? R.color.switch_trackOff : R.color.night_switch_trackOff;
     }
 
     public static int selectableItemBackground() {
