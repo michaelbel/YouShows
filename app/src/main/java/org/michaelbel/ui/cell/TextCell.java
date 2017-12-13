@@ -20,7 +20,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.michaelbel.seriespicker.LayoutHelper;
-import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
 
@@ -84,7 +83,7 @@ public class TextCell extends FrameLayout {
         valueText.setSingleLine();
         valueText.setVisibility(INVISIBLE);
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        valueText.setTextColor(ContextCompat.getColor(context, R.color.accent));
+        valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(valueText);

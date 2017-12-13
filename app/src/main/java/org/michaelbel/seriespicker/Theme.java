@@ -56,10 +56,8 @@ public class Theme {
     }
 
     public static int alertTheme() {
-        return getTheme() ? R.style.PopupMenuLight : R.style.PopupMenuNight;
+        return getTheme() ? R.style.AlertLight : R.style.AlertNight;
     }
-
-    // Switch
 
     public static int thumbOnColor() {
         return getTheme() ? R.color.switch_thumbOn : R.color.night_switch_thumbOn;

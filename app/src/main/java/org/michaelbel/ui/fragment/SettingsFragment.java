@@ -287,8 +287,10 @@ public class SettingsFragment extends Fragment {
                 cell.changeLayoutParams();
 
                 if (position == themesRow) {
+                    cell.setMode(TextCell.MODE_VALUE_TEXT);
                     cell.setHeight(ScreenUtils.dp(52));
                     cell.setText(R.string.Themes);
+                    cell.setValue("Beta");
                 }
             }
         }
