@@ -40,12 +40,21 @@ public class SeriesAdapter extends RecyclerView.Adapter implements Filterable, I
 
         DatabaseHelper database = DatabaseHelper.getInstance(context);
         database.removeSeries(seriesFilteredList.get(position));
-        database.close();
 
         seriesFilteredList.remove(position);
         notifyItemRemoved(position);
 
         Toast.makeText(context, context.getString(R.string.SeriesDeleted, title), Toast.LENGTH_SHORT).show();
+
+        SharedPreferences prefs = context.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        if (prefs.getBoolean("bottom_counter", false)) {
+            seriesFilteredList.remove(seriesFilteredList.size() - 1);
+            notifyItemRemoved(seriesFilteredList.size() - 1);
+
+            seriesFilteredList.add(new Series(database.getCount()));
+        }
+
+        database.close();
     }
 
     @Override
