@@ -1,6 +1,7 @@
 package org.michaelbel.ui.cell;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -8,6 +9,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.SwitchCompat;
 import android.util.TypedValue;
@@ -78,7 +80,7 @@ public class TextDetailCell extends FrameLayout {
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
         addView(valueText);
 
-        switchCompat = new SwitchCompat(context);
+        switchCompat = new SwitchCompat(context); // Theme.switchTheme()
         switchCompat.setClickable(false);
         switchCompat.setFocusable(false);
         switchCompat.setVisibility(INVISIBLE);
@@ -126,16 +128,16 @@ public class TextDetailCell extends FrameLayout {
 
         if (currentMode == MODE_DEFAULT) {
             valueText.setVisibility(VISIBLE);
-            switchCompat.setVisibility(GONE);
-            checkBox.setVisibility(GONE);
+            switchCompat.setVisibility(INVISIBLE);
+            checkBox.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_SWITCH) {
             valueText.setVisibility(VISIBLE);
             switchCompat.setVisibility(VISIBLE);
-            checkBox.setVisibility(GONE);
+            checkBox.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_CHECKBOX) {
             valueText.setVisibility(VISIBLE);
             checkBox.setVisibility(VISIBLE);
-            switchCompat.setVisibility(GONE);
+            switchCompat.setVisibility(INVISIBLE);
         }
     }
 
@@ -171,6 +173,34 @@ public class TextDetailCell extends FrameLayout {
         }
 
         setLayoutParams(params);
+    }
+
+    public void changeSwitchTheme() {
+        int thumbOn = ContextCompat.getColor(getContext(), Theme.thumbOnColor());
+        int thumbOff = ContextCompat.getColor(getContext(), Theme.thumbOffColor());
+
+        int trackOn = ContextCompat.getColor(getContext(), Theme.trackOnColor());
+        int trackOff = ContextCompat.getColor(getContext(), Theme.trackOffColor());
+
+        DrawableCompat.setTintList(switchCompat.getThumbDrawable(), new ColorStateList(
+                new int[][]{
+                        new int[]{ android.R.attr.state_checked },
+                        new int[]{}
+                },
+                new int[]{
+                        thumbOn,
+                        thumbOff
+                }));
+
+        DrawableCompat.setTintList(switchCompat.getTrackDrawable(), new ColorStateList(
+                new int[][]{
+                        new int[]{ android.R.attr.state_checked  },
+                        new int[]{}
+                },
+                new int[]{
+                        trackOn,
+                        trackOff
+                }));
     }
 
     @Override
