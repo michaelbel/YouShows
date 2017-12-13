@@ -1,11 +1,11 @@
-<resources>
-    <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#388E3C</color>
-    <color name="colorAccent">#4CAF50</color>
+<!--Usability: https://material.io/guidelines/style/color.html#color-usability-->
+<!--Themes: https://material.io/guidelines/style/color.html#color-themes-->
+<!--Switch: https://material.io/guidelines/components/selection-controls.html#selection-controls-switch-->
 
-    <!--<color name="primary">@color/md_teal_500</color>
-    <color name="primary_dark">@color/md_teal_700</color>
-    <color name="accent">@color/md_red_A200</color>-->
+<resources>
+    <color name="colorPrimary">#FF4CAF50</color>
+    <color name="colorPrimaryDark">#FF388E3C</color>
+    <color name="colorAccent">#FF4CAF50</color>
 
     <!--LIGHT THEME-->
     <color name="primaryTextColor">#DE000000</color>
@@ -18,6 +18,13 @@
     <color name="appBarColor">@color/md_grey_100</color>
     <color name="backgroundColor">#FFF0F0F0</color><!--Google recommended #FAFAFA-->
     <color name="foregroundColor">#FFFFFFFF</color>
+    
+    <color name="switch_thumbOn">#FF4CAF50</color>
+    <color name="switch_trackOn">#804CAF50</color>
+    <color name="switch_thumbOff">#FFFAFAFA</color>
+    <color name="switch_trackOff">#61000000</color>
+    <color name="switch_thumbDisabled">#FFBDBDBD</color>
+    <color name="switch_trackDisabled">#1F000000</color>
 
     <!--NIGHT THEME-->
     <color name="night_primaryTextColor">#FFFFFFFF</color>
@@ -30,4 +37,11 @@
     <color name="night_appBarColor">@color/md_grey_900</color>
     <color name="night_backgroundColor">#303030</color>
     <color name="night_foregroundColor">@color/md_grey_800</color>
+
+    <color name="night_switch_thumbOn">#FFA5D6A7</color>
+    <color name="night_switch_trackOn">#80A5D6A7</color>
+    <color name="night_switch_thumbOff">#FFBDBDBD</color>
+    <color name="night_switch_trackOff">#4DFFFFFF</color>
+    <color name="night_switch_thumbDisabled">#FF424242</color>
+    <color name="night_switch_trackDisabled">#1AFFFFFF</color>
 </resources>

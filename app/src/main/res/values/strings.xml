@@ -10,6 +10,10 @@
     <string name="SeasonCount">%1$d Season</string>
     <string name="SeasonsCount">%1$d Seasons</string>
     <string name="EpisodeCount">%1$d Episode</string>
+    <string name="SCount">S0%1$d</string>
+    <string name="SsCount">S%1$d</string>
+    <string name="ECount">E0%1$d</string>
+    <string name="EeCount">E%1$d</string>
     <string name="EpisodesCount">%1$d Episodes</string>
     <string name="AddNewSeries">Add new Series</string>
     <string name="UpdateSeries">Update Series</string>
@@ -49,6 +53,8 @@
     <string name="SortBySeasons">By Seasons</string>
     <string name="BottomCounter">Bottom Counter</string>
     <string name="BottomCounterInfo">Show line with series count</string>
+    <string name="ShortNumberFormat">Short Number Format</string>
+    <string name="ShortNumberFormatInfo">Display seasons and episodes as S &amp; E</string>
     <!--about-->
     <string name="About">About</string>
     <string name="RateGooglePlay">Rate on Google Play</string>

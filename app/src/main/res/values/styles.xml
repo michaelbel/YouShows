@@ -20,11 +20,39 @@
     </style>
 
     <!--AlertDialog-->
-    <style name="AlertThemeLight" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AlertLight" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/foregroundColor</item>
     </style>
 
-    <style name="AlertThemeNight" parent="Theme.AppCompat.Dialog.Alert">
+    <style name="AlertNight" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:background">@color/night_foregroundColor</item>
     </style>
+
+    <!--PopupMenu-->
+    <style name="PopupMenuLight" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:popupBackground">@color/backgroundColor</item>
+    </style>
+
+    <style name="PopupMenuNight" parent="ThemeOverlay.AppCompat">
+        <item name="android:popupBackground">@color/night_backgroundColor</item>
+    </style>
+
+    <!--SearchView-->
+    <!--<style name="SearchViewTheme" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="colorAccent">#FFFFFFFF</item>
+    </style>-->
+
+    <!--SwitchCompat-->
+    <!--<style name="SwitchThemeLight">
+        <item name="colorControlNormal">#000000</item>
+        <item name="colorSwitchThumbNormal">#000000</item>
+        <item name="android:colorForeground">@color/accent_pink</item>
+    </style>
+
+    <style name="SwitchThemeNight">
+        <item name="colorControlNormal">#000000</item>
+        <item name="colorSwitchThumbNormal">#000000</item>
+        <item name="android:colorForeground">@color/accent_pink</item>
+    </style>-->
+
 </resources>
