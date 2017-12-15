@@ -18,17 +18,17 @@ public class Browser {
 
     private static final String TAG = Browser.class.getSimpleName();
 
-    public static void openUrl(Context context, @NonNull String url) {
+    public static void openUrl(@NonNull Context context, @NonNull String url) {
         SharedPreferences prefs = context.getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
 
         if (prefs.getBoolean("in_app_browser", true)) {
-            openUrl2(context, url);
+            openInAppUrl(context, url);
         } else {
             openBrowserUrl(context, url);
         }
     }
 
-    private static void openUrl2(@NonNull Context context, String url) {
+    private static void openInAppUrl(@NonNull Context context, @NonNull String url) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
@@ -53,28 +53,7 @@ public class Browser {
         }
     }
 
-    private static void openBrowserUrl(@NonNull Context context, String url) {
+    private static void openBrowserUrl(@NonNull Context context, @NonNull String url) {
         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
-
-    /*public static void openUrl(@NonNull Context context, @StringRes int stringId) {
-        openUrl(context, context.getString(stringId));
-    }*/
-
-    /*public static void openBrowserUrl(@NonNull Context context, @StringRes int stringId) {
-        openBrowserUrl(context, context.getString(stringId));
-    }*/
-
-    /*public static void openAppInGooglePlay(@NonNull Context context) {
-        openAppInGooglePlay(context, context.getPackageName());
-    }*/
-
-    /*public static void openAppInGooglePlay(@NonNull Context context, String packageName) {
-        try {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
-        } catch (ActivityNotFoundException e) {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
-            Log.e(TAG, e.getMessage());
-        }
-    }*/
 }
