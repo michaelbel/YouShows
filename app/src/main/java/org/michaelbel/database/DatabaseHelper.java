@@ -141,6 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     list.add(series);
                 } while (cursor.moveToNext());
             }
+            cursor.close();
         }
 
         database.close();
