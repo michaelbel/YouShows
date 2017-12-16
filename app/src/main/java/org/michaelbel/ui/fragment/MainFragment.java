@@ -58,23 +58,17 @@ public class MainFragment extends SwipeBackFragment {
     private LinearLayoutManager layoutManager;
     private ArrayList<Series> list = new ArrayList<>();
 
+    private View fragmentView;
     private TextView emptyView;
+    private RecyclerListView recyclerView;
     private FloatingActionButton floatingButton;
-
-    public static MainFragment newInstance() {
-        Bundle args = new Bundle();
-
-        MainFragment fragment = new MainFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity = (MainActivity) getActivity();
 
-        View fragmentView = inflater.inflate(R.layout.fragment_main, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_main, container, false);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
         setHasOptionsMenu(true);
 
@@ -90,7 +84,7 @@ public class MainFragment extends SwipeBackFragment {
         layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        RecyclerListView recyclerView = fragmentView.findViewById(R.id.recycler_view);
+        recyclerView = fragmentView.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setEmptyView(emptyView);
         recyclerView.setLayoutManager(layoutManager);
@@ -98,9 +92,7 @@ public class MainFragment extends SwipeBackFragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setOnItemClickListener((view, position) -> {
             int id = adapter.seriesFilteredList.get(position).id;
-            //activity.startFragment(SeriesFragment.newInstance(id), "seriesFragment");
             start(SeriesFragment.newInstance(id));
-            //start(MainFragment.newInstance());
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {
             BottomSheet.Builder builder = new BottomSheet.Builder(activity);
@@ -152,7 +144,7 @@ public class MainFragment extends SwipeBackFragment {
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(recyclerView);
 
-        //return fragmentView;
+        getSwipeBackLayout().setEnableGesture(false);
         return attachToSwipeBack(fragmentView);
     }
 
@@ -167,12 +159,16 @@ public class MainFragment extends SwipeBackFragment {
         super.onSupportVisible();
         activity.toolbarTextView.setText(R.string.AppName);
         activity.toolbar.setNavigationIcon(null);
-    }
 
-    /*@Override
-    public void showHideFragment(ISupportFragment showFragment) {
-        super.showHideFragment(showFragment);
-    }*/
+        if (recyclerView != null) {
+            recyclerView.removeAllViews();
+            recyclerView.setAdapter(adapter);
+        }
+
+        if (fragmentView != null) {
+            fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
+        }
+    }
 
     @Override
     public void onResume() {
@@ -231,14 +227,12 @@ public class MainFragment extends SwipeBackFragment {
 
         MenuItem settingsItem = menu.findItem(R.id.action_settings);
         settingsItem.setOnMenuItemClickListener(menuItem -> {
-            //activity.startFragment(new SettingsFragment(), "settingsFragment");
             start(new SettingsFragment());
             return true;
         });
 
         MenuItem aboutItem = menu.findItem(R.id.action_about);
         aboutItem.setOnMenuItemClickListener(menuItem -> {
-            //activity.startFragment(new AboutFragment(), "aboutFragment");
             start(new AboutFragment());
             return true;
         });

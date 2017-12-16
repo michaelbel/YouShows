@@ -48,6 +48,7 @@ public class SettingsFragment extends SwipeBackFragment {
     private SharedPreferences prefs;
     private LinearLayoutManager layoutManager;
 
+    private FrameLayout fragmentView;
     private RecyclerListView recyclerView;
 
     @Nullable
@@ -55,14 +56,11 @@ public class SettingsFragment extends SwipeBackFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity = (MainActivity) getActivity();
 
-        FrameLayout fragmentView = new FrameLayout(activity);
+        fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.Settings);
-
-        prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
 
         rowCount = 0;
         themesRow = rowCount++;
@@ -77,6 +75,7 @@ public class SettingsFragment extends SwipeBackFragment {
 
         adapter = new ListAdapter();
         layoutManager = new LinearLayoutManager(activity);
+        prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
 
         recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
@@ -84,7 +83,6 @@ public class SettingsFragment extends SwipeBackFragment {
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (position == themesRow) {
-                //activity.startFragment(new ThemesFragment(), "themesModsFragment");
                 start(new ThemesFragment());
             } else if (position == viewTypeRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
@@ -191,21 +189,22 @@ public class SettingsFragment extends SwipeBackFragment {
             }
         });
         fragmentView.addView(recyclerView);
-
         return attachToSwipeBack(fragmentView);
     }
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
+        activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         activity.toolbarTextView.setText(R.string.Settings);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
+        if (recyclerView != null) {
+            recyclerView.removeAllViews();
+            recyclerView.setAdapter(adapter);
+        }
+
+        if (fragmentView != null) {
+            fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
         }
     }
 

@@ -79,7 +79,6 @@ public class SeriesFragment extends SwipeBackFragment implements View.OnClickLis
         setHasOptionsMenu(true);
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.UpdateSeries);
 
         LinearLayout linearLayout = new LinearLayout(activity);

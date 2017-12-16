@@ -71,7 +71,6 @@ public class AboutFragment extends SwipeBackFragment {
         setHasOptionsMenu(true);
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.About);
 
         rowCount = 0;
@@ -100,7 +99,6 @@ public class AboutFragment extends SwipeBackFragment {
             if (position == forkGithubRow) {
                 Browser.openUrl(activity, "https://github.com/michaelbel/seriespicker");
             } else if (position == libsRow) {
-                //activity.startFragment(new LibsFragment(), "libsFragment");
                 start(new LibsFragment());
             } else if (position == feedbackRow) {
                 try {
@@ -148,15 +146,8 @@ public class AboutFragment extends SwipeBackFragment {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
+        activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         activity.toolbarTextView.setText(R.string.About);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
     }
 
     @Override

@@ -37,7 +37,6 @@ public class ThemesFragment extends SwipeBackFragment implements View.OnClickLis
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.Themes);
 
         radioCell1 = new RadioCell(activity);
@@ -54,6 +53,13 @@ public class ThemesFragment extends SwipeBackFragment implements View.OnClickLis
         fragmentView.addView(radioCell1);
         fragmentView.addView(radioCell2);
         return attachToSwipeBack(fragmentView);
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        activity.toolbarTextView.setText(R.string.Themes);
     }
 
     @Override

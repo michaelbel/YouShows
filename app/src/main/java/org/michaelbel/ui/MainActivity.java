@@ -1,18 +1,20 @@
 package org.michaelbel.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.fragment.MainFragment;
 
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
+
 @SuppressWarnings("all")
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SwipeBackActivity {
 
     public Toolbar toolbar;
     public TextView toolbarTextView;
@@ -27,7 +29,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbarTextView = findViewById(R.id.toolbar_title);
-        setRootFragment(new MainFragment());
+
+        if (findFragment(MainFragment.class) == null) {
+            loadRootFragment(R.id.fragment_layout, new MainFragment());
+        }
+
+        getSwipeBackLayout().setEnableGesture(false);
     }
 
     @Override
@@ -35,31 +42,20 @@ public class MainActivity extends AppCompatActivity {
         super.setTheme(Theme.getTheme() ? R.style.ThemeLight : R.style.ThemeNight);
     }
 
-    public void setRootFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_layout, fragment)
-                .commit();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-    public void startFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.fragment_layout, fragment)
-                .commit();
+    @Override
+    public boolean swipeBackPriority() {
+        return super.swipeBackPriority();
     }
 
-    public void startFragment(Fragment fragment, String tag) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.fragment_layout, fragment)
-                .addToBackStack(tag)
-                .commit();
-    }
-
-    public void finishFragment() {
-        getSupportFragmentManager().popBackStack();
+    public FragmentAnimator onCreateFragmentAnimator() {
+        return new DefaultHorizontalAnimator();
     }
 }

@@ -65,7 +65,6 @@ public class LibsFragment extends SwipeBackFragment {
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.OpenSourceLibs);
 
         list.add(new Source("BottomSheet", "https://github.com/michaelbel/bottomsheet","Apache License v2.0"));
@@ -111,11 +110,10 @@ public class LibsFragment extends SwipeBackFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        activity.toolbarTextView.setText(R.string.OpenSourceLibs);
     }
 
     @Override
