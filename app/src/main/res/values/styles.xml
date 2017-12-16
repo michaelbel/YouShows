@@ -1,6 +1,7 @@
 <resources>
     <style name="AppTheme.Start" parent="@android:style/Theme.Material">
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="ThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -9,6 +10,7 @@
         <item name="colorAccent">#4CAF50</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="ThemeNight" parent="Theme.AppCompat">
@@ -17,6 +19,7 @@
         <item name="colorAccent">#4CAF50</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <!--AlertDialog-->
