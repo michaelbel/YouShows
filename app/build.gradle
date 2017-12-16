@@ -47,6 +47,9 @@ dependencies {
         transitive = true
     }
     implementation 'com.google.firebase:firebase-core:11.6.2'
+
+    compile 'me.yokeyword:fragmentation:1.1.10'
+    compile 'me.yokeyword:fragmentation-swipeback:1.1.10'
 }
 
 apply plugin: 'com.google.gms.google-services'

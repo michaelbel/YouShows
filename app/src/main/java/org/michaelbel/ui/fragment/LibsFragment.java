@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,8 +31,10 @@ import org.michaelbel.util.ScreenUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+
 @SuppressWarnings("all")
-public class LibsFragment extends Fragment {
+public class LibsFragment extends SwipeBackFragment {
 
     private ListAdapter adapter;
     private MainActivity activity;
@@ -64,14 +65,15 @@ public class LibsFragment extends Fragment {
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
+        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.OpenSourceLibs);
 
-        list.add(new Source("BottomSheet", "https://github.com/michaelbel/bottomsheet", "Apache License v2.0"));
-        list.add(new Source("Retrofit", "https://square.github.io/retrofit", "Apache License v2.0"));
-        list.add(new Source("RxJava", "https://github.com/reactivex/rxjava", "Apache License v2.0"));
-        list.add(new Source("RxAndroid", "https://github.com/reactivex/rxjava", "Apache License v2.0"));
-        list.add(new Source("Glide", "https://bumptech.github.io/glide/", "BSD, MIT and Apache License v2.0"));
+        list.add(new Source("BottomSheet", "https://github.com/michaelbel/bottomsheet","Apache License v2.0"));
+        list.add(new Source("Retrofit", "https://square.github.io/retrofit","Apache License v2.0"));
+        list.add(new Source("RxJava", "https://github.com/reactivex/rxjava","Apache License v2.0"));
+        list.add(new Source("RxAndroid", "https://github.com/reactivex/rxjava","Apache License v2.0"));
+        list.add(new Source("Fragmentation", "https://github.com/yokeyword/fragmentation","Apache License v2.0"));
+        list.add(new Source("Glide", "https://bumptech.github.io/glide/","BSD, MIT and Apache License v2.0"));
 
         adapter = new ListAdapter();
         layoutManager = new LinearLayoutManager(activity);
@@ -105,7 +107,7 @@ public class LibsFragment extends Fragment {
             return true;
         });
         fragmentView.addView(recyclerView);
-        return fragmentView;
+        return attachToSwipeBack(fragmentView);
     }
 
     @Override

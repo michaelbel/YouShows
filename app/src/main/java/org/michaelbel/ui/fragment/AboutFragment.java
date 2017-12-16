@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,8 +35,10 @@ import org.michaelbel.ui.cell.TextCell;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+
 @SuppressWarnings("all")
-public class AboutFragment extends Fragment {
+public class AboutFragment extends SwipeBackFragment {
 
     private int rowCount;
     private int infoRow;
@@ -69,10 +70,8 @@ public class AboutFragment extends Fragment {
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
         setHasOptionsMenu(true);
 
-        adapter = new AboutAdapter();
-
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
+        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.About);
 
         rowCount = 0;
@@ -90,6 +89,7 @@ public class AboutFragment extends Fragment {
         //analyticsInfoRow = rowCount++;
         //analyticsRow = rowCount++;
 
+        adapter = new AboutAdapter();
         layoutManager = new LinearLayoutManager(activity);
 
         recyclerView = new RecyclerListView(activity);
@@ -100,7 +100,8 @@ public class AboutFragment extends Fragment {
             if (position == forkGithubRow) {
                 Browser.openUrl(activity, "https://github.com/michaelbel/seriespicker");
             } else if (position == libsRow) {
-                activity.startFragment(new LibsFragment(), "libsFragment");
+                //activity.startFragment(new LibsFragment(), "libsFragment");
+                start(new LibsFragment());
             } else if (position == feedbackRow) {
                 try {
                     PackageManager packageManager = activity.getPackageManager();
@@ -141,7 +142,13 @@ public class AboutFragment extends Fragment {
             }*/
         });
         fragmentView.addView(recyclerView);
-        return fragmentView;
+        return attachToSwipeBack(fragmentView);
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        activity.toolbarTextView.setText(R.string.About);
     }
 
     @Override

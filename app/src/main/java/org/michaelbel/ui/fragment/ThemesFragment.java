@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,10 @@ import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.cell.RadioCell;
 
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+
 @SuppressWarnings("all")
-public class ThemesFragment extends Fragment implements View.OnClickListener {
+public class ThemesFragment extends SwipeBackFragment implements View.OnClickListener {
 
     private MainActivity activity;
 
@@ -36,7 +37,7 @@ public class ThemesFragment extends Fragment implements View.OnClickListener {
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
+        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.Themes);
 
         radioCell1 = new RadioCell(activity);
@@ -52,7 +53,7 @@ public class ThemesFragment extends Fragment implements View.OnClickListener {
 
         fragmentView.addView(radioCell1);
         fragmentView.addView(radioCell2);
-        return fragmentView;
+        return attachToSwipeBack(fragmentView);
     }
 
     @Override

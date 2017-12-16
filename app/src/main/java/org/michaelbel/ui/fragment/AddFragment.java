@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -52,12 +51,13 @@ import org.michaelbel.util.ScreenUtils;
 
 import java.util.List;
 
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressWarnings("all")
-public class AddFragment extends Fragment implements View.OnClickListener {
+public class AddFragment extends SwipeBackFragment implements View.OnClickListener {
 
     private int seasons = 0;
     private int episodes = 0;
@@ -88,7 +88,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
+        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.AddNewSeries);
 
         LinearLayout linearLayout = new LinearLayout(activity);
@@ -126,19 +126,18 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         linearLayout.addView(titleLayout);
 
         titleEditText = new EditText(activity);
-        titleEditText.requestFocus();
         titleEditText.setLines(1);
         titleEditText.setMaxLines(1);
         titleEditText.setSingleLine();
-        titleEditText.setBackgroundDrawable(null);
-        //AppUtils.clearCursorDrawable(titleEditText);
+        titleEditText.requestFocus();
         titleEditText.setHint(R.string.SeriesTitle);
+        titleEditText.setBackgroundDrawable(null);
         titleEditText.setTypeface(Typeface.DEFAULT);
         titleEditText.setEllipsize(TextUtils.TruncateAt.END);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-        titleEditText.setHintTextColor(ContextCompat.getColor(activity, Theme.hintTextColor()));
         titleEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         titleEditText.setTextColor(ContextCompat.getColor(activity, Theme.primaryTextColor()));
+        titleEditText.setHintTextColor(ContextCompat.getColor(activity, Theme.hintTextColor()));
         titleEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
                 Gravity.START | Gravity.CENTER_VERTICAL, 13, 0, 53, 0));
         titleEditText.setOnEditorActionListener((textView, actionId, event) -> {
@@ -226,7 +225,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 Gravity.END | Gravity.BOTTOM, 0, 0, 16, 16));
         fragmentView.addView(doneButton);
 
-        return fragmentView;
+        return attachToSwipeBack(fragmentView);
     }
 
     @Override
@@ -304,7 +303,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         database.close();
 
         ((AppLoader) activity.getApplication()).bus().send(new Events.AddSeries());
-        activity.finishFragment();
+        activity.onBackPressed();
     }
 
     private void downloadImage() {

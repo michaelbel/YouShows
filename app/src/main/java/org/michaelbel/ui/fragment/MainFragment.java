@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,9 +42,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import io.reactivex.functions.Consumer;
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 @SuppressWarnings("all")
-public class MainFragment extends Fragment {
+public class MainFragment extends SwipeBackFragment {
 
     private int prevPosition;
     private int prevTop;
@@ -60,6 +60,14 @@ public class MainFragment extends Fragment {
 
     private TextView emptyView;
     private FloatingActionButton floatingButton;
+
+    public static MainFragment newInstance() {
+        Bundle args = new Bundle();
+
+        MainFragment fragment = new MainFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -76,9 +84,7 @@ public class MainFragment extends Fragment {
         emptyView.setTextColor(ContextCompat.getColor(activity, Theme.secondaryTextColor()));
 
         floatingButton = fragmentView.findViewById(R.id.fab);
-        floatingButton.setOnClickListener(view ->
-                activity.startFragment(new AddFragment(), "addFragment")
-        );
+        floatingButton.setOnClickListener(view -> start(new AddFragment()));
 
         adapter = new SeriesAdapter(activity, list);
         layoutManager = new LinearLayoutManager(activity);
@@ -92,7 +98,9 @@ public class MainFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setOnItemClickListener((view, position) -> {
             int id = adapter.seriesFilteredList.get(position).id;
-            activity.startFragment(SeriesFragment.newInstance(id), "seriesFragment");
+            //activity.startFragment(SeriesFragment.newInstance(id), "seriesFragment");
+            start(SeriesFragment.newInstance(id));
+            //start(MainFragment.newInstance());
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {
             BottomSheet.Builder builder = new BottomSheet.Builder(activity);
@@ -144,7 +152,8 @@ public class MainFragment extends Fragment {
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(recyclerView);
 
-        return fragmentView;
+        //return fragmentView;
+        return attachToSwipeBack(fragmentView);
     }
 
     @Override
@@ -152,6 +161,18 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fillList();
     }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        activity.toolbarTextView.setText(R.string.AppName);
+        activity.toolbar.setNavigationIcon(null);
+    }
+
+    /*@Override
+    public void showHideFragment(ISupportFragment showFragment) {
+        super.showHideFragment(showFragment);
+    }*/
 
     @Override
     public void onResume() {
@@ -210,13 +231,15 @@ public class MainFragment extends Fragment {
 
         MenuItem settingsItem = menu.findItem(R.id.action_settings);
         settingsItem.setOnMenuItemClickListener(menuItem -> {
-            activity.startFragment(new SettingsFragment(), "settingsFragment");
+            //activity.startFragment(new SettingsFragment(), "settingsFragment");
+            start(new SettingsFragment());
             return true;
         });
 
         MenuItem aboutItem = menu.findItem(R.id.action_about);
         aboutItem.setOnMenuItemClickListener(menuItem -> {
-            activity.startFragment(new AboutFragment(), "aboutFragment");
+            //activity.startFragment(new AboutFragment(), "aboutFragment");
+            start(new AboutFragment());
             return true;
         });
 

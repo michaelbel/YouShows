@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
@@ -37,8 +36,10 @@ import org.michaelbel.util.ScreenUtils;
 
 import java.util.Objects;
 
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+
 @SuppressWarnings("all")
-public class SeriesFragment extends Fragment implements View.OnClickListener {
+public class SeriesFragment extends SwipeBackFragment implements View.OnClickListener {
 
     private static final String SERIES_ID = "id";
 
@@ -78,7 +79,7 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
+        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.UpdateSeries);
 
         LinearLayout linearLayout = new LinearLayout(activity);
@@ -148,7 +149,7 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
                 Gravity.END | Gravity.BOTTOM, 0, 0, 16, 16));
         fragmentView.addView(doneButton);
 
-        return fragmentView;
+        return attachToSwipeBack(fragmentView);
     }
 
     @Override
@@ -205,7 +206,7 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
                 .setOnMenuItemClickListener(menuItem -> {
                     DatabaseHelper database = DatabaseHelper.getInstance(activity);
                     database.removeSeries(currentSeries);
-                    activity.finishFragment();
+                    activity.onBackPressed();
                     ((AppLoader) activity.getApplication()).bus().send(new Events.DeleteSeries(currentSeries.title));
                     return true;
                 });
@@ -279,7 +280,7 @@ public class SeriesFragment extends Fragment implements View.OnClickListener {
         DatabaseHelper database = DatabaseHelper.getInstance(activity);
         database.updateSeries(series);
 
-        activity.finishFragment();
+        activity.onBackPressed();
 
         if (seasons != oldSeasons || episodes != oldEpisodes || !Objects.equals(title, oldTitle)) {
             ((AppLoader) activity.getApplication()).bus().send(new Events.UpdateSeries(currentSeries.title));

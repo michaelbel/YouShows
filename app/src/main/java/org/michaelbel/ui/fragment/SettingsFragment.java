@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,8 +27,10 @@ import org.michaelbel.ui.cell.TextDetailCell;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+
 @SuppressWarnings("all")
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends SwipeBackFragment {
 
     private int rowCount;
     private int themesRow;
@@ -58,7 +59,7 @@ public class SettingsFragment extends Fragment {
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
+        activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.Settings);
 
         prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
@@ -83,7 +84,8 @@ public class SettingsFragment extends Fragment {
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (position == themesRow) {
-                activity.startFragment(new ThemesFragment(), "themesModsFragment");
+                //activity.startFragment(new ThemesFragment(), "themesModsFragment");
+                start(new ThemesFragment());
             } else if (position == viewTypeRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setDarkTheme(!Theme.getTheme());
@@ -190,7 +192,13 @@ public class SettingsFragment extends Fragment {
         });
         fragmentView.addView(recyclerView);
 
-        return fragmentView;
+        return attachToSwipeBack(fragmentView);
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        activity.toolbarTextView.setText(R.string.Settings);
     }
 
     @Override
