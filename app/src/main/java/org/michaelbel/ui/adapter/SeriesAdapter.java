@@ -124,7 +124,6 @@ public class SeriesAdapter extends RecyclerView.Adapter implements Filterable, I
                 if (charString.isEmpty()) {
                     seriesFilteredList = seriesList;
                 } else {
-
                     ArrayList<Series> filteredList = new ArrayList<>();
 
                     for (Series series : seriesList) {
