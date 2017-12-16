@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -59,7 +60,7 @@ public class RadioCell extends FrameLayout {
         addView(radioButton);
     }
 
-    public RadioCell setText(String text) {
+    public RadioCell setText(@NonNull String text) {
         textView.setText(text);
         return this;
     }
@@ -96,10 +97,8 @@ public class RadioCell extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
         int width = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY);
         int height = (int) mHeight + (divider ? 1 : 0);
-
         setMeasuredDimension(width, height);
     }
 

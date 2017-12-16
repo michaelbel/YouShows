@@ -137,25 +137,25 @@ public class TextCell extends FrameLayout {
         currentMode = mode;
 
         if (currentMode == MODE_DEFAULT) {
-            valueText.setVisibility(GONE);
-            switchCompat.setVisibility(GONE);
-            checkBox.setVisibility(GONE);
+            valueText.setVisibility(INVISIBLE);
+            switchCompat.setVisibility(INVISIBLE);
+            checkBox.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_VALUE_TEXT) {
             valueText.setVisibility(VISIBLE);
-            switchCompat.setVisibility(GONE);
-            checkBox.setVisibility(GONE);
+            switchCompat.setVisibility(INVISIBLE);
+            checkBox.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_SWITCH) {
             switchCompat.setVisibility(VISIBLE);
-            valueText.setVisibility(GONE);
-            checkBox.setVisibility(GONE);
+            valueText.setVisibility(INVISIBLE);
+            checkBox.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_CHECKBOX) {
             checkBox.setVisibility(VISIBLE);
-            valueText.setVisibility(GONE);
-            switchCompat.setVisibility(GONE);
+            valueText.setVisibility(INVISIBLE);
+            switchCompat.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_COLOR) {
-            valueText.setVisibility(GONE);
-            switchCompat.setVisibility(GONE);
-            checkBox.setVisibility(GONE);
+            valueText.setVisibility(INVISIBLE);
+            switchCompat.setVisibility(INVISIBLE);
+            checkBox.setVisibility(INVISIBLE);
         }
     }
 
@@ -189,10 +189,8 @@ public class TextCell extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
         int width = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY);
         int height = cellHeight + (divider ? 1 : 0);
-
         setMeasuredDimension(width, height);
     }
 
@@ -214,7 +212,6 @@ public class TextCell extends FrameLayout {
                 getForeground().setHotspot(event.getX(), event.getY());
             }
         }
-
         return super.onTouchEvent(event);
     }
 }
