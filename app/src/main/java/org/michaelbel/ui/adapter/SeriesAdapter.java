@@ -11,8 +11,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.Toast;
 
-import org.michaelbel.database.DatabaseHelper;
-import org.michaelbel.model.Series;
+import org.michaelbel.sqlite.DatabaseHelper;
+import org.michaelbel.rest.model.Series;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.ui.cell.BottomCell;

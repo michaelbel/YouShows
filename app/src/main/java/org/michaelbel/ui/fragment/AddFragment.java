@@ -31,11 +31,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.michaelbel.api.SEARCH;
-import org.michaelbel.database.DatabaseHelper;
-import org.michaelbel.model.Results;
-import org.michaelbel.model.Series;
-import org.michaelbel.model.TVShow;
+import org.michaelbel.rest.api.SEARCH;
+import org.michaelbel.sqlite.DatabaseHelper;
+import org.michaelbel.rest.model.Results;
+import org.michaelbel.rest.model.Series;
+import org.michaelbel.rest.model.TVShow;
 import org.michaelbel.seriespicker.ApiFactory;
 import org.michaelbel.seriespicker.AppLoader;
 import org.michaelbel.seriespicker.Events;
@@ -88,7 +88,6 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
         setHasOptionsMenu(true);
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        //activity.toolbar.setNavigationOnClickListener(view -> activity.onBackPressed());
         activity.toolbarTextView.setText(R.string.AddNewSeries);
 
         LinearLayout linearLayout = new LinearLayout(activity);

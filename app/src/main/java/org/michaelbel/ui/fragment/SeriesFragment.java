@@ -21,8 +21,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.michaelbel.database.DatabaseHelper;
-import org.michaelbel.model.Series;
+import org.michaelbel.sqlite.DatabaseHelper;
+import org.michaelbel.rest.model.Series;
 import org.michaelbel.seriespicker.AppLoader;
 import org.michaelbel.seriespicker.Events;
 import org.michaelbel.seriespicker.LayoutHelper;
