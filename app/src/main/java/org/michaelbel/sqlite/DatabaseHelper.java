@@ -1,4 +1,4 @@
-package org.michaelbel.database;
+package org.michaelbel.sqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import org.michaelbel.model.Series;
+import org.michaelbel.rest.model.Series;
 
 import java.util.ArrayList;
 import java.util.List;
