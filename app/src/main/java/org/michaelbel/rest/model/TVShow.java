@@ -1,4 +1,4 @@
-package org.michaelbel.model;
+package org.michaelbel.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 

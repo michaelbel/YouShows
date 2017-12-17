@@ -1,6 +1,6 @@
-package org.michaelbel.api;
+package org.michaelbel.rest.api;
 
-import org.michaelbel.model.Results;
+import org.michaelbel.rest.model.Results;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
