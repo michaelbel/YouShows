@@ -168,22 +168,20 @@ public class MainFragment extends SwipeBackFragment {
         if (fragmentView != null) {
             fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
         }
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
         activity.toolbar.setNavigationIcon(null);
-        fillList();
 
         ((AppLoader) activity.getApplication()).bus().toObservable().subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object object) throws Exception {
                 if (object instanceof Events.DeleteSeries) {
+                    fillList();
                     Toast.makeText(getContext(), getString(R.string.SeriesDeleted, ((Events.DeleteSeries) object).getSeriesTitle()), Toast.LENGTH_SHORT).show();
                 } else if (object instanceof Events.UpdateSeries) {
+                    fillList();
                     Toast.makeText(getContext(), getString(R.string.SeriesUpdated, ((Events.UpdateSeries) object).getSeriesTitle()), Toast.LENGTH_SHORT).show();
                 } else if (object instanceof Events.AddSeries) {
+                    fillList();
                     Toast.makeText(getContext(), R.string.SeriesAdded, Toast.LENGTH_SHORT).show();
                 }
             }
