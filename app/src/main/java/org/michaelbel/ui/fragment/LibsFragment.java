@@ -71,6 +71,7 @@ public class LibsFragment extends SwipeBackFragment {
         list.add(new Source("Retrofit", "https://square.github.io/retrofit","Apache License v2.0"));
         list.add(new Source("RxJava", "https://github.com/reactivex/rxjava","Apache License v2.0"));
         list.add(new Source("RxAndroid", "https://github.com/reactivex/rxjava","Apache License v2.0"));
+        list.add(new Source("Realm Java", "https://github.com/realm/realm-java", "Apache License v2.0"));
         list.add(new Source("Fragmentation", "https://github.com/yokeyword/fragmentation","Apache License v2.0"));
         list.add(new Source("Glide", "https://bumptech.github.io/glide/","BSD, MIT and Apache License v2.0"));
 
