@@ -34,8 +34,4 @@ public class AppLoader extends Application {
     public RxBus bus() {
         return rxBus;
     }
-
-    public Realm realm() {
-        return Realm.getDefaultInstance();
-    }
 }
