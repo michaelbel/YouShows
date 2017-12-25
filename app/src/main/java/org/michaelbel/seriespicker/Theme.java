@@ -24,7 +24,7 @@ public class Theme {
     }
 
     public static int primaryColor() {
-        return getTheme() ? R.color.colorPrimary : R.color.colorPrimary;
+        return R.color.colorPrimary;
     }
 
     public static int backgroundColor() {

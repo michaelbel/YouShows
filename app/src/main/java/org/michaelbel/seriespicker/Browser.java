@@ -20,7 +20,6 @@ public class Browser {
 
     public static void openUrl(@NonNull Context context, @NonNull String url) {
         SharedPreferences prefs = context.getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
-
         if (prefs.getBoolean("in_app_browser", true)) {
             openInAppUrl(context, url);
         } else {

@@ -25,12 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.michaelbel.bottomsheet.BottomSheet;
-import org.michaelbel.sqlite.DatabaseHelper;
 import org.michaelbel.rest.model.Series;
 import org.michaelbel.seriespicker.AppLoader;
 import org.michaelbel.seriespicker.Events;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
+import org.michaelbel.sqlite.DatabaseHelper;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.ItemTouchHelperSimpleCallback;
 import org.michaelbel.ui.adapter.SeriesAdapter;
@@ -241,7 +241,6 @@ public class MainFragment extends SwipeBackFragment {
                     activity.startFragment(new SettingsFragment(), "settingsFragment");
                     return true;
                 });
-
         menu.add(R.string.About)
                 .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_NEVER)
                 .setOnMenuItemClickListener(menuItem -> {

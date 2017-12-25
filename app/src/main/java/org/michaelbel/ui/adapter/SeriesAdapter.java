@@ -11,10 +11,10 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.Toast;
 
-import org.michaelbel.sqlite.DatabaseHelper;
 import org.michaelbel.rest.model.Series;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
+import org.michaelbel.sqlite.DatabaseHelper;
 import org.michaelbel.ui.cell.BottomCell;
 import org.michaelbel.ui.view.SeriesCompatView;
 import org.michaelbel.ui.view.SeriesView;

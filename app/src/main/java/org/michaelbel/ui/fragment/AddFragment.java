@@ -32,7 +32,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.michaelbel.rest.api.SEARCH;
-import org.michaelbel.sqlite.DatabaseHelper;
 import org.michaelbel.rest.model.Results;
 import org.michaelbel.rest.model.Series;
 import org.michaelbel.rest.model.TVShow;
@@ -43,6 +42,7 @@ import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.seriespicker.Url;
+import org.michaelbel.sqlite.DatabaseHelper;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.cell.TextCell;
 import org.michaelbel.ui.view.LayoutContainer;

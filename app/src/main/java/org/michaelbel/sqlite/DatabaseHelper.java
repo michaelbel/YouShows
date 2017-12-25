@@ -15,7 +15,7 @@ import java.util.List;
 @SuppressWarnings("all")
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION_CURRENT = 2;
     public static final String DATABASE_NAME = "SERIES_DATABASE";
 
     private static final String SERIES_TABLE = "SERIES";
@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION_CURRENT);
     }
 
     @Override

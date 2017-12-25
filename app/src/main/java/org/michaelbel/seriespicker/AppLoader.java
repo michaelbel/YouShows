@@ -4,14 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-
 @SuppressWarnings("all")
 public class AppLoader extends Application {
 
     private RxBus rxBus;
-    private RealmConfiguration realmConfig;
+    /*private RealmConfiguration realmConfig;*/
     public static volatile Context AppContext;
     public static volatile Handler AppHandler;
 
@@ -24,11 +21,11 @@ public class AppLoader extends Application {
 
         rxBus = new RxBus();
 
-        Realm.init(this);
+        /*Realm.init(this);
         realmConfig = new RealmConfiguration.Builder()
-                .name("spRealmDBv2.realm")
+                .name("spRealmDBv3.realm")
                 .build();
-        Realm.setDefaultConfiguration(realmConfig);
+        Realm.setDefaultConfiguration(realmConfig);*/
     }
 
     public RxBus bus() {
