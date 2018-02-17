@@ -17,10 +17,10 @@ public class ApiFactory {
     @NonNull
     public static Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Url.TMDB_API)
-                .addConverterFactory(GsonConverterFactory.create(GSON))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
+            .baseUrl(Url.TMDB_API)
+            .addConverterFactory(GsonConverterFactory.create(GSON))
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .build();
 
         return retrofit;
     }
