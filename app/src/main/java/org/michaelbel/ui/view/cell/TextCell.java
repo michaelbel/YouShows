@@ -1,4 +1,4 @@
-package org.michaelbel.ui.cell;
+package org.michaelbel.ui.view.cell;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -73,8 +73,7 @@ public class TextCell extends FrameLayout {
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
-                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(textView);
 
         valueText = new AppCompatTextView(context);
@@ -84,24 +83,21 @@ public class TextCell extends FrameLayout {
         valueText.setVisibility(INVISIBLE);
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
-                LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(valueText);
 
         switchCompat = new SwitchCompat(context);
         switchCompat.setClickable(false);
         switchCompat.setFocusable(false);
         switchCompat.setVisibility(INVISIBLE);
-        switchCompat.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
-                LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        switchCompat.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(switchCompat);
 
         checkBox = new AppCompatCheckBox(context);
         checkBox.setClickable(false);
         checkBox.setFocusable(false);
         checkBox.setVisibility(INVISIBLE);
-        checkBox.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT,
-                LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        checkBox.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
 
         setMode(currentMode);
@@ -165,15 +161,11 @@ public class TextCell extends FrameLayout {
     }
 
     public void changeLayoutParams() {
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (ScreenUtils.isLandscape()) {
             params.leftMargin = ScreenUtils.dp(56);
             params.rightMargin = ScreenUtils.dp(56);
         }
-
         setLayoutParams(params);
     }
 

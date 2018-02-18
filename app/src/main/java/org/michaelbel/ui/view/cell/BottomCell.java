@@ -1,4 +1,4 @@
-package org.michaelbel.ui.cell;
+package org.michaelbel.ui.view.cell;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,7 +12,6 @@ import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
 
-@SuppressWarnings("all")
 public class BottomCell extends FrameLayout {
 
     private TextView textView;
@@ -23,8 +22,7 @@ public class BottomCell extends FrameLayout {
         textView = new TextView(context);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         textView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(textView);
     }
 

@@ -1,4 +1,4 @@
-package org.michaelbel.ui.cell;
+package org.michaelbel.ui.view.cell;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
@@ -81,15 +81,11 @@ public class EmptyCell extends FrameLayout {
     }
 
     public void changeLayoutParams() {
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (ScreenUtils.isLandscape()) {
             params.leftMargin = ScreenUtils.dp(56);
             params.rightMargin = ScreenUtils.dp(56);
         }
-
         setLayoutParams(params);
     }
 

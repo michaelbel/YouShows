@@ -1,4 +1,4 @@
-package org.michaelbel.ui.cell;
+package org.michaelbel.ui.view.cell;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -47,16 +47,14 @@ public class RadioCell extends FrameLayout {
         textView = new TextView(context);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 0, 0));
+        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 0, 0));
         addView(textView);
 
         radioButton = new AppCompatRadioButton(context);
         radioButton.setFocusable(false);
         radioButton.setClickable(false);
         radioButton.setButtonTintList(ColorStateList.valueOf(ContextCompat.getColor(context, Theme.secondaryTextColor())));
-        radioButton.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        radioButton.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(radioButton);
     }
 
@@ -70,9 +68,8 @@ public class RadioCell extends FrameLayout {
         return this;
     }
 
-    public RadioCell setChecked(boolean value) {
+    public void setChecked(boolean value) {
         radioButton.setChecked(value);
-        return this;
     }
 
     public RadioCell setDivider(boolean divider) {
