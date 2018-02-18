@@ -24,7 +24,7 @@ import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.Holder;
-import org.michaelbel.ui.cell.TextDetailCell;
+import org.michaelbel.ui.view.cell.TextDetailCell;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
@@ -33,7 +33,6 @@ import java.util.List;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
-@SuppressWarnings("all")
 public class LibsFragment extends SwipeBackFragment {
 
     private ListAdapter adapter;
@@ -56,11 +55,15 @@ public class LibsFragment extends SwipeBackFragment {
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = (MainActivity) getActivity();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        activity = (MainActivity) getActivity();
-
         FrameLayout fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 

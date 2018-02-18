@@ -44,7 +44,7 @@ import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.seriespicker.Url;
 import org.michaelbel.sqlite.DatabaseHelper;
 import org.michaelbel.ui.MainActivity;
-import org.michaelbel.ui.cell.TextCell;
+import org.michaelbel.ui.view.cell.TextCell;
 import org.michaelbel.ui.view.LayoutContainer;
 import org.michaelbel.ui.view.NumberPicker;
 import org.michaelbel.util.ScreenUtils;
@@ -56,7 +56,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@SuppressWarnings("all")
 public class AddFragment extends SwipeBackFragment implements View.OnClickListener {
 
     private int seasons = 0;
@@ -78,14 +77,18 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
     private ImageView seasonsDoneIcon;
     private ImageView episodesDoneIcon;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = (MainActivity) getActivity();
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        activity = (MainActivity) getActivity();
-
         FrameLayout fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
-        setHasOptionsMenu(true);
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         activity.toolbarTextView.setText(R.string.AddNewSeries);
@@ -96,8 +99,7 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
         fragmentView.addView(linearLayout);
 
         FrameLayout imageFrameLayout = new FrameLayout(activity);
-        imageFrameLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 180,
-                Gravity.START | Gravity.TOP, 24, 24, 24, 24));
+        imageFrameLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 180, Gravity.START | Gravity.TOP, 24, 24, 24, 24));
         linearLayout.addView(imageFrameLayout);
 
         backdropImageView = new ImageView(activity);
@@ -110,8 +112,7 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
         placeHolderTextView.setText(R.string.BackdropTextHolder);
         placeHolderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         placeHolderTextView.setTextColor(ContextCompat.getColor(activity, Theme.secondaryTextColor()));
-        placeHolderTextView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL));
+        placeHolderTextView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL));
         imageFrameLayout.addView(placeHolderTextView);
 
         progressBar = new ProgressBar(activity);
@@ -137,8 +138,7 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
         titleEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         titleEditText.setTextColor(ContextCompat.getColor(activity, Theme.primaryTextColor()));
         titleEditText.setHintTextColor(ContextCompat.getColor(activity, Theme.hintTextColor()));
-        titleEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.START | Gravity.CENTER_VERTICAL, 13, 0, 53, 0));
+        titleEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 13, 0, 53, 0));
         titleEditText.setOnEditorActionListener((textView, actionId, event) -> {
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 if (backdropPath == null) {
@@ -183,8 +183,7 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
         titleDoneIcon = new ImageView(activity);
         titleDoneIcon.setVisibility(View.INVISIBLE);
         titleDoneIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(activity, R.color.colorPrimary)));
-        titleDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        titleDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         titleLayout.addView(titleDoneIcon);
 
         seasonsCell = new TextCell(activity);
@@ -198,8 +197,7 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
         seasonsDoneIcon = new ImageView(activity);
         seasonsDoneIcon.setVisibility(View.INVISIBLE);
         seasonsDoneIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(activity, R.color.colorPrimary)));
-        seasonsDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        seasonsDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         seasonsCell.addView(seasonsDoneIcon);
 
         episodesCell = new TextCell(activity);
@@ -212,16 +210,14 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
         episodesDoneIcon = new ImageView(activity);
         episodesDoneIcon.setVisibility(View.INVISIBLE);
         episodesDoneIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(activity, R.color.colorPrimary)));
-        episodesDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        episodesDoneIcon.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         episodesCell.addView(episodesDoneIcon);
 
         doneButton = new FloatingActionButton(activity);
         doneButton.setImageResource(R.drawable.ic_done);
         doneButton.setVisibility(View.INVISIBLE);
         doneButton.setOnClickListener(this);
-        doneButton.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT,
-                Gravity.END | Gravity.BOTTOM, 0, 0, 16, 16));
+        doneButton.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.BOTTOM, 0, 0, 16, 16));
         fragmentView.addView(doneButton);
 
         return attachToSwipeBack(fragmentView);
@@ -315,7 +311,7 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
         Call<Results> call = service.searchSeries(Url.TMDB_API_KEY, finalTitle);
         call.enqueue(new Callback<Results>() {
             @Override
-            public void onResponse(Call<Results> call, Response<Results> response) {
+            public void onResponse(@NonNull Call<Results> call, @NonNull Response<Results> response) {
                 if (response.isSuccessful()) {
                     try {
                         List<TVShow> list = response.body().list;
@@ -337,7 +333,8 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
             }
 
             @Override
-            public void onFailure(Call<Results> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results> call, @NonNull Throwable t) {
+                t.printStackTrace();
                 loadImage(null);
             }
         });
@@ -351,8 +348,8 @@ public class AddFragment extends SwipeBackFragment implements View.OnClickListen
             String quality = prefs.getString("image_quality_backdrop", "w780");
 
             Glide.with(this)
-                    .load("http://image.tmdb.org/t/p/" + quality +"/" + backdropPath)
-                    .into(backdropImageView);
+                 .load("http://image.tmdb.org/t/p/" + quality +"/" + backdropPath)
+                 .into(backdropImageView);
 
             placeHolderTextView.setVisibility(View.INVISIBLE);
         } else {

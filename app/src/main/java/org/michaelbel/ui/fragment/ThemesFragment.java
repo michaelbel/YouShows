@@ -14,11 +14,10 @@ import android.widget.LinearLayout;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.MainActivity;
-import org.michaelbel.ui.cell.RadioCell;
+import org.michaelbel.ui.view.cell.RadioCell;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
-@SuppressWarnings("all")
 public class ThemesFragment extends SwipeBackFragment implements View.OnClickListener {
 
     private MainActivity activity;
@@ -27,11 +26,15 @@ public class ThemesFragment extends SwipeBackFragment implements View.OnClickLis
     private RadioCell radioCell2;
     private LinearLayout fragmentView;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = (MainActivity) getActivity();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        activity = (MainActivity) getActivity();
-
         fragmentView = new LinearLayout(activity);
         fragmentView.setOrientation(LinearLayout.VERTICAL);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));

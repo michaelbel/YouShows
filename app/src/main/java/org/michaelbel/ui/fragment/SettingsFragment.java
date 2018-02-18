@@ -21,15 +21,14 @@ import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.Holder;
-import org.michaelbel.ui.cell.EmptyCell;
-import org.michaelbel.ui.cell.TextCell;
-import org.michaelbel.ui.cell.TextDetailCell;
+import org.michaelbel.ui.view.cell.EmptyCell;
+import org.michaelbel.ui.view.cell.TextCell;
+import org.michaelbel.ui.view.cell.TextDetailCell;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
-@SuppressWarnings("all")
 public class SettingsFragment extends SwipeBackFragment {
 
     private int rowCount;
@@ -51,11 +50,15 @@ public class SettingsFragment extends SwipeBackFragment {
     private FrameLayout fragmentView;
     private RecyclerListView recyclerView;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = (MainActivity) getActivity();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        activity = (MainActivity) getActivity();
-
         fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
@@ -311,8 +314,7 @@ public class SettingsFragment extends SwipeBackFragment {
         public int getItemViewType(int position) {
             if (position == emptyRow || position == emptyRow2) {
                 return 0;
-            } else if (position == inAppBrowserRow || position == viewTypeRow || position == sortRow ||
-                    position == imageQualityRow || position == bottomCounterRow || position == shortNamesRow) {
+            } else if (position == inAppBrowserRow || position == viewTypeRow || position == sortRow || position == imageQualityRow || position == bottomCounterRow || position == shortNamesRow) {
                 return 1;
             } else {
                 return 2;

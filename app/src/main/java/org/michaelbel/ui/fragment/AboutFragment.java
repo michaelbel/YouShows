@@ -25,19 +25,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.michaelbel.seriespicker.Browser;
+import org.michaelbel.seriespicker.BuildConfig;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.Holder;
-import org.michaelbel.ui.cell.EmptyCell;
-import org.michaelbel.ui.cell.TextCell;
+import org.michaelbel.ui.view.cell.EmptyCell;
+import org.michaelbel.ui.view.cell.TextCell;
 import org.michaelbel.ui.view.RecyclerListView;
 import org.michaelbel.util.ScreenUtils;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
-@SuppressWarnings("all")
 public class AboutFragment extends SwipeBackFragment {
 
     private int rowCount;
@@ -61,14 +61,18 @@ public class AboutFragment extends SwipeBackFragment {
 
     private RecyclerListView recyclerView;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = (MainActivity) getActivity();
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        activity = (MainActivity) getActivity();
-
         FrameLayout fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
-        setHasOptionsMenu(true);
 
         activity.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         activity.toolbarTextView.setText(R.string.About);
@@ -89,7 +93,7 @@ public class AboutFragment extends SwipeBackFragment {
         //analyticsRow = rowCount++;
 
         adapter = new AboutAdapter();
-        layoutManager = new LinearLayoutManager(activity);
+        layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
 
         recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
@@ -116,7 +120,7 @@ public class AboutFragment extends SwipeBackFragment {
                         startActivity(Intent.createChooser(intent, "Feedback"));
                     }
                 } catch (PackageManager.NameNotFoundException e) {
-                    // todo report
+                    e.printStackTrace();
                 }
             }
 
@@ -247,9 +251,9 @@ public class AboutFragment extends SwipeBackFragment {
 
     public class InfoView extends LinearLayout {
 
-        private ImageView iconImageView;
-        private TextView nameTextView;
-        private TextView versionTextView;
+        private ImageView iconImage;
+        private TextView nameText;
+        private TextView versionText;
 
         public InfoView(Context context) {
             super(context);
@@ -257,38 +261,30 @@ public class AboutFragment extends SwipeBackFragment {
             setOrientation(VERTICAL);
             setPadding(ScreenUtils.dp(24), ScreenUtils.dp(24), ScreenUtils.dp(24), ScreenUtils.dp(24));
 
-            iconImageView = new ImageView(context);
-            iconImageView.setImageResource(R.mipmap.ic_launcher);
-            iconImageView.setLayoutParams(LayoutHelper.makeLinear(110, 110, Gravity.CENTER_HORIZONTAL));
-            addView(iconImageView);
+            iconImage = new ImageView(context);
+            iconImage.setImageResource(R.mipmap.ic_launcher);
+            iconImage.setLayoutParams(LayoutHelper.makeLinear(110, 110, Gravity.CENTER_HORIZONTAL));
+            addView(iconImage);
 
-            nameTextView = new TextView(context);
-            nameTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            nameTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-            nameTextView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-            nameTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT,
-                    LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL, 0, 5, 0, 0));
-            addView(nameTextView);
+            nameText = new TextView(context);
+            nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+            nameText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+            nameText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL, 0, 5, 0, 0));
+            addView(nameText);
 
-            versionTextView = new TextView(context);
-            versionTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            versionTextView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-            versionTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT,
-                    LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL, 0, 4, 0, 0));
-            addView(versionTextView);
+            versionText = new TextView(context);
+            versionText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            versionText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+            versionText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL, 0, 4, 0, 0));
+            addView(versionText);
 
             setVersion();
         }
 
         private void setVersion() {
-            try {
-                PackageInfo packageInfo = getContext().getPackageManager()
-                        .getPackageInfo(getContext().getPackageName(), 0);
-                nameTextView.setText(getString(R.string.AppNameForAndroid, getString(R.string.AppName)));
-                versionTextView.setText(getString(R.string.VersionBuild, packageInfo.versionName, packageInfo.versionCode));
-            } catch (Exception e) {
-                //todo report
-            }
+            nameText.setText(getString(R.string.AppNameForAndroid, getString(R.string.AppName)));
+            versionText.setText(getString(R.string.VersionBuild, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
         }
 
         @Override
