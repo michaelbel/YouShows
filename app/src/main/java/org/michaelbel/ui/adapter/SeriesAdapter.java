@@ -15,14 +15,13 @@ import org.michaelbel.rest.model.Series;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.sqlite.DatabaseHelper;
-import org.michaelbel.ui.cell.BottomCell;
+import org.michaelbel.ui.view.cell.BottomCell;
 import org.michaelbel.ui.view.SeriesCompatView;
 import org.michaelbel.ui.view.SeriesView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-@SuppressWarnings("all")
 public class SeriesAdapter extends RecyclerView.Adapter implements Filterable, ItemBehavior {
 
     private Context context;
@@ -50,7 +49,6 @@ public class SeriesAdapter extends RecyclerView.Adapter implements Filterable, I
         if (prefs.getBoolean("bottom_counter", false)) {
             seriesFilteredList.remove(seriesFilteredList.size() - 1);
             notifyItemRemoved(seriesFilteredList.size() - 1);
-
             seriesFilteredList.add(new Series(database.getCount()));
         }
 
@@ -91,8 +89,7 @@ public class SeriesAdapter extends RecyclerView.Adapter implements Filterable, I
             seriesView.setSeasons(series.seasonCount);
             seriesView.setEpisodes(series.episodeCount);
             seriesView.setBackdrop(series.backdropPath == null ? "" : series.backdropPath);
-            seriesView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT,
-                    LayoutHelper.WRAP_CONTENT, 6, 2, 6, 0));
+            seriesView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 2, 6, 0));
         } else {
             BottomCell cell = (BottomCell) holder.itemView;
             cell.setText(context.getString(R.string.SeriesCount, series.seriesCountBottom));
