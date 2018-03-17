@@ -3,7 +3,6 @@ package org.michaelbel.seriespicker;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
-@SuppressWarnings("all")
 public class RxBus {
 
     public RxBus() {}

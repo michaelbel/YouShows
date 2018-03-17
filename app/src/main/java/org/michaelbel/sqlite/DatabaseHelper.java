@@ -12,7 +12,6 @@ import org.michaelbel.rest.model.Series;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("all")
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION_CURRENT = 2;

@@ -2,7 +2,6 @@ package org.michaelbel.rest.model;
 
 import java.io.Serializable;
 
-@SuppressWarnings("all")
 public class Series implements Serializable {
 
     public int id;

@@ -9,7 +9,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@SuppressWarnings("all")
 public class ApiFactory {
 
     public static Gson GSON = new GsonBuilder().setDateFormat(Url.GSON_DATE_FORMAT).create();

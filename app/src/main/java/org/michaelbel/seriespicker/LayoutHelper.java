@@ -6,7 +6,6 @@ import android.widget.RelativeLayout;
 
 import org.michaelbel.util.ScreenUtils;
 
-@SuppressWarnings("all")
 public class LayoutHelper {
 
     public static final int MATCH_PARENT = -1;

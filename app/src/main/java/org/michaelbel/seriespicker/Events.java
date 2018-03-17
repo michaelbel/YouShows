@@ -1,6 +1,5 @@
 package org.michaelbel.seriespicker;
 
-@SuppressWarnings("all")
 public class Events {
 
     public static class DeleteSeries {

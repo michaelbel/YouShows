@@ -1,5 +1,6 @@
 package org.michaelbel.ui.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
@@ -9,7 +10,7 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import org.michaelbel.material.util.Utils;
+import org.michaelbel.material.util2.Utils;
 import org.michaelbel.seriespicker.LayoutHelper;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
@@ -57,6 +58,7 @@ public class CountButton extends FrameLayout {
         setMeasuredDimension(width, height);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (getForeground() != null) {

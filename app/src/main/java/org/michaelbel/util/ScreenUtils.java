@@ -11,7 +11,6 @@ import android.view.WindowManager;
 
 import org.michaelbel.seriespicker.AppLoader;
 
-@SuppressWarnings("all")
 public class ScreenUtils {
 
     public static int dp(float value) {

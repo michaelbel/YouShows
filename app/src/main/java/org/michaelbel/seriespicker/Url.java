@@ -2,7 +2,6 @@ package org.michaelbel.seriespicker;
 
 import org.michaelbel.util.AppUtils;
 
-@SuppressWarnings("all")
 public class Url {
 
     public static final String GSON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";

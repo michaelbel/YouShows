@@ -55,8 +55,9 @@ public class SeriesAdapter extends RecyclerView.Adapter implements Filterable, I
         database.close();
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int type) {
         View view;
 
         if (type == 0) {
@@ -72,7 +73,7 @@ public class SeriesAdapter extends RecyclerView.Adapter implements Filterable, I
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         int type = getItemViewType(position);
         Series series = seriesFilteredList.get(position);
 

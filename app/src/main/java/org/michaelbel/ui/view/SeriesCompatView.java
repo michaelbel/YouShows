@@ -1,5 +1,6 @@
 package org.michaelbel.ui.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,7 +25,6 @@ import org.michaelbel.seriespicker.R;
 import org.michaelbel.seriespicker.Theme;
 import org.michaelbel.util.ScreenUtils;
 
-@SuppressWarnings("all")
 public class SeriesCompatView extends FrameLayout {
 
     private CardView cardView;
@@ -211,6 +211,7 @@ public class SeriesCompatView extends FrameLayout {
         menuImageView.setVisibility(INVISIBLE);
     }*/
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (cardView.getForeground() != null) {

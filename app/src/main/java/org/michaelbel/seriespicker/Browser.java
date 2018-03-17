@@ -11,9 +11,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import org.michaelbel.material.util.Utils;
+import org.michaelbel.material.util2.Utils;
 
-@SuppressWarnings("all")
 public class Browser {
 
     private static final String TAG = Browser.class.getSimpleName();

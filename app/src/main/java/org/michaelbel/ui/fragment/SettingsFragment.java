@@ -222,8 +222,9 @@ public class SettingsFragment extends SwipeBackFragment {
 
     public class ListAdapter extends RecyclerView.Adapter {
 
+        @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int type) {
             View cell;
 
             if (type == 0) {
@@ -238,7 +239,7 @@ public class SettingsFragment extends SwipeBackFragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             int type = getItemViewType(position);
 
             if (type == 0) {

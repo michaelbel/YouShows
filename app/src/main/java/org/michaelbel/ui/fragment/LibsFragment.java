@@ -131,13 +131,14 @@ public class LibsFragment extends SwipeBackFragment {
 
     public class ListAdapter extends RecyclerView.Adapter {
 
+        @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-            return new Holder(new TextDetailCell(activity));
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int type) {
+            return new Holder(new TextDetailCell(parent.getContext()));
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             Source source = list.get(position);
 
             TextDetailCell cell = (TextDetailCell) holder.itemView;

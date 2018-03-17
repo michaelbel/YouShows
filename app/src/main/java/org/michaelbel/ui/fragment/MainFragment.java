@@ -44,7 +44,6 @@ import java.util.Collections;
 import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
-@SuppressWarnings("all")
 public class MainFragment extends SwipeBackFragment {
 
     private int prevPosition;

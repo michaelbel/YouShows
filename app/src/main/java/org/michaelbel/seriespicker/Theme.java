@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
-@SuppressWarnings("all")
 public class Theme {
 
     private static Context getContext() {

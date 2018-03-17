@@ -1,5 +1,6 @@
 package org.michaelbel.ui.view.cell;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
@@ -215,6 +216,7 @@ public class TextDetailCell extends FrameLayout {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (getForeground() != null) {

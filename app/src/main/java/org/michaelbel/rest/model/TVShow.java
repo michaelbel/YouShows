@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-@SuppressWarnings("all")
 public class TVShow implements Serializable {
 
     @SerializedName("id")

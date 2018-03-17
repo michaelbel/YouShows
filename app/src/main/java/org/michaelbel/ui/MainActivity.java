@@ -13,7 +13,6 @@ import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
-@SuppressWarnings("all")
 public class MainActivity extends SwipeBackActivity {
 
     public Toolbar toolbar;

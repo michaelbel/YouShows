@@ -4,7 +4,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-@SuppressWarnings("all")
 public class ItemTouchHelperSimpleCallback extends ItemTouchHelper.SimpleCallback {
 
     private ItemBehavior listener;

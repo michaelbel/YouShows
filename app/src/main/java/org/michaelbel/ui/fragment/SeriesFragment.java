@@ -38,7 +38,6 @@ import java.util.Objects;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
-@SuppressWarnings("all")
 public class SeriesFragment extends SwipeBackFragment implements View.OnClickListener {
 
     private static final String SERIES_ID = "id";
