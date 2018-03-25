@@ -36,7 +36,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    implementation 'org.michaelbel:material:0.3.1'
+    implementation 'org.michaelbel:material:0.3.2'
     implementation 'org.michaelbel:bottomsheet:1.2.2'
 
     implementation 'io.realm:android-adapters:2.1.1'
