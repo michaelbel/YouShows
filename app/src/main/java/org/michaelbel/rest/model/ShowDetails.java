@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import org.michaelbel.rest.TmdbObject;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Date: 27 MAR 2018
@@ -13,13 +14,25 @@ import java.io.Serializable;
  * @author Michael Bel
  */
 
-public class Show extends TmdbObject implements Serializable {
+public class ShowDetails extends TmdbObject implements Serializable {
 
-    @SerializedName("id")
+    @SerializedName("season_id")
     public int id;
 
     @SerializedName("name")
     public String name;
+
+    //@SerializedName("created_by")
+
+    //@SerializedName("episode_run_time")
+
+    //@SerializedName("languages")
+
+    @SerializedName("homepage")
+    public String homepage;
+
+    @SerializedName("in_production")
+    public boolean inProduction;
 
     @SerializedName("backdrop_path")
     public String backdropPath;
@@ -37,7 +50,12 @@ public class Show extends TmdbObject implements Serializable {
     public String overview;
 
     @SerializedName("first_air_date")
-    public String airDate;
+    public String first_air_date;
+
+    @SerializedName("last_air_date")
+    public String last_air_date;
+
+    //@SerializedName("networks")
 
     //@SerializedName("origin_country")
 
@@ -51,4 +69,21 @@ public class Show extends TmdbObject implements Serializable {
 
     @SerializedName("original_name")
     public String originalName;
+
+    @SerializedName("number_of_episodes")
+    public int number_of_episodes;
+
+    @SerializedName("number_of_seasons")
+    public int number_of_seasons;
+
+    //@SerializedName("production_companies")
+
+    @SerializedName("seasons")
+    public List<Season> seasons;
+
+    @SerializedName("status")
+    public String status;
+
+    @SerializedName("type")
+    public String type;
 }
