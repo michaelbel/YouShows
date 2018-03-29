@@ -15,18 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="56dp">
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:visibility="gone"
-                android:textSize="20sp"
-                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
-
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"

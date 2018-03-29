@@ -32,7 +32,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <fragment
-        class="org.michaelbel.ux.fragment.SeasonFragment"
+        class="org.michaelbel.ui.fragment.SeasonFragment"
         android:id="@+id/seasonFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

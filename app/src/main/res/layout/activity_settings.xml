@@ -32,7 +32,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <fragment
-        class="org.michaelbel.ux.fragment.SettingsFragment"
+        class="org.michaelbel.ui.fragment.SettingsFragment"
         android:id="@+id/settingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
