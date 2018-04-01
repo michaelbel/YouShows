@@ -6,6 +6,13 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+/**
+ * Date: 01 APR 2018
+ * Time: 18:16 MSK
+ *
+ * @author Michael Bel
+ */
+
 @Retention(RetentionPolicy.CLASS)
 @IntDef({
     EmptyViewMode.MODE_NO_CONNECTION,
