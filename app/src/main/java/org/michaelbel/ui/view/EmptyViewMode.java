@@ -13,14 +13,13 @@ import java.lang.annotation.RetentionPolicy;
  * @author Michael Bel
  */
 
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.SOURCE)
 @IntDef({
     EmptyViewMode.MODE_NO_CONNECTION,
     EmptyViewMode.MODE_NO_SHOWS,
     EmptyViewMode.MODE_NO_RESULTS
 })
 @Documented
-@EmptyViewMode
 public @interface EmptyViewMode {
     int MODE_NO_CONNECTION = 0;
     int MODE_NO_SHOWS = 1;
