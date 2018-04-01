@@ -75,7 +75,6 @@ public class SearchActivity extends AppCompatActivity {
         searchEditText.setSingleLine();
         searchEditText.setHint(R.string.Search);
         searchEditText.setBackground(null);
-        //searchEditText.setBackgroundDrawable(null);
         searchEditText.setTypeface(Typeface.DEFAULT);
         searchEditText.setEllipsize(TextUtils.TruncateAt.END);
         searchEditText.setInputType(InputType.TYPE_CLASS_TEXT);
