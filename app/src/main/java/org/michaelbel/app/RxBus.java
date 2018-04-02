@@ -1,4 +1,4 @@
-package org.michaelbel.seriespicker;
+package org.michaelbel.app;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
