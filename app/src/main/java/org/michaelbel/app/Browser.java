@@ -1,4 +1,4 @@
-package org.michaelbel.seriespicker;
+package org.michaelbel.app;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,13 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import org.michaelbel.material.util2.Utils;
+import org.michaelbel.seriespicker.R;
 
 public class Browser {
-
-    private static final String TAG = Browser.class.getSimpleName();
 
     public static void openUrl(@NonNull Context context, @NonNull String url) {
         SharedPreferences prefs = context.getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
@@ -47,7 +45,7 @@ public class Browser {
             intent.putExtra(android.provider.Browser.EXTRA_APPLICATION_ID, context.getPackageName());
             context.startActivity(intent);
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
         }
     }
 
