@@ -20,7 +20,7 @@ import android.widget.FrameLayout;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
-import org.michaelbel.realm.ShowRealm;
+import org.michaelbel.rest.model.Show;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.ShowActivity;
@@ -96,10 +96,10 @@ public class MyShowsFragment extends Fragment {
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof MyShowView) {
-                ShowRealm showRealm = adapter.getShows().get(position);
+                Show show = adapter.getShows().get(position);
 
                 Intent intent = new Intent(activity, ShowActivity.class);
-                intent.putExtra("showRealm", showRealm);
+                intent.putExtra("show", show);
                 startActivity(intent);
             }
         });
@@ -143,7 +143,7 @@ public class MyShowsFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<ShowRealm> results = realm.where(ShowRealm.class).findAll();
+        RealmResults<Show> results = realm.where(Show.class).findAll();
         if (results.isEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
@@ -160,7 +160,7 @@ public class MyShowsFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<ShowRealm> results = realm.where(ShowRealm.class).findAll();
+        RealmResults<Show> results = realm.where(Show.class).findAll();
         if (results.isEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
