@@ -122,7 +122,7 @@ public class NowPlayingShowsFragment extends Fragment {
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof ShowView) {
-                Show show = (Show) adapter.getList().get(position);
+                Show show = adapter.getList().get(position);
                 activity.startShow(show);
             }
         });
