@@ -3,6 +3,13 @@ package org.michaelbel.app;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
+/**
+ * Date: 02 APR 2018
+ * Time: 21:52 MSK
+ *
+ * @author Michael Bel
+ */
+
 public class RxBus {
 
     public RxBus() {}

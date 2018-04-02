@@ -13,6 +13,13 @@ import android.support.annotation.NonNull;
 import org.michaelbel.material.util2.Utils;
 import org.michaelbel.seriespicker.R;
 
+/**
+ * Date: 02 APR 2018
+ * Time: 21:52 MSK
+ *
+ * @author Michael Bel
+ */
+
 public class Browser {
 
     public static void openUrl(@NonNull Context context, @NonNull String url) {
