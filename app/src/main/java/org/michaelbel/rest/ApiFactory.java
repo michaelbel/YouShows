@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.michaelbel.util.AppUtils;
+import org.michaelbel.app.AndroidExtensions;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiFactory {
 
     public static final String TMDB_API_ENDPOINT = "https://api.themoviedb.org/3/";
-    public static final String TMDB_API_KEY = AppUtils.getProperty("tmdb_api_key");
+    public static final String TMDB_API_KEY = AndroidExtensions.getProperty("tmdb_api_key");
     public static final String TMDB_IMAGE = "http://image.tmdb.org/t/p/%s/%s";
     public static final String TMDB_MOVIE = "https://themoviedb.org/movie/%d";
 
@@ -34,7 +34,7 @@ public class ApiFactory {
 
     public static final int TRAKT_API_VERSION = 2;
     public static final String TRAKT_API_ENDPOINT = "https://api-v2launch.trakt.tv/";
-    public static final String TRAKT_CLIENT_ID = AppUtils.getProperty("tract_client_id");
+    public static final String TRAKT_CLIENT_ID = AndroidExtensions.getProperty("tract_client_id");
 
     private static Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 
