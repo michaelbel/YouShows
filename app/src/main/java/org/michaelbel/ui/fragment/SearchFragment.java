@@ -21,7 +21,6 @@ import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
 import org.michaelbel.rest.ApiFactory;
 import org.michaelbel.rest.ApiService;
-import org.michaelbel.rest.TmdbObject;
 import org.michaelbel.rest.model.Show;
 import org.michaelbel.rest.response.ShowsResponse;
 import org.michaelbel.seriespicker.R;
@@ -96,7 +95,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof ShowView) {
-                Show show = (Show) adapter.getList().get(position);
+                Show show = adapter.getList().get(position);
 
                 Intent intent = new Intent(activity, ShowActivity.class);
                 intent.putExtra("show", show);
@@ -143,7 +142,7 @@ public class SearchFragment extends Fragment {
                     if (showsResponse != null) {
                         totalPages = showsResponse.totalPages;
                         totalResults = showsResponse.totalResults;
-                        List<TmdbObject> results = new ArrayList<>(showsResponse.shows);
+                        List<Show> results = new ArrayList<>(showsResponse.shows);
                         if (results.isEmpty()) {
                             showError(EmptyViewMode.MODE_NO_RESULTS);
                             return;
@@ -170,7 +169,7 @@ public class SearchFragment extends Fragment {
                 if (response.isSuccessful()) {
                     ShowsResponse showsResponse = response.body();
                     if (showsResponse != null) {
-                        List<TmdbObject> results = new ArrayList<>(showsResponse.shows);
+                        List<Show> results = new ArrayList<>(showsResponse.shows);
                         showResults(results, false);
                     }
                 }
@@ -191,7 +190,7 @@ public class SearchFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void showResults(List<TmdbObject> results, boolean firstPage) {
+    public void showResults(List<Show> results, boolean firstPage) {
         if (firstPage) {
             progressBar.setVisibility(View.GONE);
 
