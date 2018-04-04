@@ -1,4 +1,4 @@
-package org.michaelbel.seriespicker;
+package org.michaelbel.app;
 
 public class Events {
 
