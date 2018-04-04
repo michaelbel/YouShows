@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import org.michaelbel.realm.ShowRealm;
 import org.michaelbel.rest.model.Season;
+import org.michaelbel.rest.model.Show;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.ui.fragment.SeasonFragment;
 
@@ -20,8 +20,8 @@ import org.michaelbel.ui.fragment.SeasonFragment;
 
 public class SeasonActivity extends AppCompatActivity {
 
+    public Show show;
     public Season season;
-    public ShowRealm showRealm;
 
     public Toolbar toolbar;
     public TextView toolbarTitle;
@@ -36,14 +36,14 @@ public class SeasonActivity extends AppCompatActivity {
 
         toolbar.setNavigationIcon(R.drawable.ic_clear);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(view -> finish());
 
-        showRealm = getIntent().getParcelableExtra("showRealm");
+        show = (Show) getIntent().getSerializableExtra("show");
         season = (Season) getIntent().getSerializableExtra("season");
 
         toolbarTitle.setText(season.name);
 
         SeasonFragment fragment = (SeasonFragment) getSupportFragmentManager().findFragmentById(R.id.seasonFragment);
-        fragment.showEpisodes(showRealm.showId, season.seasonNumber);
+        fragment.showEpisodes(show.showId, season.seasonNumber);
     }
 }
