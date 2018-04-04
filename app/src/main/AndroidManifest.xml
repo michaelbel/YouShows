@@ -7,13 +7,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".AppLoader"
+        android:name="org.michaelbel.app.AppLoader"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:label="@string/AppName"
-        android:theme="@style/AppTheme.Start"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher">
+        android:theme="@style/AppTheme.Start"
+        android:roundIcon="@mipmap/ic_launcher_round">
 
         <activity
             android:name="org.michaelbel.ui.MainActivity"
@@ -24,6 +24,36 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="org.michaelbel.ui.ExploreActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
+        <activity
+            android:name="org.michaelbel.ui.SearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
+        <activity
+            android:name="org.michaelbel.ui.ShowActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
+        <activity
+            android:name="org.michaelbel.ui.SeasonActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+
+        <activity
+            android:name="org.michaelbel.ui.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
 
     </application>
 
