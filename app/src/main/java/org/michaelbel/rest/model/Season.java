@@ -2,10 +2,15 @@ package org.michaelbel.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.michaelbel.realm.Realmed;
 import org.michaelbel.rest.Response;
-import org.michaelbel.rest.TmdbObject;
 
 import java.io.Serializable;
+import java.util.List;
+
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.RealmClass;
 
 /**
  * Date: 19 MAR 2018
@@ -14,11 +19,12 @@ import java.io.Serializable;
  * @author Michael Bel
  */
 
-public class Season extends TmdbObject implements Serializable {
+@RealmClass
+public class Season extends RealmObject implements Serializable {
 
     @Response
     @SerializedName("id")
-    public int id;
+    public int seasonId;
 
     @Response
     @SerializedName("air_date")
@@ -42,4 +48,19 @@ public class Season extends TmdbObject implements Serializable {
     @SerializedName("overview")
     public String overview;
 
+    @SerializedName("_id")
+    public String _id;
+
+    @Ignore
+    @SerializedName("episodes")
+    public List<Episode> episodes;
+
+    @Realmed
+    public int showId;
+
+    @Realmed
+    public int episodeWatchedCount;
+
+    @Realmed
+    public boolean isWatched;
 }

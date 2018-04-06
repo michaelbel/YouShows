@@ -1,13 +1,11 @@
 package org.michaelbel.rest.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 import org.michaelbel.realm.Realmed;
 import org.michaelbel.rest.Response;
 
+import java.io.Serializable;
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -23,7 +21,7 @@ import io.realm.annotations.RealmClass;
 
 @SuppressWarnings("all")
 @RealmClass
-public class Show extends RealmObject implements Parcelable {
+public class Show extends RealmObject implements Serializable {
 
     @Response
     @SerializedName("id")
@@ -116,7 +114,7 @@ public class Show extends RealmObject implements Parcelable {
 
     @Ignore
     @SerializedName("production_companies")
-    public List<Company> productionCompanies;
+    public List<Company> companies;
 
     @Ignore
     @SerializedName("seasons")
@@ -134,7 +132,10 @@ public class Show extends RealmObject implements Parcelable {
     @Realmed
     public int viewsNumber;
 
-    public Show() {}
+    @Realmed
+    public int lastWatchDate;
+
+    /*public Show() {}
 
     protected Show(Parcel in) {
         showId = in.readInt();
@@ -148,13 +149,6 @@ public class Show extends RealmObject implements Parcelable {
         originalLanguage = in.readString();
         voteCount = in.readInt();
         originalName = in.readString();
-        homepage = in.readString();
-        inProduction = in.readByte() != 0x00;
-        lastAirDate = in.readString();
-        numberEpisodes = in.readInt();
-        numberSeasons = in.readInt();
-        status = in.readString();
-        type = in.readString();
     }
 
     @Override
@@ -175,13 +169,6 @@ public class Show extends RealmObject implements Parcelable {
         dest.writeString(originalLanguage);
         dest.writeInt(voteCount);
         dest.writeString(originalName);
-        dest.writeString(homepage);
-        dest.writeByte((byte) (inProduction ? 0x01 : 0x00));
-        dest.writeString(lastAirDate);
-        dest.writeInt(numberEpisodes);
-        dest.writeInt(numberSeasons);
-        dest.writeString(status);
-        dest.writeString(type);
     }
 
     @SuppressWarnings("unused")
@@ -195,5 +182,5 @@ public class Show extends RealmObject implements Parcelable {
         public Show[] newArray(int size) {
             return new Show[size];
         }
-    };
+    };*/
 }
