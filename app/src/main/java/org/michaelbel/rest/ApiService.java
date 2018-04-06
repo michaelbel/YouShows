@@ -1,7 +1,7 @@
 package org.michaelbel.rest;
 
-import org.michaelbel.rest.model.SeasonDetails;
-import org.michaelbel.rest.model.ShowDetails;
+import org.michaelbel.rest.model.Season;
+import org.michaelbel.rest.model.Show;
 import org.michaelbel.rest.response.ShowsResponse;
 
 import retrofit2.Call;
@@ -57,7 +57,7 @@ public interface ApiService {
     );
 
     @GET("tv/{tv_id}?")
-    Call<ShowDetails> details(
+    Call<Show> details(
         @Path("tv_id") int id,
         @Query("api_key") String apiKey,
         @Query("language") String lang
@@ -65,7 +65,7 @@ public interface ApiService {
     );
 
     @GET("tv/{tv_id}/season/{seasonNumber}?")
-    Call<SeasonDetails> season(
+    Call<Season> season(
         @Path("tv_id") int id,
         @Path("seasonNumber") int number,
         @Query("api_key") String apiKey,
