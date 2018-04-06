@@ -1,14 +1,42 @@
 <resources>
     <string name="AppName">Series Picker</string>
-    <string name="AppNameBeta">Series Picker Beta</string>
+    <string name="MyShows">My Shows</string>
+    <string name="Following">Following</string>
+    <string name="Search">Search</string>
+    <string name="About">About</string>
+    <string name="Settings">Settings</string>
+    <string name="Popular">Popular</string>
+    <string name="Trending">Trending</string>
+    <string name="NowPlaying">Now Playing</string>
+    <string name="TopRated">Top Rated</string>
+    <string name="Tune">Tune</string>
+    <string name="Share">Share</string>
+    <string name="ShareVia">Share via</string>
+    <string name="ShowImageDesc">Show Poster</string>
+    <string name="NoResults">No results</string>
+    <string name="NoConnection">No connection</string>
+    <string name="NoShows">No shows</string>
+    <string name="ExploreShows">Explore Shows</string>
+    <string name="InAppBrowser">In-App Browser</string>
+    <string name="InAppBrowserInfo">Open external links within the app</string>
+    <string name="MyShowsEmpty">Your shows list is empty</string>
+    <string name="ClickOn">Click on </string>
+    <string name="ClickOn2"> button to start explore shows</string>
+    <string name="Finished">Finished</string>
+    <string name="LoadingLabel">Loading label…</string>
+    <string name="NoOverview">No overview</string>
+    <string name="UnknownDate">Unknown date</string>
+    <string name="Seasons">Seasons</string>
+    <string name="SeasonsCount">Seasons (%1$d)</string>
+    <string name="EpisodesWatched">%1$d Episodes watched</string>
+    <string name="NoEpisodesWatched">No Episodes Watched</string>
+
     <!--main-->
     <string name="Ok">OK</string>
     <string name="Done">Done</string>
     <string name="Cancel">Cancel</string>
     <string name="Remove">Remove</string>
-    <string name="Search">Search</string>
     <string name="SeasonCount">%1$d Season</string>
-    <string name="SeasonsCount">%1$d Seasons</string>
     <string name="EpisodeCount">%1$d Episode</string>
     <string name="SCount">S0%1$d</string>
     <string name="SsCount">S%1$d</string>
@@ -19,7 +47,6 @@
     <string name="UpdateSeries">Update Series</string>
     <string name="RemoveSeries">Remove Series</string>
     <string name="SeriesTitle">Series Title</string>
-    <string name="Seasons">Seasons</string>
     <string name="Episodes">Episodes</string>
     <string name="NoEpisodes">No Episodes</string>
     <string name="NoSeries">No Series</string>
@@ -32,13 +59,11 @@
     <string name="SeriesCount">%1$d Series</string>
     <string name="EditTitle">Edit Title</string>
     <string name="NoImage">No Image</string>
+    <string name="SpeakNow">Speak now</string>
     <!--settings-->
-    <string name="Settings">Settings</string>
     <string name="Themes">Themes</string>
     <string name="ThemeLight">Light</string>
     <string name="ThemeNight">Night</string>
-    <string name="InAppBrowser">In-App Browser</string>
-    <string name="InAppBrowserInfo">Open external links within the app</string>
     <string name="ImageQuality">Image Quality</string>
     <string name="ImageQualityLow">Low</string>
     <string name="ImageQualityMedium">Medium</string>
@@ -56,7 +81,6 @@
     <string name="ShortNumberFormat">Short Number Format</string>
     <string name="ShortNumberFormatInfo">Display seasons and episodes as S &amp; E</string>
     <!--about-->
-    <string name="About">About</string>
     <string name="RateGooglePlay">Rate on Google Play</string>
     <string name="ForkGithub">Fork on Github</string>
     <string name="Feedback">Feedback</string>
