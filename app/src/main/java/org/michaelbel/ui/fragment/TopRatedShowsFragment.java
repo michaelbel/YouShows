@@ -117,7 +117,7 @@ public class TopRatedShowsFragment extends Fragment {
         recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setEmptyView(emptyView);
+        //recyclerView.setEmptyView(emptyView);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
@@ -217,6 +217,7 @@ public class TopRatedShowsFragment extends Fragment {
         if (firstPage) {
             fragmentLayout.setRefreshing(false);
             progressBar.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
 
             adapter.addAll(results);
 
@@ -241,6 +242,7 @@ public class TopRatedShowsFragment extends Fragment {
     public void showError(int mode) {
         fragmentLayout.setRefreshing(false);
         progressBar.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
         emptyView.setMode(mode);
     }
 }

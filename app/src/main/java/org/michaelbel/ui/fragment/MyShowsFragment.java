@@ -1,7 +1,6 @@
 package org.michaelbel.ui.fragment;
 
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +22,6 @@ import org.michaelbel.old.ui_old.view.RecyclerListView;
 import org.michaelbel.rest.model.Show;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.ui.MainActivity;
-import org.michaelbel.ui.ShowActivity;
 import org.michaelbel.ui.adapter.MyShowsAdapter;
 import org.michaelbel.ui.view.MyShowView;
 import org.michaelbel.ui.view.MyShowsEmptyView;
@@ -42,8 +40,8 @@ import io.realm.RealmResults;
 
 public class MyShowsFragment extends Fragment {
 
-    private int prevPosition;
     private int prevTop;
+    private int prevPosition;
     private boolean scrollUpdated;
     private boolean floatingHidden;
     private final AccelerateDecelerateInterpolator floatingInterpolator = new AccelerateDecelerateInterpolator();
@@ -97,10 +95,7 @@ public class MyShowsFragment extends Fragment {
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof MyShowView) {
                 Show show = adapter.getShows().get(position);
-
-                Intent intent = new Intent(activity, ShowActivity.class);
-                intent.putExtra("show", show);
-                startActivity(intent);
+                activity.startShow(show);
             }
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -143,7 +138,7 @@ public class MyShowsFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<Show> results = realm.where(Show.class).findAll();
+        RealmResults<Show> results = realm.where(Show.class).equalTo("isFollow", true).findAll();
         if (results.isEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
@@ -160,7 +155,7 @@ public class MyShowsFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<Show> results = realm.where(Show.class).findAll();
+        RealmResults<Show> results = realm.where(Show.class).equalTo("isFollow", true).findAll();
         if (results.isEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
         } else {

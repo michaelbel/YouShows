@@ -217,6 +217,7 @@ public class PopularShowsFragment extends Fragment {
         if (firstPage) {
             fragmentLayout.setRefreshing(false);
             progressBar.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
 
             adapter.addAll(results);
 
@@ -241,6 +242,7 @@ public class PopularShowsFragment extends Fragment {
     public void showError(int mode) {
         fragmentLayout.setRefreshing(false);
         progressBar.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
         emptyView.setMode(mode);
     }
 }
