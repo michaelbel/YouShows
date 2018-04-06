@@ -15,13 +15,21 @@ import android.view.MenuItem;
 
 import org.michaelbel.material.widget2.FragmentsPagerAdapter;
 import org.michaelbel.old.Theme;
+import org.michaelbel.rest.model.Show;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.ui.fragment.FollowingFragment;
 import org.michaelbel.ui.fragment.MyShowsFragment;
 
+/**
+ * Date: 06 APR 2018
+ * Time: 22:33 MSK
+ *
+ * @author Michael Bel
+ */
+
 public class MainActivity extends AppCompatActivity {
 
-    private final int NOTIFICATION_ICON_INDEX = 1;
+    private final int NOTIFICATION_ICON_INDEX = 0;
 
     private final int tab_shows = 0;
     private final int tab_follow = 1;
@@ -35,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public TabLayout tabLayout;
     public FloatingActionButton floatingButton;
 
-    private MyShowsFragment myShowsFragment;
     private FollowingFragment followingEpisodesFragment;
 
     @Override
@@ -50,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        myShowsFragment = new MyShowsFragment();
         followingEpisodesFragment = new FollowingFragment();
 
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());
-        adapter.addFragment(myShowsFragment, R.string.MyShows);
+        adapter.addFragment(new MyShowsFragment(), R.string.MyShows);
         //adapter.addFragment(followingEpisodesFragment, R.string.Following);
 
         viewPager.setAdapter(adapter);
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.secondaryText), ContextCompat.getColor(this, R.color.primaryText));
 
         floatingButton.setImageResource(R.drawable.ic_plus);
-        floatingButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ExploreActivity.class)));
+        floatingButton.setOnClickListener(v -> startExplore());
 
         SharedPreferences prefs = getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         iconNotificationMode = prefs.getBoolean("following_notifications", true);
@@ -96,14 +102,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-
-        menu.add(R.string.Search)
-            .setIcon(R.drawable.ic_search)
-            .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            .setOnMenuItemClickListener(item -> {
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
-                return true;
-            });
 
         menu.add(null)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
@@ -146,5 +144,18 @@ public class MainActivity extends AppCompatActivity {
                 menu.getItem(NOTIFICATION_ICON_INDEX).setIcon(R.drawable.ic_notifications_off);
             }
         }
+    }
+
+    public void startExplore() {
+        startActivity(new Intent(MainActivity.this, ExploreActivity.class));
+    }
+
+    public void startShow(Show show) {
+        Intent intent = new Intent(this, ShowActivity.class);
+        intent.putExtra("id", show.showId);
+        intent.putExtra("name", show.name);
+        intent.putExtra("overview", show.overview);
+        intent.putExtra("backdropPath", show.backdropPath);
+        startActivity(intent);
     }
 }
