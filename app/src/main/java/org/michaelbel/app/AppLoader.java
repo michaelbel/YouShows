@@ -1,13 +1,15 @@
-package org.michaelbel.seriespicker;
+package org.michaelbel.app;
 
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class AppLoader extends Application {
 
     private RxBus rxBus;
-    /*private RealmConfiguration realmConfig;*/
     public static volatile Context AppContext;
     public static volatile Handler AppHandler;
 
@@ -20,11 +22,13 @@ public class AppLoader extends Application {
 
         rxBus = new RxBus();
 
-        /*Realm.init(this);
-        realmConfig = new RealmConfiguration.Builder()
-                .name("spRealmDBv3.realm")
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                //.schemaVersion(1)
+                //.migration()
+                .name("RealmDb-v11.realm")
                 .build();
-        Realm.setDefaultConfiguration(realmConfig);*/
+        Realm.setDefaultConfiguration(config);
     }
 
     public RxBus bus() {
