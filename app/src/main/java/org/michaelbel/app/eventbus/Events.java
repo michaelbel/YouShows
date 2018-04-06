@@ -1,7 +1,15 @@
-package org.michaelbel.app;
+package org.michaelbel.app.eventbus;
+
+import org.michaelbel.app.NotTested;
 
 public class Events {
 
+    public static class UpdateSeasonView {
+
+        public UpdateSeasonView() {}
+    }
+
+    @NotTested
     public static class DeleteSeries {
 
         private String seriesTitle;
@@ -15,6 +23,7 @@ public class Events {
         }
     }
 
+    @NotTested
     public static class UpdateSeries {
 
         private String seriesTitle;
@@ -28,6 +37,7 @@ public class Events {
         }
     }
 
+    @NotTested
     public static class AddSeries {
 
         public AddSeries() {}
