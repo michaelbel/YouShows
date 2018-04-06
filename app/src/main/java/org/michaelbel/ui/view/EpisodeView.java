@@ -21,6 +21,13 @@ import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.old.Theme;
 import org.michaelbel.seriespicker.R;
 
+/**
+ * Date: 06 APR 2018
+ * Time: 22:19 MSK
+ *
+ * @author Michael Bel
+ */
+
 @SuppressLint("ClickableViewAccessibility")
 public class EpisodeView extends FrameLayout {
 
