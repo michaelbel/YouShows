@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import org.michaelbel.app.eventbus.RxBus;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
