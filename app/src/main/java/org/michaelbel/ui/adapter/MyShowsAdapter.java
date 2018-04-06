@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import org.michaelbel.old.ui_old.adapter.Holder;
+import org.michaelbel.realm.RealmDb;
 import org.michaelbel.rest.model.Show;
 import org.michaelbel.ui.view.MyShowView;
 
@@ -43,12 +44,10 @@ public class MyShowsAdapter extends RecyclerView.Adapter {
         MyShowView view = (MyShowView) holder.itemView;
         view.setPoster(show.posterPath);
         view.setName(show.name);
-        view.setStatus(show.inProduction);
         view.setDates(show.firstAirDate, show.lastAirDate);
-        view.setSeasons(show.numberSeasons);
-        view.setEpisodes(show.numberEpisodes);
-        view.setProgress();
-        view.setDivider(true);
+        view.setWatchedEpisodes(RealmDb.getWatchedEpisodesInShow(show.showId));
+        view.setStatus(show.inProduction);
+        view.setDivider(position != shows.size() - 1);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
