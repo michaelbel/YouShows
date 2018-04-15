@@ -17,8 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
@@ -40,12 +38,15 @@ import java.util.Locale;
 @SuppressLint({"ClickableViewAccessibility", "InflateParams"})
 public class MyShowView extends FrameLayout {
 
+    public static final int TYPE_SHOW = 0;
+    public static final int TYPE_SEASONS = 1;
+    public static final int TYPE_EPISODES = 2;
+
     private TextView nameText;
     private TextView datesText;
     private CardView statusCard;
     private ImageView posterImage;
-    private CardView posterPlaceholder;
-    private TextView episodeWatchedText;
+    private TextView progressWatchedText;
     //private CircleProgressView circleProgressView;
 
     private Paint paint;
@@ -69,7 +70,6 @@ public class MyShowView extends FrameLayout {
         addView(view);
 
         posterImage = view.findViewById(R.id.poster_image);
-        posterPlaceholder = view.findViewById(R.id.place_holder);
 
         nameText = view.findViewById(R.id.name_text);
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
@@ -90,8 +90,8 @@ public class MyShowView extends FrameLayout {
         ImageView viewsIcon = view.findViewById(R.id.views_icon);
         viewsIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_eye, ContextCompat.getColor(context, R.color.iconActive)));
 
-        episodeWatchedText = view.findViewById(R.id.watched_episodes_text);
-        episodeWatchedText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        progressWatchedText = view.findViewById(R.id.watched_episodes_text);
+        progressWatchedText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         //circleProgressView = view.findViewById(R.id.circle_progress);
         //circleProgressView.setVisibility(GONE);
@@ -101,21 +101,8 @@ public class MyShowView extends FrameLayout {
 
     public void setPoster(@NonNull String posterPath) {
         Picasso.with(getContext())
-               .load(String.format(Locale.US, ApiFactory.TMDB_IMAGE, "original", posterPath))
-               .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-               .into(posterImage, new Callback() {
-                   @Override
-                   public void onSuccess() {
-                       posterImage.setVisibility(VISIBLE);
-                       posterPlaceholder.setVisibility(INVISIBLE);
-                   }
-
-                   @Override
-                   public void onError() {
-                       posterImage.setVisibility(GONE);
-                       posterPlaceholder.setVisibility(VISIBLE);
-                   }
-               });
+               .load(String.format(Locale.US, ApiFactory.TMDB_IMAGE, "w200", posterPath))
+               .into(posterImage);
     }
 
     public void setName(String title) {
@@ -136,8 +123,18 @@ public class MyShowView extends FrameLayout {
         statusCard.setVisibility(status ? GONE : VISIBLE);
     }
 
-    public void setWatchedEpisodes(int episodes) {
-        episodeWatchedText.setText(episodes != 0 ? getContext().getString(R.string.EpisodesWatched, episodes) : getContext().getString(R.string.NoEpisodesWatched));
+    public void setProgressWatchedText(int choice, int count) {
+        if (choice == TYPE_SEASONS) {
+            progressWatchedText.setText(getResources().getQuantityString(R.plurals.Seasons, count, count));
+        } else if (choice == TYPE_EPISODES) {
+            if (count == 0) {
+                progressWatchedText.setText(getResources().getString(R.string.NoEpisodesWatched));
+            } else {
+                progressWatchedText.setText(getResources().getQuantityString(R.plurals.Episodes, count, count));
+            }
+        } else if (choice == TYPE_SHOW) {
+            progressWatchedText.setText(getResources().getString(R.string.ShowIsOverWatched));
+        }
     }
 
     /*public void setProgress(int watchedEpisodes, int allEpisodes) {
