@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MyShowsAdapter extends RecyclerView.Adapter {
 
-    protected List<Show> shows;
+    private List<Show> shows;
 
     public MyShowsAdapter() {
         shows = new ArrayList<>();
@@ -42,13 +42,23 @@ public class MyShowsAdapter extends RecyclerView.Adapter {
         Show show = shows.get(position);
 
         MyShowView view = (MyShowView) holder.itemView;
-        view.setPoster(show.posterPath);
         view.setName(show.name);
+        view.setPoster(show.posterPath);
         view.setDates(show.firstAirDate, show.lastAirDate);
-        view.setWatchedEpisodes(RealmDb.getWatchedEpisodesInShow(show.showId));
         view.setStatus(show.inProduction);
         view.setDivider(position != shows.size() - 1);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        int watchedSeasons = RealmDb.getWatchedSeasonsInShow(show.showId);
+
+        if (watchedSeasons == -1) {
+            view.setProgressWatchedText(MyShowView.TYPE_SHOW, -1);
+        } else if (watchedSeasons > 0) {
+            view.setProgressWatchedText(MyShowView.TYPE_SEASONS, watchedSeasons);
+        } else {
+            int watchedEpisodes = RealmDb.getWatchedEpisodesInShow(show.showId);
+            view.setProgressWatchedText(MyShowView.TYPE_EPISODES, watchedEpisodes);
+        }
     }
 
     @Override
