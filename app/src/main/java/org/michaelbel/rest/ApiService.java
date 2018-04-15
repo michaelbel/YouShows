@@ -64,10 +64,10 @@ public interface ApiService {
         //@Query("append_to_response") String append_to_response
     );
 
-    @GET("tv/{tv_id}/season/{seasonNumber}?")
+    @GET("tv/{tv_id}/season/{season_number}?")
     Call<Season> season(
         @Path("tv_id") int id,
-        @Path("seasonNumber") int number,
+        @Path("season_number") int number,
         @Query("api_key") String apiKey,
         @Query("language") String lang
         //@Query("append_to_response") String append_to_response
