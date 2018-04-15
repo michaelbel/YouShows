@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import org.michaelbel.realm.Realmed;
 import org.michaelbel.rest.Response;
 
-import java.io.Serializable;
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -21,7 +20,7 @@ import io.realm.annotations.RealmClass;
 
 @SuppressWarnings("all")
 @RealmClass
-public class Show extends RealmObject implements Serializable {
+public class Show extends RealmObject /*implements Parcelable*/ {
 
     @Response
     @SerializedName("id")
