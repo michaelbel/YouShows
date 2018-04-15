@@ -14,8 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.michaelbel.old.LayoutHelper;
@@ -50,14 +48,14 @@ public class BackdropView extends FrameLayout {
         backdropImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(backdropImage);
 
-//------TextView------------------------------------------------------------------------------------
+//------Show Status Label---------------------------------------------------------------------------
 
         CardView cardView = new CardView(context);
         cardView.setCardElevation(0);
         cardView.setUseCompatPadding(false);
         cardView.setPreventCornerOverlap(false);
-        cardView.setRadius(ScreenUtils.dp(5));
         cardView.setCardBackgroundColor(0x80000000);
+        cardView.setRadius(ScreenUtils.dp(5));
         cardView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 6, 0, 16 + 16 + 56, 4));
         addView(cardView);
 
@@ -65,7 +63,7 @@ public class BackdropView extends FrameLayout {
         textView.setLines(1);
         textView.setMaxLines(1);
         textView.setSingleLine();
-        textView.setText(R.string.LoadingLabel);
+        textView.setText(R.string.Loading);
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
         textView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
@@ -77,14 +75,14 @@ public class BackdropView extends FrameLayout {
     public void setImage(String path) {
         Picasso.with(getContext())
                .load(path)
-               .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-               .into(backdropImage, new Callback() {
+               //.memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+               .into(backdropImage/*, new Callback() {
                    @Override
                    public void onSuccess() {}
 
                    @Override
                    public void onError() {}
-               });
+               }*/);
     }
 
     public void setLabel(String text) {
