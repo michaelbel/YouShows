@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import org.michaelbel.rest.model.Show;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Date: 25 FEB 2018
@@ -21,14 +20,14 @@ public class PaginationAdapter extends RecyclerView.Adapter {
     public final int ITEM = 0;
     public final int LOADING = 1;
 
-    protected List<Show> objectList;
+    protected ArrayList<Show> objectList;
     protected boolean isLoadingAdded = false;
 
     public PaginationAdapter() {
         objectList = new ArrayList<>();
     }
 
-    public List<Show> getList() {
+    public ArrayList<Show> getList() {
         return objectList;
     }
 
