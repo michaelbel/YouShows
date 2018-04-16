@@ -23,13 +23,41 @@
     <string name="ClickOn">Click on </string>
     <string name="ClickOn2"> button to start explore shows</string>
     <string name="Finished">Finished</string>
-    <string name="LoadingLabel">Loading label…</string>
+    <string name="Loading">Loading…</string>
     <string name="NoOverview">No overview</string>
     <string name="UnknownDate">Unknown date</string>
     <string name="Seasons">Seasons</string>
     <string name="SeasonsCount">Seasons (%1$d)</string>
-    <string name="EpisodesWatched">%1$d Episodes watched</string>
-    <string name="NoEpisodesWatched">No Episodes Watched</string>
+    <string name="ShowInProduction">Show in production</string>
+    <string name="ShowIsFinished">Show is finished</string>
+    <string name="ShowIsOverWatched">Show is over watched</string>
+    <string name="NoEpisodesWatched">No Episodes watched</string>
+    <plurals name="Episodes">
+        <item quantity="zero">No Episodes watched</item>
+        <item quantity="one">%d Episode watched</item>
+        <item quantity="two">%d Episodes watched</item>
+        <item quantity="few">%d Episodes watched</item>
+        <item quantity="many">%d Episodes watched</item>
+        <item quantity="other">No Episodes watched</item>
+    </plurals>
+    <plurals name="Seasons">
+        <item quantity="zero">No Seasons watched</item>
+        <item quantity="one">%d Season watched</item>
+        <item quantity="two">%d Seasons watched</item>
+        <item quantity="few">%d Seasons watched</item>
+        <item quantity="many">%d Seasons watched</item>
+        <item quantity="other">%d Seasons watched</item>
+    </plurals>
+    <string name="Info">Info</string>
+    <string name="OriginalName">Original Name</string>
+    <string name="OriginalCountry">Original Country</string>
+    <string name="Status">Status</string>
+    <string name="ShowType">Show Type</string>
+    <string name="FirstAirDate">First Air Date</string>
+    <string name="LastAirDate">Last Air Date</string>
+    <string name="GenresTitle">Genres</string>
+    <string name="CompaniesTitle">Companies</string>
+    <string name="HomepageTitle">Homepage</string>
 
     <!--main-->
     <string name="Ok">OK</string>
