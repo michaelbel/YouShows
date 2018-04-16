@@ -3,6 +3,9 @@ package org.michaelbel.ui.view;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,20 +60,31 @@ public class SeasonsLayout extends FrameLayout {
         seasonsTitle.setMaxLines(1);
         seasonsTitle.setSingleLine();
         seasonsTitle.setText(R.string.Seasons);
-        seasonsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        seasonsTitle.setTextColor(ContextCompat.getColor(context, R.color.accent));
+        seasonsTitle.setGravity(Gravity.CENTER_VERTICAL);
+        seasonsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        seasonsTitle.setTextColor(ContextCompat.getColor(context, R.color.yellow));
         seasonsTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         seasonsTitle.setOnLongClickListener(view -> {
+            Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            if (vibrator != null) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(20, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    // Deprecated in API 26
+                    vibrator.vibrate(20);
+                }
+            }
+
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
-            boolean seasonCountVisible = prefs.getBoolean("seasonCountVisible", false);
+            boolean seasonCountVisible = prefs.getBoolean("seasonsCountVisible", false);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("seasonCountVisible", !seasonCountVisible);
+            editor.putBoolean("seasonsCountVisible", !seasonCountVisible);
             editor.apply();
 
             setShowTitle(show);
             return true;
         });
-        seasonsTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 8, 16, 0));
+        seasonsTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 42, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         linearLayout.addView(seasonsTitle);
 
         adapter = new SeasonsAdapter();
@@ -95,7 +109,7 @@ public class SeasonsLayout extends FrameLayout {
 
     public void setShowTitle(Show show) {
         SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
-        boolean seasonCountVisible = prefs.getBoolean("seasonCountVisible", false);
+        boolean seasonCountVisible = prefs.getBoolean("seasonsCountVisible", false);
         seasonsTitle.setText(seasonCountVisible ? getContext().getString(R.string.SeasonsCount, show.numberSeasons) : getContext().getString(R.string.Seasons));
     }
 
@@ -139,13 +153,14 @@ public class SeasonsLayout extends FrameLayout {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
             Season season = seasons.get(position);
 
-            int watchedCount = RealmDb.getWatchedEpisodesInSeason(show.showId, season.seasonId);
+            int allEpisodes = season.episodeCount;
+            int watchedEpisodes = RealmDb.getWatchedEpisodesInSeason(show.showId, season.seasonId);
 
             SeasonView view = (SeasonView) holder.itemView;
             view.setName(season.name);
             view.setAirDate(season.airDate);
-            view.setSelected(watchedCount == season.episodeCount);
-            view.setEpisodeCount(watchedCount, season.episodeCount);
+            view.setEpisodeCount(watchedEpisodes, allEpisodes);
+            view.setSelected(allEpisodes != 0 && watchedEpisodes == allEpisodes);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 

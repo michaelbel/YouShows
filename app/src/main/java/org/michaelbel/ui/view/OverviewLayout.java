@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.Theme;
 import org.michaelbel.seriespicker.R;
 
 import at.blogc.android.views.ExpandableTextView;
@@ -26,19 +25,19 @@ import at.blogc.android.views.ExpandableTextView;
  */
 
 @SuppressLint("InflateParams")
-public class ShowLayout extends LinearLayout {
+public class OverviewLayout extends LinearLayout {
 
     private TextView titleText;
     private ExpandableTextView overviewText;
 
-    public ShowLayout(@NonNull Context context) {
+    public OverviewLayout(@NonNull Context context) {
         super(context);
 
         setOrientation(VERTICAL);
         setBackgroundColor(ContextCompat.getColor(context, R.color.background));
 
         titleText = new TextView(context);
-        titleText.setTextIsSelectable(false);
+        titleText.setTextIsSelectable(true);
         titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
         titleText.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
         titleText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
@@ -47,14 +46,13 @@ public class ShowLayout extends LinearLayout {
 
         overviewText = (ExpandableTextView) LayoutInflater.from(context).inflate(R.layout.item_overview, null);
         overviewText.setMaxLines(5);
-        overviewText.setTextIsSelectable(true);
-        overviewText.setAnimationDuration(350L);
         overviewText.setTextIsSelectable(false);
+        overviewText.setAnimationDuration(350L);
         overviewText.setEllipsize(TextUtils.TruncateAt.END);
         overviewText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         overviewText.setInterpolator(new OvershootInterpolator(0));
+        overviewText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
         overviewText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        overviewText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         overviewText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 12, 2, 12, 12));
         overviewText.setOnClickListener(view -> overviewText.toggle());
         addView(overviewText);

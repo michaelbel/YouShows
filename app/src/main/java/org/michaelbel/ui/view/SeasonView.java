@@ -82,7 +82,7 @@ public class SeasonView extends FrameLayout {
 
     public void setSelected(boolean selected) {
         selectIcon.setImageDrawable(selected ?
-            Theme.getIcon(R.drawable.ic_check_circle, ContextCompat.getColor(getContext(), R.color.accent)) :
+            Theme.getIcon(R.drawable.ic_check_circle, ContextCompat.getColor(getContext(), R.color.green)) :
             Theme.getIcon(R.drawable.ic_check_outline, ContextCompat.getColor(getContext(), R.color.iconActive))
         );
     }

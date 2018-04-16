@@ -7,15 +7,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.old.Theme;
@@ -33,7 +31,8 @@ public class EpisodeView extends FrameLayout {
 
     protected TextView textView;
     protected TextView valueText;
-    protected AppCompatCheckBox checkBox;
+    protected CheckBox checkBox;
+    protected ImageView selectIcon;
 
     private Paint paint;
     private boolean divider;
@@ -70,10 +69,16 @@ public class EpisodeView extends FrameLayout {
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
         addView(valueText);
 
-        checkBox = new AppCompatCheckBox(context);
-        checkBox.setClickable(false);
-        checkBox.setFocusable(false);
-        checkBox.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        selectIcon = new ImageView(context);
+        selectIcon.setVisibility(VISIBLE);
+        selectIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_check_outline, ContextCompat.getColor(context, R.color.green)));
+        selectIcon.setLayoutParams(LayoutHelper.makeFrame(29, 29, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 14, 0));
+        addView(selectIcon);
+
+        checkBox = new CheckBox(context, R.drawable.round_check2);
+        checkBox.setVisibility(VISIBLE);
+        checkBox.setColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, R.color.foreground));
+        checkBox.setLayoutParams(LayoutHelper.makeFrame(24, 24, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
     }
 
@@ -85,22 +90,13 @@ public class EpisodeView extends FrameLayout {
         valueText.setText(text);
     }
 
-    public void setChecked(boolean value) {
-        checkBox.setChecked(value);
+    public void setChecked(boolean value, boolean animated) {
+        checkBox.setChecked(value, animated);
     }
 
     public void setDivider(boolean divider) {
         this.divider = divider;
         setWillNotDraw(!divider);
-    }
-
-    public void changeLayoutParams() {
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if (AndroidExtensions.isLandscape()) {
-            params.leftMargin = ScreenUtils.dp(56);
-            params.rightMargin = ScreenUtils.dp(56);
-        }
-        setLayoutParams(params);
     }
 
     @Override
