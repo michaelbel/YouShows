@@ -1,7 +1,6 @@
 package org.michaelbel.realm;
 
 import org.michaelbel.app.NotTested;
-import org.michaelbel.material.annotation.Beta;
 import org.michaelbel.rest.model.Episode;
 import org.michaelbel.rest.model.Season;
 import org.michaelbel.rest.model.Show;
@@ -231,6 +230,10 @@ public class RealmDb {
         realmDb.close();
     }
 
+    public static boolean isSeasonWatched(int showId, Season season) {
+        return season.episodeCount == getWatchedEpisodesInSeason(showId, season.seasonId);
+    }
+
 //--Episode-----------------------------------------------------------------------------------------
 
     public static boolean isEpisodeWatched(int showId, int seasonId, int episodeId) {
@@ -287,12 +290,6 @@ public class RealmDb {
     }
 
 //--Not Tested--------------------------------------------------------------------------------------
-
-    @Beta
-    @NotTested
-    public static boolean isSeasonWatched(int showId, Season season) {
-        return season.episodeCount == getWatchedEpisodesInSeason(showId, season.seasonId);
-    }
 
     @NotTested
     public static boolean getShowStatus(int showId) {
