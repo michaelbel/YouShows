@@ -86,7 +86,12 @@ public class NowPlayingShowsFragment extends Fragment {
 
         fragmentLayout = new SwipeRefreshLayout(activity);
         fragmentLayout.setRefreshing(false);
-        fragmentLayout.setColorSchemeResources(R.color.accent);
+        fragmentLayout.setColorSchemeColors(
+            ContextCompat.getColor(activity, R.color.yellow),
+            ContextCompat.getColor(activity, R.color.red),
+            ContextCompat.getColor(activity, R.color.green),
+            ContextCompat.getColor(activity, R.color.accent)
+        );
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
         fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, R.color.primary));
         fragmentLayout.setOnRefreshListener(() -> {

@@ -2,6 +2,7 @@ package org.michaelbel.ui.fragment;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -65,6 +66,7 @@ public class TopRatedShowsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         activity = (ExploreActivity) getActivity();
     }
 
@@ -86,7 +88,12 @@ public class TopRatedShowsFragment extends Fragment {
 
         fragmentLayout = new SwipeRefreshLayout(activity);
         fragmentLayout.setRefreshing(false);
-        fragmentLayout.setColorSchemeResources(R.color.accent);
+        fragmentLayout.setColorSchemeColors(
+            ContextCompat.getColor(activity, R.color.yellow),
+            ContextCompat.getColor(activity, R.color.red),
+            ContextCompat.getColor(activity, R.color.green),
+            ContextCompat.getColor(activity, R.color.accent)
+        );
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
         fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, R.color.primary));
         fragmentLayout.setOnRefreshListener(() -> {
@@ -154,7 +161,25 @@ public class TopRatedShowsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadFirstPage();
+        if (savedInstanceState == null) {
+            loadFirstPage();
+        } else {
+            //adapter.addAll(savedInstanceState.getParcelableArrayList("array_list"));
+            recyclerView.getLayoutManager().onRestoreInstanceState(savedInstanceState.getParcelable("recycler_state"));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        Parcelable state = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable("recycler_state", state);
+        //outState.putParcelableArrayList("array_list", adapter.getList());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     public void loadFirstPage() {

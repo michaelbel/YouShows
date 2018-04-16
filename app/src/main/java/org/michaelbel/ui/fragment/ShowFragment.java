@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.AppLoader;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.old.LayoutHelper;
@@ -19,8 +20,9 @@ import org.michaelbel.rest.model.Season;
 import org.michaelbel.rest.model.Show;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.ui.ShowActivity;
+import org.michaelbel.ui.view.InfoLayout;
 import org.michaelbel.ui.view.SeasonsLayout;
-import org.michaelbel.ui.view.ShowLayout;
+import org.michaelbel.ui.view.OverviewLayout;
 
 import java.util.List;
 
@@ -37,8 +39,9 @@ public class ShowFragment extends Fragment {
     private ShowActivity activity;
     private List<Season> list;
 
-    private ShowLayout showLayout;
+    private OverviewLayout overviewLayout;
     private SeasonsLayout seasonsLayout;
+    private InfoLayout infoLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,17 +56,22 @@ public class ShowFragment extends Fragment {
         fragmentLayout.setOrientation(LinearLayout.VERTICAL);
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.appBar));
 
-        showLayout = new ShowLayout(activity);
-        showLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 6, 0, 0));
-        fragmentLayout.addView(showLayout);
+        overviewLayout = new OverviewLayout(activity);
+        overviewLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, 0));
+        fragmentLayout.addView(overviewLayout);
 
         seasonsLayout = new SeasonsLayout(activity);
         seasonsLayout.recyclerView.setOnItemClickListener((view, position) -> {
             Season season = seasonsLayout.getSeasons().get(position);
             activity.startSeason(season);
         });
-        seasonsLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 6, 0, 6));
+        seasonsLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 6, 0, 0));
         fragmentLayout.addView(seasonsLayout);
+
+        infoLayout = new InfoLayout(activity);
+        infoLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 6, 0, 0));
+        fragmentLayout.addView(infoLayout);
+
         return fragmentLayout;
     }
 
@@ -79,14 +87,14 @@ public class ShowFragment extends Fragment {
     }
 
     public void setName(String name) {
-        showLayout.setName(name);
+        overviewLayout.setName(name);
     }
 
     public void setOverview(String overview) {
         if (TextUtils.isEmpty(overview)) {
-            showLayout.setOverview(getString(R.string.NoOverview));
+            overviewLayout.setOverview(getString(R.string.NoOverview));
         } else {
-            showLayout.setOverview(overview);
+            overviewLayout.setOverview(overview);
         }
     }
 
@@ -96,5 +104,20 @@ public class ShowFragment extends Fragment {
         seasonsLayout.setSeasons(show.seasons);
 
         list = show.seasons;
+    }
+
+    public void setInfo(Show show) {
+        infoLayout.setGenres(AndroidExtensions.formatGenres(show.genres));
+
+        infoLayout.setOriginalName(show.originalName);
+        infoLayout.setCountries(AndroidExtensions.formatCountries(show.countries));
+
+        infoLayout.setStatus(show.status);
+        infoLayout.setType(show.type);
+
+        infoLayout.setDates(AndroidExtensions.formatDate(show.firstAirDate), AndroidExtensions.formatDate(show.lastAirDate));
+
+        infoLayout.setCompanies(AndroidExtensions.formatCompanies(show.companies));
+        infoLayout.setHomepage(show.homepage);
     }
 }
