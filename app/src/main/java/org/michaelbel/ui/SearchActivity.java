@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.rest.model.Show;
 import org.michaelbel.seriespicker.R;
 import org.michaelbel.ui.fragment.SearchFragment;
 
@@ -81,7 +82,7 @@ public class SearchActivity extends AppCompatActivity {
         searchEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         searchEditText.setTextColor(ContextCompat.getColor(this, R.color.md_white));
-        searchEditText.setHintTextColor(ContextCompat.getColor(this, R.color.night_disabledHintTextColor));
+        searchEditText.setHintTextColor(ContextCompat.getColor(this, R.color.disabledHintText));
         searchEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,9 +90,9 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence text, int start, int before, int count) {
-                if (!TextUtils.isEmpty(text)) {
+                /*if (!TextUtils.isEmpty(text)) {
                     searchFragment.search(text.toString().trim());
-                }
+                }*/
                 changeActionIcon();
             }
 
@@ -162,6 +163,15 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void startShow(Show show) {
+        Intent intent = new Intent(this, ShowActivity.class);
+        intent.putExtra("id", show.showId);
+        intent.putExtra("name", show.name);
+        intent.putExtra("overview", show.overview);
+        intent.putExtra("backdropPath", show.backdropPath);
+        startActivity(intent);
     }
 
     private void changeActionIcon() {

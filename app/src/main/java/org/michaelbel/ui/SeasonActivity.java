@@ -1,15 +1,19 @@
 package org.michaelbel.ui;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import org.michaelbel.old.Theme;
+import org.michaelbel.realm.RealmDb;
 import org.michaelbel.rest.model.Season;
-import org.michaelbel.rest.model.Show;
 import org.michaelbel.seriespicker.R;
-import org.michaelbel.ui.fragment.SeasonFragment;
+import org.michaelbel.ui.fragment.EpisodesFragment;
 
 /**
  * Date: 19 MAR 2018
@@ -20,11 +24,14 @@ import org.michaelbel.ui.fragment.SeasonFragment;
 
 public class SeasonActivity extends AppCompatActivity {
 
-    public Show show;
+    public int showId;
     public Season season;
 
     public Toolbar toolbar;
     public TextView toolbarTitle;
+    public FloatingActionButton fabButton;
+
+    public EpisodesFragment fragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,18 +39,60 @@ public class SeasonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_season);
 
         toolbar = findViewById(R.id.toolbar);
-        toolbarTitle = findViewById(R.id.toolbar_title);
-
-        toolbar.setNavigationIcon(R.drawable.ic_clear);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
-        show = (Show) getIntent().getSerializableExtra("show");
+        showId = getIntent().getIntExtra("showId", 0);
         season = (Season) getIntent().getSerializableExtra("season");
 
+        toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(season.name);
 
-        SeasonFragment fragment = (SeasonFragment) getSupportFragmentManager().findFragmentById(R.id.seasonFragment);
-        fragment.showEpisodes(show.showId, season.seasonNumber);
+        fabButton = findViewById(R.id.fab);
+        fabButton.setClickable(false);
+        fabButton.setLongClickable(false);
+        fabButton.setOnClickListener(view -> {
+            markSeasonsAsWatched(showId, season);
+        });
+        changeFabStyle(RealmDb.isSeasonWatched(showId, season));
+
+        fragment = (EpisodesFragment) getSupportFragmentManager().findFragmentById(R.id.seasonFragment);
+        //loadSeason(season);
+        fragment.showEpisodes(showId, season);
+    }
+
+    public void changeFabStyle(boolean watched) {
+        fabButton.setImageDrawable(watched ?
+            Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
+            Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(this, R.color.iconActive))
+        );
+        fabButton.setBackgroundTintList(watched ?
+            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
+            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent))
+        );
+    }
+
+    public void changeFabStyle() {
+        boolean watched = RealmDb.isSeasonWatched(showId, season);
+
+        fabButton.setImageDrawable(watched ?
+                Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
+                Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(this, R.color.iconActive))
+        );
+        fabButton.setBackgroundTintList(watched ?
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent))
+        );
+    }
+
+    public void markSeasonsAsWatched(int showId, Season season) {
+        if (RealmDb.isSeasonWatched(showId, season)) {
+            fragment.removeEpisodesFromRealm();
+            changeFabStyle(false);
+        } else {
+            fragment.addEpisodesToRealm();
+            changeFabStyle(true);
+        }
     }
 }

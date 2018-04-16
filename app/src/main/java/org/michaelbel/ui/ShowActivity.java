@@ -13,9 +13,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -44,7 +44,12 @@ import retrofit2.Response;
 
 public class ShowActivity extends AppCompatActivity {
 
-    public Show showExtra;
+    public int extraId;
+    public String extraName;
+    public String extraBackdrop;
+    public String extraOverview;
+
+    private ShowFragment fragment;
 
     public Toolbar toolbar;
     public TextView toolbarTitle;
@@ -53,26 +58,19 @@ public class ShowActivity extends AppCompatActivity {
     public FloatingActionButton followButton;
     public CollapsingToolbarLayout collapsingToolbarLayout;
 
-    private ShowFragment fragment;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
-        showExtra = (Show) getIntent().getSerializableExtra("show");
-        if (showExtra == null) {
-            Show s = new Show();
-            s.showId = getIntent().getIntExtra("id", 0);
-            s.name = getIntent().getStringExtra("name");
-            s.overview = getIntent().getStringExtra("overview");
-            s.backdropPath = getIntent().getStringExtra("backdropPath");
-            showExtra = s;
-        }
+        extraId = getIntent().getIntExtra("id", 0);
+        extraName = getIntent().getStringExtra("name");
+        extraOverview = getIntent().getStringExtra("overview");
+        extraBackdrop = getIntent().getStringExtra("backdropPath");
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(0x33000000);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
@@ -81,35 +79,35 @@ public class ShowActivity extends AppCompatActivity {
 
         scrollView = findViewById(R.id.scroll_view);
         collapsingToolbarLayout = findViewById(R.id.collapsing_layout);
+        //setCollapsingLabel(RealmDb.getShowStatus(extraId));
 
         toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(showExtra.name);
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+        toolbarTitle.setText(extraName);
+        /*toolbarTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 scrollView.fullScroll(NestedScrollView.FOCUS_UP);
             }
-        });
+        });*/
 
         collapsingView = findViewById(R.id.backdrop_image);
-        collapsingView.setLabel("Loading...");
-        collapsingView.setImage("http://image.tmdb.org/t/p/original/" + showExtra.backdropPath);
+        collapsingView.setImage("http://image.tmdb.org/t/p/original/" + extraBackdrop);
 
         followButton = findViewById(R.id.follow_fab);
         followButton.setClickable(false);
         followButton.setLongClickable(false);
         followButton.setOnClickListener(view -> {
-            boolean follow = RealmDb.isShowFollow(showExtra.showId);
+            boolean follow = RealmDb.isShowFollow(extraId);
             followShow(!follow);
             changeFabStyle(!follow);
         });
-        changeFabStyle(RealmDb.isShowFollow(showExtra.showId));
+        changeFabStyle(RealmDb.isShowFollow(extraId));
 
         fragment = (ShowFragment) getSupportFragmentManager().findFragmentById(R.id.showFragment);
-        fragment.setName(showExtra.name);
-        fragment.setOverview(showExtra.overview);
+        fragment.setName(extraName);
+        fragment.setOverview(extraOverview);
 
-        loadDetails(showExtra.showId);
+        loadDetails();
     }
 
     @Override
@@ -125,7 +123,7 @@ public class ShowActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, String.format(Locale.US, ApiFactory.TMDB_MOVIE, showExtra.showId));
+                intent.putExtra(Intent.EXTRA_TEXT, String.format(Locale.US, ApiFactory.TMDB_MOVIE, extraId));
                 startActivity(Intent.createChooser(intent, getString(R.string.ShareVia)));
                 return true;
             });
@@ -136,17 +134,17 @@ public class ShowActivity extends AppCompatActivity {
     private void changeFabStyle(boolean follow) {
         followButton.setImageDrawable(follow ?
             Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
-            Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(this, R.color.iconActive))
+            Theme.getIcon(R.drawable.ic_eye, ContextCompat.getColor(this, R.color.iconActive))
         );
         followButton.setBackgroundTintList(follow ?
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.md_green_A700)) :
+            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
             ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent))
         );
     }
 
-    private void loadDetails(int id) {
+    private void loadDetails() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.details(id, ApiFactory.TMDB_API_KEY, ApiFactory.TMDB_EN_US).enqueue(new Callback<Show>() {
+        service.details(extraId, ApiFactory.TMDB_API_KEY, ApiFactory.TMDB_EN_US).enqueue(new Callback<Show>() {
             @Override
             public void onResponse(@NonNull Call<Show> call, @NonNull Response<Show> response) {
                 if (response.isSuccessful()) {
@@ -154,39 +152,39 @@ public class ShowActivity extends AppCompatActivity {
                     if (show != null) {
                         setCollapsingLabel(show.inProduction);
 
-                        if (!RealmDb.isShowExist(showExtra.showId)) {
+                        if (!RealmDb.isShowExist(extraId)) {
                             RealmDb.insertOrUpdateShow(show);
                         } else {
-                            RealmDb.updateShowViewsCount(showExtra.showId);
+                            RealmDb.updateShowViewsCount(extraId);
                         }
 
                         followButton.setClickable(true);
                         followButton.setLongClickable(true);
-
                         fragment.setSeasons(show);
+                        fragment.setInfo(show);
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Show> call, @NonNull Throwable t) {
+                Log.e("2580", t.getMessage());
                 t.printStackTrace();
             }
         });
     }
 
     private void followShow(boolean status) {
-        RealmDb.followShow(showExtra.showId, status);
+        RealmDb.followShow(extraId, status);
     }
 
     private void setCollapsingLabel(boolean production) {
-        // Add air date of last episode here.
-        collapsingView.setLabel(production ? "Шоу еще выходит" : "Show is Finished");
+        collapsingView.setLabel(production ? getString(R.string.ShowInProduction) : getString(R.string.ShowIsFinished));
     }
 
     public void startSeason(Season season) {
         Intent intent = new Intent(this, SeasonActivity.class);
-        intent.putExtra("show", showExtra);
+        intent.putExtra("showId", extraId);
         intent.putExtra("season", season);
         startActivity(intent);
     }
