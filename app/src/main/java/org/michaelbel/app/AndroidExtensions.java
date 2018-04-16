@@ -16,11 +16,14 @@ import android.view.View;
 import android.view.WindowManager;
 
 import org.michaelbel.material.extensions.Extensions;
+import org.michaelbel.rest.model.Company;
+import org.michaelbel.rest.model.Genre;
 
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -204,5 +207,61 @@ public class AndroidExtensions extends Extensions {
             //FirebaseCrash.logcat(Log.ERROR, "e_message", "Error check display size");
             //FirebaseCrash.report(e);
         }
+    }
+
+    public static String formatCountries(List<String> countries) {
+        if (countries == null) {
+            return "";
+        }
+
+        StringBuilder text = new StringBuilder();
+        for (String country : countries) {
+            if (country.equals("United States of America")) {
+                country = "USA";
+            } else if (country.equals("United Kingdom")) {
+                country = "UK";
+            } else if (country.equals("United Arab Emirates")) {
+                country = "UAE";
+            }
+
+            text.append(country);
+            if (country != countries.get(countries.size() - 1)) {
+                text.append(", ");
+            }
+        }
+
+        return text.toString();
+    }
+
+    public static String formatGenres(List<Genre> genres) {
+        if (genres == null) {
+            return "";
+        }
+
+        StringBuilder text = new StringBuilder();
+        for (Genre genre : genres) {
+            text.append(genre.name);
+            if (genre != genres.get(genres.size() - 1)) {
+                text.append(", ");
+            }
+        }
+
+        return text.toString();
+    }
+
+    public static String formatCompanies(List<Company> companies) {
+        if (companies == null) {
+            return "";
+        }
+
+        StringBuilder text = new StringBuilder();
+        for (Company company : companies) {
+            text.append(company.name);
+            if (company != companies.get(companies.size() - 1)) {
+                text.append(", ");
+            }
+        }
+
+        return text.toString();
     }
 }
