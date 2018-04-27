@@ -21,11 +21,11 @@ import android.widget.ProgressBar;
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
-import org.michaelbel.rest.ApiFactory;
-import org.michaelbel.rest.ApiService;
-import org.michaelbel.rest.model.Show;
-import org.michaelbel.rest.response.ShowsResponse;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.app.rest.ApiService;
+import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.app.rest.response.ShowsResponse;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.ExploreActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;
 import org.michaelbel.ui.view.EmptyView;
@@ -124,7 +124,6 @@ public class TopRatedShowsFragment extends Fragment {
         recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
-        //recyclerView.setEmptyView(emptyView);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
@@ -132,9 +131,6 @@ public class TopRatedShowsFragment extends Fragment {
                 Show show = adapter.getList().get(position);
                 activity.startShow(show);
             }
-        });
-        recyclerView.setOnItemLongClickListener((view, position) -> {
-            return true;
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -189,7 +185,7 @@ public class TopRatedShowsFragment extends Fragment {
         }
 
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.topRated(ApiFactory.TMDB_API_KEY, ApiFactory.TMDB_EN_US, page).enqueue(new Callback<ShowsResponse>() {
+        service.topRated(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), page).enqueue(new Callback<ShowsResponse>() {
             @Override
             public void onResponse(@NonNull Call<ShowsResponse> call, @NonNull Response<ShowsResponse> response) {
                 if (response.isSuccessful()) {
@@ -219,7 +215,7 @@ public class TopRatedShowsFragment extends Fragment {
 
     public void loadNextPage() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.topRated(ApiFactory.TMDB_API_KEY, ApiFactory.TMDB_EN_US, page).enqueue(new Callback<ShowsResponse>() {
+        service.topRated(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), page).enqueue(new Callback<ShowsResponse>() {
             @Override
             public void onResponse(@NonNull Call<ShowsResponse> call, @NonNull Response<ShowsResponse> response) {
                 if (response.isSuccessful()) {
