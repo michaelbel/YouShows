@@ -23,8 +23,8 @@ import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.old.Theme;
-import org.michaelbel.rest.ApiFactory;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.shows.R;
 
 import java.util.Locale;
 
@@ -182,7 +182,11 @@ public class ShowView extends FrameLayout {
     }
 
     public void setReleaseDate(String releaseDate) {
-        dateView.setDate(AndroidExtensions.formatDate(releaseDate));
+        if (TextUtils.isEmpty(releaseDate)) {
+            dateView.setDate(getContext().getString(R.string.UnknownDate));
+        } else {
+            dateView.setDate(AndroidExtensions.formatDate(releaseDate));
+        }
     }
 
     public void addBottomPadding() {
