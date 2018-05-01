@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.shows.R;
 
 /**
  * Date: 01 APR 2018
