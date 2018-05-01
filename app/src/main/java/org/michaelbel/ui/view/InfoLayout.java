@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import org.michaelbel.app.Browser;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.shows.R;
 
 /**
  * Date: 19 MAR 2018
@@ -29,10 +29,8 @@ public class InfoLayout extends FrameLayout {
     private TextView genresTitle;
     private TextView genresText;
 
-    private TextView originalName;
     private TextView originalNameText;
 
-    private TextView originalCountry;
     private TextView originalCountryText;
 
     private TextView statusText;
@@ -88,7 +86,7 @@ public class InfoLayout extends FrameLayout {
 
         LinearLayout spansLayout = new LinearLayout(context);
         spansLayout.setOrientation(LinearLayout.HORIZONTAL);
-        spansLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 0));
+        spansLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 16));
         linearLayout.addView(spansLayout);
 
 //------OriginalName, Status, FirstAirDate----------------------------------------------------------
@@ -98,7 +96,7 @@ public class InfoLayout extends FrameLayout {
         layoutSpan1.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START, 1.0F));
         spansLayout.addView(layoutSpan1);
 
-        originalName = new TextView(context);
+        TextView originalName = new TextView(context);
         originalName.setText(context.getString(R.string.OriginalName));
         originalName.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
         originalName.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
@@ -147,7 +145,7 @@ public class InfoLayout extends FrameLayout {
         layoutSpan2.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START, 1.0F));
         spansLayout.addView(layoutSpan2);
 
-        originalCountry = new TextView(context);
+        TextView originalCountry = new TextView(context);
         originalCountry.setText(context.getString(R.string.OriginalCountry));
         originalCountry.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
         originalCountry.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
@@ -195,7 +193,7 @@ public class InfoLayout extends FrameLayout {
         companiesTitle.setText(context.getString(R.string.CompaniesTitle));
         companiesTitle.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
         companiesTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        companiesTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 0));
+        companiesTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 16, 0, 16, 0));
         linearLayout.addView(companiesTitle);
 
         companiesText = new TextView(context);
