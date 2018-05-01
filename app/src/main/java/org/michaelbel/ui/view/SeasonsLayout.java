@@ -3,9 +3,6 @@ package org.michaelbel.ui.view;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.Build;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,13 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.realm.RealmDb;
+import org.michaelbel.app.rest.model.Season;
+import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
-import org.michaelbel.realm.RealmDb;
-import org.michaelbel.rest.model.Season;
-import org.michaelbel.rest.model.Show;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.shows.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +63,7 @@ public class SeasonsLayout extends FrameLayout {
         seasonsTitle.setTextColor(ContextCompat.getColor(context, R.color.yellow));
         seasonsTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         seasonsTitle.setOnLongClickListener(view -> {
-            Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            /*Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
             if (vibrator != null) {
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                     vibrator.vibrate(VibrationEffect.createOneShot(20, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -73,7 +71,7 @@ public class SeasonsLayout extends FrameLayout {
                     // Deprecated in API 26
                     vibrator.vibrate(20);
                 }
-            }
+            }*/
 
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
             boolean seasonCountVisible = prefs.getBoolean("seasonsCountVisible", false);
@@ -82,6 +80,7 @@ public class SeasonsLayout extends FrameLayout {
             editor.apply();
 
             setShowTitle(show);
+            AndroidExtensions.startVibrate(20);
             return true;
         });
         seasonsTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 42, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
