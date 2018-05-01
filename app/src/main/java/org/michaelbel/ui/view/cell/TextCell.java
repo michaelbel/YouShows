@@ -20,10 +20,20 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.michaelbel.seriespicker.LayoutHelper;
-import org.michaelbel.seriespicker.Theme;
-import org.michaelbel.util.ScreenUtils;
+import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.old.ScreenUtils;
+import org.michaelbel.old.Theme;
+import org.michaelbel.shows.R;
 
+/**
+ * Date: 02 MAR 2018
+ * Time: 00:21 MSK
+ *
+ * @author Michael Bel
+ */
+
+@SuppressLint("ClickableViewAccessibility")
 public class TextCell extends FrameLayout {
 
     public static final int MODE_DEFAULT = 100;
@@ -33,11 +43,11 @@ public class TextCell extends FrameLayout {
     public static final int MODE_COLOR = 500;
 
     @IntDef({
-            MODE_DEFAULT,
-            MODE_VALUE_TEXT,
-            MODE_SWITCH,
-            MODE_CHECKBOX,
-            MODE_COLOR
+        MODE_DEFAULT,
+        MODE_VALUE_TEXT,
+        MODE_SWITCH,
+        MODE_CHECKBOX,
+        MODE_COLOR
     })
     private @interface Mode {}
 
@@ -49,9 +59,8 @@ public class TextCell extends FrameLayout {
     private Paint paint;
     private boolean divider;
     private Rect rect = new Rect();
-    private int currentMode = MODE_DEFAULT;
-
     private int cellHeight;
+    private int currentMode = MODE_DEFAULT;
 
     public TextCell(Context context) {
         super(context);
@@ -73,7 +82,7 @@ public class TextCell extends FrameLayout {
         textView.setMaxLines(1);
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
+        textView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(textView);
 
@@ -83,7 +92,7 @@ public class TextCell extends FrameLayout {
         valueText.setSingleLine();
         valueText.setVisibility(INVISIBLE);
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        valueText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(valueText);
 
@@ -163,7 +172,7 @@ public class TextCell extends FrameLayout {
 
     public void changeLayoutParams() {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if (ScreenUtils.isLandscape()) {
+        if (AndroidExtensions.isLandscape()) {
             params.leftMargin = ScreenUtils.dp(56);
             params.rightMargin = ScreenUtils.dp(56);
         }
@@ -194,7 +203,6 @@ public class TextCell extends FrameLayout {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (getForeground() != null) {

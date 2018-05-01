@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -18,22 +19,35 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.michaelbel.seriespicker.LayoutHelper;
-import org.michaelbel.seriespicker.Theme;
-import org.michaelbel.util.ScreenUtils;
+import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.old.ScreenUtils;
+import org.michaelbel.old.Theme;
+import org.michaelbel.shows.R;
 
+/**
+ * Date: 02 MAR 2018
+ * Time: 00:21 MSK
+ *
+ * @author Michael Bel
+ */
+
+@SuppressLint("ClickableViewAccessibility")
 public class TextDetailCell extends FrameLayout {
 
     public static final int MODE_DEFAULT = 100;
     public static final int MODE_SWITCH = 200;
     public static final int MODE_CHECKBOX = 300;
+    public static final int MODE_ICON = 400;
 
     @IntDef({
-            MODE_DEFAULT,
-            MODE_SWITCH,
-            MODE_CHECKBOX
+        MODE_DEFAULT,
+        MODE_SWITCH,
+        MODE_CHECKBOX,
+        MODE_ICON
     })
     private @interface Mode {}
 
@@ -41,6 +55,7 @@ public class TextDetailCell extends FrameLayout {
     protected TextView valueText;
     protected SwitchCompat switchCompat;
     protected AppCompatCheckBox checkBox;
+    protected ImageView endIconView;
 
     private Paint paint;
     private boolean divider;
@@ -53,7 +68,7 @@ public class TextDetailCell extends FrameLayout {
 
         setElevation(ScreenUtils.dp(1));
         setForeground(Theme.selectableItemBackgroundDrawable());
-        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
+        setBackgroundColor(ContextCompat.getColor(context, R.color.foreground));
 
         if (paint == null) {
             paint = new Paint();
@@ -66,7 +81,7 @@ public class TextDetailCell extends FrameLayout {
         textView.setMaxLines(1);
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
+        textView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 16, 0));
         addView(textView);
 
@@ -75,11 +90,11 @@ public class TextDetailCell extends FrameLayout {
         valueText.setMaxLines(1);
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        valueText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
         addView(valueText);
 
-        switchCompat = new SwitchCompat(context); // Theme.switchTheme()
+        switchCompat = new SwitchCompat(context);
         switchCompat.setClickable(false);
         switchCompat.setFocusable(false);
         switchCompat.setVisibility(INVISIBLE);
@@ -92,6 +107,13 @@ public class TextDetailCell extends FrameLayout {
         checkBox.setVisibility(INVISIBLE);
         checkBox.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
+
+        endIconView = new ImageView(context);
+        endIconView.setClickable(false);
+        endIconView.setFocusable(false);
+        endIconView.setVisibility(INVISIBLE);
+        endIconView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        addView(endIconView);
 
         setMode(currentMode);
     }
@@ -120,20 +142,32 @@ public class TextDetailCell extends FrameLayout {
         }
     }
 
-    public void setMode(int mode) {
+    public void setEndIcon(Drawable icon) {
+        endIconView.setImageDrawable(icon);
+    }
+
+    public void setMode(@Mode int mode) {
         currentMode = mode;
 
         if (currentMode == MODE_DEFAULT) {
             valueText.setVisibility(VISIBLE);
             switchCompat.setVisibility(INVISIBLE);
             checkBox.setVisibility(INVISIBLE);
+            endIconView.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_SWITCH) {
             valueText.setVisibility(VISIBLE);
             switchCompat.setVisibility(VISIBLE);
             checkBox.setVisibility(INVISIBLE);
+            endIconView.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_CHECKBOX) {
             valueText.setVisibility(VISIBLE);
             checkBox.setVisibility(VISIBLE);
+            switchCompat.setVisibility(INVISIBLE);
+            endIconView.setVisibility(INVISIBLE);
+        } else if (currentMode == MODE_ICON) {
+            valueText.setVisibility(VISIBLE);
+            endIconView.setVisibility(VISIBLE);
+            checkBox.setVisibility(INVISIBLE);
             switchCompat.setVisibility(INVISIBLE);
         }
     }
@@ -161,7 +195,7 @@ public class TextDetailCell extends FrameLayout {
 
     public void changeLayoutParams() {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if (ScreenUtils.isLandscape()) {
+        if (AndroidExtensions.isLandscape()) {
             params.leftMargin = ScreenUtils.dp(56);
             params.rightMargin = ScreenUtils.dp(56);
         }
@@ -216,7 +250,6 @@ public class TextDetailCell extends FrameLayout {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (getForeground() != null) {

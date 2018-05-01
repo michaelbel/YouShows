@@ -12,9 +12,17 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.michaelbel.seriespicker.LayoutHelper;
-import org.michaelbel.seriespicker.Theme;
-import org.michaelbel.util.ScreenUtils;
+import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.old.Theme;
+import org.michaelbel.old.ScreenUtils;
+
+/**
+ * Date: 02 MAR 2018
+ * Time: 00:21 MSK
+ *
+ * @author Michael Bel
+ */
 
 public class EmptyCell extends FrameLayout {
 
@@ -82,7 +90,7 @@ public class EmptyCell extends FrameLayout {
 
     public void changeLayoutParams() {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if (ScreenUtils.isLandscape()) {
+        if (AndroidExtensions.isLandscape()) {
             params.leftMargin = ScreenUtils.dp(56);
             params.rightMargin = ScreenUtils.dp(56);
         }
