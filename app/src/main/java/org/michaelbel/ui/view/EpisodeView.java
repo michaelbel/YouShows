@@ -7,17 +7,20 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.old.Theme;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.shows.R;
 
 /**
  * Date: 06 APR 2018
@@ -29,8 +32,9 @@ import org.michaelbel.seriespicker.R;
 @SuppressLint("ClickableViewAccessibility")
 public class EpisodeView extends FrameLayout {
 
-    protected TextView textView;
+    protected TextView nameText;
     protected TextView valueText;
+    protected TextView airDateText;
     protected CheckBox checkBox;
     protected ImageView selectIcon;
 
@@ -43,7 +47,7 @@ public class EpisodeView extends FrameLayout {
 
         setElevation(ScreenUtils.dp(1));
         setForeground(Theme.selectableItemBackgroundDrawable());
-        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
+        setBackgroundColor(ContextCompat.getColor(context, R.color.foreground));
 
         if (paint == null) {
             paint = new Paint();
@@ -51,23 +55,43 @@ public class EpisodeView extends FrameLayout {
             paint.setColor(ContextCompat.getColor(context, R.color.divider));
         }
 
-        textView = new TextView(context);
-        textView.setLines(1);
-        textView.setMaxLines(1);
-        textView.setSingleLine();
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 16, 0));
-        addView(textView);
+        nameText = new TextView(context);
+        nameText.setLines(1);
+        nameText.setMaxLines(1);
+        nameText.setSingleLine();
+        nameText.setEllipsize(TextUtils.TruncateAt.END);
+        nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        nameText.setTextColor(ContextCompat.getColor(context, R.color.yellow));
+        nameText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 56, 0));
+        addView(nameText);
+
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
+        addView(layout);
 
         valueText = new TextView(context);
         valueText.setLines(1);
         valueText.setMaxLines(1);
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
-        addView(valueText);
+        valueText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
+        valueText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        layout.addView(valueText);
+
+        View dotDivider = new View(context);
+        dotDivider.setBackgroundResource(R.drawable.dot_divider);
+        dotDivider.setLayoutParams(LayoutHelper.makeLinear(4, 4, Gravity.CENTER_VERTICAL, 6, 1, 6, 0));
+        layout.addView(dotDivider);
+
+        airDateText = new TextView(context);
+        airDateText.setLines(1);
+        airDateText.setMaxLines(1);
+        airDateText.setSingleLine();
+        airDateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+        airDateText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
+        airDateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        layout.addView(airDateText);
 
         selectIcon = new ImageView(context);
         selectIcon.setVisibility(VISIBLE);
@@ -83,11 +107,15 @@ public class EpisodeView extends FrameLayout {
     }
 
     public void setName(@NonNull String text) {
-        textView.setText(text);
+        nameText.setText(text);
     }
 
-    public void setNumberAndDate(@NonNull String text) {
+    public void setNumber(@NonNull String text) {
         valueText.setText(text);
+    }
+
+    public void setDate(@NonNull String text) {
+        airDateText.setText(text);
     }
 
     public void setChecked(boolean value, boolean animated) {
