@@ -18,17 +18,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.AppLoader;
+import org.michaelbel.app.ShowsApp;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ui_old.adapter.Holder;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
-import org.michaelbel.realm.RealmDb;
-import org.michaelbel.rest.ApiFactory;
-import org.michaelbel.rest.ApiService;
-import org.michaelbel.rest.model.Episode;
-import org.michaelbel.rest.model.Season;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.app.realm.RealmDb;
+import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.app.rest.ApiService;
+import org.michaelbel.app.rest.model.Episode;
+import org.michaelbel.app.rest.model.Season;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.SeasonActivity;
 import org.michaelbel.ui.adapter.holder.LoadingHolder;
 import org.michaelbel.ui.view.EpisodeOverview;
@@ -99,13 +99,12 @@ public class EpisodesFragment extends Fragment {
         });
         recyclerView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         contentLayout.addView(recyclerView);
-
         return fragmentLayout;
     }
 
     public void showEpisodes(int showId, Season s) {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.season(showId, s.seasonNumber, ApiFactory.TMDB_API_KEY, ApiFactory.TMDB_EN_US).enqueue(new Callback<Season>() {
+        service.season(showId, s.seasonNumber, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Season>() {
             @Override
             public void onResponse(@NonNull Call<Season> call, @NonNull Response<Season> response) {
                 if (response.isSuccessful()) {
@@ -124,6 +123,7 @@ public class EpisodesFragment extends Fragment {
                         adapter.addEpisodes(season.episodes);
                         progressBar.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
+                        activity.showFab();
 
                         if (!RealmDb.isSeasonExist(showId, season.seasonId)) {
                             RealmDb.insertOrUpdateSeason(showId, season);
@@ -140,6 +140,10 @@ public class EpisodesFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<Season> call, @NonNull Throwable t) {
                 t.printStackTrace();
+
+                progressBar.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+                // todo Update with swipe
             }
         });
     }
@@ -158,7 +162,7 @@ public class EpisodesFragment extends Fragment {
         }
 
         activity.changeFabStyle();
-        ((AppLoader) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
+        ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
     }
 
     public void addEpisodesToRealm() {
@@ -178,7 +182,7 @@ public class EpisodesFragment extends Fragment {
         }
 
         adapter.notifyDataSetChanged();
-        ((AppLoader) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
+        ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
     }
 
     public void removeEpisodesFromRealm() {
@@ -187,7 +191,7 @@ public class EpisodesFragment extends Fragment {
         }
 
         adapter.notifyDataSetChanged();
-        ((AppLoader) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
+        ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
     }
 
     private class SeasonAdapter extends RecyclerView.Adapter {
@@ -237,7 +241,8 @@ public class EpisodesFragment extends Fragment {
                 EpisodeView view = (EpisodeView) ((Holder) holder).itemView;
                 view.setName(episode.name);
                 view.setChecked(RealmDb.isEpisodeWatched(activity.showId, activity.season.seasonId, episode.episodeId), false);
-                view.setNumberAndDate("Episode #" + episode.episodeNumber + "  |  " + AndroidExtensions.formatDate(episode.airDate));
+                view.setNumber(getString(R.string.EpisodeNumber, episode.episodeNumber));
+                view.setDate(AndroidExtensions.formatDate(episode.airDate));
                 view.setDivider(position != episodes.size() - 1);
             } else if (getItemViewType(position) == ITEM_OVERVIEW) {
                 EpisodeOverview view = (EpisodeOverview) ((LoadingHolder) holder).itemView;
