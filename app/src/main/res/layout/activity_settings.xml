@@ -32,9 +32,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <fragment
-        class="org.michaelbel.ui.fragment.SettingsFragment"
-        android:id="@+id/settingsFragment"
+    <FrameLayout
+        android:id="@+id/fragment_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>

@@ -1,9 +1,14 @@
-<FrameLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="2dp">
+    app:cardUseCompatPadding="false"
+    app:cardPreventCornerOverlap="false"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="0dp"
+    app:cardBackgroundColor="@color/foreground">
 
     <android.support.v7.widget.CardView
         android:layout_width="65dp"
@@ -11,7 +16,7 @@
         android:layout_gravity="start|center_vertical"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="4.2dp"
         app:cardUseCompatPadding="false"
         app:cardPreventCornerOverlap="false"
         app:cardElevation="0dp"
@@ -136,8 +141,7 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:textSize="14sp"
-                android:textColor="@color/secondaryText"/>
+                android:textSize="14sp"/>
 
             <!--<LinearLayout
                 android:layout_width="wrap_content"
@@ -200,4 +204,10 @@
 
     </android.support.v7.widget.LinearLayoutCompat>
 
-</FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_gravity="bottom"
+        android:background="@color/background"/>
+
+</android.support.v7.widget.CardView>
