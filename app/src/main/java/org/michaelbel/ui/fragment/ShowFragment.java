@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.AppLoader;
+import org.michaelbel.app.ShowsApp;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.rest.model.Season;
-import org.michaelbel.rest.model.Show;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.app.rest.model.Season;
+import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.ShowActivity;
 import org.michaelbel.ui.view.InfoLayout;
 import org.michaelbel.ui.view.SeasonsLayout;
@@ -36,8 +36,8 @@ import java.util.List;
 @SuppressLint("CheckResult")
 public class ShowFragment extends Fragment {
 
-    private ShowActivity activity;
     private List<Season> list;
+    private ShowActivity activity;
 
     private OverviewLayout overviewLayout;
     private SeasonsLayout seasonsLayout;
@@ -79,7 +79,7 @@ public class ShowFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ((AppLoader) activity.getApplication()).bus().toObservable().subscribe(object -> {
+        ((ShowsApp) activity.getApplication()).bus().toObservable().subscribe(object -> {
             if (object instanceof Events.UpdateSeasonView) {
                 seasonsLayout.updateAdapter(list);
             }
