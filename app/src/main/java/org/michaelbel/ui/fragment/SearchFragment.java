@@ -18,11 +18,11 @@ import android.widget.ProgressBar;
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
-import org.michaelbel.rest.ApiFactory;
-import org.michaelbel.rest.ApiService;
-import org.michaelbel.rest.model.Show;
-import org.michaelbel.rest.response.ShowsResponse;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.app.rest.ApiService;
+import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.app.rest.response.ShowsResponse;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.SearchActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;
 import org.michaelbel.ui.view.EmptyView;
@@ -129,7 +129,7 @@ public class SearchFragment extends Fragment {
         }
 
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.search(ApiFactory.TMDB_API_KEY, ApiFactory.TMDB_EN_US, searchQuery, page).enqueue(new Callback<ShowsResponse>() {
+        service.search(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), searchQuery, page).enqueue(new Callback<ShowsResponse>() {
             @Override
             public void onResponse(@NonNull Call<ShowsResponse> call, @NonNull Response<ShowsResponse> response) {
                 if (response.isSuccessful()) {
@@ -158,7 +158,7 @@ public class SearchFragment extends Fragment {
 
     private void loadNext() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.search(ApiFactory.TMDB_API_KEY, ApiFactory.TMDB_EN_US, searchQuery, page).enqueue(new Callback<ShowsResponse>() {
+        service.search(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), searchQuery, page).enqueue(new Callback<ShowsResponse>() {
             @Override
             public void onResponse(@NonNull Call<ShowsResponse> call, @NonNull Response<ShowsResponse> response) {
                 if (response.isSuccessful()) {
