@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import org.michaelbel.rest.model.Show;
+import org.michaelbel.app.rest.model.Show;
 
 import java.util.ArrayList;
 
