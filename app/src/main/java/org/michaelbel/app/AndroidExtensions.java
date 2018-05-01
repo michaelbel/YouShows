@@ -1,23 +1,27 @@
 package org.michaelbel.app;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.design.widget.AppBarLayout;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import org.michaelbel.app.rest.model.Company;
+import org.michaelbel.app.rest.model.Genre;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.rest.model.Company;
-import org.michaelbel.rest.model.Genre;
 
 import java.io.InputStream;
 import java.text.ParseException;
@@ -50,7 +54,7 @@ public class AndroidExtensions extends Extensions {
     }
 
     private static int getNetworkStatus() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) AppLoader.AppContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) ShowsApp.AppContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
 
         if (networkInfo != null) {
@@ -71,48 +75,48 @@ public class AndroidExtensions extends Extensions {
     }
 
     public static int dp(float value) {
-        return (int) Math.ceil(AppLoader.AppContext.getResources().getDisplayMetrics().density * value);
+        return (int) Math.ceil(ShowsApp.AppContext.getResources().getDisplayMetrics().density * value);
     }
 
     public static int getScreenWidth() {
-        WindowManager windowManager = (WindowManager) AppLoader.AppContext.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) ShowsApp.AppContext.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
     }
 
     public static int getScreenHeight() {
-        WindowManager windowManager = (WindowManager) AppLoader.AppContext.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) ShowsApp.AppContext.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.heightPixels;
     }
 
     public static boolean isPortrait() {
-        return AppLoader.AppContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        return ShowsApp.AppContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
     public static boolean isLandscape() {
-        return AppLoader.AppContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        return ShowsApp.AppContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     public static boolean isUndefined() {
-        return AppLoader.AppContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_UNDEFINED;
+        return ShowsApp.AppContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_UNDEFINED;
     }
 
     public static int getStatusBarHeight() {
         int result = 0;
-        int resourceId = AppLoader.AppContext.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = ShowsApp.AppContext.getResources().getIdentifier("status_bar_height", "dimen", "android");
 
         if (resourceId > 0) {
-            result = AppLoader.AppContext.getResources().getDimensionPixelSize(resourceId);
+            result = ShowsApp.AppContext.getResources().getDimensionPixelSize(resourceId);
         }
 
         return result;
     }
 
     public static boolean isScreenLock() {
-        KeyguardManager keyguardManager = (KeyguardManager) AppLoader.AppContext.getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager keyguardManager = (KeyguardManager) ShowsApp.AppContext.getSystemService(Context.KEYGUARD_SERVICE);
         return keyguardManager.inKeyguardRestrictedInputMode();
     }
 
@@ -139,18 +143,18 @@ public class AndroidExtensions extends Extensions {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private boolean isRTL() {
-        return AppLoader.AppContext.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+        return ShowsApp.AppContext.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private boolean isLTR() {
-        return AppLoader.AppContext.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR;
+        return ShowsApp.AppContext.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR;
     }
 
     public static String getProperty(String key) {
         try {
             Properties properties = new Properties();
-            AssetManager assetManager = AppLoader.AppContext.getAssets();
+            AssetManager assetManager = ShowsApp.AppContext.getAssets();
             InputStream inputStream = assetManager.open("config.properties");
             properties.load(inputStream);
             return properties.getProperty(key);
@@ -176,14 +180,14 @@ public class AndroidExtensions extends Extensions {
 
     public static void runOnUIThread(Runnable runnable, long delay) {
         if (delay == 0) {
-            AppLoader.AppHandler.post(runnable);
+            ShowsApp.AppHandler.post(runnable);
         } else {
-            AppLoader.AppHandler.postDelayed(runnable, delay);
+            ShowsApp.AppHandler.postDelayed(runnable, delay);
         }
     }
 
     public static void cancelRunOnUIThread(Runnable runnable) {
-        AppLoader.AppHandler.removeCallbacks(runnable);
+        ShowsApp.AppHandler.removeCallbacks(runnable);
     }
 
     static {
@@ -192,9 +196,9 @@ public class AndroidExtensions extends Extensions {
 
     public static void checkDisplaySize() {
         try {
-            Configuration configuration = AppLoader.AppContext.getResources().getConfiguration();
+            Configuration configuration = ShowsApp.AppContext.getResources().getConfiguration();
             usingHardwareInput = configuration.keyboard != Configuration.KEYBOARD_NOKEYS && configuration.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO;
-            WindowManager manager = (WindowManager) AppLoader.AppContext.getSystemService(Context.WINDOW_SERVICE);
+            WindowManager manager = (WindowManager) ShowsApp.AppContext.getSystemService(Context.WINDOW_SERVICE);
             if (manager != null) {
                 Display display = manager.getDefaultDisplay();
                 if (display != null) {
@@ -263,5 +267,22 @@ public class AndroidExtensions extends Extensions {
         }
 
         return text.toString();
+    }
+
+    public static int getLanguage() {
+        SharedPreferences prefs = ShowsApp.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        return prefs.getInt("language", 0);
+    }
+
+    public static void startVibrate(int milliseconds) {
+        Vibrator vibrator = (Vibrator) ShowsApp.AppContext.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null) {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                // Deprecated in API 26
+                vibrator.vibrate(milliseconds);
+            }
+        }
     }
 }

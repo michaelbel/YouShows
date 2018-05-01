@@ -11,7 +11,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import org.michaelbel.material.util2.Utils;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.shows.R;
 
 /**
  * Date: 02 APR 2018
