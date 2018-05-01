@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
-import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
@@ -30,9 +29,7 @@ import org.michaelbel.ui.view.MyShowView;
 import org.michaelbel.ui.view.ShowsEmptyView;
 import org.michaelbel.ui.view.SortView;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -45,7 +42,7 @@ import io.realm.Sort;
  * @author Michael Bel
  */
 
-public class MyShowsFragment extends Fragment {
+public class FollowingShowsFragment extends Fragment {
 
     private int prevTop;
     private int prevPosition;
@@ -86,8 +83,7 @@ public class MyShowsFragment extends Fragment {
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
 
         emptyView = new ShowsEmptyView(activity);
-        emptyView.setMode(ShowsEmptyView.MY_SHOWS_MODE);
-        emptyView.setOnClickListener(v -> activity.startExplore());
+        emptyView.setMode(ShowsEmptyView.FOLLOWING_MODE);
         emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(emptyView);
 
@@ -136,16 +132,8 @@ public class MyShowsFragment extends Fragment {
                 }
             }
         });
-
-        /*ItemTouchHelper.SimpleCallback callback = new ItemTouchHelperSimpleCallback(
-                adapter,
-                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                ItemTouchHelper.START | ItemTouchHelper.END
-        );
-        ItemTouchHelper helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(recyclerView);*/
-
         fragmentLayout.addView(recyclerView);
+
         return fragmentLayout;
     }
 
@@ -163,8 +151,8 @@ public class MyShowsFragment extends Fragment {
 
     public void refreshLayout() {
         SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-        int sortFilter = prefs.getInt("myshows_sort_type", SortView.SORT_BY_DEFAULT);
-        Sort sort = prefs.getBoolean("myshows_sort_order", SortView.ORDER_ASCENDING) ? Sort.ASCENDING : Sort.DESCENDING;
+        int sortFilter = prefs.getInt("following_sort_type", SortView.SORT_BY_DEFAULT);
+        Sort sort = prefs.getBoolean("following_sort_order", SortView.ORDER_ASCENDING) ? Sort.ASCENDING : Sort.DESCENDING;
 
         adapter.getShows().clear();
         adapter.notifyDataSetChanged();
@@ -173,27 +161,19 @@ public class MyShowsFragment extends Fragment {
         RealmResults<Show> results = null;
 
         if (sortFilter == SortView.SORT_BY_DEFAULT) {
-            results = realm.where(Show.class).findAll();
+            results = realm.where(Show.class).equalTo("isFollow", true).findAll();
         } else if (sortFilter == SortView.SORT_BY_NAME) {
-            results = realm.where(Show.class).sort("name", sort).findAll();
+            results = realm.where(Show.class).equalTo("isFollow", true).sort("name", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_FIRST_AIR_DATE) {
-            results = realm.where(Show.class).sort("firstAirDate", sort).findAll();
+            results = realm.where(Show.class).equalTo("isFollow", true).sort("firstAirDate", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_LAST_AIR_DATE) {
-            results = realm.where(Show.class).sort("lastAirDate", sort).findAll();
+            results = realm.where(Show.class).equalTo("isFollow", true).sort("lastAirDate", sort).findAll();
         }
 
         if (results.isEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
-            List<Show> list = new ArrayList<>();
-
-            for (Show s : results) {
-                if (RealmDb.isWatchedEpisodesInShowIsExist(s.showId)) {
-                    list.add(s);
-                }
-            }
-
-            adapter.addShows(list);
+            adapter.addShows(results);
             if (sortFilter == SortView.SORT_BY_DEFAULT && sort == Sort.DESCENDING) {
                 Collections.reverse(adapter.getShows());
             }
@@ -210,4 +190,23 @@ public class MyShowsFragment extends Fragment {
         activity.floatingButton.setClickable(!hide);
         animator.start();
     }
+
+    /*private void getNextEpisodes() {
+        ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TRAKT_API_ENDPOINT);
+        service.nextEpisode(ApiFactory.TRAKT_CLIENT_ID, ApiFactory.TRAKT_API_VERSION, 1402); // imdb showId, trakt tv showId
+    }*/
+
+    /*public void showSnackbar(boolean enable) {
+        Snackbar snackbar = Snackbar.make(fragmentLayout, enable ? "Уведомления включены" : "Уведомления отключены", Snackbar.LENGTH_SHORT);
+        //snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.snackbar_action_text));
+        //snackbar.setAction(R.string.Retry, view1 -> {
+        //
+        //});
+        //snackbar.addCallback(new Snackbar.Callback() {
+        //    @Override
+        //    public void onShown(Snackbar sb) {
+        //        super.onShown(sb);
+        //});
+        snackbar.show();
+    }*/
 }
