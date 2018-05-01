@@ -26,8 +26,8 @@ import android.widget.FrameLayout;
 
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.rest.model.Show;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.SearchFragment;
 
 import java.util.List;

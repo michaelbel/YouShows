@@ -18,8 +18,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.rest.model.Show;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.NowPlayingShowsFragment;
 import org.michaelbel.ui.fragment.PopularShowsFragment;
 import org.michaelbel.ui.fragment.TopRatedShowsFragment;

@@ -7,12 +7,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import org.michaelbel.old.Theme;
-import org.michaelbel.realm.RealmDb;
-import org.michaelbel.rest.model.Season;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.app.realm.RealmDb;
+import org.michaelbel.app.rest.model.Season;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.EpisodesFragment;
 
 /**
@@ -50,6 +51,7 @@ public class SeasonActivity extends AppCompatActivity {
         toolbarTitle.setText(season.name);
 
         fabButton = findViewById(R.id.fab);
+        fabButton.setVisibility(View.INVISIBLE);
         fabButton.setClickable(false);
         fabButton.setLongClickable(false);
         fabButton.setOnClickListener(view -> {
@@ -94,5 +96,9 @@ public class SeasonActivity extends AppCompatActivity {
             fragment.addEpisodesToRealm();
             changeFabStyle(true);
         }
+    }
+
+    public void showFab() {
+        fabButton.show();
     }
 }

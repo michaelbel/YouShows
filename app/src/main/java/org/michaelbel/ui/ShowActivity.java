@@ -19,13 +19,14 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.realm.RealmDb;
+import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.app.rest.ApiService;
+import org.michaelbel.app.rest.model.Season;
+import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.old.Theme;
-import org.michaelbel.realm.RealmDb;
-import org.michaelbel.rest.ApiFactory;
-import org.michaelbel.rest.ApiService;
-import org.michaelbel.rest.model.Season;
-import org.michaelbel.rest.model.Show;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.ShowFragment;
 import org.michaelbel.ui.view.BackdropView;
 
@@ -63,14 +64,14 @@ public class ShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
+
         extraId = getIntent().getIntExtra("id", 0);
         extraName = getIntent().getStringExtra("name");
         extraOverview = getIntent().getStringExtra("overview");
         extraBackdrop = getIntent().getStringExtra("backdropPath");
-
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
@@ -100,6 +101,12 @@ public class ShowActivity extends AppCompatActivity {
             boolean follow = RealmDb.isShowFollow(extraId);
             followShow(!follow);
             changeFabStyle(!follow);
+        });
+        followButton.setOnLongClickListener(v -> {
+            boolean follow = RealmDb.isShowFollow(extraId);
+            collapsingView.showFollowHint(false, !follow);
+            AndroidExtensions.startVibrate(15);
+            return true;
         });
         changeFabStyle(RealmDb.isShowFollow(extraId));
 
@@ -144,7 +151,7 @@ public class ShowActivity extends AppCompatActivity {
 
     private void loadDetails() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.details(extraId, ApiFactory.TMDB_API_KEY, ApiFactory.TMDB_EN_US).enqueue(new Callback<Show>() {
+        service.details(extraId, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Show>() {
             @Override
             public void onResponse(@NonNull Call<Show> call, @NonNull Response<Show> response) {
                 if (response.isSuccessful()) {
