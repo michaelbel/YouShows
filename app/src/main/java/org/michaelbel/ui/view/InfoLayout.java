@@ -256,6 +256,7 @@ public class InfoLayout extends FrameLayout {
         if (TextUtils.isEmpty(companies)) {
             linearLayout.removeView(companiesTitle);
             linearLayout.removeView(companiesText);
+            homepageTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 16, 0, 16, 0));
         } else {
             companiesText.setText(companies);
         }
