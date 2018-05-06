@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -18,6 +19,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
@@ -41,18 +43,21 @@ public class TextCell extends FrameLayout {
     public static final int MODE_SWITCH = 300;
     public static final int MODE_CHECKBOX = 400;
     public static final int MODE_COLOR = 500;
+    public static final int MODE_ICON = 600;
 
     @IntDef({
         MODE_DEFAULT,
         MODE_VALUE_TEXT,
         MODE_SWITCH,
         MODE_CHECKBOX,
-        MODE_COLOR
+        MODE_COLOR,
+        MODE_ICON
     })
     private @interface Mode {}
 
     protected TextView textView;
     protected TextView valueText;
+    protected ImageView iconView;
     protected SwitchCompat switchCompat;
     protected AppCompatCheckBox checkBox;
 
@@ -76,6 +81,11 @@ public class TextCell extends FrameLayout {
             paint.setStrokeWidth(1);
             paint.setColor(ContextCompat.getColor(context, Theme.dividerColor()));
         }
+
+        iconView = new ImageView(context);
+        iconView.setVisibility(INVISIBLE);
+        iconView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 0, 0));
+        addView(iconView);
 
         textView = new AppCompatTextView(context);
         textView.setLines(1);
@@ -113,6 +123,17 @@ public class TextCell extends FrameLayout {
         setMode(currentMode);
     }
 
+    public void setIcon(@DrawableRes int icon) {
+        iconView.setVisibility(icon == 0 ? INVISIBLE : VISIBLE);
+        if (icon != 0) {
+            iconView.setImageDrawable(Theme.getIcon(icon, ContextCompat.getColor(getContext(), R.color.iconActive)));
+        }
+
+        if (currentMode == MODE_ICON) {
+            textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 56, 0, 16, 0));
+        }
+    }
+
     public void setText(@NonNull String text) {
         textView.setText(text);
     }
@@ -146,19 +167,29 @@ public class TextCell extends FrameLayout {
             valueText.setVisibility(INVISIBLE);
             switchCompat.setVisibility(INVISIBLE);
             checkBox.setVisibility(INVISIBLE);
+            iconView.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_VALUE_TEXT) {
             valueText.setVisibility(VISIBLE);
             switchCompat.setVisibility(INVISIBLE);
             checkBox.setVisibility(INVISIBLE);
+            iconView.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_SWITCH) {
             switchCompat.setVisibility(VISIBLE);
             valueText.setVisibility(INVISIBLE);
             checkBox.setVisibility(INVISIBLE);
+            iconView.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_CHECKBOX) {
             checkBox.setVisibility(VISIBLE);
             valueText.setVisibility(INVISIBLE);
             switchCompat.setVisibility(INVISIBLE);
+            iconView.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_COLOR) {
+            valueText.setVisibility(INVISIBLE);
+            switchCompat.setVisibility(INVISIBLE);
+            checkBox.setVisibility(INVISIBLE);
+            iconView.setVisibility(INVISIBLE);
+        } else if (currentMode == MODE_ICON) {
+            iconView.setVisibility(VISIBLE);
             valueText.setVisibility(INVISIBLE);
             switchCompat.setVisibility(INVISIBLE);
             checkBox.setVisibility(INVISIBLE);

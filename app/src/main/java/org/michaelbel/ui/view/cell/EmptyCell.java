@@ -46,7 +46,7 @@ public class EmptyCell extends FrameLayout {
         textView.setVisibility(GONE);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         textView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        textView.setPadding(ScreenUtils.dp(16), ScreenUtils.dp(12), ScreenUtils.dp(16), ScreenUtils.dp(12));
+        textView.setPadding(ScreenUtils.dp(16), ScreenUtils.dp(12), ScreenUtils.dp(16), ScreenUtils.dp(4));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         addView(textView);
 
