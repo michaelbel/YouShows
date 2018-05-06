@@ -43,7 +43,7 @@ public class SortView extends FrameLayout {
     private String[] sorts;
 
     private TextView sortTypeTextView;
-    private ImageView orderArrowIcon;
+    public ImageView orderArrowIcon;
 
     public FrameLayout sortLayout;
     public FrameLayout orderLayout;
@@ -123,7 +123,7 @@ public class SortView extends FrameLayout {
         orderLinearLayout.addView(orderTextView);
 
         orderArrowIcon = new ImageView(context);
-        orderArrowIcon.setScaleType(ImageView.ScaleType.FIT_XY);
+        orderArrowIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_anim_expandcollapse));
         orderArrowIcon.setLayoutParams(LayoutHelper.makeLinear(24, 24, Gravity.CENTER_VERTICAL, 8, 0, 0, 0));
         orderLinearLayout.addView(orderArrowIcon);
     }
@@ -133,7 +133,7 @@ public class SortView extends FrameLayout {
     }
 
     public void setOrder(boolean order) {
-        orderArrowIcon.setImageResource(order ? R.drawable.ic_expand_more : R.drawable.ic_expand_less);
-        // todo add Animation
+        final int[] stateSet = {android.R.attr.state_checked * (order ? 1 : -1)};
+        orderArrowIcon.setImageState(stateSet, true);
     }
 }
