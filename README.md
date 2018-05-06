@@ -1,4 +1,4 @@
-# Shows
+# YouShows
 TV Shows tracker app
 
 [![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://github.com/michaelbel/shows)
