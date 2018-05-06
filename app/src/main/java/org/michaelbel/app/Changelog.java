@@ -1,8 +1,8 @@
 package org.michaelbel.app;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Date: 26 APR 2018
@@ -13,15 +13,15 @@ import java.util.List;
 
 public class Changelog {
 
+    @SerializedName("version")
     public String version;
-    public int build;
-    public String date;
-    public List<String> changes = new ArrayList<>();
 
-    public Changelog(String version, int build, String date, String... changes) {
-        this.version = version;
-        this.build = build;
-        this.date = date;
-        Collections.addAll(this.changes, changes);
-    }
+    @SerializedName("build")
+    public int build;
+
+    @SerializedName("date")
+    public String date;
+
+    @SerializedName("changes")
+    public ArrayList<String> changes = new ArrayList<>();
 }
