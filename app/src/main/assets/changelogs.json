@@ -1,0 +1,30 @@
+[
+    {
+        "version":"1.0.0",
+        "build":6,
+        "date":"April 24, 2018",
+        "changes":[
+            "First commit"
+        ]
+    },
+
+    {
+        "version":"1.0.1",
+        "build":7,
+        "date":"April 26, 2018",
+        "changes":[
+            "List of your shows and following shows fixed",
+            "New design for settings",
+            "Other minor updates"
+        ]
+    },
+
+    {
+        "version":"1.0.2",
+        "build":8,
+        "date":"May 2, 2018",
+        "changes":[
+            "Sorting shows by name and dates"
+        ]
+    }
+]
