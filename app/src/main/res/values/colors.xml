@@ -3,15 +3,16 @@
 <!--Switch: https://material.io/guidelines/components/selection-controls.html#selection-controls-switch-->
 
 <resources>
-    <color name="primary">#795548</color>
-    <color name="primaryDark">#5D4037</color>
-    <!--<color name="accent">#0090E7</color>-->
+    <color name="primary">#212121</color>
+    <color name="primaryDark">#1A1A1A</color>
     <color name="accent">#0091EA</color>
 
     <color name="red">#F25252</color>
     <color name="green">#4CB050</color>
-    <color name="yellow">#fCB22D</color>
+    <color name="yellow">#FCB22D</color>
     <color name="orange">#FA8E22</color>
+
+    <color name="telegram">#2FADE6</color>
 
     <color name="primaryText">#FFFFFFFF</color>
     <color name="secondaryText">#B3FFFFFF</color>
@@ -19,18 +20,16 @@
     <color name="divider">#1FFFFFFF</color>
     <color name="iconActive">#FFFFFFFF</color>
     <color name="iconInactive">#80FFFFFF</color>
-    <color name="statusBar">@color/md_black</color>
-    <color name="appBar">@color/md_grey_900</color>
+    <color name="statusBar">#000000</color>
+    <color name="appBar">#212121</color>
     <color name="background">#303030</color>
     <color name="foreground">#424242</color>
     <color name="transparent">#33000000</color>
 
-    <color name="switch_thumbOn">#FF0090E7</color>
-    <color name="switch_trackOn">#800090E7</color>
+    <color name="switch_thumbOn">#FFFFAB40</color><!--A200 100%-->
+    <color name="switch_trackOn">#80FFAB40</color><!--A200 50%-->
     <color name="switch_thumbOff">#FFBDBDBD</color>
     <color name="switch_trackOff">#4DFFFFFF</color>
     <color name="switch_thumbDisabled">#FF424242</color>
     <color name="switch_trackDisabled">#1AFFFFFF</color>
-
-    <color name="md_grey_7000">#535353</color>
 </resources>
