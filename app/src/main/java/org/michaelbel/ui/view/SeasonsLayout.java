@@ -1,5 +1,6 @@
 package org.michaelbel.ui.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -44,6 +45,7 @@ public class SeasonsLayout extends FrameLayout {
     private ProgressBar progressBar;
     public RecyclerListView recyclerView;
 
+    @SuppressLint("ClickableViewAccessibility")
     public SeasonsLayout(@NonNull Context context) {
         super(context);
 
@@ -63,22 +65,9 @@ public class SeasonsLayout extends FrameLayout {
         seasonsTitle.setTextColor(ContextCompat.getColor(context, R.color.yellow));
         seasonsTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         seasonsTitle.setOnLongClickListener(view -> {
-            /*Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-            if (vibrator != null) {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(20, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    // Deprecated in API 26
-                    vibrator.vibrate(20);
-                }
-            }*/
-
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
             boolean seasonCountVisible = prefs.getBoolean("seasonsCountVisible", false);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("seasonsCountVisible", !seasonCountVisible);
-            editor.apply();
-
+            prefs.edit().putBoolean("seasonsCountVisible", !seasonCountVisible).apply();
             setShowTitle(show);
             AndroidExtensions.startVibrate(20);
             return true;
