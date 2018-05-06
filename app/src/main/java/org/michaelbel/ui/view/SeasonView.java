@@ -19,7 +19,7 @@ import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.Theme;
-import org.michaelbel.seriespicker.R;
+import org.michaelbel.shows.R;
 
 import java.util.Locale;
 
