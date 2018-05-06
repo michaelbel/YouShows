@@ -1,7 +1,9 @@
 package org.michaelbel.ui.view;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -56,12 +58,10 @@ public class ChangelogView extends FrameLayout {
         dateText.setMaxLines(1);
         dateText.setSingleLine();
         dateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        dateText.setTextColor(ContextCompat.getColor(context, R.color.yellowSecondary));
+        dateText.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
         dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        dateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 12, 0, 0, 0));
+        dateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 6, 0, 0, 0));
         layout.addView(dateText);
-
-        dateText.setVisibility(GONE);
 
         changesLayout = new LinearLayout(context);
         changesLayout.setOrientation(LinearLayout.VERTICAL);
@@ -74,7 +74,11 @@ public class ChangelogView extends FrameLayout {
     }
 
     public void setDate(String date) {
-        dateText.setText(date);
+        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean dates = prefs.getBoolean("changelogDates", false);
+
+        dateText.setText(String.format("(%s)", date));
+        dateText.setVisibility(dates ? VISIBLE : GONE);
     }
 
     public void setChanges(List<String> changes) {
