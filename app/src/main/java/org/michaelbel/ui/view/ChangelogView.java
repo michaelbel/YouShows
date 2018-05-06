@@ -38,9 +38,8 @@ public class ChangelogView extends FrameLayout {
 
         setBackgroundColor(ContextCompat.getColor(context, R.color.background));
 
-        LinearLayout layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 0));
+        FrameLayout layout = new FrameLayout(context);
+        layout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 0));
         addView(layout);
 
         versionText = new TextView(context);
@@ -50,7 +49,7 @@ public class ChangelogView extends FrameLayout {
         versionText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         versionText.setTextColor(ContextCompat.getColor(context, R.color.yellow));
         versionText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        versionText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        versionText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         layout.addView(versionText);
 
         dateText = new TextView(context);
@@ -60,7 +59,7 @@ public class ChangelogView extends FrameLayout {
         dateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         dateText.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
         dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        dateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 6, 0, 0, 0));
+        dateText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
         layout.addView(dateText);
 
         changesLayout = new LinearLayout(context);
@@ -77,7 +76,7 @@ public class ChangelogView extends FrameLayout {
         SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         boolean dates = prefs.getBoolean("changelogDates", false);
 
-        dateText.setText(String.format("(%s)", date));
+        dateText.setText(date);
         dateText.setVisibility(dates ? VISIBLE : GONE);
     }
 
