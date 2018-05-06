@@ -328,12 +328,14 @@ public class SettingsFragment extends Fragment {
                     cell.setChecked(prefs.getBoolean("in_app_browser", true));
                     cell.setDivider(false);
                 } else if (position == appInfoRow) {
-                    cell.setMode(TextDetailCell.MODE_DEFAULT);
+                    cell.setMode(TextDetailCell.MODE_ICONS);
+                    cell.setStartIcon(R.drawable.ic_about);
                     cell.setText(getString(R.string.AppForAndroid, getString(R.string.AppName)));
                     cell.setValue(getString(R.string.VersionBuildDate, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE, BuildConfig.VERSION_DATE));
                     cell.setDivider(true);
                 } else if (position == feedbackRow) {
-                    cell.setMode(TextDetailCell.MODE_ICON);
+                    cell.setMode(TextDetailCell.MODE_ICONS);
+                    cell.setStartIcon(R.drawable.ic_message_alert);
                     cell.setText(R.string.Feedback);
                     cell.setValue(ShowsApp.TELEGRAM_FDL);
                     cell.setEndIcon(Theme.getIcon(R.drawable.ic_telegram, ContextCompat.getColor(activity, R.color.telegram)));
@@ -344,11 +346,13 @@ public class SettingsFragment extends Fragment {
                 cell.changeLayoutParams();
 
                 if (position == rateGooglePlay) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setMode(TextCell.MODE_ICON);
+                    cell.setIcon(R.drawable.ic_google_play);
                     cell.setText(R.string.RateGooglePlay);
                     cell.setDivider(true);
                 } else if (position == forkGithubRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setMode(TextCell.MODE_ICON);
+                    cell.setIcon(R.drawable.ic_github);
                     cell.setText(R.string.ForkGithub);
                     cell.setDivider(true);
                 } else if (position == libsRow) {
@@ -356,15 +360,18 @@ public class SettingsFragment extends Fragment {
                     cell.setText(R.string.OpenSourceLibs);
                     cell.setDivider(true);
                 } else if (position == shareFriendsRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setMode(TextCell.MODE_ICON);
+                    cell.setIcon(R.drawable.ic_share);
                     cell.setText(R.string.ShareWithFriends);
                     cell.setDivider(true);
                 } else if (position == donatePaypalRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setMode(TextCell.MODE_ICON);
+                    cell.setIcon(R.drawable.ic_paypal);
                     cell.setText(R.string.DonatePaypal);
                     cell.setDivider(true);
                 } else if (position == changelogsRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setMode(TextCell.MODE_ICON);
+                    cell.setIcon(R.drawable.ic_file_xml);
                     cell.setText(R.string.Changelogs);
                     cell.setDivider(false);
                 }
