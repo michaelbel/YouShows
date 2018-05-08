@@ -234,6 +234,9 @@ public class SettingsFragment extends Fragment {
             } else if (position == forkGithubRow) {
                 Extensions.copyToClipboard(activity, ShowsApp.GITHUB_URL);
                 Toast.makeText(activity, R.string.CopiedToClipboard, Toast.LENGTH_SHORT).show();
+            } else if (position == shareFriendsRow) {
+                Extensions.copyToClipboard(activity, ShowsApp.APP_WEB);
+                Toast.makeText(activity, R.string.CopiedToClipboard, Toast.LENGTH_SHORT).show();
             } else if (position == donatePaypalRow) {
                 Extensions.copyToClipboard(activity, ShowsApp.PAYPAL_ME);
                 Toast.makeText(activity, R.string.CopiedToClipboard, Toast.LENGTH_SHORT).show();
