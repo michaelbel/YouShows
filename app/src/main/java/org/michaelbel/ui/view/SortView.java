@@ -15,9 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.Theme;
 import org.michaelbel.shows.R;
 
 /**
@@ -34,11 +35,8 @@ public class SortView extends FrameLayout {
     public static final int SORT_BY_FIRST_AIR_DATE = 2;
     public static final int SORT_BY_LAST_AIR_DATE = 3;
     //public static final int SORT_BY_STATUS = 4;
-    //public static final int SORT_YOUR_LAST_VIEW = 5;
-    //public static final int SORT_YOUR_VIEWS_COUNT = 6;
 
     public static final boolean ORDER_ASCENDING = true;
-    public static final boolean ORDER_DESCENDING = false;
 
     private String[] sorts;
 
@@ -47,6 +45,9 @@ public class SortView extends FrameLayout {
 
     public FrameLayout sortLayout;
     public FrameLayout orderLayout;
+
+    private View dividerView;
+    private TextView orderTextView;
 
     public SortView(@NonNull Context context) {
         super(context);
@@ -60,18 +61,18 @@ public class SortView extends FrameLayout {
 
     private void initialize(@NonNull Context context) {
         sorts = getResources().getStringArray(R.array.Sorts);
-        setBackgroundColor(ContextCompat.getColor(context, R.color.primary));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.primary()));
 
-        View dividerView = new View(context);
-        dividerView.setBackgroundColor(ContextCompat.getColor(context, R.color.background));
+        dividerView = new View(context);
+        dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
         dividerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, 1, Gravity.TOP));
         addView(dividerView);
 
 //--------------------------------------------------------------------------------------------------
 
         sortLayout = new FrameLayout(context);
+        sortLayout.setForeground(Extensions.selectableItemBackgroundBorderlessDrawable(context));
         sortLayout.setPadding(ScreenUtils.dp(24), 0, ScreenUtils.dp(24), 0);
-        sortLayout.setForeground(Theme.selectableItemBackgroundBorderlessDrawable());
         sortLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START));
         addView(sortLayout);
 
@@ -86,7 +87,7 @@ public class SortView extends FrameLayout {
         sortTypeTextView.setSingleLine();
         sortTypeTextView.setEllipsize(TextUtils.TruncateAt.END);
         sortTypeTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        sortTypeTextView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
+        sortTypeTextView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         sortTypeTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         sortTypeTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         sortLinearLayout.addView(sortTypeTextView);
@@ -101,7 +102,7 @@ public class SortView extends FrameLayout {
 
         orderLayout = new FrameLayout(context);
         orderLayout.setPadding(ScreenUtils.dp(24), 0, ScreenUtils.dp(24), 0);
-        orderLayout.setForeground(Theme.selectableItemBackgroundBorderlessDrawable());
+        orderLayout.setForeground(Extensions.selectableItemBackgroundBorderlessDrawable(context));
         orderLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END));
         addView(orderLayout);
 
@@ -110,14 +111,14 @@ public class SortView extends FrameLayout {
         orderLinearLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         orderLayout.addView(orderLinearLayout);
 
-        TextView orderTextView = new TextView(context);
+        orderTextView = new TextView(context);
         orderTextView.setLines(1);
         orderTextView.setMaxLines(1);
         orderTextView.setSingleLine();
         orderTextView.setText(R.string.SortOrder);
         orderTextView.setEllipsize(TextUtils.TruncateAt.END);
         orderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        orderTextView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
+        orderTextView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         orderTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         orderTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         orderLinearLayout.addView(orderTextView);
@@ -135,5 +136,12 @@ public class SortView extends FrameLayout {
     public void setOrder(boolean order) {
         final int[] stateSet = {android.R.attr.state_checked * (order ? 1 : -1)};
         orderArrowIcon.setImageState(stateSet, true);
+    }
+
+    public void changeTheme() {
+        setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.primary()));
+        dividerView.setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
+        sortTypeTextView.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.primaryText()));
+        orderTextView.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.primaryText()));
     }
 }

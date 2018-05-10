@@ -8,8 +8,8 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import org.michaelbel.app.Theme;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.shows.R;
 
 /**
  * Date: 01 APR 2018
@@ -34,10 +34,10 @@ public class LoadingView extends FrameLayout {
     public LoadingView(Context context) {
         super(context);
 
-        setBackgroundColor(ContextCompat.getColor(context, R.color.background));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
 
         ProgressBar progressBar = new ProgressBar(context);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.accent), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, Theme.Color.accent()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(24, 24, Gravity.CENTER, 0, 12, 0, 12));
         addView(progressBar);
     }

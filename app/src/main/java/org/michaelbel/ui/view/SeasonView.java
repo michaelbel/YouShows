@@ -16,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.Theme;
 import org.michaelbel.shows.R;
 
 import java.util.Locale;
@@ -32,9 +32,6 @@ import java.util.Locale;
 
 @SuppressLint({"ClickableViewAccessibility", "InflateParams"})
 public class SeasonView extends FrameLayout {
-
-    private int allEpisodeCount;
-    private int watchedEpisodeCount;
 
     private CardView cardView;
     private ImageView selectIcon;
@@ -55,16 +52,23 @@ public class SeasonView extends FrameLayout {
 
         cardView = view.findViewById(R.id.card_view);
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+        if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+        }
 
         selectIcon = view.findViewById(R.id.select_icon);
 
         nameText = view.findViewById(R.id.name_text);
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        nameText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
 
         airDateText = view.findViewById(R.id.date_text);
         airDateText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        airDateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
 
         episodesText = view.findViewById(R.id.episodes_text);
+        episodesText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         episodesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
     }
 
@@ -88,10 +92,7 @@ public class SeasonView extends FrameLayout {
     }
 
     public void setEpisodeCount(int watched, int all) {
-        watchedEpisodeCount = watched;
-        allEpisodeCount = all;
-
-        episodesText.setText(String.format(Locale.US, "%d/%d", watchedEpisodeCount, allEpisodeCount));
+        episodesText.setText(String.format(Locale.US, "%d/%d", watched, all));
     }
 
     @Override

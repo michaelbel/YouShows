@@ -23,11 +23,13 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.circleprogress.CircleProgressView;
+import org.michaelbel.circleprogress.UnitPosition;
 import org.michaelbel.material.annotation.NotTested;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.Theme;
 import org.michaelbel.shows.R;
 
 import java.util.Locale;
@@ -51,8 +53,12 @@ public class MyShowView extends FrameLayout {
     private CardView statusCard;
     private ImageView posterImage;
     private TextView progressWatchedText;
-    //private CircleProgressView circleProgressView;
+    private CircleProgressView circleProgressView;
     private CardView cardView;
+    private TextView statusText;
+    private View dividerView;
+    private ImageView dateIcon;
+    private ImageView viewsIcon;
 
     private Paint paint;
     private boolean divider;
@@ -61,13 +67,12 @@ public class MyShowView extends FrameLayout {
     public MyShowView(Context context) {
         super(context);
 
-        //setForeground(Extensions.selectableItemBackgroundDrawable(context));
-        setBackgroundColor(ContextCompat.getColor(context, R.color.background));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
 
         if (paint == null) {
             paint = new Paint();
             paint.setStrokeWidth(1);
-            paint.setColor(ContextCompat.getColor(context, R.color.background));
+            paint.setColor(ContextCompat.getColor(context, Theme.Color.background()));
         }
 
         View view = LayoutInflater.from(context).inflate(R.layout.item_myshow, null);
@@ -76,36 +81,54 @@ public class MyShowView extends FrameLayout {
 
         cardView = view.findViewById(R.id.card_item);
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
 
         posterImage = view.findViewById(R.id.poster_image);
 
         nameText = view.findViewById(R.id.name_text);
+        nameText.setTextColor(ContextCompat.getColor(context, R.color.yellow));
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         statusCard = view.findViewById(R.id.status_card);
+        statusCard.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
 
-        TextView statusText = view.findViewById(R.id.status_text);
+        statusText = view.findViewById(R.id.status_text);
         statusText.setText(context.getString(R.string.Finished).toUpperCase());
         statusText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        statusText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         statusText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
-        ImageView dateIcon = view.findViewById(R.id.date_icon);
-        dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(context, R.color.iconActive)));
+        dateIcon = view.findViewById(R.id.date_icon);
+        dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(context, Theme.Color.iconActive())));
 
         datesText = view.findViewById(R.id.dates_text);
+        datesText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         datesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
-        ImageView viewsIcon = view.findViewById(R.id.views_icon);
-        viewsIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_eye, ContextCompat.getColor(context, R.color.iconActive)));
+        viewsIcon = view.findViewById(R.id.views_icon);
+        viewsIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(context, Theme.Color.iconActive())));
 
         progressWatchedText = view.findViewById(R.id.watched_episodes_text);
-        progressWatchedText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
+        progressWatchedText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         progressWatchedText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
-        //circleProgressView = view.findViewById(R.id.circle_progress);
-        //circleProgressView.setVisibility(GONE);
-        //circleProgressView.setTextSize(14);
-        //circleProgressView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
+        dividerView = view.findViewById(R.id.divider_view);
+        dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+
+        circleProgressView = view.findViewById(R.id.progress_view);
+        circleProgressView.setTextSize(Extensions.dp(context, 10));
+        circleProgressView.setTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        circleProgressView.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        circleProgressView.setUnitColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        circleProgressView.setUnitTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        circleProgressView.setUnitVisible(true);
+        circleProgressView.setUnitSize(Extensions.dp(context, 6));
+        circleProgressView.setBarColor(ContextCompat.getColor(context, R.color.green));
+        circleProgressView.setRimColor(ContextCompat.getColor(context, Theme.Color.iconActive()));
+        circleProgressView.setBarWidth(Extensions.dp(context, 5.2F));
+        circleProgressView.setRimWidth(Extensions.dp(context, 5));
+        circleProgressView.setUnit("%");
+        circleProgressView.setUnitPosition(UnitPosition.RIGHT_BOTTOM);
     }
 
     public void setPoster(@NonNull String posterPath) {
@@ -122,9 +145,9 @@ public class MyShowView extends FrameLayout {
 
     public void setDates(String airDate, String lastDate) {
         if (lastDate == null) {
-            datesText.setText(AndroidExtensions.formatDate(airDate) + " - Present");
+            datesText.setText(getContext().getString(R.string.FirstAndNoLastDates, AndroidExtensions.formatDate(airDate)));
         } else {
-            datesText.setText(AndroidExtensions.formatDate(airDate) + " - " + AndroidExtensions.formatDate(lastDate));
+            datesText.setText(String.format(Locale.US, "%1$s - %2$s", AndroidExtensions.formatDate(airDate), AndroidExtensions.formatDate(lastDate)));
         }
     }
 
@@ -172,14 +195,38 @@ public class MyShowView extends FrameLayout {
         }
     }
 
-    /*public void setProgress(int watchedEpisodes, int allEpisodes) {
+    public void setProgress(boolean animated, int watchedEpisodes, int allEpisodes) {
         float percent = (watchedEpisodes * 100F) / allEpisodes;
-        circleProgressView.setValue(percent);
-    }*/
+        if (animated) {
+            circleProgressView.setValueAnimated(percent);
+        } else {
+            circleProgressView.setValue(percent);
+        }
+    }
 
     public void setDivider(boolean divider) {
         this.divider = divider;
         setWillNotDraw(!divider);
+    }
+
+    public void changeTheme() {
+        setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.foreground()));
+        nameText.setTextColor(ContextCompat.getColor(getContext(), R.color.yellow));
+        statusCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
+        statusText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.primaryText()));
+        datesText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
+        progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
+        dividerView.setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
+        dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
+        viewsIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
+        paint.setColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
+        setWillNotDraw(true);
+
+        circleProgressView.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
+        circleProgressView.setUnitColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
+        circleProgressView.setBarColor(ContextCompat.getColor(getContext(), R.color.green));
+        circleProgressView.setRimColor(ContextCompat.getColor(getContext(), Theme.Color.iconActive()));
     }
 
     @Override

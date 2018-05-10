@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
@@ -35,6 +36,7 @@ import java.util.List;
  * @author Michael Bel
  */
 
+@SuppressLint("ClickableViewAccessibility")
 public class SeasonsLayout extends FrameLayout {
 
     private Show show;
@@ -45,11 +47,10 @@ public class SeasonsLayout extends FrameLayout {
     private ProgressBar progressBar;
     public RecyclerListView recyclerView;
 
-    @SuppressLint("ClickableViewAccessibility")
     public SeasonsLayout(@NonNull Context context) {
         super(context);
 
-        setBackgroundColor(ContextCompat.getColor(context, R.color.background));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
 
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);

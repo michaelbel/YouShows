@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.Theme;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.Theme;
 import org.michaelbel.shows.R;
 
 /**
@@ -52,7 +52,7 @@ public class ShowsEmptyView extends LinearLayout {
         titleText = new TextView(getContext());
         titleText.setGravity(Gravity.CENTER);
         titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        titleText.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryText));
+        titleText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.primaryText()));
         titleText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         titleText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 8, 24, 0));
         addView(titleText);
@@ -66,7 +66,7 @@ public class ShowsEmptyView extends LinearLayout {
         descText1.setText(R.string.ClickOn);
         descText1.setGravity(Gravity.CENTER);
         descText1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        descText1.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
+        descText1.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         descText1.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         descText1.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
         layout.addView(descText1);
@@ -79,7 +79,7 @@ public class ShowsEmptyView extends LinearLayout {
         descText2.setGravity(Gravity.CENTER);
         descText2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         descText2.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        descText2.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
+        descText2.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         descText2.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
         layout.addView(descText2);
     }
