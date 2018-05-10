@@ -20,4 +20,8 @@ public class Events {
     public static class EnableSorting {
         public EnableSorting() {}
     }
+
+    public static class ChangeTheme {
+        public ChangeTheme() {}
+    }
 }
