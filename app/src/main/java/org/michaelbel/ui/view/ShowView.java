@@ -13,17 +13,16 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
+import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.Theme;
-import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.shows.R;
 
 import java.util.Locale;
@@ -39,20 +38,11 @@ import java.util.Locale;
 public class ShowView extends FrameLayout {
 
     private ImageView posterImage;
-    private ProgressBar progressBar;
-
     private TextView titleText;
-    private TextView voteCountText;
-    private TextView releaseDateText;
     private TextView overviewText;
     private CardView cardView;
-    private ImageView backdropImage;
-    private FrameLayout blurLayout;
-    private FrameLayout contentLayout;
-    public FollowButton followButton;
     private RatingView ratingView;
     private DateView dateView;
-    //private View posterPlaceholder;
 
     private Rect rect = new Rect();
 
@@ -65,13 +55,13 @@ public class ShowView extends FrameLayout {
         cardView.setRadius(ScreenUtils.dp(2));
         cardView.setCardElevation(ScreenUtils.dp(1.0F));
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
-        cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.foreground));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
         cardView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 5.5F, 5.5F, 5.5F, 0));
         addView(cardView);
 
 //--------------------------------------------------------------------------------------------------
 
-        contentLayout = new FrameLayout(context);
+        FrameLayout contentLayout = new FrameLayout(context);
         contentLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         cardView.addView(contentLayout);
 
@@ -82,19 +72,14 @@ public class ShowView extends FrameLayout {
         posterLayout.setUseCompatPadding(false);
         posterLayout.setPreventCornerOverlap(false);
         posterLayout.setRadius(ScreenUtils.dp(2));
-        posterLayout.setCardBackgroundColor(ContextCompat.getColor(context, R.color.foreground));
+        posterLayout.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
         posterLayout.setLayoutParams(LayoutHelper.makeFrame(110, 170, Gravity.START | Gravity.CENTER_VERTICAL, 4, 4, 0, 4));
         contentLayout.addView(posterLayout);
 
         posterImage = new ImageView(context);
-        //posterImage.setVisibility(INVISIBLE);
         posterImage.setScaleType(ImageView.ScaleType.FIT_XY);
         posterImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         posterLayout.addView(posterImage);
-
-        /*posterPlaceholder = LayoutInflater.from(context).inflate(R.layout.item_poster_placeholder, null);
-        posterPlaceholder.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
-        posterLayout.addView(posterPlaceholder);*/
 
 //--------------------------------------------------------------------------------------------------
 
@@ -112,7 +97,7 @@ public class ShowView extends FrameLayout {
         titleText.setMaxLines(2);
         titleText.setEllipsize(TextUtils.TruncateAt.END);
         titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
-        titleText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
+        titleText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         titleText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         titleText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         infoLayout.addView(titleText);
@@ -140,19 +125,13 @@ public class ShowView extends FrameLayout {
 
 //--------------------------------------------------------------------------------------------------
 
-        followButton = new FollowButton(context);
-        followButton.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
-        //frameLayout.addView(followButton);
-
-//--------------------------------------------------------------------------------------------------
-
         overviewText = new TextView(context);
         overviewText.setLines(1);
         overviewText.setMaxLines(5);
         overviewText.setEllipsize(TextUtils.TruncateAt.END);
         overviewText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         overviewText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        overviewText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        overviewText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         overviewText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         infoLayout.addView(overviewText);
     }
@@ -189,10 +168,6 @@ public class ShowView extends FrameLayout {
         }
     }
 
-    public void addBottomPadding() {
-        cardView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 5.5F, 5.5F, 5.5F, 5.5F));
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (cardView.getForeground() != null) {
@@ -218,7 +193,7 @@ public class ShowView extends FrameLayout {
             setOrientation(LinearLayout.HORIZONTAL);
 
             ImageView averageIcon = new ImageView(context);
-            averageIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_star_circle, ContextCompat.getColor(context, R.color.iconActive)));
+            averageIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_star_circle, ContextCompat.getColor(context, Theme.Color.iconActive())));
             averageIcon.setLayoutParams(LayoutHelper.makeLinear(16, 16, Gravity.START | Gravity.CENTER_VERTICAL));
             addView(averageIcon);
 
@@ -227,7 +202,7 @@ public class ShowView extends FrameLayout {
             ratingText.setMaxLines(1);
             ratingText.setSingleLine();
             ratingText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            ratingText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+            ratingText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
             ratingText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
             ratingText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 1, 0, 0, 0));
             addView(ratingText);
@@ -248,7 +223,7 @@ public class ShowView extends FrameLayout {
             setOrientation(LinearLayout.HORIZONTAL);
 
             ImageView dateIcon = new ImageView(context);
-            dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(context, R.color.iconActive)));
+            dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(context, Theme.Color.iconActive())));
             dateIcon.setLayoutParams(LayoutHelper.makeLinear(16, 16, Gravity.START | Gravity.CENTER_VERTICAL));
             addView(dateIcon);
 
@@ -257,7 +232,7 @@ public class ShowView extends FrameLayout {
             dateText.setMaxLines(1);
             dateText.setSingleLine();
             dateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            dateText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+            dateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
             dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
             dateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 2, 0, 0, 0));
             addView(dateText);
