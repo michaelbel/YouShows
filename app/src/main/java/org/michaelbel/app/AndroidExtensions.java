@@ -18,10 +18,13 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import org.michaelbel.app.rest.model.Company;
 import org.michaelbel.app.rest.model.Genre;
 import org.michaelbel.material.extensions.Extensions;
+import org.michaelbel.shows.R;
 
 import java.io.InputStream;
 import java.text.ParseException;
@@ -283,6 +286,16 @@ public class AndroidExtensions extends Extensions {
                 // Deprecated in API 26
                 vibrator.vibrate(milliseconds);
             }
+        }
+    }
+
+    public static LayoutAnimationController layoutAnimationController() {
+        SharedPreferences prefs = ShowsApp.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean animations = prefs.getBoolean("animations", true);
+        if (animations) {
+            return AnimationUtils.loadLayoutAnimation(ShowsApp.AppContext, R.anim.layout_animation_from_bottom);
+        } else {
+            return null;
         }
     }
 }
