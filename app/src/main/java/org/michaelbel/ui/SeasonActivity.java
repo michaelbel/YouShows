@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import org.michaelbel.old.Theme;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.shows.R;
@@ -39,8 +39,11 @@ public class SeasonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_season);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 

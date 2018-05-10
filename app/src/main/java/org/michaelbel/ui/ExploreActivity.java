@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.NowPlayingShowsFragment;
@@ -46,9 +48,15 @@ public class ExploreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+
+        AppBarLayout appBar = findViewById(R.id.app_bar);
+        appBar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
+
         toolbar = findViewById(R.id.toolbar);
         toolbar.setLayoutParams(AndroidExtensions.setScrollFlags(toolbar));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
@@ -67,9 +75,9 @@ public class ExploreActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-        tabLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.primary));
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.primaryText));
-        tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.secondaryText), ContextCompat.getColor(this, R.color.primaryText));
+        tabLayout.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, Theme.Color.primaryText()));
+        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.secondaryText()), ContextCompat.getColor(this, Theme.Color.primaryText()));
     }
 
     @Override

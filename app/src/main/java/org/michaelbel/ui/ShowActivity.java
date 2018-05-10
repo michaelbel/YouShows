@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,7 @@ import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
-import org.michaelbel.old.Theme;
+import org.michaelbel.app.Theme;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.ShowFragment;
 import org.michaelbel.ui.view.BackdropView;
@@ -64,6 +65,8 @@ public class ShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
@@ -79,7 +82,10 @@ public class ShowActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> finish());
 
         scrollView = findViewById(R.id.scroll_view);
+
         collapsingToolbarLayout = findViewById(R.id.collapsing_layout);
+        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, Theme.Color.primary()));
+        collapsingToolbarLayout.setStatusBarScrimColor(ContextCompat.getColor(this, android.R.color.transparent));
         //setCollapsingLabel(RealmDb.getShowStatus(extraId));
 
         toolbarTitle = findViewById(R.id.toolbar_title);
@@ -108,7 +114,7 @@ public class ShowActivity extends AppCompatActivity {
             AndroidExtensions.startVibrate(15);
             return true;
         });
-        changeFabStyle(RealmDb.isShowFollow(extraId));
+        followButtonSwapAnimation();
 
         fragment = (ShowFragment) getSupportFragmentManager().findFragmentById(R.id.showFragment);
         fragment.setName(extraName);
@@ -149,6 +155,14 @@ public class ShowActivity extends AppCompatActivity {
         );
     }
 
+    private void followButtonSwapAnimation() {
+        Drawable avd = AnimatedVectorDrawableCompat.create(this, R.drawable.ic_anim_progressbar);
+        followButton.setImageDrawable(avd);
+        if (avd != null) {
+            ((Animatable) avd).start();
+        }
+    }
+
     private void loadDetails() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
         service.details(extraId, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Show>() {
@@ -165,10 +179,10 @@ public class ShowActivity extends AppCompatActivity {
                             RealmDb.updateShowViewsCount(extraId);
                         }
 
-                        followButton.setClickable(true);
-                        followButton.setLongClickable(true);
                         fragment.setSeasons(show);
                         fragment.setInfo(show);
+
+                        fragmentLoaded();
                     }
                 }
             }
@@ -179,6 +193,12 @@ public class ShowActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void fragmentLoaded() {
+        changeFabStyle(RealmDb.isShowFollow(extraId));
+        followButton.setClickable(true);
+        followButton.setLongClickable(true);
     }
 
     private void followShow(boolean status) {

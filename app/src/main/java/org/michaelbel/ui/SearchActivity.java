@@ -24,9 +24,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import org.michaelbel.app.Theme;
+import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.SearchFragment;
 
@@ -42,8 +43,8 @@ import java.util.Locale;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private final int MENU_ITEM_INDEX = 0;
-    private final int SPEECH_REQUEST_CODE = 101;
+    private static final int MENU_ITEM_INDEX = 0;
+    private static final int SPEECH_REQUEST_CODE = 101;
 
     private final int MODE_ACTION_CLEAR = 1;
     private final int MODE_ACTION_VOICE = 2;
@@ -59,8 +60,11 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
@@ -81,8 +85,8 @@ public class SearchActivity extends AppCompatActivity {
         searchEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         searchEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        searchEditText.setTextColor(ContextCompat.getColor(this, R.color.md_white));
-        searchEditText.setHintTextColor(ContextCompat.getColor(this, R.color.disabledHintText));
+        searchEditText.setTextColor(ContextCompat.getColor(this, Theme.Color.primaryText()));
+        searchEditText.setHintTextColor(ContextCompat.getColor(this, Theme.Color.disabledHintText()));
         searchEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override

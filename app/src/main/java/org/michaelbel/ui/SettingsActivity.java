@@ -3,10 +3,12 @@ package org.michaelbel.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import org.michaelbel.app.Theme;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.SettingsFragment;
 
@@ -27,8 +29,11 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
         setSupportActionBar(toolbar);
 
         toolbarTitle = findViewById(R.id.toolbar_title);
