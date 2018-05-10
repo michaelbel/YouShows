@@ -22,8 +22,7 @@
             android:maxLines="1"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"/>
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="4dp"
@@ -43,8 +42,7 @@
             android:maxLines="1"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"/>
+            android:textSize="16sp"/>
 
     </LinearLayout>
 

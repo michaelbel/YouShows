@@ -19,9 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="@color/primary"
-            app:statusBarScrim="@android:color/transparent">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <org.michaelbel.ui.view.BackdropView
                 android:id="@+id/backdrop_image"
@@ -81,8 +79,7 @@
             class="org.michaelbel.ui.fragment.ShowFragment"
             android:id="@+id/showFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/appBar"/>
+            android:layout_height="match_parent"/>
 
     </android.support.v4.widget.NestedScrollView>
 
