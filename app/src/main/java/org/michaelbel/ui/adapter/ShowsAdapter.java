@@ -1,5 +1,6 @@
 package org.michaelbel.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import java.util.List;
  * @author Michael Bel
  */
 
+@SuppressLint("CheckResult")
 public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
 
     private List<Show> shows;
@@ -51,31 +53,19 @@ public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
         view.setDates(show.firstAirDate, show.lastAirDate);
         view.setDivider(position != shows.size() - 1);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.changeTheme();
 
+        int allEpisodes = show.numberEpisodes;
+        int watchedEpisodes = RealmDb.getWatchedEpisodesInShow(show.showId);
         int watchedSeasons = RealmDb.getWatchedSeasonsInShow(show.showId);
+        view.setProgress(true, watchedEpisodes, allEpisodes);
 
         if (watchedSeasons == -1) {
-            // Show is over watched
             view.setProgressWatchedText(MyShowView.TYPE_SHOW, -1);
-            //todo view.setProgressWatchedText(MyShowView.TYPE_SHOW, -1);
         } else if (watchedSeasons > 0) {
-            // 10 Seasons watched
-            //todo int allSeasons = RealmDb.getSeasonsInShow(show.showId);
             view.setProgressWatchedText(MyShowView.TYPE_SEASONS, watchedSeasons);
-            //todo view.setProgressWatchedText(MyShowView.TYPE_SEASONS, watchedSeasons, allSeasons);
         } else {
-            // 5 Episodes watched
-
-            // Get first season
-            // Get episodes count in season
-            // Get watched episodes count in season
-            //todo Season firstSeason = RealmDb.getFirstSeasonInShow(show.showId);
-            //todo int watchedEpisodes = RealmDb.getWatchedEpisodesInSeason(show.showId, firstSeason.seasonId);
-            //todo int allEpisodes = firstSeason.episodeCount;
-
-            int watchedEpisodes = RealmDb.getWatchedEpisodesInShow(show.showId);
             view.setProgressWatchedText(MyShowView.TYPE_EPISODES, watchedEpisodes, watchedEpisodes);
-            //todo view.setProgressWatchedText(MyShowView.TYPE_EPISODES, watchedEpisodes, allEpisodes);
         }
     }
 
