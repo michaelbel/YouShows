@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.shows.R;
@@ -56,6 +57,8 @@ public class BackdropView extends FrameLayout {
     }
 
     private void initialize(@NonNull Context context) {
+        setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.primary()));
+
         backdropImage = new ImageView(context);
         backdropImage.setScaleType(ImageView.ScaleType.FIT_XY);
         backdropImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
@@ -79,7 +82,7 @@ public class BackdropView extends FrameLayout {
         textView.setText(R.string.Loading);
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 5, 2.5F, 5, 2.5F));
         cardView.addView(textView);

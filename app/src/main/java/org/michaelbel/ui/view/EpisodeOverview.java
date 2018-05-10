@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.Theme;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.shows.R;
 
@@ -39,9 +40,11 @@ public class EpisodeOverview extends FrameLayout {
         addView(view);
 
         episodesText = view.findViewById(R.id.episodes_text);
+        episodesText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         episodesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         dateText = view.findViewById(R.id.date_text);
+        dateText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         overviewText = view.findViewById(R.id.expandable_text);
@@ -50,7 +53,7 @@ public class EpisodeOverview extends FrameLayout {
         overviewText.setTextIsSelectable(false);
         overviewText.setEllipsize(TextUtils.TruncateAt.END);
         overviewText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        overviewText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
+        overviewText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         overviewText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         overviewText.setOnClickListener(v -> overviewText.toggle());
     }

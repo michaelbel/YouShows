@@ -17,9 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.Theme;
 import org.michaelbel.shows.R;
 
 /**
@@ -46,13 +47,13 @@ public class EpisodeView extends FrameLayout {
         super(context);
 
         setElevation(ScreenUtils.dp(1));
-        setForeground(Theme.selectableItemBackgroundDrawable());
-        setBackgroundColor(ContextCompat.getColor(context, R.color.foreground));
+        setForeground(Extensions.selectableItemBackgroundDrawable(context));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
 
         if (paint == null) {
             paint = new Paint();
             paint.setStrokeWidth(1);
-            paint.setColor(ContextCompat.getColor(context, R.color.divider));
+            paint.setColor(ContextCompat.getColor(context, Theme.Color.divider()));
         }
 
         nameText = new TextView(context);
@@ -75,7 +76,7 @@ public class EpisodeView extends FrameLayout {
         valueText.setMaxLines(1);
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        valueText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
+        valueText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         valueText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(valueText);
 
@@ -89,7 +90,7 @@ public class EpisodeView extends FrameLayout {
         airDateText.setMaxLines(1);
         airDateText.setSingleLine();
         airDateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        airDateText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
+        airDateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         airDateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(airDateText);
 
@@ -101,7 +102,7 @@ public class EpisodeView extends FrameLayout {
 
         checkBox = new CheckBox(context, R.drawable.round_check2);
         checkBox.setVisibility(VISIBLE);
-        checkBox.setColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, R.color.foreground));
+        checkBox.setColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, Theme.Color.foreground()));
         checkBox.setLayoutParams(LayoutHelper.makeFrame(24, 24, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
     }

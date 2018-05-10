@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.Theme;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.Theme;
 import org.michaelbel.shows.R;
 
 /**
@@ -48,7 +48,7 @@ public class EmptyView extends LinearLayout {
         emptyText.setGravity(Gravity.CENTER);
         emptyText.setText(R.string.NoResults);
         emptyText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-        emptyText.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
+        emptyText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         emptyText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         emptyText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 10, 24, 0));
         addView(emptyText);
