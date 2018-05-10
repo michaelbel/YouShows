@@ -35,5 +35,16 @@
         "changes":[
             "Slight improvements"
         ]
+    },
+
+    {
+        "version":"1.0.4",
+        "build":10,
+        "date":"10 May 2018",
+        "changes":[
+            "Themes",
+            "List animations",
+            "Open-source libraries"
+        ]
     }
 ]
