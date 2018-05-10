@@ -23,9 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.michaelbel.app.Changelog;
+import org.michaelbel.app.Theme;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.Theme;
 import org.michaelbel.old.ui_old.adapter.Holder;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
 import org.michaelbel.shows.R;
@@ -68,7 +68,7 @@ public class ChangelogsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-        boolean enableDates = prefs.getBoolean("changelogDates", false);
+        boolean enableDates = prefs.getBoolean("changelog_dates", false);
 
         actionMenu = menu;
 
@@ -76,15 +76,14 @@ public class ChangelogsFragment extends Fragment {
             .setIcon(enableDates ? R.drawable.ic_calendar_check : R.drawable.ic_calendar_text)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             .setOnMenuItemClickListener(item -> {
-                boolean enable = prefs.getBoolean("changelogDates", false);
-                prefs.edit().putBoolean("changelogDates", !enable).apply();
+                boolean enable = prefs.getBoolean("changelog_dates", false);
+                prefs.edit().putBoolean("changelog_dates", !enable).apply();
 
                 changes.clear();
                 adapter.notifyDataSetChanged();
                 recyclerView.setAdapter(adapter);
 
                 readJsonFile();
-
                 changeMenuIcon();
                 return true;
             });
@@ -97,7 +96,7 @@ public class ChangelogsFragment extends Fragment {
         activity.toolbarTitle.setText(R.string.Changelogs);
 
         FrameLayout fragmentView = new FrameLayout(activity);
-        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
+        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
         adapter = new ChangesAdapter();
         layoutManager = new LinearLayoutManager(activity);
@@ -163,7 +162,7 @@ public class ChangelogsFragment extends Fragment {
 
     private void changeMenuIcon() {
         SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-        boolean dates = prefs.getBoolean("changelogDates", false);
+        boolean dates = prefs.getBoolean("changelog_dates", false);
         if (actionMenu != null) {
             actionMenu.getItem(MENU_ICON_DATES).setIcon(dates ? R.drawable.ic_calendar_check : R.drawable.ic_calendar_text);
         }
