@@ -14,15 +14,16 @@ import android.widget.LinearLayout;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.eventbus.Events;
-import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.ShowActivity;
 import org.michaelbel.ui.view.InfoLayout;
-import org.michaelbel.ui.view.SeasonsLayout;
 import org.michaelbel.ui.view.OverviewLayout;
+import org.michaelbel.ui.view.SeasonsLayout;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ShowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LinearLayout fragmentLayout = new LinearLayout(activity);
         fragmentLayout.setOrientation(LinearLayout.VERTICAL);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.appBar));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.appBar()));
 
         overviewLayout = new OverviewLayout(activity);
         overviewLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, 0));
@@ -71,6 +72,13 @@ public class ShowFragment extends Fragment {
         infoLayout = new InfoLayout(activity);
         infoLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 6, 0, 0));
         fragmentLayout.addView(infoLayout);
+
+        if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
+            fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+            overviewLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.foreground()));
+            seasonsLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.foreground()));
+            infoLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.foreground()));
+        }
 
         return fragmentLayout;
     }

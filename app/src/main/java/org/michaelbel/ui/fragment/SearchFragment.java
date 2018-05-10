@@ -16,13 +16,13 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.app.rest.response.ShowsResponse;
-import org.michaelbel.shows.R;
+import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.old.ui_old.view.RecyclerListView;
 import org.michaelbel.ui.SearchActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;
 import org.michaelbel.ui.view.EmptyView;
@@ -69,7 +69,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(activity);
-        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
+        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
         emptyView = new EmptyView(activity);
         emptyView.setMode(EmptyViewMode.MODE_NO_RESULTS);
@@ -78,7 +78,7 @@ public class SearchFragment extends Fragment {
 
         progressBar = new ProgressBar(activity);
         progressBar.setVisibility(View.INVISIBLE);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.accent), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accent()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentView.addView(progressBar);
 

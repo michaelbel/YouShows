@@ -18,12 +18,13 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.app.rest.response.ShowsResponse;
+import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.old.ui_old.view.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.ExploreActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;
@@ -92,8 +93,8 @@ public class NowPlayingShowsFragment extends Fragment {
             ContextCompat.getColor(activity, R.color.green),
             ContextCompat.getColor(activity, R.color.accent)
         );
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
-        fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, R.color.primary));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, Theme.Color.primary()));
         fragmentLayout.setOnRefreshListener(() -> {
             if (adapter.getList().isEmpty()) {
                 loadFirstPage();
@@ -107,7 +108,7 @@ public class NowPlayingShowsFragment extends Fragment {
         fragmentLayout.addView(contentLayout);
 
         progressBar = new ProgressBar(activity);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.accent), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accent()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         contentLayout.addView(progressBar);
 

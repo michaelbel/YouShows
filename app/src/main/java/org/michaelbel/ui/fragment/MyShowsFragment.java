@@ -1,6 +1,7 @@
 package org.michaelbel.ui.fragment;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,14 +17,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
+import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.Theme;
+import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
-import org.michaelbel.shows.R;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.ShowsAdapter;
 import org.michaelbel.ui.view.MyShowView;
@@ -45,6 +50,7 @@ import io.realm.Sort;
  * @author Michael Bel
  */
 
+@SuppressLint("CheckResult")
 public class MyShowsFragment extends Fragment {
 
     private int prevTop;
@@ -57,6 +63,7 @@ public class MyShowsFragment extends Fragment {
     private ShowsAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
 
+    private FrameLayout fragmentLayout;
     private ShowsEmptyView emptyView;
     private RecyclerListView recyclerView;
 
@@ -82,8 +89,8 @@ public class MyShowsFragment extends Fragment {
             }
         });
 
-        FrameLayout fragmentLayout = new FrameLayout(activity);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
+        fragmentLayout = new FrameLayout(activity);
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
         emptyView = new ShowsEmptyView(activity);
         emptyView.setMode(ShowsEmptyView.MY_SHOWS_MODE);
@@ -102,6 +109,19 @@ public class MyShowsFragment extends Fragment {
         recyclerView.setClipToPadding(false); // Apply Top and Bottom padding
         recyclerView.setPadding(0, ScreenUtils.dp(6), 0, ScreenUtils.dp(6));
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutAnimation(AndroidExtensions.layoutAnimationController());
+        recyclerView.setLayoutAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                activity.floatingButtonAppear();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof MyShowView) {
                 Show show = adapter.getShows().get(position);
@@ -136,6 +156,7 @@ public class MyShowsFragment extends Fragment {
                 }
             }
         });
+        //reload: recyclerView.scheduleLayoutAnimation();
 
         /*ItemTouchHelper.SimpleCallback callback = new ItemTouchHelperSimpleCallback(
                 adapter,
@@ -159,6 +180,12 @@ public class MyShowsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         refreshLayout();
+
+        ((ShowsApp) activity.getApplication()).bus().toObservable().subscribe(object -> {
+            if (object instanceof Events.ChangeTheme) {
+                fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+            }
+        });
     }
 
     public void refreshLayout() {

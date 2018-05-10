@@ -23,21 +23,21 @@ import android.widget.Toast;
 
 import org.michaelbel.app.Browser;
 import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.Theme;
 import org.michaelbel.old.ui_old.adapter.Holder;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.shows.BuildConfig;
+import org.michaelbel.shows.R;
+import org.michaelbel.ui.SettingsActivity;
 import org.michaelbel.ui.view.cell.EmptyCell;
 import org.michaelbel.ui.view.cell.HeaderCell;
 import org.michaelbel.ui.view.cell.TextCell;
 import org.michaelbel.ui.view.cell.TextDetailCell;
-import org.michaelbel.shows.BuildConfig;
-import org.michaelbel.shows.R;
-import org.michaelbel.ui.SettingsActivity;
 
 /**
  * Date: 19 MAR 2018
@@ -53,8 +53,10 @@ public class SettingsFragment extends Fragment {
 
     private int rowCount;
     //private int languageRow;
+    private int themeRow;
     private int defaultTabRow;
     private int enableSortingRow;
+    private int enableAnimationsRow;
     private int inAppBrowserRow;
     private int emptyRow1;
     private int aboutRow;
@@ -71,6 +73,7 @@ public class SettingsFragment extends Fragment {
     private int pressCount = 0;
 
     private String[] tabs;
+    private String[] themes;
     //private String[] viewTypes;
     private SharedPreferences prefs;
     private SettingsActivity activity;
@@ -84,6 +87,7 @@ public class SettingsFragment extends Fragment {
         activity = (SettingsActivity) getActivity();
 
         tabs = getResources().getStringArray(R.array.Tabs);
+        themes = getResources().getStringArray(R.array.Themes);
         //viewTypes = getResources().getStringArray(R.array.ViewTypes);
     }
 
@@ -94,20 +98,23 @@ public class SettingsFragment extends Fragment {
         activity.toolbarTitle.setText(R.string.Settings);
 
         FrameLayout fragmentLayout = new FrameLayout(activity);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
         rowCount = 0;
-        //languageRow = rowCount++;
+        // Settings
+        themeRow = rowCount++;
         defaultTabRow = rowCount++;
         enableSortingRow = rowCount++;
+        enableAnimationsRow = rowCount++;
         inAppBrowserRow = rowCount++;
         emptyRow1 = rowCount++;
+        // About
         aboutRow = rowCount++;
         appInfoRow = rowCount++;
         feedbackRow = rowCount++;
         rateGooglePlay = rowCount++;
         forkGithubRow = rowCount++;
-        //libsRow = rowCount++;
+        libsRow = rowCount++;
         shareFriendsRow = rowCount++;
         donatePaypalRow = rowCount++;
         changelogsRow = rowCount++;
@@ -139,40 +146,43 @@ public class SettingsFragment extends Fragment {
                         ((TextDetailCell) view).setValue(R.string.LangRussian);
                     }
                 }
-            } else*/ if (position == defaultTabRow) {
+            } else*/
+
+            if (position == themeRow) {
+                activity.startFragment(new ThemeFragment(), "themesFragment");
+            } else if (position == defaultTabRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setCellHeight(ScreenUtils.dp(52));
-                builder.setItemTextColorRes(R.color.primaryText);
-                builder.setBackgroundColorRes(R.color.foreground);
-                builder.setItems(new int[] { R.string.MyShows, R.string.Following }, (dialog, i) -> {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putInt("default_tab", i);
-                    editor.apply();
-
+                builder.setDarkTheme(true);
+                builder.setItemTextColorRes(Theme.Color.primaryText());
+                builder.setBackgroundColorRes(Theme.Color.foreground());
+                builder.setItems(new int[] { R.string.MyShows, R.string.Following }, (dialog, pos) -> {
+                    prefs.edit().putInt("default_tab", pos).apply();
                     if (view instanceof TextDetailCell) {
-                        ((TextDetailCell) view).setValue(tabs[i]);
+                        ((TextDetailCell) view).setValue(tabs[pos]);
                     }
-
                     ((ShowsApp) activity.getApplication()).bus().send(new Events.ChangeDefaultTab());
                 });
                 builder.show();
             } else if (position == enableSortingRow) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
                 boolean enable = prefs.getBoolean("sorting", false);
-                editor.putBoolean("sorting", !enable);
-                editor.apply();
+                prefs.edit().putBoolean("sorting", !enable).apply();
                 if (view instanceof TextDetailCell) {
                     ((TextDetailCell) view).setChecked(!enable);
                 }
-
                 ((ShowsApp) activity.getApplication()).bus().send(new Events.EnableSorting());
+            } else if (position == enableAnimationsRow) {
+                SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                boolean enable = prefs.getBoolean("animations", true);
+                prefs.edit().putBoolean("animations", !enable).apply();
+                if (view instanceof TextDetailCell) {
+                    ((TextDetailCell) view).setChecked(!enable);
+                }
             } else if (position == inAppBrowserRow) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
                 boolean enable = prefs.getBoolean("in_app_browser", true);
-                editor.putBoolean("in_app_browser", !enable);
-                editor.apply();
+                prefs.edit().putBoolean("in_app_browser", !enable).apply();
                 if (view instanceof TextDetailCell) {
                     ((TextDetailCell) view).setChecked(!enable);
                 }
@@ -205,7 +215,7 @@ public class SettingsFragment extends Fragment {
             } else if (position == forkGithubRow) {
                 Browser.openUrl(activity, ShowsApp.GITHUB_URL);
             } else if (position == libsRow) {
-                //activity.startFragment(new LibsFragment(), R.id.fragment_view, "libsFragment");
+                activity.startFragment(new LibsFragment(), "libsFragment");
             } else if (position == shareFriendsRow) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
@@ -224,29 +234,28 @@ public class SettingsFragment extends Fragment {
                 pressCount++;
                 if (pressCount >= 2) {
                     Extensions.copyToClipboard(activity, ShowsApp.TELEGRAM_URL);
-                    Toast.makeText(activity, R.string.CopiedToClipboard, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, "You are awesome!", Toast.LENGTH_SHORT).show();
                 }
             } else if (position == rateGooglePlay) {
                 Extensions.copyToClipboard(activity, ShowsApp.APP_WEB);
-                Toast.makeText(activity, R.string.CopiedToClipboard, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             } else if (position == forkGithubRow) {
                 Extensions.copyToClipboard(activity, ShowsApp.GITHUB_URL);
-                Toast.makeText(activity, R.string.CopiedToClipboard, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             } else if (position == shareFriendsRow) {
                 Extensions.copyToClipboard(activity, ShowsApp.APP_WEB);
-                Toast.makeText(activity, R.string.CopiedToClipboard, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             } else if (position == donatePaypalRow) {
                 Extensions.copyToClipboard(activity, ShowsApp.PAYPAL_ME);
-                Toast.makeText(activity, R.string.CopiedToClipboard, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             }
 
             return true;
         });
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         fragmentLayout.addView(recyclerView);
-
         return fragmentLayout;
     }
 
@@ -313,7 +322,14 @@ public class SettingsFragment extends Fragment {
                         cell.setValue(R.string.LangRussian);
                     }
                     cell.setDivider(true);
-                } else*/ if (position == defaultTabRow) {
+                }*/
+
+                if (position == themeRow) {
+                    cell.setMode(TextDetailCell.MODE_DEFAULT);
+                    cell.setText(R.string.Theme);
+                    cell.setValue(themes[prefs.getInt("theme", 1)]);
+                    cell.setDivider(true);
+                } else if (position == defaultTabRow) {
                     cell.setMode(TextDetailCell.MODE_DEFAULT);
                     cell.setText(R.string.DefaultTab);
                     cell.setValue(tabs[prefs.getInt("default_tab",0)]);
@@ -323,6 +339,12 @@ public class SettingsFragment extends Fragment {
                     cell.setText(R.string.EnableSorting);
                     cell.setValue(R.string.EnableSortingInfo);
                     cell.setChecked(prefs.getBoolean("sorting", false));
+                    cell.setDivider(true);
+                } else if (position == enableAnimationsRow) {
+                    cell.setMode(TextDetailCell.MODE_SWITCH);
+                    cell.setText(R.string.EnableAnimations);
+                    cell.setValue(R.string.EnableAnimationsInfo);
+                    cell.setChecked(prefs.getBoolean("animations", true));
                     cell.setDivider(true);
                 } else if (position == inAppBrowserRow) {
                     cell.setMode(TextDetailCell.MODE_SWITCH);
@@ -359,7 +381,8 @@ public class SettingsFragment extends Fragment {
                     cell.setText(R.string.ForkGithub);
                     cell.setDivider(true);
                 } else if (position == libsRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setMode(TextCell.MODE_ICON);
+                    cell.setIcon(R.drawable.ic_storage);
                     cell.setText(R.string.OpenSourceLibs);
                     cell.setDivider(true);
                 } else if (position == shareFriendsRow) {
@@ -392,7 +415,7 @@ public class SettingsFragment extends Fragment {
                 return 0;
             } else if (position == aboutRow) {
                 return 1;
-            } else if (/*position == languageRow || */position == defaultTabRow || position == enableSortingRow || position == inAppBrowserRow || position == appInfoRow || position == feedbackRow) {
+            } else if (position == themeRow || position == defaultTabRow || position == enableSortingRow || position == enableAnimationsRow || position == inAppBrowserRow || position == appInfoRow || position == feedbackRow) {
                 return 2;
             } else {
                 return 3;

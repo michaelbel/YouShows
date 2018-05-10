@@ -1,6 +1,7 @@
 package org.michaelbel.ui.fragment;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,13 +17,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
+import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.Theme;
+import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.old.ui_old.view.RecyclerListView;
-import org.michaelbel.shows.R;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.ShowsAdapter;
 import org.michaelbel.ui.view.MyShowView;
@@ -42,6 +47,7 @@ import io.realm.Sort;
  * @author Michael Bel
  */
 
+@SuppressLint("CheckResult")
 public class FollowingShowsFragment extends Fragment {
 
     private int prevTop;
@@ -54,6 +60,7 @@ public class FollowingShowsFragment extends Fragment {
     private ShowsAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
 
+    private FrameLayout fragmentLayout;
     private ShowsEmptyView emptyView;
     private RecyclerListView recyclerView;
 
@@ -79,8 +86,8 @@ public class FollowingShowsFragment extends Fragment {
             }
         });
 
-        FrameLayout fragmentLayout = new FrameLayout(activity);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
+        fragmentLayout = new FrameLayout(activity);
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
         emptyView = new ShowsEmptyView(activity);
         emptyView.setMode(ShowsEmptyView.FOLLOWING_MODE);
@@ -98,6 +105,19 @@ public class FollowingShowsFragment extends Fragment {
         recyclerView.setClipToPadding(false); // Apply Top and Bottom padding
         recyclerView.setPadding(0, ScreenUtils.dp(6), 0, ScreenUtils.dp(6));
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutAnimation(AndroidExtensions.layoutAnimationController());
+        recyclerView.setLayoutAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                activity.floatingButtonAppear();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof MyShowView) {
                 Show show = adapter.getShows().get(position);
@@ -147,6 +167,12 @@ public class FollowingShowsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         refreshLayout();
+
+        ((ShowsApp) activity.getApplication()).bus().toObservable().subscribe(object -> {
+            if (object instanceof Events.ChangeTheme) {
+                fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+            }
+        });
     }
 
     public void refreshLayout() {
@@ -191,22 +217,17 @@ public class FollowingShowsFragment extends Fragment {
         animator.start();
     }
 
-    /*private void getNextEpisodes() {
-        ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TRAKT_API_ENDPOINT);
-        service.nextEpisode(ApiFactory.TRAKT_CLIENT_ID, ApiFactory.TRAKT_API_VERSION, 1402); // imdb showId, trakt tv showId
-    }*/
-
     /*public void showSnackbar(boolean enable) {
-        Snackbar snackbar = Snackbar.make(fragmentLayout, enable ? "Уведомления включены" : "Уведомления отключены", Snackbar.LENGTH_SHORT);
-        //snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.snackbar_action_text));
-        //snackbar.setAction(R.string.Retry, view1 -> {
-        //
-        //});
-        //snackbar.addCallback(new Snackbar.Callback() {
-        //    @Override
-        //    public void onShown(Snackbar sb) {
-        //        super.onShown(sb);
-        //});
+        Snackbar snackbar = Snackbar.make(fragmentLayout, enable ? "" : "", Snackbar.LENGTH_SHORT);
+        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.snackbar_action_text));
+        snackbar.setAction(R.string.Retry, view1 -> {
+            // your action here
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onShown(Snackbar sb) {
+                super.onShown(sb);
+        });
         snackbar.show();
     }*/
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.ApiFactory;
@@ -50,11 +51,6 @@ import retrofit2.Response;
 
 public class EpisodesFragment extends Fragment {
 
-    //private int prevTop;
-    //private int prevPosition;
-    //private boolean scrollUpdated;
-    //private boolean floatingHidden;
-
     private SeasonAdapter adapter;
     private SeasonActivity activity;
 
@@ -71,14 +67,14 @@ public class EpisodesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FrameLayout fragmentLayout = new FrameLayout(activity);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.background));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
         LinearLayout contentLayout = new LinearLayout(activity);
         contentLayout.setOrientation(LinearLayout.VERTICAL);
         fragmentLayout.addView(contentLayout);
 
         progressBar = new ProgressBar(activity);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.accent), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accent()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(progressBar);
 
@@ -102,34 +98,6 @@ public class EpisodesFragment extends Fragment {
                 addEpisodeToRealm(episode, view);
             }
         });
-        /*recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                int firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
-                if (activity.fabButton.getVisibility() != View.GONE) {
-                    final View topChild = recyclerView.getChildAt(0);
-                    int firstViewTop = 0;
-                    if (topChild != null) {
-                        firstViewTop = topChild.getTop();
-                    }
-                    boolean goingDown;
-                    boolean changed = true;
-                    if (prevPosition == firstVisibleItem) {
-                        final int topDelta = prevTop - firstViewTop;
-                        goingDown = firstViewTop < prevTop;
-                        changed = Math.abs(topDelta) > 1;
-                    } else {
-                        goingDown = firstVisibleItem > prevPosition;
-                    }
-                    if (changed && scrollUpdated) {
-                        hideFloatingButton(goingDown);
-                    }
-                    prevPosition = firstVisibleItem;
-                    prevTop = firstViewTop;
-                    scrollUpdated = true;
-                }
-            }
-        });*/
         recyclerView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         contentLayout.addView(recyclerView);
         return fragmentLayout;
@@ -201,8 +169,7 @@ public class EpisodesFragment extends Fragment {
     public void addEpisodesToRealm() {
         List<Episode> list = adapter.getEpisodes();
         for (Episode episode : list) {
-            // Item with position 0 is not an episode, it's season overview!
-            if (episode != list.get(0)) {
+            if (episode != list.get(0)) { // Item != Overview
                 boolean exist = RealmDb.isEpisodeExist(activity.showId, activity.season.seasonId, episode.episodeId);
 
                 if (exist) {
@@ -226,19 +193,6 @@ public class EpisodesFragment extends Fragment {
         adapter.notifyDataSetChanged();
         ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
     }
-
-    /*private void hideFloatingButton(boolean hide) {
-        if (floatingHidden == hide) {
-            return;
-        }
-        floatingHidden = hide;
-        if (floatingHidden) {
-            activity.fabButton.hide();
-        } else {
-            activity.fabButton.show();
-        }
-        activity.fabButton.setClickable(!hide);
-    }*/
 
     private class SeasonAdapter extends RecyclerView.Adapter {
 
