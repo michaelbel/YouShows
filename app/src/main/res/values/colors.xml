@@ -7,29 +7,55 @@
     <color name="primaryDark">#1A1A1A</color>
     <color name="accent">#0091EA</color>
 
+    <color name="nb_primary">#202E3B</color>
+    <color name="nb_primaryDark">#18222C</color>
+    <color name="nb_accent">#FFAB40</color>
+
     <color name="red">#F25252</color>
     <color name="green">#4CB050</color>
     <color name="yellow">#FCB22D</color>
     <color name="orange">#FA8E22</color>
 
+    <color name="youtube">#F44336</color>
     <color name="telegram">#2FADE6</color>
 
-    <color name="primaryText">#FFFFFFFF</color>
+    <color name="transparent">#33000000</color>
+
+    <!--Night Black theme-->
+    <color name="primaryText">#FFFFFF</color>
     <color name="secondaryText">#B3FFFFFF</color>
     <color name="disabledHintText">#80FFFFFF</color>
     <color name="divider">#1FFFFFFF</color>
-    <color name="iconActive">#FFFFFFFF</color>
+    <color name="iconActive">#FFFFFF</color>
     <color name="iconInactive">#80FFFFFF</color>
     <color name="statusBar">#000000</color>
     <color name="appBar">#212121</color>
     <color name="background">#303030</color>
     <color name="foreground">#424242</color>
-    <color name="transparent">#33000000</color>
-
-    <color name="switch_thumbOn">#FFFFAB40</color><!--A200 100%-->
-    <color name="switch_trackOn">#80FFAB40</color><!--A200 50%-->
-    <color name="switch_thumbOff">#FFBDBDBD</color>
+    <!--Switch-->
+    <color name="switch_thumbOn">#FFCC80</color>
+    <color name="switch_trackOn">#80FFCC80</color>
+    <color name="switch_thumbOff">#BDBDBD</color>
     <color name="switch_trackOff">#4DFFFFFF</color>
-    <color name="switch_thumbDisabled">#FF424242</color>
+    <color name="switch_thumbDisabled">#424242</color>
     <color name="switch_trackDisabled">#1AFFFFFF</color>
+
+    <!--Night Blue theme-->
+    <color name="nb_primaryText">#FFFFFF</color>
+    <color name="nb_secondaryText">#B3FFFFFF</color>
+    <color name="nb_disabledHintText">#80FFFFFF</color>
+    <color name="nb_divider">#1FFFFFFF</color>
+    <color name="nb_iconActive">#7C8F96</color>
+    <color name="nb_iconInactive">#807C8F96</color>
+    <color name="nb_statusBar">#000000</color>
+    <color name="nb_appBar">#111C16</color>
+    <color name="nb_background">#151D26</color>
+    <color name="nb_foreground">#1C2732</color>
+    <!--Switch-->
+    <color name="nb_switch_thumbOn">#FFCC80</color>
+    <color name="nb_switch_trackOn">#80FFCC80</color>
+    <color name="nb_switch_thumbOff">#BDBDBD</color>
+    <color name="nb_switch_trackOff">#4DFFFFFF</color>
+    <color name="nb_switch_thumbDisabled">#424242</color>
+    <color name="nb_switch_trackDisabled">#1AFFFFFF</color>
 </resources>
