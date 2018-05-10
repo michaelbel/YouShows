@@ -1,0 +1,33 @@
+<vector
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="240dp"
+  android:height="240dp"
+  android:viewportHeight="240"
+  android:viewportWidth="240">
+
+  <group
+    android:pivotX="120"
+    android:pivotY="120"
+    android:scaleX="0.91"
+    android:scaleY="0.91">
+
+    <group
+      android:name="progress_spinner"
+      android:translateX="120"
+      android:translateY="120">
+
+      <path
+        android:name="progress_bar"
+        android:pathData="M 0,-120 a 120,120 0 1,1 0,240 a 120,120 0 1,1 0,-240"
+        android:strokeColor="@color/primaryText"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter"
+        android:strokeWidth="20"
+        android:trimPathEnd="0"
+        android:trimPathStart="0"/>
+
+    </group>
+
+  </group>
+
+</vector>
