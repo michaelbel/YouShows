@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.Theme;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.shows.R;
@@ -31,7 +32,7 @@ public class HeaderCell extends FrameLayout {
         super(context);
 
         setElevation(ScreenUtils.dp(1));
-        setBackgroundColor(ContextCompat.getColor(context, R.color.foreground));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
 
         textView = new AppCompatTextView(context);
         textView.setLines(1);

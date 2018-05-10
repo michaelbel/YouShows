@@ -24,9 +24,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.Theme;
 import org.michaelbel.shows.R;
 
 /**
@@ -69,13 +70,13 @@ public class TextDetailCell extends FrameLayout {
         super(context);
 
         setElevation(ScreenUtils.dp(1));
-        setForeground(Theme.selectableItemBackgroundDrawable());
-        setBackgroundColor(ContextCompat.getColor(context, R.color.foreground));
+        setForeground(Extensions.selectableItemBackgroundDrawable(context));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
 
         if (paint == null) {
             paint = new Paint();
             paint.setStrokeWidth(1);
-            paint.setColor(ContextCompat.getColor(context, Theme.dividerColor()));
+            paint.setColor(ContextCompat.getColor(context, Theme.Color.divider()));
         }
 
         startIconView = new ImageView(context);
@@ -226,11 +227,11 @@ public class TextDetailCell extends FrameLayout {
     }
 
     public void changeSwitchTheme() {
-        int thumbOn = ContextCompat.getColor(getContext(), Theme.thumbOnColor());
-        int thumbOff = ContextCompat.getColor(getContext(), Theme.thumbOffColor());
+        int thumbOn = ContextCompat.getColor(getContext(), Theme.Color.thumbOn());
+        int thumbOff = ContextCompat.getColor(getContext(), Theme.Color.thumbOff());
 
-        int trackOn = ContextCompat.getColor(getContext(), Theme.trackOnColor());
-        int trackOff = ContextCompat.getColor(getContext(), Theme.trackOffColor());
+        int trackOn = ContextCompat.getColor(getContext(), Theme.Color.trackOn());
+        int trackOff = ContextCompat.getColor(getContext(), Theme.Color.trackOff());
 
         DrawableCompat.setTintList(switchCompat.getThumbDrawable(), new ColorStateList(
                 new int[][]{

@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.Theme;
 import org.michaelbel.old.ScreenUtils;
 
 /**
@@ -45,7 +45,7 @@ public class EmptyCell extends FrameLayout {
         textView = new TextView(context);
         textView.setVisibility(GONE);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        textView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         textView.setPadding(ScreenUtils.dp(16), ScreenUtils.dp(12), ScreenUtils.dp(16), ScreenUtils.dp(4));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         addView(textView);

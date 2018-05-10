@@ -23,9 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.Theme;
 import org.michaelbel.shows.R;
 
 /**
@@ -61,7 +62,7 @@ public class TextCell extends FrameLayout {
     protected SwitchCompat switchCompat;
     protected AppCompatCheckBox checkBox;
 
-    private Paint paint;
+    protected Paint paint;
     private boolean divider;
     private Rect rect = new Rect();
     private int cellHeight;
@@ -70,16 +71,16 @@ public class TextCell extends FrameLayout {
     public TextCell(Context context) {
         super(context);
 
-        cellHeight = ScreenUtils.dp(48);
+        cellHeight = ScreenUtils.dp(52);
 
         setElevation(ScreenUtils.dp(1));
-        setForeground(Theme.selectableItemBackgroundDrawable());
-        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
+        setForeground(Extensions.selectableItemBackgroundDrawable(context));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
 
         if (paint == null) {
             paint = new Paint();
             paint.setStrokeWidth(1);
-            paint.setColor(ContextCompat.getColor(context, Theme.dividerColor()));
+            paint.setColor(ContextCompat.getColor(context, Theme.Color.divider()));
         }
 
         iconView = new ImageView(context);
