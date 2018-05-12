@@ -194,6 +194,10 @@ public class FollowingShowsFragment extends Fragment {
             results = realm.where(Show.class).equalTo("isFollow", true).sort("firstAirDate", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_LAST_AIR_DATE) {
             results = realm.where(Show.class).equalTo("isFollow", true).sort("lastAirDate", sort).findAll();
+        } else if (sortFilter == SortView.SORT_BY_STATUS) {
+            results = realm.where(Show.class).equalTo("isFollow", true).sort("inProduction", sort).findAll();
+        } else if (sortFilter == SortView.SORT_BY_PROGRESS) {
+            results = realm.where(Show.class).equalTo("isFollow", true).sort("progress", sort).findAll();
         }
 
         if (results.isEmpty()) {

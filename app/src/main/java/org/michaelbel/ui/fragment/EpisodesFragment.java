@@ -141,10 +141,8 @@ public class EpisodesFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<Season> call, @NonNull Throwable t) {
                 t.printStackTrace();
-
                 progressBar.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
-                // todo Update with swipe
             }
         });
     }
@@ -163,7 +161,7 @@ public class EpisodesFragment extends Fragment {
         }
 
         activity.changeFabStyle();
-        ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
+        updateRealmDb();
     }
 
     public void addEpisodesToRealm() {
@@ -182,7 +180,7 @@ public class EpisodesFragment extends Fragment {
         }
 
         adapter.notifyDataSetChanged();
-        ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
+        updateRealmDb();
     }
 
     public void removeEpisodesFromRealm() {
@@ -191,6 +189,15 @@ public class EpisodesFragment extends Fragment {
         }
 
         adapter.notifyDataSetChanged();
+        updateRealmDb();
+    }
+
+    private void updateRealmDb() {
+        int allEpisodes = RealmDb.getShowEpisodesCount(activity.showId);
+        int watchedEpisodes = RealmDb.getWatchedEpisodesInShow(activity.showId);
+        float percent = (watchedEpisodes * 100F) / allEpisodes;
+
+        RealmDb.updateProgress(activity.showId, (int) percent);
         ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
     }
 

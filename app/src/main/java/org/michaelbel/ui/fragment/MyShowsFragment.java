@@ -191,7 +191,7 @@ public class MyShowsFragment extends Fragment {
     public void refreshLayout() {
         SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         int sortFilter = prefs.getInt("myshows_sort_type", SortView.SORT_BY_DEFAULT);
-        Sort sort = prefs.getBoolean("myshows_sort_order", SortView.ORDER_ASCENDING) ? Sort.ASCENDING : Sort.DESCENDING;
+        Sort sortOrder = prefs.getBoolean("myshows_sort_order", SortView.ORDER_ASCENDING) ? Sort.ASCENDING : Sort.DESCENDING;
 
         adapter.getShows().clear();
         adapter.notifyDataSetChanged();
@@ -202,11 +202,15 @@ public class MyShowsFragment extends Fragment {
         if (sortFilter == SortView.SORT_BY_DEFAULT) {
             results = realm.where(Show.class).findAll();
         } else if (sortFilter == SortView.SORT_BY_NAME) {
-            results = realm.where(Show.class).sort("name", sort).findAll();
+            results = realm.where(Show.class).sort("name", sortOrder).findAll();
         } else if (sortFilter == SortView.SORT_BY_FIRST_AIR_DATE) {
-            results = realm.where(Show.class).sort("firstAirDate", sort).findAll();
+            results = realm.where(Show.class).sort("firstAirDate", sortOrder).findAll();
         } else if (sortFilter == SortView.SORT_BY_LAST_AIR_DATE) {
-            results = realm.where(Show.class).sort("lastAirDate", sort).findAll();
+            results = realm.where(Show.class).sort("lastAirDate", sortOrder).findAll();
+        } else if (sortFilter == SortView.SORT_BY_STATUS) {
+            results = realm.where(Show.class).sort("inProduction", sortOrder).findAll();
+        } else if (sortFilter == SortView.SORT_BY_PROGRESS) {
+            results = realm.where(Show.class).sort("progress", sortOrder).findAll();
         }
 
         if (results.isEmpty()) {
@@ -221,7 +225,7 @@ public class MyShowsFragment extends Fragment {
             }
 
             adapter.addShows(list);
-            if (sortFilter == SortView.SORT_BY_DEFAULT && sort == Sort.DESCENDING) {
+            if (sortFilter == SortView.SORT_BY_DEFAULT && sortOrder == Sort.DESCENDING) {
                 Collections.reverse(adapter.getShows());
             }
         }
