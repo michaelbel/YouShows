@@ -14,19 +14,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
-import org.michaelbel.app.Theme;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.ShowFragment;
 import org.michaelbel.ui.view.BackdropView;
@@ -147,7 +146,7 @@ public class ShowActivity extends AppCompatActivity {
     private void changeFabStyle(boolean follow) {
         followButton.setImageDrawable(follow ?
             Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
-            Theme.getIcon(R.drawable.ic_eye, ContextCompat.getColor(this, R.color.iconActive))
+            Theme.getIcon(R.drawable.ic_eye_plus, ContextCompat.getColor(this, R.color.iconActive))
         );
         followButton.setBackgroundTintList(follow ?
             ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
@@ -189,7 +188,6 @@ public class ShowActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Show> call, @NonNull Throwable t) {
-                Log.e("2580", t.getMessage());
                 t.printStackTrace();
             }
         });
