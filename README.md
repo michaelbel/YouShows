@@ -43,6 +43,10 @@ Simple app to track and save your TV shows
 </a>
 
 ## License
+<a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">
+  <img alt="Apache License 2.0" src="https://github.com/michaelbel/YouShows/blob/master/images/apache_software_foundation_logo.png" height="120"/>
+</a>
+
     Copyright 2017-Present Michael Bel
 
     Licensed under the Apache License, Version 2.0 (the "License");
