@@ -55,16 +55,23 @@ public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         view.changeTheme();
 
-        int allEpisodes = show.numberEpisodes;
-        int watchedEpisodes = RealmDb.getWatchedEpisodesInShow(show.showId);
+        int progress = RealmDb.getShowProgress(show.showId);
+        view.setProgress(progress);
+
+        //int allEpisodes = show.numberEpisodes;
+
         int watchedSeasons = RealmDb.getWatchedSeasonsInShow(show.showId);
-        view.setProgress(true, watchedEpisodes, allEpisodes);
+
+        //float percent = (watchedEpisodes * 100F) / allEpisodes;
+        //RealmDb.updateProgress(show.showId, (int) percent);
+        //view.setProgress(watchedEpisodes, allEpisodes);
 
         if (watchedSeasons == -1) {
             view.setProgressWatchedText(MyShowView.TYPE_SHOW, -1);
         } else if (watchedSeasons > 0) {
             view.setProgressWatchedText(MyShowView.TYPE_SEASONS, watchedSeasons);
         } else {
+            int watchedEpisodes = RealmDb.getWatchedEpisodesInShow(show.showId);
             view.setProgressWatchedText(MyShowView.TYPE_EPISODES, watchedEpisodes, watchedEpisodes);
         }
     }
