@@ -41,6 +41,15 @@ Simple app to track and save your TV shows
     <img style="margin-left:0px;" src="/images/render/7.png" width="33%">
 </div>
 
+## Permissions
+* android.permission.VIBRATE
+* android.permission.INTERNET
+* android.permission.BODY_SENSORS
+* android.permission.ACCESS_WIFI_STATE
+* android.permission.ACCESS_NETWORK_STATE
+* android.permission.READ_EXTERNAL_STORAGE
+* android.permission.WRITE_EXTERNAL_STORAGE
+
 ## License
 <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">
   <img alt="Apache License 2.0" src="https://github.com/michaelbel/YouShows/blob/master/images/apache_software_foundation_logo.png" height="120"/>
