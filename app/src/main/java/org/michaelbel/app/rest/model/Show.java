@@ -134,6 +134,9 @@ public class Show extends RealmObject /*implements Parcelable*/ {
     @Realmed
     public int lastWatchDate;
 
+    @Realmed
+    public int progress;
+
     /*public Show() {}
 
     protected Show(Parcel in) {
