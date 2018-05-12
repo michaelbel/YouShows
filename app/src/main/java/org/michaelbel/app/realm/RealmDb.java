@@ -171,6 +171,18 @@ public class RealmDb {
         return show != null ? show.viewsNumber : 0;
     }
 
+    public static int getShowEpisodesCount(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.numberEpisodes : 0;
+    }
+
+    public static int getShowProgress(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.progress : 0;
+    }
+
     public static void updateShowViewsCount(int showId) {
         int views = getShowViews(showId);
         int newViews = views + 1;
@@ -180,6 +192,17 @@ public class RealmDb {
         realmDb.executeTransaction(realm -> {
             if (show != null) {
                 show.viewsNumber = newViews;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static void updateProgress(int showId, int progress) {
+        Realm realmDb = Realm.getDefaultInstance();
+        Show show = realmDb.where(Show.class).equalTo("showId", showId).findFirst();
+        realmDb.executeTransaction(realm -> {
+            if (show != null) {
+                show.progress = progress;
             }
         });
         realmDb.close();
