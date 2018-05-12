@@ -1,7 +1,9 @@
 package org.michaelbel.ui.view;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -83,6 +85,9 @@ public class MyShowView extends FrameLayout {
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
 
+        CardView cardPoster = view.findViewById(R.id.card_poster);
+        cardPoster.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+
         posterImage = view.findViewById(R.id.poster_image);
 
         nameText = view.findViewById(R.id.name_text);
@@ -123,8 +128,12 @@ public class MyShowView extends FrameLayout {
         circleProgressView.setUnitTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         circleProgressView.setUnitVisible(true);
         circleProgressView.setUnitSize(Extensions.dp(context, 6));
-        circleProgressView.setBarColor(ContextCompat.getColor(context, R.color.green));
-        circleProgressView.setRimColor(ContextCompat.getColor(context, Theme.Color.iconActive()));
+        circleProgressView.setBarColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, R.color.red));
+        if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
+            circleProgressView.setRimColor(ContextCompat.getColor(context, Theme.Color.iconActive()));
+        } else if (Theme.getTheme() == Theme.THEME_NIGHT_BLACK) {
+            circleProgressView.setRimColor(ContextCompat.getColor(context, R.color.background));
+        }
         circleProgressView.setBarWidth(Extensions.dp(context, 5.2F));
         circleProgressView.setRimWidth(Extensions.dp(context, 5));
         circleProgressView.setUnit("%");
@@ -195,12 +204,27 @@ public class MyShowView extends FrameLayout {
         }
     }
 
-    public void setProgress(boolean animated, int watchedEpisodes, int allEpisodes) {
+    public void setProgress(int watchedEpisodes, int allEpisodes) {
         float percent = (watchedEpisodes * 100F) / allEpisodes;
+
+        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean animated = prefs.getBoolean("animations", true);
+
         if (animated) {
             circleProgressView.setValueAnimated(percent);
         } else {
             circleProgressView.setValue(percent);
+        }
+    }
+
+    public void setProgress(int progress) {
+        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean animated = prefs.getBoolean("animations", true);
+
+        if (animated) {
+            circleProgressView.setValueAnimated(progress);
+        } else {
+            circleProgressView.setValue(progress);
         }
     }
 
@@ -226,7 +250,11 @@ public class MyShowView extends FrameLayout {
         circleProgressView.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         circleProgressView.setUnitColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         circleProgressView.setBarColor(ContextCompat.getColor(getContext(), R.color.green));
-        circleProgressView.setRimColor(ContextCompat.getColor(getContext(), Theme.Color.iconActive()));
+        if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
+            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), Theme.Color.iconActive()));
+        } else if (Theme.getTheme() == Theme.THEME_NIGHT_BLACK) {
+            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
+        }
     }
 
     @Override

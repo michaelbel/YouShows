@@ -34,7 +34,8 @@ public class SortView extends FrameLayout {
     public static final int SORT_BY_NAME = 1;
     public static final int SORT_BY_FIRST_AIR_DATE = 2;
     public static final int SORT_BY_LAST_AIR_DATE = 3;
-    //public static final int SORT_BY_STATUS = 4;
+    public static final int SORT_BY_STATUS = 4;
+    public static final int SORT_BY_PROGRESS = 5;
 
     public static final boolean ORDER_ASCENDING = true;
 

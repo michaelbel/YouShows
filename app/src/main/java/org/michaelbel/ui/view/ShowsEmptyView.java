@@ -91,7 +91,7 @@ public class ShowsEmptyView extends LinearLayout {
             descText2.setText(R.string.ClickOn2);
         } else if (mode == FOLLOWING_MODE) {
             titleText.setText(R.string.NoFollowingShows);
-            plusIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_eye, ContextCompat.getColor(getContext(), R.color.accent)));
+            plusIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_eye_plus, ContextCompat.getColor(getContext(), R.color.accent)));
             descText2.setText(R.string.ClickOn3);
         }
     }
