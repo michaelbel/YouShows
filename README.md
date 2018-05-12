@@ -25,6 +25,10 @@
 [![GooglePlay][googleplay-badge]][googleplay-url]
 [![Paypal][paypal-badge]][paypal-url]
 
+<a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows" target="_blank">
+  <img alt="App on Google Play" src="https://goo.gl/cR2qQH" height="100"/>
+</a>
+
 Simple app to track and save your TV shows
 
 <div style="dispaly:flex">
@@ -37,12 +41,20 @@ Simple app to track and save your TV shows
     <img style="margin-left:0px;" src="/images/render/7.png" width="33%">
 </div>
 
-## Demo
-<a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows" target="_blank">
-  <img alt="App on Google Play" src="https://goo.gl/cR2qQH" height="100"/>
-</a>
+## Permissions
+* android.permission.VIBRATE
+* android.permission.INTERNET
+* android.permission.BODY_SENSORS
+* android.permission.ACCESS_WIFI_STATE
+* android.permission.ACCESS_NETWORK_STATE
+* android.permission.READ_EXTERNAL_STORAGE
+* android.permission.WRITE_EXTERNAL_STORAGE
 
 ## License
+<a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">
+  <img alt="Apache License 2.0" src="https://github.com/michaelbel/YouShows/blob/master/images/apache_software_foundation_logo.png" height="120"/>
+</a>
+
     Copyright 2017-Present Michael Bel
 
     Licensed under the Apache License, Version 2.0 (the "License");
