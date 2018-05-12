@@ -38,7 +38,7 @@ Simple app to track and save your TV shows
 </div>
 
 ## Demo
-<a href="https://play.google.com/store/apps/details?id=org.michaelbel.bottomsheetdialog" target="_blank">
+<a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows" target="_blank">
   <img alt="App on Google Play" src="https://goo.gl/cR2qQH" height="100"/>
 </a>
 
