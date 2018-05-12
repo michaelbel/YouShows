@@ -1,37 +1,23 @@
 <resources>
-    <string name="AppName">Series Picker</string>
+    <!--app-->
+    <string name="AppName">YouShows</string>
+    <!--main-->
     <string name="MyShows">My Shows</string>
     <string name="Following">Following</string>
-    <string name="Search">Search</string>
-    <string name="About">About</string>
-    <string name="Settings">Settings</string>
-    <string name="Popular">Popular</string>
-    <string name="Trending">Trending</string>
-    <string name="NowPlaying">Now Playing</string>
-    <string name="TopRated">Top Rated</string>
-    <string name="Tune">Tune</string>
-    <string name="Share">Share</string>
-    <string name="ShareVia">Share via</string>
-    <string name="ShowImageDesc">Show Poster</string>
-    <string name="NoResults">No results</string>
-    <string name="NoConnection">No connection</string>
-    <string name="NoShows">No shows</string>
-    <string name="ExploreShows">Explore Shows</string>
-    <string name="InAppBrowser">In-App Browser</string>
-    <string name="InAppBrowserInfo">Open external links within the app</string>
+    <string name="Sort">Sort</string>
+    <string name="SortOrder">Order</string>
+    <string-array name="Sorts">
+        <item>By Default</item>
+        <item>By Name</item>
+        <item>By First Air Date</item>
+        <item>By Last Air Date</item>
+        <item>By Status</item>
+        <item>By Progress</item>
+    </string-array>
+    <string name="Cancel">Cancel</string>
     <string name="MyShowsEmpty">Your shows list is empty</string>
-    <string name="ClickOn">Click on </string>
-    <string name="ClickOn2"> button to start explore shows</string>
-    <string name="Finished">Finished</string>
-    <string name="Loading">Loading…</string>
-    <string name="NoOverview">No overview</string>
-    <string name="UnknownDate">Unknown date</string>
-    <string name="Seasons">Seasons</string>
-    <string name="SeasonsCount">Seasons (%1$d)</string>
-    <string name="ShowInProduction">Show in production</string>
-    <string name="ShowIsFinished">Show is finished</string>
-    <string name="ShowIsOverWatched">Show is over watched</string>
-    <string name="NoEpisodesWatched">No Episodes watched</string>
+    <string name="NoFollowingShows">No following shows</string>
+    <string name="FirstAndNoLastDates">%1$s - Present</string>
     <plurals name="Episodes">
         <item quantity="zero">No Episodes watched</item>
         <item quantity="one">%d Episode watched</item>
@@ -48,7 +34,17 @@
         <item quantity="many">%d Seasons watched</item>
         <item quantity="other">%d Seasons watched</item>
     </plurals>
-    <string name="Info">Info</string>
+    <!--show-->
+    <string name="ExploreShows">Explore Shows</string>
+    <string name="Popular">Popular</string>
+    <string name="NowPlaying">Now Playing</string>
+    <string name="TopRated">Top Rated</string>
+    <string name="Share">Share</string>
+    <string name="ShareVia">Share via</string>
+    <string name="NoConnection">No connection</string>
+    <string name="TapToFollow">Tap to follow show</string>
+    <string name="TapToUnFollow">Tap to unfollow show</string>
+    <string name="Details">Details</string>
     <string name="OriginalName">Original Name</string>
     <string name="OriginalCountry">Original Country</string>
     <string name="Status">Status</string>
@@ -58,71 +54,110 @@
     <string name="GenresTitle">Genres</string>
     <string name="CompaniesTitle">Companies</string>
     <string name="HomepageTitle">Homepage</string>
-
-    <!--main-->
-    <string name="Ok">OK</string>
-    <string name="Done">Done</string>
-    <string name="Cancel">Cancel</string>
-    <string name="Remove">Remove</string>
-    <string name="SeasonCount">%1$d Season</string>
-    <string name="EpisodeCount">%1$d Episode</string>
-    <string name="SCount">S0%1$d</string>
-    <string name="SsCount">S%1$d</string>
-    <string name="ECount">E0%1$d</string>
-    <string name="EeCount">E%1$d</string>
-    <string name="EpisodesCount">%1$d Episodes</string>
-    <string name="AddNewSeries">Add new Series</string>
-    <string name="UpdateSeries">Update Series</string>
-    <string name="RemoveSeries">Remove Series</string>
-    <string name="SeriesTitle">Series Title</string>
-    <string name="Episodes">Episodes</string>
-    <string name="NoEpisodes">No Episodes</string>
-    <string name="NoSeries">No Series</string>
-    <string name="NumberSeasons">Seasons</string>
-    <string name="NumberEpisodes">Episodes</string>
-    <string name="BackdropTextHolder">Enter a name of Series to upload backdrop image</string>
-    <string name="SeriesAdded">New Series has been added</string>
-    <string name="SeriesDeleted">Series \'%1$s\' was deleted</string>
-    <string name="SeriesUpdated">Series \'%1$s\' was updated</string>
-    <string name="SeriesCount">%1$d Series</string>
-    <string name="EditTitle">Edit Title</string>
-    <string name="NoImage">No Image</string>
-    <string name="SpeakNow">Speak now</string>
+    <string name="Loading">Loading…</string>
+    <string name="NoOverview">No overview</string>
+    <string name="UnknownDate">Unknown date</string>
+    <string name="Seasons">Seasons</string>
+    <string name="SeasonsCount">Seasons (%1$d)</string>
+    <!--search-->
+    <string name="Search">Search</string>
+    <string name="NoResults">No results</string>
     <!--settings-->
-    <string name="Themes">Themes</string>
-    <string name="ThemeLight">Light</string>
-    <string name="ThemeNight">Night</string>
-    <string name="ImageQuality">Image Quality</string>
-    <string name="ImageQualityLow">Low</string>
-    <string name="ImageQualityMedium">Medium</string>
-    <string name="ImageQualityHigh">High</string>
-    <string name="ImageQualityOriginal">Original</string>
-    <string name="Sort">Sort</string>
-    <string name="ViewType">View Type</string>
-    <string name="ViewList">List</string>
-    <string name="ViewCards">Cards</string>
-    <string name="SortByAdded">By Added</string>
-    <string name="SortByTitle">By Title</string>
-    <string name="SortBySeasons">By Seasons</string>
-    <string name="BottomCounter">Bottom Counter</string>
-    <string name="BottomCounterInfo">Show line with series count</string>
-    <string name="ShortNumberFormat">Short Number Format</string>
-    <string name="ShortNumberFormatInfo">Display seasons and episodes as S &amp; E</string>
+    <string name="Settings">Settings</string>
+    <string name="DefaultTab">Default Tab</string>
+    <string-array name="Tabs">
+        <item>My Shows</item>
+        <item>Following</item>
+    </string-array>
+    <string name="InAppBrowser">In-App Browser</string>
+    <string name="InAppBrowserInfo">Open external links within the app</string>
+    <string name="EnableSorting">Enable Sorting</string>
+    <string name="EnableSortingInfo">Show sorting view on main screen</string>
+    <string name="EnableAnimations">Enable Animations</string>
+    <string name="EnableAnimationsInfo">Manage all animations in app</string>
+    <string name="Theme">Theme</string>
+    <string-array name="Themes">
+        <item>Night Blue</item>
+        <item>Night Black</item>
+    </string-array>
     <!--about-->
+    <string name="About">About</string>
+    <string name="Changelogs">Changelogs</string>
+    <string name="Version">Version %1$s</string>
+    <string name="EnableDates">Enable Dates</string>
+    <string name="AppForAndroid">%1$s for Android</string>
+    <string name="VersionBuildDate">Version %1$s (Build %2$d) of %3$s</string>
+    <string name="DonatePaypal">Donate PayPal</string>
     <string name="RateGooglePlay">Rate on Google Play</string>
     <string name="ForkGithub">Fork on Github</string>
     <string name="Feedback">Feedback</string>
     <string name="OpenSourceLibs">Open-source Libraries</string>
     <string name="ShareWithFriends">Share with Friends</string>
+    <string name="CopyLink">Copy Link</string>
+    <string name="Open">Open</string>
+    <string name="LinkCopied">Link copied to clipboard</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="Tune">Tune</string>
+    <string name="ShowImageDesc">Show Poster</string>
+    <string name="NoShows">No Shows</string>
+    <string name="ClickOn">Click on </string>
+    <string name="ClickOn2"> button to start explore shows</string>
+    <string name="ClickOn3"> button to start follow show</string>
+    <string name="Finished">Finished</string>
+    <string name="ShowInProduction">Show in production</string>
+    <string name="ShowIsFinished">Show is finished</string>
+    <string name="ShowIsOverWatched">Full watched</string>
+    <string name="NoEpisodesWatched">No Episodes watched</string>
+    <plurals name="Episodes2">
+        <item quantity="zero">No Episodes watched</item>
+        <item quantity="one">%1$d/%2$d Episode watched</item>
+        <item quantity="two">%1$d/%2$d Episodes watched</item>
+        <item quantity="few">%1$d/%2$d Episodes watched</item>
+        <item quantity="many">%1$d/%2$d Episodes watched</item>
+        <item quantity="other">No Episodes watched</item>
+    </plurals>
+    <plurals name="Seasons2">
+        <item quantity="zero">No Seasons watched</item>
+        <item quantity="one">%1$d/%2$d Season watched</item>
+        <item quantity="two">%1$d/%2$d Seasons watched</item>
+        <item quantity="few">%1$d/%2$d Seasons watched</item>
+        <item quantity="many">%1$d/%2$d Seasons watched</item>
+        <item quantity="other">%1$d/%2$d Seasons watched</item>
+    </plurals>
+    <string name="EpisodeNumber">Episode #%1$d</string>
+    <string name="Language">Language</string>
+    <string name="LangEnglish">English</string>
+    <string name="LangRussian">Russian</string>
+    <string-array name="ViewTypes">
+        <item>List</item>
+        <item>Cards</item>
+    </string-array>
+    <!--main-->
+    <string name="SeasonCount">%1$d Season</string>
+    <string name="EpisodeCount">%1$d Episode</string>
+    <string name="EpisodesCount">%1$d Episodes</string>
+    <string name="Episodes">Episodes</string>
+    <string name="NoEpisodes">No Episodes</string>
+    <string name="NoSeries">No Series</string>
+    <string name="SeriesCount">%1$d Series</string>
+    <string name="SpeakNow">Speak now</string>
+    <!--about-->
     <string name="SupportDevelopment">Support Development</string>
-    <string name="ContributeTranslations">Contribute Translations</string>
     <string name="EnableAnalytics">Enable Analytics</string>
     <string name="ShareApp">Share App</string>
-    <string name="AppNameForAndroid">%1$s for Android</string>
-    <string name="VersionBuild">Version %1$s (Build %2$d)</string>
-    <string name="Open">Open</string>
-    <string name="CopyLink">Copy Link</string>
-    <string name="LinkCopied">Link copied to clipboard</string>
     <string name="ProjectInfo">%1$s is an open source project maintained by one develop. You can help improve the project in one of the following ways:</string>
     <string name="AnalyticsInfo">The application sends anonymous usage reports. You can disable this feature.</string>
+    <!--About-->
+    <string name="PoweredBy">Powered by <![CDATA[<b>]]>Themoviedb.org<![CDATA[</b>]]></string>
+    <string name="Link">Link</string>
+    <string name="Subject">Subject</string>
 </resources>
