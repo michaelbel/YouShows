@@ -48,7 +48,7 @@ public class ShowsApp extends Application {
 
         RealmConfiguration config = new RealmConfiguration.Builder()
             .name(REALM_NAME)
-            .schemaVersion(1)
+            .schemaVersion(2)
             .migration(new MyRealmMigration())
             .build();
 
