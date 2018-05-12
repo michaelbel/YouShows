@@ -27,6 +27,10 @@
 
 Simple app to track and save your TV shows
 
+<a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows" target="_blank">
+  <img alt="App on Google Play" src="https://goo.gl/cR2qQH" height="100"/>
+</a>
+
 <div style="dispaly:flex">
     <img style="margin-left:0px;" src="/images/render/1.png" width="33%">
     <img style="margin-left:0px;" src="/images/render/2.png" width="33%">
@@ -36,11 +40,6 @@ Simple app to track and save your TV shows
     <img style="margin-left:0px;" src="/images/render/6.png" width="33%">
     <img style="margin-left:0px;" src="/images/render/7.png" width="33%">
 </div>
-
-## Demo
-<a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows" target="_blank">
-  <img alt="App on Google Play" src="https://goo.gl/cR2qQH" height="100"/>
-</a>
 
 ## License
 <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">
