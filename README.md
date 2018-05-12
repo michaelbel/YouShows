@@ -16,7 +16,7 @@
 
 <!------------------------------------------------------------------------------------------------------------------------------------->
 
-[![Launcher][Launcher-path]][github-url]
+<!--[![Launcher][Launcher-path]][github-url]-->
 # YouShows
 
 [![Platform][platform-badge]][github-url]
