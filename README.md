@@ -25,11 +25,11 @@
 [![GooglePlay][googleplay-badge]][googleplay-url]
 [![Paypal][paypal-badge]][paypal-url]
 
-Simple app to track and save your TV shows
-
 <a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows" target="_blank">
   <img alt="App on Google Play" src="https://goo.gl/cR2qQH" height="100"/>
 </a>
+
+Simple app to track and save your TV shows
 
 <div style="dispaly:flex">
     <img style="margin-left:0px;" src="/images/render/1.png" width="33%">
