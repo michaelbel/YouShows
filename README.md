@@ -1,9 +1,25 @@
-# YouShows
-TV Shows tracker app
+[apk-url]:          https://github.com/michaelbel/BottomSheet/raw/master/app/release/bottomsheet-v1.2.2.apk
+[paypal-url]:       https://paypal.me/michaelbel
+[github-url]:       https://github.com/michaelbel/bottomsheet
+[licence-url]:      http://www.apache.org/licenses/LICENSE-2.0
+[arsenal-url]:      https://android-arsenal.com/details/1/6623
+[googleplay-url]:   https://play.google.com/store/apps/details?id=org.michaelbel.bottomsheetdialog
 
-[![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://github.com/michaelbel/shows)
-[![API](https://img.shields.io/badge/API-21%2B-blue.svg)](https://github.com/michaelbel/shows)
-[![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[launcher-path]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
+
+<!------------------------------------------------------------------------------------------------------------------------------------->
+
+[![Launcher][Launcher-path]][github-url]
+# YouShows
+
+[![Platform][platform-badge]][github-url]
+[![MinSdk][minsdk-badge]][github-url]
+[![License][license-badge]][licence-url]
+[![AndroidArsenal][arsenal-badge]][arsenal-url]
+[![GooglePlay][googleplay-badge]][googleplay-url]
+[![Paypal][paypal-badge]][paypal-url]
+
+Simple app to track and save your TV shows
 
 <div style="dispaly:flex">
     <img style="margin-left:0px;" src="/images/render/1.png" width="33%">
@@ -12,7 +28,6 @@ TV Shows tracker app
     <img style="margin-left:0px;" src="/images/render/4.png" width="33%">
     <img style="margin-left:0px;" src="/images/render/5.png" width="33%">
     <img style="margin-left:0px;" src="/images/render/6.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/7.png" width="33%">
     <img style="margin-left:0px;" src="/images/render/7.png" width="33%">
 </div>
 
