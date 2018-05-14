@@ -1,6 +1,8 @@
 package org.michaelbel.ui;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
@@ -20,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.ShowsApp;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.ApiFactory;
@@ -124,8 +127,11 @@ public class ShowActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        SharedPreferences prefs = ShowsApp.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean animations = prefs.getBoolean("animations", true);
+
         menu.add(R.string.Share)
-            .setIcon(R.drawable.ic_anim_share)
+            .setIcon(animations ? R.drawable.ic_anim_share : R.drawable.ic_share)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             .setOnMenuItemClickListener(menuItem -> {
                 Drawable icon = menu.getItem(0).getIcon();
