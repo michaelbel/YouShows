@@ -46,5 +46,15 @@
             "List animations",
             "Open-source libraries"
         ]
+    },
+
+    {
+        "version":"1.0.5",
+        "build":11,
+        "date":"12 May 2018",
+        "changes":[
+            "Progress indicators",
+            "Sort by status and progress"
+        ]
     }
 ]
