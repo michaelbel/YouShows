@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.old.ui_old.adapter.Holder;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.ui.adapter.holder.LoadingHolder;
@@ -41,12 +42,13 @@ public class PaginationShowsAdapter extends PaginationAdapter {
 
         if (getItemViewType(position) == ITEM) {
             ShowView view = (ShowView) ((Holder) holder).itemView;
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            view.setPoster(show.posterPath);
-            view.setRating(String.valueOf(show.voteAverage));
-            view.setReleaseDate(show.firstAirDate != null ? show.firstAirDate : "No date");
             view.setTitle(show.name);
+            view.setPoster(show.posterPath);
             view.setOverview(show.overview);
+            view.setReleaseDate(show.firstAirDate);
+            view.setRating(String.valueOf(show.voteAverage));
+            view.setWatch(RealmDb.getWatchedEpisodesInShow(show.showId) > 0);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
     }
 
@@ -55,9 +57,9 @@ public class PaginationShowsAdapter extends PaginationAdapter {
         return (position == objectList.size() - 1 && isLoadingAdded) ? LOADING : ITEM;
     }
 
-    public void addAll(List<Show> movies) {
-        for (Show movie : movies) {
-            add(movie);
+    public void addAll(List<Show> shows) {
+        for (Show show : shows) {
+            add(show);
         }
     }
 
