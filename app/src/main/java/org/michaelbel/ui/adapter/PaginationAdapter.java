@@ -15,6 +15,7 @@ import java.util.ArrayList;
  * @author Michael Bel
  */
 
+@SuppressWarnings("all")
 public class PaginationAdapter extends RecyclerView.Adapter {
 
     public final int ITEM = 0;
