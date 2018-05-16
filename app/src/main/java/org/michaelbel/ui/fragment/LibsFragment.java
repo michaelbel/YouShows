@@ -22,8 +22,7 @@ import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.old.view.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
 import org.michaelbel.ui.view.cell.TextDetailCell;
@@ -39,6 +38,9 @@ import java.util.List;
  */
 
 public class LibsFragment extends Fragment {
+
+    private static final String LICENSE_APACHE = "Apache License 2.0";
+    private static final String LICENSE_MIT = "The MIT License (MIT)";
 
     private SettingsActivity activity;
     private LinearLayoutManager linearLayoutManager;
@@ -61,21 +63,14 @@ public class LibsFragment extends Fragment {
         FrameLayout fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
-        sources.add(new Source("BottomSheet", "https://github.com/michaelbel/bottomsheet","Apache License 2.0"));
-        sources.add(new Source("Gson", "https://github.com/google/gson","Apache License 2.0"));
-        sources.add(new Source("Retrofit", "https://square.github.io/retrofit","Apache License 2.0"));
-        sources.add(new Source("RxJava", "https://github.com/reactivex/rxjava","Apache License 2.0"));
-        sources.add(new Source("Picasso", "https://square.github.io/picasso","Apache License 2.0"));
-        sources.add(new Source("Realm Java", "https://github.com/realm/realm-java", "Apache License 2.0"));
-        sources.add(new Source("ExpandableTextView", "https://github.com/blogcat/android-expandabletextview", "Apache License 2.0"));
-        //sources.add(new Source("Moxy", "https://github.com/arello-mobile/moxy", "The MIT License (MIT)"));
-        //sources.add(new Source("GestureViews", "https://github.com/alexvasilkov/gestureviews", "Apache License 2.0"));
-        //sources.add(new Source("ChipsLayoutManager", "https://github.com/beloos/chipslayoutmanager", "Apache License 2.0"));
-        //sources.add(new Source("Android Animated Menu Items", "https://github.com/adonixis/android-animated-menu-items", "Apache License 2.0"));
-        //sources.add(new Source("Realm Android Adapters", "https://github.com/realm/realm-android-adapters", "Apache License 2.0"));
-        //sources.add(new Source("Dagger 2", "https://github.com/google/dagger", "Apache License v2.0"));
-        //sources.add(new Source("CircleIndicator", "https://github.com/ongakuer/circleindicator", "Apache License 2.0"));
-        //sources.add(new Source("RxAndroid", "https://github.com/reactivex/rxjava","Apache License 2.0"));
+        sources.add(new Source("BottomSheet", "https://github.com/michaelbel/bottomsheet", LICENSE_APACHE));
+        sources.add(new Source("Gson", "https://github.com/google/gson", LICENSE_APACHE));
+        sources.add(new Source("Retrofit", "https://square.github.io/retrofit", LICENSE_APACHE));
+        sources.add(new Source("RxJava", "https://github.com/reactivex/rxjava", LICENSE_APACHE));
+        sources.add(new Source("Picasso", "https://square.github.io/picasso", LICENSE_APACHE));
+        sources.add(new Source("Realm Java", "https://github.com/realm/realm-java", LICENSE_APACHE));
+        sources.add(new Source("ExpandableTextView", "https://github.com/blogcat/android-expandabletextview", LICENSE_APACHE));
+        sources.add(new Source("CircleProgressView", "https://github.com/jakob-grabner/circle-progress-view", LICENSE_MIT));
 
         linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
 
@@ -87,9 +82,8 @@ public class LibsFragment extends Fragment {
         recyclerView.setOnItemClickListener((view, position) -> Browser.openUrl(activity, sources.get(position).url));
         recyclerView.setOnItemLongClickListener((view, position) -> {
             BottomSheet.Builder builder = new BottomSheet.Builder(activity);
-            builder.setCellHeight(ScreenUtils.dp(52));
+            builder.setCellHeight(Extensions.dp(activity,52));
             builder.setTitle(sources.get(position).url).setTitleMultiline(true);
-            builder.setDarkTheme(true);
             builder.setTitleTextColorRes(Theme.Color.secondaryText());
             builder.setBackgroundColorRes(Theme.Color.foreground());
             builder.setItemTextColorRes(Theme.Color.primaryText());
