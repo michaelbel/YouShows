@@ -23,7 +23,7 @@ import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.old.view.RecyclerListView;
 import org.michaelbel.shows.R;
 
 import java.util.ArrayList;
@@ -67,8 +67,8 @@ public class SeasonsLayout extends FrameLayout {
         seasonsTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         seasonsTitle.setOnLongClickListener(view -> {
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
-            boolean seasonCountVisible = prefs.getBoolean("seasonsCountVisible", false);
-            prefs.edit().putBoolean("seasonsCountVisible", !seasonCountVisible).apply();
+            boolean seasonCountVisible = prefs.getBoolean("seasons_count_visible", false);
+            prefs.edit().putBoolean("seasons_count_visible", !seasonCountVisible).apply();
             setShowTitle(show);
             AndroidExtensions.startVibrate(20);
             return true;
@@ -98,7 +98,7 @@ public class SeasonsLayout extends FrameLayout {
 
     public void setShowTitle(Show show) {
         SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
-        boolean seasonCountVisible = prefs.getBoolean("seasonsCountVisible", false);
+        boolean seasonCountVisible = prefs.getBoolean("seasons_count_visible", false);
         seasonsTitle.setText(seasonCountVisible ? getContext().getString(R.string.SeasonsCount, show.numberSeasons) : getContext().getString(R.string.Seasons));
     }
 
