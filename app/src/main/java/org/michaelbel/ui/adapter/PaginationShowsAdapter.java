@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.old.ui_old.adapter.Holder;
+import org.michaelbel.old.adapter.Holder;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.ui.adapter.holder.LoadingHolder;
 import org.michaelbel.ui.view.LoadingView;
