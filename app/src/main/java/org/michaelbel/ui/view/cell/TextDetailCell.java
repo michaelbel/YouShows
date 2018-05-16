@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
@@ -89,7 +90,7 @@ public class TextDetailCell extends FrameLayout {
         textView.setMaxLines(1);
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 16, 0));
         addView(textView);
 
@@ -98,7 +99,7 @@ public class TextDetailCell extends FrameLayout {
         valueText.setMaxLines(1);
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        valueText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
+        valueText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
         addView(valueText);
 
@@ -199,6 +200,10 @@ public class TextDetailCell extends FrameLayout {
     public void setDivider(boolean divider) {
         this.divider = divider;
         setWillNotDraw(!divider);
+    }
+
+    public void setTitleColor(@ColorRes int color) {
+        textView.setTextColor(ContextCompat.getColor(getContext(), color));
     }
 
     /*public void setMultiline(boolean value) {

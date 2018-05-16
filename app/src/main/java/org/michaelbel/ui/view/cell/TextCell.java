@@ -93,7 +93,7 @@ public class TextCell extends FrameLayout {
         textView.setMaxLines(1);
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.primaryText));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(textView);
 
@@ -103,7 +103,7 @@ public class TextCell extends FrameLayout {
         valueText.setSingleLine();
         valueText.setVisibility(INVISIBLE);
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        valueText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
+        valueText.setTextColor(ContextCompat.getColor(context, Theme.Color.accent()));
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(valueText);
 

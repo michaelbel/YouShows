@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.widget.ImageView;
 
 import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.shows.R;
@@ -27,7 +28,7 @@ public class ThemeCell extends TextCell {
     public ThemeCell(Context context) {
         super(context);
 
-        setHeight(ScreenUtils.dp(52));
+        setHeight(Extensions.dp(context,52));
 
         iconCheckView = new ImageView(context);
         iconCheckView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
