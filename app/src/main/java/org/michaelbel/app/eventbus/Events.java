@@ -24,4 +24,8 @@ public class Events {
     public static class ChangeTheme {
         public ChangeTheme() {}
     }
+
+    public static class UpdateProgress {
+        public UpdateProgress() {}
+    }
 }
