@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.annotation.Beta;
-import org.michaelbel.old.ui_old.adapter.Holder;
+import org.michaelbel.old.adapter.Holder;
 import org.michaelbel.ui.adapter.itemTouch.ItemBehavior;
 import org.michaelbel.ui.view.MyShowView;
 
@@ -58,13 +58,7 @@ public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
         int progress = RealmDb.getShowProgress(show.showId);
         view.setProgress(progress);
 
-        //int allEpisodes = show.numberEpisodes;
-
         int watchedSeasons = RealmDb.getWatchedSeasonsInShow(show.showId);
-
-        //float percent = (watchedEpisodes * 100F) / allEpisodes;
-        //RealmDb.updateProgress(show.showId, (int) percent);
-        //view.setProgress(watchedEpisodes, allEpisodes);
 
         if (watchedSeasons == -1) {
             view.setProgressWatchedText(MyShowView.TYPE_SHOW, -1);
@@ -72,7 +66,7 @@ public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
             view.setProgressWatchedText(MyShowView.TYPE_SEASONS, watchedSeasons);
         } else {
             int watchedEpisodes = RealmDb.getWatchedEpisodesInShow(show.showId);
-            view.setProgressWatchedText(MyShowView.TYPE_EPISODES, watchedEpisodes, watchedEpisodes);
+            view.setProgressWatchedText(MyShowView.TYPE_EPISODES, watchedEpisodes);
         }
     }
 
