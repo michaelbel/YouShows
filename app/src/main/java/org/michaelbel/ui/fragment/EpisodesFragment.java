@@ -197,7 +197,8 @@ public class EpisodesFragment extends Fragment {
         int watchedEpisodes = RealmDb.getWatchedEpisodesInShow(activity.showId);
         float percent = (watchedEpisodes * 100F) / allEpisodes;
 
-        RealmDb.updateProgress(activity.showId, (int) percent);
+        RealmDb.updateProgress(activity.showId, percent);
+        ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateProgress());
         ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
     }
 
