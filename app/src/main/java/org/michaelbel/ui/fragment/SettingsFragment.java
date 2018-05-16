@@ -29,8 +29,8 @@ import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.ui_old.adapter.Holder;
-import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.old.adapter.Holder;
+import org.michaelbel.old.view.RecyclerListView;
 import org.michaelbel.shows.BuildConfig;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
@@ -48,16 +48,14 @@ import org.michaelbel.ui.view.cell.TextDetailCell;
 
 public class SettingsFragment extends Fragment {
 
-    //public final int LANG_EN = 0;
-    //public final int LANG_RU = 1;
-
     private int rowCount;
-    //private int languageRow;
     private int themeRow;
     private int defaultTabRow;
+    private int dateFormatRow;
     private int enableSortingRow;
     private int enableAnimationsRow;
     private int inAppBrowserRow;
+    private int dataUsageRow;
     private int emptyRow1;
     private int aboutRow;
     private int appInfoRow;
@@ -72,9 +70,14 @@ public class SettingsFragment extends Fragment {
 
     private int pressCount = 0;
 
+    private String[] dateFormats = new String[] {
+        "d MMM yyyy",
+        "MMM d, yyyy",
+        "dd.MM.yyyy"
+    };
+
     private String[] tabs;
     private String[] themes;
-    //private String[] viewTypes;
     private SharedPreferences prefs;
     private SettingsActivity activity;
     private LinearLayoutManager linearLayoutManager;
@@ -88,7 +91,6 @@ public class SettingsFragment extends Fragment {
 
         tabs = getResources().getStringArray(R.array.Tabs);
         themes = getResources().getStringArray(R.array.Themes);
-        //viewTypes = getResources().getStringArray(R.array.ViewTypes);
     }
 
     @Nullable
@@ -104,9 +106,11 @@ public class SettingsFragment extends Fragment {
         // Settings
         themeRow = rowCount++;
         defaultTabRow = rowCount++;
+        dateFormatRow = rowCount++;
         enableSortingRow = rowCount++;
         enableAnimationsRow = rowCount++;
         inAppBrowserRow = rowCount++;
+        //dataUsageRow = rowCount++;
         emptyRow1 = rowCount++;
         // About
         aboutRow = rowCount++;
@@ -164,6 +168,19 @@ public class SettingsFragment extends Fragment {
                     ((ShowsApp) activity.getApplication()).bus().send(new Events.ChangeDefaultTab());
                 });
                 builder.show();
+            } else if (position == dateFormatRow) {
+                BottomSheet.Builder builder = new BottomSheet.Builder(activity);
+                builder.setCellHeight(ScreenUtils.dp(52));
+                builder.setDarkTheme(true);
+                builder.setItemTextColorRes(Theme.Color.primaryText());
+                builder.setBackgroundColorRes(Theme.Color.foreground());
+                builder.setItems(dateFormats, (dialog, pos) -> {
+                    prefs.edit().putString("date_format", dateFormats[pos]).apply();
+                    if (view instanceof TextDetailCell) {
+                        ((TextDetailCell) view).setValue(dateFormats[pos]);
+                    }
+                });
+                builder.show();
             } else if (position == enableSortingRow) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 boolean enable = prefs.getBoolean("sorting", false);
@@ -186,6 +203,8 @@ public class SettingsFragment extends Fragment {
                 if (view instanceof TextDetailCell) {
                     ((TextDetailCell) view).setChecked(!enable);
                 }
+            } else if (position == dataUsageRow) {
+                activity.startFragment(new DataUsageFragment(), "storageFragment");
             } else if (position == feedbackRow) {
                 try {
                     PackageManager packageManager = activity.getPackageManager();
@@ -334,6 +353,11 @@ public class SettingsFragment extends Fragment {
                     cell.setText(R.string.DefaultTab);
                     cell.setValue(tabs[prefs.getInt("default_tab",0)]);
                     cell.setDivider(true);
+                } else if (position == dateFormatRow) {
+                    cell.setMode(TextDetailCell.MODE_DEFAULT);
+                    cell.setText(R.string.DateFormat);
+                    cell.setValue(prefs.getString("date_format", dateFormats[0]));
+                    cell.setDivider(true);
                 } else if (position == enableSortingRow) {
                     cell.setMode(TextDetailCell.MODE_SWITCH);
                     cell.setText(R.string.EnableSorting);
@@ -370,7 +394,11 @@ public class SettingsFragment extends Fragment {
                 TextCell cell = (TextCell) holder.itemView;
                 cell.changeLayoutParams();
 
-                if (position == rateGooglePlay) {
+                if (position == dataUsageRow) {
+                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setText(R.string.DataUsage);
+                    cell.setDivider(false);
+                } else if (position == rateGooglePlay) {
                     cell.setMode(TextCell.MODE_ICON);
                     cell.setIcon(R.drawable.ic_google_play);
                     cell.setText(R.string.RateGooglePlay);
@@ -415,7 +443,7 @@ public class SettingsFragment extends Fragment {
                 return 0;
             } else if (position == aboutRow) {
                 return 1;
-            } else if (position == themeRow || position == defaultTabRow || position == enableSortingRow || position == enableAnimationsRow || position == inAppBrowserRow || position == appInfoRow || position == feedbackRow) {
+            } else if (position == themeRow || position == defaultTabRow || position == dateFormatRow || position == enableSortingRow || position == enableAnimationsRow || position == inAppBrowserRow || position == appInfoRow || position == feedbackRow) {
                 return 2;
             } else {
                 return 3;
