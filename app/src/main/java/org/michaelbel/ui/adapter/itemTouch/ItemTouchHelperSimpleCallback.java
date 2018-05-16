@@ -4,8 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import org.michaelbel.old.ui_old.adapter.BottomCellHolder;
-import org.michaelbel.old.ui_old.adapter.Holder;
+import org.michaelbel.old.adapter.Holder;
 
 /**
  * Date: 27 APR 2018
@@ -48,9 +47,9 @@ public class ItemTouchHelperSimpleCallback extends ItemTouchHelper.SimpleCallbac
             return false;
         }
 
-        if (viewHolder instanceof BottomCellHolder) {
+        /*if (viewHolder instanceof Holder2) {
             return false;
-        }
+        }*/
 
         listener.onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         return false;
