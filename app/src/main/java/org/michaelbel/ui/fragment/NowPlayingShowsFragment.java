@@ -24,7 +24,7 @@ import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.app.rest.response.ShowsResponse;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.old.view.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.ExploreActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;
