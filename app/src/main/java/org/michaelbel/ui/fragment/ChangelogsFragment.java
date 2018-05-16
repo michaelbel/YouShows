@@ -24,10 +24,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.michaelbel.app.Changelog;
 import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.ui_old.adapter.Holder;
-import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.old.adapter.Holder;
+import org.michaelbel.old.view.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
 import org.michaelbel.ui.view.ChangelogView;
@@ -48,6 +48,7 @@ import java.util.List;
 public class ChangelogsFragment extends Fragment {
 
     public static final int MENU_ICON_DATES = 0;
+    public static final String CHANGELOG_FILE_NAME = "changelog.json";
 
     private ChangesAdapter adapter;
     private SharedPreferences prefs;
@@ -103,9 +104,10 @@ public class ChangelogsFragment extends Fragment {
 
         recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
+        recyclerView.setClipToPadding(false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setVerticalScrollBarEnabled(true);
-        recyclerView.setPadding(0, 0, 0, ScreenUtils.dp(16));
+        recyclerView.setVerticalScrollBarEnabled(false);
+        recyclerView.setPadding(0, 0, 0, Extensions.dp(activity,16));
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         fragmentView.addView(recyclerView);
         return fragmentView;
@@ -129,7 +131,7 @@ public class ChangelogsFragment extends Fragment {
     private void readJsonFile() {
         String json;
         try {
-            InputStream inputStream = activity.getAssets().open("changelogs.json");
+            InputStream inputStream = activity.getAssets().open(CHANGELOG_FILE_NAME);
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             inputStream.read(buffer);
