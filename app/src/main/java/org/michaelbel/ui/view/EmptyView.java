@@ -46,23 +46,22 @@ public class EmptyView extends LinearLayout {
 
         emptyText = new TextView(getContext());
         emptyText.setGravity(Gravity.CENTER);
-        emptyText.setText(R.string.NoResults);
         emptyText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-        emptyText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         emptyText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        emptyText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         emptyText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 10, 24, 0));
         addView(emptyText);
     }
 
     public EmptyView setMode(@EmptyViewMode int mode) {
         if (mode == EmptyViewMode.MODE_NO_CONNECTION) {
-            emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_offline, ContextCompat.getColor(getContext(), R.color.iconActive)));
+            emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_offline, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
             emptyText.setText(R.string.NoConnection);
         } else if (mode == EmptyViewMode.MODE_NO_SHOWS) {
-            emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_show, ContextCompat.getColor(getContext(), R.color.iconActive)));
+            emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_show, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
             emptyText.setText(R.string.NoShows);
         } else if (mode == EmptyViewMode.MODE_NO_RESULTS) {
-            emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_search_results, ContextCompat.getColor(getContext(), R.color.iconActive)));
+            emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_search_results, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
             emptyText.setText(R.string.NoResults);
         }
 
