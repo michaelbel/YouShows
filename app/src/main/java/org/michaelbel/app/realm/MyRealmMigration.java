@@ -32,5 +32,24 @@ public class MyRealmMigration implements RealmMigration {
             schema.addField("progress", int.class);
             oldVersion++;
         }
+
+        if (oldVersion == 2) {
+            RealmObjectSchema schema = realmSchema.get("Show");
+            schema.addRealmListField("genresString", String.class);
+            oldVersion++;
+        }
+
+        if (oldVersion == 3) {
+            RealmObjectSchema schema = realmSchema.get("Show");
+            schema.addRealmListField("countriesString", String.class);
+            schema.addRealmListField("companiesString", String.class);
+            oldVersion++;
+        }
+
+        if (oldVersion == 4) {
+            RealmObjectSchema schema = realmSchema.get("Show");
+            schema.addField("showProgress", float.class);
+            oldVersion++;
+        }
     }
 }
