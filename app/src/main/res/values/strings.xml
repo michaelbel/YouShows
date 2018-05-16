@@ -80,6 +80,15 @@
         <item>Night Blue</item>
         <item>Night Black</item>
     </string-array>
+    <string name="DateFormat">Date Format</string>
+    <string name="DataUsage">Data Usage</string>
+    <string name="DeleteAllShows">Delete all my shows</string>
+    <string name="ShowsSaved">%1$d Shows saved</string>
+    <string name="UnfollowFromShows">Unfollow from all my shows</string>
+    <string name="ShowsFollowing">%1$d Shows following</string>
+    <string name="CachedShows">Cached Shows</string>
+    <string name="AllCachedShows">All cached shows</string>
+    <string name="Calculating">Calculating…</string>
     <!--about-->
     <string name="About">About</string>
     <string name="Changelogs">Changelogs</string>

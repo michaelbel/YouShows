@@ -48,10 +48,7 @@
                 android:id="@+id/name_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|top"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:textSize="18sp"/>
+                android:layout_gravity="start|top"/>
 
         </FrameLayout>
 
@@ -84,12 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="4dp"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:textSize="14sp"/>
+                        android:layout_marginStart="4dp"/>
 
                 </LinearLayout>
 
@@ -112,12 +104,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center_vertical"
-                        android:layout_marginStart="4dp"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:textSize="14sp"/>
+                        android:layout_marginStart="4dp"/>
 
                 </LinearLayout>
 
@@ -139,11 +126,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="2.5dp"
                         android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="2.5dp"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:ellipsize="end"/>
+                        android:layout_marginBottom="2.5dp"/>
 
                 </android.support.v7.widget.CardView>
 
@@ -158,7 +141,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp">
 
-                <org.michaelbel.circleprogress.CircleProgressView
+                <org.michaelbel.ui.view.circleprogress.CircleProgressView
                     android:id="@+id/progress_view"
                     android:layout_width="44dp"
                     android:layout_height="44dp"/>
