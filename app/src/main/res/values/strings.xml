@@ -59,6 +59,7 @@
     <string name="UnknownDate">Unknown date</string>
     <string name="Seasons">Seasons</string>
     <string name="SeasonsCount">Seasons (%1$d)</string>
+    <string name="Progress">Progress:</string>
     <!--search-->
     <string name="Search">Search</string>
     <string name="NoResults">No results</string>
