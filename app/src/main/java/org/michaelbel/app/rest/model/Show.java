@@ -7,6 +7,7 @@ import org.michaelbel.app.rest.Response;
 
 import java.util.List;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.RealmClass;
@@ -136,6 +137,33 @@ public class Show extends RealmObject /*implements Parcelable*/ {
 
     @Realmed
     public int progress;
+
+    @Realmed
+    public RealmList<String> genresString;
+
+    @Realmed
+    public RealmList<String> countriesString;
+
+    @Realmed
+    public RealmList<String> companiesString;
+
+    @Realmed
+    public float showProgress;
+
+    //@Realmed
+    //public String lastViewedTime;
+
+    /*@New
+    @Realmed
+    public String genresString;
+
+    @New
+    @Realmed
+    public String counriesString;
+
+    @New
+    @Realmed
+    public String companiesString;*/
 
     /*public Show() {}
 
