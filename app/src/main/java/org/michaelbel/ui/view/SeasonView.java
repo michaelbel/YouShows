@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,16 +62,34 @@ public class SeasonView extends FrameLayout {
         selectIcon = view.findViewById(R.id.select_icon);
 
         nameText = view.findViewById(R.id.name_text);
+        nameText.setLines(1);
+        nameText.setMaxLines(1);
+        nameText.setSingleLine();
+        nameText.setEllipsize(TextUtils.TruncateAt.END);
+        nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         nameText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
 
         airDateText = view.findViewById(R.id.date_text);
+        airDateText.setLines(1);
+        airDateText.setMaxLines(1);
+        airDateText.setSingleLine();
+        airDateText.setEllipsize(TextUtils.TruncateAt.END);
+        airDateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         airDateText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         airDateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
 
         episodesText = view.findViewById(R.id.episodes_text);
+        episodesText.setLines(1);
+        episodesText.setMaxLines(1);
+        episodesText.setSingleLine();
+        episodesText.setGravity(Gravity.CENTER_VERTICAL);
+        episodesText.setEllipsize(TextUtils.TruncateAt.END);
+        episodesText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         episodesText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         episodesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        episodesText.setCompoundDrawablePadding(Extensions.dp(context, 4));
+        episodesText.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_right), null);
     }
 
     public void setName(String name) {
