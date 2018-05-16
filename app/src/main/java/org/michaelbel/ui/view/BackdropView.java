@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,7 @@ import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.shows.R;
@@ -39,9 +41,12 @@ import org.michaelbel.shows.R;
 
 public class BackdropView extends FrameLayout {
 
+    public CardView labelView;
+
     private TextView textView;
     private ImageView backdropImage;
     private TextView followHintTextView;
+    private ImageView playIcon;
 
     private Runnable followHintHideRunnable;
     private AnimatorSet followHintAnimation;
@@ -64,38 +69,47 @@ public class BackdropView extends FrameLayout {
         backdropImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(backdropImage);
 
+        playIcon = new ImageView(context);
+        playIcon.setScaleType(ImageView.ScaleType.FIT_XY);
+        playIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_play_circle, 0x4DFFFFFF));
+        playIcon.setLayoutParams(LayoutHelper.makeFrame(42, 42, Gravity.CENTER));
+        //addView(playIcon);
+
 //------Show Status Label---------------------------------------------------------------------------
 
-        CardView cardView = new CardView(context);
-        cardView.setCardElevation(0);
-        cardView.setUseCompatPadding(false);
-        cardView.setPreventCornerOverlap(false);
-        cardView.setCardBackgroundColor(0x80000000);
-        cardView.setRadius(ScreenUtils.dp(5));
-        cardView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 6, 0, 16 + 16 + 56, 4));
-        addView(cardView);
+        labelView = new CardView(context);
+        labelView.setCardElevation(0);
+        labelView.setUseCompatPadding(false);
+        labelView.setPreventCornerOverlap(false);
+        labelView.setCardBackgroundColor(0x80000000);
+        labelView.setRadius(ScreenUtils.dp(5));
+        labelView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 6, 0, 16 + 16 + 56, 4));
+        addView(labelView);
 
         textView = new TextView(context);
         textView.setLines(1);
         textView.setMaxLines(1);
         textView.setSingleLine();
         textView.setText(R.string.Loading);
+        textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        textView.setCompoundDrawablePadding(Extensions.dp(context, 3));
         textView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 5, 2.5F, 5, 2.5F));
-        cardView.addView(textView);
+        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL, 5, 2.5F, 5, 2.5F));
+        labelView.addView(textView);
     }
 
     public void setImage(String path) {
         Picasso.with(getContext())
-               .load(path)
+               .load("http://image.tmdb.org/t/p/original/" + path)
                .into(backdropImage);
     }
 
-    public void setLabel(String text) {
+    public void setLabel(String text, @DrawableRes int icon) {
         textView.setText(text);
+        textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), icon), null, null, null);
     }
 
     public void showFollowHint(boolean hide, boolean follow) {
