@@ -26,9 +26,10 @@ import org.michaelbel.app.Theme;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.ui_old.view.RecyclerListView;
+import org.michaelbel.old.view.RecyclerListView;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.ShowsAdapter;
 import org.michaelbel.ui.view.MyShowView;
@@ -104,10 +105,10 @@ public class MyShowsFragment extends Fragment {
         recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
         recyclerView.setEmptyView(emptyView);
+        recyclerView.setClipToPadding(false);
         recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setClipToPadding(false); // Apply Top and Bottom padding
-        recyclerView.setPadding(0, ScreenUtils.dp(6), 0, ScreenUtils.dp(6));
+        recyclerView.setPadding(0, Extensions.dp(activity,6), 0, Extensions.dp(activity,6));
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setLayoutAnimation(AndroidExtensions.layoutAnimationController());
         recyclerView.setLayoutAnimationListener(new Animation.AnimationListener() {
@@ -219,6 +220,7 @@ public class MyShowsFragment extends Fragment {
             List<Show> list = new ArrayList<>();
 
             for (Show s : results) {
+                // Fixme
                 if (RealmDb.isWatchedEpisodesInShowIsExist(s.showId)) {
                     list.add(s);
                 }
