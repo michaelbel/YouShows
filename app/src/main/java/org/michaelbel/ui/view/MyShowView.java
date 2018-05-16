@@ -11,9 +11,7 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,12 +25,11 @@ import com.squareup.picasso.Picasso;
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
-import org.michaelbel.circleprogress.CircleProgressView;
-import org.michaelbel.circleprogress.UnitPosition;
-import org.michaelbel.material.annotation.NotTested;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.shows.R;
+import org.michaelbel.ui.view.circleprogress.CircleProgressView;
+import org.michaelbel.ui.view.circleprogress.UnitPosition;
 
 import java.util.Locale;
 
@@ -91,6 +88,9 @@ public class MyShowView extends FrameLayout {
         posterImage = view.findViewById(R.id.poster_image);
 
         nameText = view.findViewById(R.id.name_text);
+        nameText.setMaxLines(2);
+        nameText.setEllipsize(TextUtils.TruncateAt.END);
+        nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         nameText.setTextColor(ContextCompat.getColor(context, R.color.yellow));
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
@@ -98,7 +98,11 @@ public class MyShowView extends FrameLayout {
         statusCard.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
 
         statusText = view.findViewById(R.id.status_text);
+        statusText.setLines(1);
+        statusText.setMaxLines(1);
+        statusText.setSingleLine();
         statusText.setText(context.getString(R.string.Finished).toUpperCase());
+        statusText.setEllipsize(TextUtils.TruncateAt.END);
         statusText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
         statusText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         statusText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
@@ -107,6 +111,11 @@ public class MyShowView extends FrameLayout {
         dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(context, Theme.Color.iconActive())));
 
         datesText = view.findViewById(R.id.dates_text);
+        datesText.setLines(1);
+        datesText.setMaxLines(1);
+        datesText.setSingleLine();
+        datesText.setEllipsize(TextUtils.TruncateAt.END);
+        datesText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         datesText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         datesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
@@ -114,6 +123,11 @@ public class MyShowView extends FrameLayout {
         viewsIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(context, Theme.Color.iconActive())));
 
         progressWatchedText = view.findViewById(R.id.watched_episodes_text);
+        progressWatchedText.setLines(1);
+        progressWatchedText.setMaxLines(1);
+        progressWatchedText.setSingleLine();
+        progressWatchedText.setEllipsize(TextUtils.TruncateAt.END);
+        progressWatchedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         progressWatchedText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         progressWatchedText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
@@ -147,17 +161,14 @@ public class MyShowView extends FrameLayout {
     }
 
     public void setName(String title) {
-        if (title != null) {
-            nameText.setText(title);
-        }
+        nameText.setText(title);
     }
 
     public void setDates(String airDate, String lastDate) {
-        if (lastDate == null) {
-            datesText.setText(getContext().getString(R.string.FirstAndNoLastDates, AndroidExtensions.formatDate(airDate)));
-        } else {
-            datesText.setText(String.format(Locale.US, "%1$s - %2$s", AndroidExtensions.formatDate(airDate), AndroidExtensions.formatDate(lastDate)));
-        }
+        datesText.setText(lastDate == null ?
+            getContext().getString(R.string.FirstAndNoLastDates, AndroidExtensions.formatDate(airDate)) :
+            String.format(Locale.US, "%1$s - %2$s", AndroidExtensions.formatDate(airDate), AndroidExtensions.formatDate(lastDate)
+        ));
     }
 
     public void setStatus(boolean status) {
@@ -178,8 +189,7 @@ public class MyShowView extends FrameLayout {
         }
     }
 
-    @NotTested
-    public void setProgressWatchedText(int choice, int count, int count2) {
+    /*public void setProgressWatchedText(int choice, int count, int count2) {
         if (choice == TYPE_SEASONS) {
             SpannableStringBuilder spannable; // First number is green
 
@@ -202,20 +212,7 @@ public class MyShowView extends FrameLayout {
             progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
             progressWatchedText.setText(getResources().getString(R.string.ShowIsOverWatched));
         }
-    }
-
-    public void setProgress(int watchedEpisodes, int allEpisodes) {
-        float percent = (watchedEpisodes * 100F) / allEpisodes;
-
-        SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-        boolean animated = prefs.getBoolean("animations", true);
-
-        if (animated) {
-            circleProgressView.setValueAnimated(percent);
-        } else {
-            circleProgressView.setValue(percent);
-        }
-    }
+    }*/
 
     public void setProgress(int progress) {
         SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
