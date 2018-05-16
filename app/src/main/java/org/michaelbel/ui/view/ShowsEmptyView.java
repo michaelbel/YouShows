@@ -45,7 +45,7 @@ public class ShowsEmptyView extends LinearLayout {
         setGravity(Gravity.CENTER);
 
         ImageView emptyIcon = new ImageView(getContext());
-        emptyIcon.setImageResource(R.drawable.ic_show);
+        emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_show, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
         emptyIcon.setLayoutParams(LayoutHelper.makeLinear(62, 62));
         addView(emptyIcon);
 
@@ -66,8 +66,8 @@ public class ShowsEmptyView extends LinearLayout {
         descText1.setText(R.string.ClickOn);
         descText1.setGravity(Gravity.CENTER);
         descText1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        descText1.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         descText1.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        descText1.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         descText1.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
         layout.addView(descText1);
 
