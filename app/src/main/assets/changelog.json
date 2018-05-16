@@ -54,7 +54,17 @@
         "date":"12 May 2018",
         "changes":[
             "Progress indicators",
-            "Sort by status and progress"
+            "Sorting shows by status and progress"
+        ]
+    },
+
+    {
+        "version":"1.0.6",
+        "build":13,
+        "date":"16 May 2018",
+        "changes":[
+            "Date format changing",
+            "Other minor updates"
         ]
     }
 ]
