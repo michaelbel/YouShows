@@ -1,4 +1,4 @@
-package org.michaelbel.circleprogress;
+package org.michaelbel.ui.view.circleprogress;
 
 /**
  * Created by Jakob on 20.11.2015.

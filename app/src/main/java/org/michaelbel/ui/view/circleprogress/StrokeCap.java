@@ -1,4 +1,4 @@
-package org.michaelbel.circleprogress;
+package org.michaelbel.ui.view.circleprogress;
 
 import android.graphics.Paint;
 
