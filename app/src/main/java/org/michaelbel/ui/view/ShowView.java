@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.material.annotation.NotTested;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
@@ -43,6 +44,7 @@ public class ShowView extends FrameLayout {
     private CardView cardView;
     private RatingView ratingView;
     private DateView dateView;
+    private ImageView watchIcon;
 
     private Rect rect = new Rect();
 
@@ -92,6 +94,10 @@ public class ShowView extends FrameLayout {
 
 //--------------------------------------------------------------------------------------------------
 
+        FrameLayout layout1 = new FrameLayout(context);
+        layout1.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        infoLayout.addView(layout1);
+
         titleText = new TextView(context);
         titleText.setLines(1);
         titleText.setMaxLines(2);
@@ -99,8 +105,13 @@ public class ShowView extends FrameLayout {
         titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
         titleText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         titleText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        titleText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-        infoLayout.addView(titleText);
+        titleText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, 20, 0));
+        layout1.addView(titleText);
+
+        watchIcon = new ImageView(context);
+        watchIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_eye, ContextCompat.getColor(context, Theme.Color.iconActive())));
+        watchIcon.setLayoutParams(LayoutHelper.makeFrame(16, 16, Gravity.END | Gravity.TOP, 0, 6, 0, 0));
+        layout1.addView(watchIcon);
 
 //--------------------------------------------------------------------------------------------------
 
@@ -161,10 +172,17 @@ public class ShowView extends FrameLayout {
     }
 
     public void setReleaseDate(String releaseDate) {
-        if (TextUtils.isEmpty(releaseDate)) {
-            dateView.setDate(getContext().getString(R.string.UnknownDate));
+        dateView.setDate(TextUtils.isEmpty(releaseDate) ? getContext().getString(R.string.UnknownDate) : AndroidExtensions.formatDate(releaseDate));
+    }
+
+    @NotTested
+    public void setWatch(boolean watch) {
+        if (watch) {
+            watchIcon.setVisibility(VISIBLE);
+            titleText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, 20, 0));
         } else {
-            dateView.setDate(AndroidExtensions.formatDate(releaseDate));
+            watchIcon.setVisibility(GONE);
+            titleText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, 0, 0));
         }
     }
 
