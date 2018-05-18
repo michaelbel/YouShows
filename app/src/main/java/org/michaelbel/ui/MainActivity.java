@@ -20,12 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.eventbus.Events;
+import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget2.FragmentsPagerAdapter;
-import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.FollowingShowsFragment;
 import org.michaelbel.ui.fragment.MyShowsFragment;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         floatingButton = findViewById(R.id.fab);
         floatingButton.setClickable(!animations);
         floatingButton.setImageResource(R.drawable.ic_plus);
-        floatingButton.setTranslationY(ScreenUtils.dp(animations ? 88 : 0));
+        floatingButton.setTranslationY(Extensions.dp(this, animations ? 88 : 0));
         floatingButton.setOnClickListener(v -> startExplore());
 
         viewPager = findViewById(R.id.view_pager);
@@ -149,20 +150,12 @@ public class MainActivity extends AppCompatActivity {
                 boolean order = prefs.getBoolean("myshows_sort_order", SortView.ORDER_ASCENDING);
                 prefs.edit().putBoolean("myshows_sort_order", !order).apply();
                 sortView.setOrder(!order);
-
-                //final int[] stateSet = {android.R.attr.state_checked * (!order ? 1 : -1)};
-                //sortView.orderArrowIcon.setImageState(stateSet, true);
-
                 MyShowsFragment fragment = (MyShowsFragment) adapter.getItem(tab_shows);
                 fragment.refreshLayout();
             } else if (viewPager.getCurrentItem() == tab_follow) {
                 boolean order = prefs.getBoolean("following_sort_order", SortView.ORDER_ASCENDING);
                 prefs.edit().putBoolean("following_sort_order", !order).apply();
                 sortView.setOrder(!order);
-
-                //final int[] stateSet = {android.R.attr.state_checked * (!order ? 1 : -1)};
-                //sortView.orderArrowIcon.setImageState(stateSet, true);
-
                 FollowingShowsFragment fragment = (FollowingShowsFragment) adapter.getItem(tab_follow);
                 fragment.refreshLayout();
             }
@@ -172,14 +165,26 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(currentTab);
         setSortView();
 
-        //iconNotificationMode = prefs.getBoolean("following_notifications", true);
+        if (currentTab == tab_shows) {
+            if (RealmDb.getMyWatchedShowsCount() == 0) {
+                if (floatingButton.getTranslationY() == Extensions.dp(this,88)) {
+                    floatingButtonAppear();
+                }
+            }
+        } else if (currentTab == tab_follow)  {
+            if (RealmDb.getFollowingShowsCount() == 0) {
+                if (floatingButton.getTranslationY() == Extensions.dp(this,88)) {
+                    floatingButtonAppear();
+                }
+            }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        ((ShowsApp) getApplication()).bus().toObservable().subscribe(object -> {
+        ((YouShows) getApplication()).bus().toObservable().subscribe(object -> {
             if (object instanceof Events.ChangeDefaultTab) {
                 SharedPreferences prefs = getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 viewPager.setCurrentItem(prefs.getInt("default_tab", 0));
@@ -198,17 +203,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //this.menu = menu;
-
-        /*menu.add(R.string.Tune)
-            .setIcon(R.drawable.ic_tune)
-            .setVisible(false)
-            .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            .setOnMenuItemClickListener(item -> {
-                //sortViewVisible();
-                return true;
-            });*/
-
         menu.add(R.string.Settings)
             .setIcon(R.drawable.ic_settings)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
@@ -217,8 +211,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             });
 
-        //notificationIconVisibility(viewPager.getCurrentItem());
-        //notificationIconVisibility(tab_shows);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -226,9 +218,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         boolean visible = prefs.getBoolean("sorting", false);
         sortView.setVisibility(visible ? View.VISIBLE : View.GONE);
-        /*if (menu != null) {
-            menu.getItem(MENU_ICON_SORTING).setVisible(enable);
-        }*/
     }
 
     private void setSortView() {
@@ -254,26 +243,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*private void notificationIconVisibility(int position) {
-        if (menu != null) {
-            if (position == tab_follow) {
-                menu.getItem(NOTIFICATION_ICON_INDEX).setIcon(iconNotificationMode ? R.drawable.ic_notifications_active : R.drawable.ic_notifications_off);
-            } else {
-                menu.getItem(NOTIFICATION_ICON_INDEX).setIcon(R.drawable.ic_settings);
-            }
-        }
-    }*/
-
-    /*private void changeNotificationIcon() {
-        if (menu != null) {
-            if (iconNotificationMode) {
-                menu.getItem(NOTIFICATION_ICON_INDEX).setIcon(R.drawable.ic_notifications_active);
-            } else {
-                menu.getItem(NOTIFICATION_ICON_INDEX).setIcon(R.drawable.ic_notifications_off);
-            }
-        }
-    }*/
 
     public void startExplore() {
         startActivity(new Intent(MainActivity.this, ExploreActivity.class));

@@ -27,7 +27,7 @@ import android.widget.FrameLayout;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.SearchFragment;
 

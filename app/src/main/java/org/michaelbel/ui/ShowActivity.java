@@ -1,5 +1,6 @@
 package org.michaelbel.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,12 +19,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
@@ -33,6 +36,7 @@ import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.ShowFragment;
 import org.michaelbel.ui.view.BackdropView;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -46,6 +50,7 @@ import retrofit2.Response;
  * @author Michael Bel
  */
 
+@SuppressLint("CheckResult")
 public class ShowActivity extends AppCompatActivity {
 
     public int extraId;
@@ -84,11 +89,11 @@ public class ShowActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> finish());
 
         scrollView = findViewById(R.id.scroll_view);
+        scrollView.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.appBar()));
 
         collapsingToolbarLayout = findViewById(R.id.collapsing_layout);
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, Theme.Color.primary()));
         collapsingToolbarLayout.setStatusBarScrimColor(ContextCompat.getColor(this, android.R.color.transparent));
-        //setCollapsingLabel(RealmDb.getShowStatus(extraId));
 
         toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(extraName);
@@ -100,7 +105,19 @@ public class ShowActivity extends AppCompatActivity {
         });*/
 
         collapsingView = findViewById(R.id.backdrop_image);
-        collapsingView.setImage("http://image.tmdb.org/t/p/original/" + extraBackdrop);
+        collapsingView.setImage(extraBackdrop);
+        collapsingView.labelView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                SharedPreferences prefs = YouShows.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                boolean label = prefs.getBoolean("collapsing_label", true);
+                prefs.edit().putBoolean("collapsing_label", !label).apply();
+                setCollapsingLabel();
+                AndroidExtensions.startVibrate(15);
+                return true;
+            }
+        });
+        setCollapsingLabel();
 
         followButton = findViewById(R.id.follow_fab);
         followButton.setClickable(false);
@@ -116,18 +133,23 @@ public class ShowActivity extends AppCompatActivity {
             AndroidExtensions.startVibrate(15);
             return true;
         });
-        followButtonSwapAnimation();
+        if (RealmDb.isShowExist(extraId)) {
+            changeFabStyle(RealmDb.isShowFollow(extraId));
+        } else {
+            followButtonSwapAnimation();
+        }
 
         fragment = (ShowFragment) getSupportFragmentManager().findFragmentById(R.id.showFragment);
         fragment.setName(extraName);
         fragment.setOverview(extraOverview);
+        setDetails();
 
         loadDetails();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        SharedPreferences prefs = ShowsApp.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        SharedPreferences prefs = YouShows.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         boolean animations = prefs.getBoolean("animations", true);
 
         menu.add(R.string.Share)
@@ -149,6 +171,59 @@ public class ShowActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ((YouShows) getApplication()).bus().toObservable().subscribe(object -> {
+            if (object instanceof Events.UpdateProgress) {
+                setCollapsingLabel();
+            }
+        });
+    }
+
+    private void setCollapsingLabel() {
+        SharedPreferences prefs = YouShows.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean label = prefs.getBoolean("collapsing_label", true);
+
+        if (RealmDb.isShowExist(extraId)) {
+            if (label) {
+                boolean production = RealmDb.getShowStatus(extraId);
+                collapsingView.setLabel(production ? getString(R.string.ShowInProduction) : getString(R.string.ShowIsFinished));
+            } else {
+                float progress = RealmDb.getProgress(extraId);
+                String formatted = new DecimalFormat("#0.00").format(progress);
+                // Fixme
+                collapsingView.setLabel(getString(R.string.Progress) + " " + formatted + "%");
+            }
+        }
+    }
+
+    private void setDetails() {
+        //fragment.setGenres(RealmDb.getGenres(extraId));
+        //fragment.setOriginalCountries(RealmDb.getCountries(extraId));
+        //fragment.setCompanies(RealmDb.getCompanies(extraId));
+
+        if (RealmDb.isShowExist(extraId)) {
+            fragment.setOriginalName(RealmDb.getOriginalName(extraId));
+            fragment.setStatus(RealmDb.getStatus(extraId));
+            fragment.setType(RealmDb.getType(extraId));
+            fragment.setDates(RealmDb.getFirstAirDate(extraId), RealmDb.getLastAirDate(extraId));
+            fragment.setHomepage(RealmDb.getHomepage(extraId));
+        }
+    }
+
+    private void followButtonSwapAnimation() {
+        Drawable avd = AnimatedVectorDrawableCompat.create(this, R.drawable.ic_anim_progressbar);
+        followButton.setImageDrawable(avd);
+        if (avd != null) {
+            ((Animatable) avd).start();
+        }
+        followButton.setClickable(false);
+        followButton.setLongClickable(false);
+        followButton.setFocusable(false);
+    }
+
     private void changeFabStyle(boolean follow) {
         followButton.setImageDrawable(follow ?
             Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
@@ -160,14 +235,6 @@ public class ShowActivity extends AppCompatActivity {
         );
     }
 
-    private void followButtonSwapAnimation() {
-        Drawable avd = AnimatedVectorDrawableCompat.create(this, R.drawable.ic_anim_progressbar);
-        followButton.setImageDrawable(avd);
-        if (avd != null) {
-            ((Animatable) avd).start();
-        }
-    }
-
     private void loadDetails() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
         service.details(extraId, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Show>() {
@@ -176,17 +243,46 @@ public class ShowActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Show show = response.body();
                     if (show != null) {
-                        setCollapsingLabel(show.inProduction);
-
                         if (!RealmDb.isShowExist(extraId)) {
                             RealmDb.insertOrUpdateShow(show);
+                            RealmDb.updateGenres(extraId, show.genres);
+                            RealmDb.updateCountries(extraId, show.countries);
+                            RealmDb.updateCompanies(extraId, show.companies);
+
+                            setCollapsingLabel();
+                            setDetails();
+
+                            //fragment.setGenres(RealmDb.getGenres(extraId));
+                            //fragment.setOriginalCountries(RealmDb.getCountries(extraId));
+                            //fragment.setCompanies(RealmDb.getCompanies(extraId));
                         } else {
+                            // Update if changed
                             RealmDb.updateShowViewsCount(extraId);
+                            RealmDb.updateStatus(extraId, show.inProduction);
+                            RealmDb.updateOriginalName(extraId, show.originalName);
+                            RealmDb.updateStatus(extraId, show.status);
+                            RealmDb.updateType(extraId, show.type);
+                            RealmDb.updateLastAirDate(extraId, show.lastAirDate);
+                            RealmDb.updateHomepage(extraId, show.homepage);
+
+                            /*RealmDb.updateGenres(extraId, show.genres);
+                            fragment.setGenres(RealmDb.getGenres(extraId));
+
+                            RealmDb.updateCountries(extraId, show.countries);
+                            fragment.setOriginalCountries(RealmDb.getCountries(extraId));
+
+                            RealmDb.updateCompanies(extraId, show.companies);
+                            fragment.setCompanies(RealmDb.getCompanies(extraId));*/
                         }
 
-                        fragment.setSeasons(show);
-                        fragment.setInfo(show);
+                        //fragment.setGenres(RealmDb.getGenres(extraId));
+                        //fragment.setOriginalCountries(RealmDb.getCountries(extraId));
+                        //fragment.setCompanies(RealmDb.getCompanies(extraId));
 
+                        fragment.setSeasons(show);
+                        fragment.setGenres(show.genres);
+                        fragment.setOriginalCountries(show.countries);
+                        fragment.setCompanies(show.companies);
                         fragmentLoaded();
                     }
                 }
@@ -207,10 +303,6 @@ public class ShowActivity extends AppCompatActivity {
 
     private void followShow(boolean status) {
         RealmDb.followShow(extraId, status);
-    }
-
-    private void setCollapsingLabel(boolean production) {
-        collapsingView.setLabel(production ? getString(R.string.ShowInProduction) : getString(R.string.ShowIsFinished));
     }
 
     public void startSeason(Season season) {
