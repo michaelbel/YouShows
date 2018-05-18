@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -26,10 +27,12 @@ import org.michaelbel.app.Theme;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.ShowsAdapter;
 import org.michaelbel.ui.view.MyShowView;
@@ -60,8 +63,8 @@ public class MyShowsFragment extends Fragment {
     private boolean floatingHidden;
     private final AccelerateDecelerateInterpolator floatingInterpolator = new AccelerateDecelerateInterpolator();
 
-    private MainActivity activity;
     private ShowsAdapter adapter;
+    private MainActivity activity;
     private LinearLayoutManager linearLayoutManager;
 
     private FrameLayout fragmentLayout;
@@ -129,6 +132,41 @@ public class MyShowsFragment extends Fragment {
                 activity.startShow(show);
             }
         });
+        recyclerView.setOnItemLongClickListener((view, position) -> {
+            if (view instanceof MyShowView) {
+                Show show = adapter.getShows().get(position);
+
+                BottomSheet.Builder builder = new BottomSheet.Builder(activity);
+                builder.setCellHeight(ScreenUtils.dp(52));
+                builder.setTitle(show.name);
+                builder.setTitleMultiline(true);
+                builder.setTitleTextColorRes(Theme.Color.secondaryText());
+                builder.setItemTextColorRes(Theme.Color.primaryText());
+                builder.setIconColorRes(Theme.Color.iconActive());
+                builder.setBackgroundColorRes(Theme.Color.foreground());
+                builder.setItems(new int[]{R.string.Delete}, new int[]{R.drawable.ic_delete}, (dialog, whichRow) -> {
+                    if (whichRow == 0) {
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity, Theme.alertTheme());
+                        alertBuilder.setTitle(R.string.AppName);
+                        alertBuilder.setMessage(R.string.DeleteShowMessage);
+                        alertBuilder.setNegativeButton(R.string.Cancel, null);
+                        alertBuilder.setPositiveButton(R.string.Ok, (d, pos) -> {
+                            RealmDb.removeShow(show.showId);
+                            adapter.removeItem(recyclerView.getChildAdapterPosition(view));
+                            ((ShowsApp) activity.getApplication()).bus().send(new Events.RemoveProgress());
+                        });
+                        AlertDialog alertDialog = alertBuilder.create();
+                        alertDialog.show();
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
+                    }
+                });
+                builder.show();
+                return true;
+            }
+
+            return false;
+        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -157,7 +195,7 @@ public class MyShowsFragment extends Fragment {
                 }
             }
         });
-        //reload: recyclerView.scheduleLayoutAnimation();
+        // reload: recyclerView.scheduleLayoutAnimation();
 
         /*ItemTouchHelper.SimpleCallback callback = new ItemTouchHelperSimpleCallback(
                 adapter,
@@ -214,21 +252,21 @@ public class MyShowsFragment extends Fragment {
             results = realm.where(Show.class).sort("progress", sortOrder).findAll();
         }
 
-        if (results.isEmpty()) {
-            emptyView.setVisibility(View.VISIBLE);
-        } else {
-            List<Show> list = new ArrayList<>();
-
-            for (Show s : results) {
-                // Fixme
-                if (RealmDb.isWatchedEpisodesInShowIsExist(s.showId)) {
-                    list.add(s);
+        if (results != null) {
+            if (results.isLoaded()) {
+                List<Show> list = new ArrayList<>();
+                for (Show show : results) {
+                    if (RealmDb.isWatchedEpisodesInShowExist(show.showId)) {
+                        list.add(show);
+                    }
                 }
-            }
 
-            adapter.addShows(list);
-            if (sortFilter == SortView.SORT_BY_DEFAULT && sortOrder == Sort.DESCENDING) {
-                Collections.reverse(adapter.getShows());
+                adapter.addShows(list);
+                if (sortFilter == SortView.SORT_BY_DEFAULT && sortOrder == Sort.DESCENDING) {
+                    Collections.reverse(adapter.getShows());
+                }
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
             }
         }
     }
