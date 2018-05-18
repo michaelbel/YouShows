@@ -1,4 +1,4 @@
-package org.michaelbel.app;
+package org.michaelbel.app.model;
 
 /**
  * Date: 08 MAY 2018
