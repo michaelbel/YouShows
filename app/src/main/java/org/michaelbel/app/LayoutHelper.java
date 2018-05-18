@@ -4,8 +4,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import org.michaelbel.old.ScreenUtils;
-
 public class LayoutHelper {
 
     public static final int MATCH_PARENT = -1;
