@@ -2,8 +2,8 @@
 [paypal-url]:       https://paypal.me/michaelbel
 [github-url]:       https://github.com/michaelbel/youshows
 [licence-url]:      http://www.apache.org/licenses/LICENSE-2.0
-[arsenal-url]:      none
 [googleplay-url]:   https://play.google.com/store/apps/details?id=org.michaelbel.shows
+[cangelog]:         https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
 
 [launcher-path]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
 
@@ -49,6 +49,9 @@ Simple app to track and save your TV shows
 * android.permission.ACCESS_NETWORK_STATE
 * android.permission.READ_EXTERNAL_STORAGE
 * android.permission.WRITE_EXTERNAL_STORAGE
+
+## Changelog
+Cangelog is available [here][cangelog].
 
 ## License
 <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">
