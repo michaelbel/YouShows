@@ -18,17 +18,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Episode;
 import org.michaelbel.app.rest.model.Season;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.adapter.Holder;
-import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.material.widget.Holder;
+import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SeasonActivity;
 import org.michaelbel.ui.adapter.holder.LoadingHolder;
@@ -198,8 +198,8 @@ public class EpisodesFragment extends Fragment {
         float percent = (watchedEpisodes * 100F) / allEpisodes;
 
         RealmDb.updateProgress(activity.showId, percent);
-        ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateProgress());
-        ((ShowsApp) activity.getApplication()).bus().send(new Events.UpdateSeasonView());
+        ((YouShows) activity.getApplication()).bus().send(new Events.UpdateProgress());
+        ((YouShows) activity.getApplication()).bus().send(new Events.UpdateSeasonsView());
     }
 
     private class SeasonAdapter extends RecyclerView.Adapter {

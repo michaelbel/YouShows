@@ -22,16 +22,16 @@ import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.material.widget.RecyclerListView;
+import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.ShowsAdapter;
@@ -153,7 +153,7 @@ public class MyShowsFragment extends Fragment {
                         alertBuilder.setPositiveButton(R.string.Ok, (d, pos) -> {
                             RealmDb.removeShow(show.showId);
                             adapter.removeItem(recyclerView.getChildAdapterPosition(view));
-                            ((ShowsApp) activity.getApplication()).bus().send(new Events.RemoveProgress());
+                            ((YouShows) activity.getApplication()).bus().send(new Events.RemoveProgress());
                         });
                         AlertDialog alertDialog = alertBuilder.create();
                         alertDialog.show();
@@ -220,7 +220,7 @@ public class MyShowsFragment extends Fragment {
         super.onResume();
         refreshLayout();
 
-        ((ShowsApp) activity.getApplication()).bus().toObservable().subscribe(object -> {
+        ((YouShows) activity.getApplication()).bus().toObservable().subscribe(object -> {
             if (object instanceof Events.ChangeTheme) {
                 fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
             }

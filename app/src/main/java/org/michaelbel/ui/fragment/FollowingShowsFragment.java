@@ -22,16 +22,16 @@ import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.material.widget.RecyclerListView;
+import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.ShowsAdapter;
@@ -206,7 +206,7 @@ public class FollowingShowsFragment extends Fragment {
         super.onResume();
         refreshLayout();
 
-        ((ShowsApp) activity.getApplication()).bus().toObservable().subscribe(object -> {
+        ((YouShows) activity.getApplication()).bus().toObservable().subscribe(object -> {
             if (object instanceof Events.ChangeTheme) {
                 fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
             } else if (object instanceof Events.RemoveProgress) {
@@ -223,6 +223,7 @@ public class FollowingShowsFragment extends Fragment {
         adapter.getShows().clear();
         adapter.notifyDataSetChanged();
 
+        // todo move to RealmDb.class
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Show> results = null;
 
@@ -267,7 +268,7 @@ public class FollowingShowsFragment extends Fragment {
         Snackbar snackbar = Snackbar.make(fragmentLayout, enable ? "" : "", Snackbar.LENGTH_SHORT);
         snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.snackbar_action_text));
         snackbar.setAction(R.string.Retry, view1 -> {
-            // your action here
+            your action here
         });
         snackbar.addCallback(new Snackbar.Callback() {
             @Override

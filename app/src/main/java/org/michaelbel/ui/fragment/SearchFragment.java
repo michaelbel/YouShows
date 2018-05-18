@@ -16,13 +16,15 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.model.SearchItem;
+import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.app.rest.response.ShowsResponse;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.ui.SearchActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;
 import org.michaelbel.ui.view.EmptyView;
@@ -144,6 +146,9 @@ public class SearchFragment extends Fragment {
                         }
                         showResults(results, true);
                     }
+
+                    SearchItem item = new SearchItem(searchQuery, AndroidExtensions.getCurrentDateAndTimeWithMilliseconds());
+                    RealmDb.insertSearchItem(item);
                 } else {
                     showError(EmptyViewMode.MODE_NO_RESULTS);
                 }

@@ -15,10 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.eventbus.Events;
-import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
 import org.michaelbel.ui.view.cell.ThemeCell;
@@ -116,7 +116,7 @@ public class ThemeFragment extends Fragment implements View.OnClickListener {
         changeToolbarBackground();
         changeFragmentViewBackground();
 
-        ((ShowsApp) activity.getApplication()).bus().send(new Events.ChangeTheme());
+        ((YouShows) activity.getApplication()).bus().send(new Events.ChangeTheme());
     }
 
     private void changeStatusBarColor() {

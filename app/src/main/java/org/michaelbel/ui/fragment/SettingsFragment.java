@@ -22,15 +22,15 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.Browser;
-import org.michaelbel.app.ShowsApp;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ScreenUtils;
-import org.michaelbel.old.adapter.Holder;
-import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.material.widget.Holder;
+import org.michaelbel.material.widget.RecyclerListView;
+import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.BuildConfig;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
@@ -56,6 +56,7 @@ public class SettingsFragment extends Fragment {
     private int enableAnimationsRow;
     private int inAppBrowserRow;
     private int dataUsageRow;
+    private int searchHistoryRow;
     private int emptyRow1;
     private int aboutRow;
     private int appInfoRow;
@@ -110,6 +111,7 @@ public class SettingsFragment extends Fragment {
         enableAnimationsRow = rowCount++;
         inAppBrowserRow = rowCount++;
         dataUsageRow = rowCount++;
+        searchHistoryRow = rowCount++;
         emptyRow1 = rowCount++;
         aboutRow = rowCount++;
         appInfoRow = rowCount++;
@@ -142,7 +144,7 @@ public class SettingsFragment extends Fragment {
                     if (view instanceof TextDetailCell) {
                         ((TextDetailCell) view).setValue(tabs[pos]);
                     }
-                    ((ShowsApp) activity.getApplication()).bus().send(new Events.ChangeDefaultTab());
+                    ((YouShows) activity.getApplication()).bus().send(new Events.ChangeDefaultTab());
                 });
                 builder.show();
             } else if (position == dateFormatRow) {
@@ -165,7 +167,7 @@ public class SettingsFragment extends Fragment {
                 if (view instanceof TextDetailCell) {
                     ((TextDetailCell) view).setChecked(!enable);
                 }
-                ((ShowsApp) activity.getApplication()).bus().send(new Events.EnableSorting());
+                ((YouShows) activity.getApplication()).bus().send(new Events.EnableSorting());
             } else if (position == enableAnimationsRow) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 boolean enable = prefs.getBoolean("animations", true);
@@ -187,12 +189,12 @@ public class SettingsFragment extends Fragment {
                     PackageManager packageManager = activity.getPackageManager();
                     PackageInfo packageInfo = packageManager.getPackageInfo("org.telegram.messenger", 0);
                     if (packageInfo != null) {
-                        Intent telegram = new Intent(Intent.ACTION_VIEW , Uri.parse(ShowsApp.TELEGRAM_URL));
+                        Intent telegram = new Intent(Intent.ACTION_VIEW , Uri.parse(YouShows.TELEGRAM_URL));
                         startActivity(telegram);
                     } else {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/plain");
-                        intent.putExtra(Intent.EXTRA_EMAIL, ShowsApp.EMAIL);
+                        intent.putExtra(Intent.EXTRA_EMAIL, YouShows.EMAIL);
                         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.Subject));
                         intent.putExtra(Intent.EXTRA_TEXT, "");
                         startActivity(Intent.createChooser(intent, getString(R.string.Feedback)));
@@ -203,24 +205,26 @@ public class SettingsFragment extends Fragment {
             } else if (position == rateGooglePlay) {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(ShowsApp.APP_MARKET));
+                    intent.setData(Uri.parse(YouShows.APP_MARKET));
                     startActivity(intent);
                 } catch (Exception e) {
-                    Browser.openUrl(activity, ShowsApp.APP_WEB);
+                    Browser.openUrl(activity, YouShows.APP_WEB);
                 }
             } else if (position == forkGithubRow) {
-                Browser.openUrl(activity, ShowsApp.GITHUB_URL);
+                Browser.openUrl(activity, YouShows.GITHUB_URL);
             } else if (position == libsRow) {
                 activity.startFragment(new LibsFragment(), "libsFragment");
             } else if (position == shareFriendsRow) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, ShowsApp.APP_WEB);
+                intent.putExtra(Intent.EXTRA_TEXT, YouShows.APP_WEB);
                 startActivity(Intent.createChooser(intent, getString(R.string.ShareVia)));
             } else if (position == donatePaypalRow) {
-                Browser.openUrl(activity, ShowsApp.PAYPAL_ME);
+                Browser.openUrl(activity, YouShows.PAYPAL_ME);
             } else if (position == changelogsRow) {
                 activity.startFragment(new ChangelogsFragment(), "changelogsFragment");
+            } else if (position == searchHistoryRow) {
+                activity.startFragment(new SearchHistoryFragment(), "historyFragment");
             }
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {
@@ -229,22 +233,22 @@ public class SettingsFragment extends Fragment {
             } else if (position == feedbackRow) {
                 pressCount++;
                 if (pressCount >= 2) {
-                    Extensions.copyToClipboard(activity, ShowsApp.TELEGRAM_URL);
+                    Extensions.copyToClipboard(activity, YouShows.TELEGRAM_URL);
                     Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, "You are awesome!", Toast.LENGTH_SHORT).show();
                 }
             } else if (position == rateGooglePlay) {
-                Extensions.copyToClipboard(activity, ShowsApp.APP_WEB);
+                Extensions.copyToClipboard(activity, YouShows.APP_WEB);
                 Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             } else if (position == forkGithubRow) {
-                Extensions.copyToClipboard(activity, ShowsApp.GITHUB_URL);
+                Extensions.copyToClipboard(activity, YouShows.GITHUB_URL);
                 Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             } else if (position == shareFriendsRow) {
-                Extensions.copyToClipboard(activity, ShowsApp.APP_WEB);
+                Extensions.copyToClipboard(activity, YouShows.APP_WEB);
                 Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             } else if (position == donatePaypalRow) {
-                Extensions.copyToClipboard(activity, ShowsApp.PAYPAL_ME);
+                Extensions.copyToClipboard(activity, YouShows.PAYPAL_ME);
                 Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             }
 
@@ -352,7 +356,7 @@ public class SettingsFragment extends Fragment {
                     cell.setMode(TextDetailCell.MODE_ICONS);
                     cell.setStartIcon(R.drawable.ic_message_alert);
                     cell.setText(R.string.Feedback);
-                    cell.setValue(ShowsApp.TELEGRAM_FDL);
+                    cell.setValue(YouShows.TELEGRAM_FDL);
                     cell.setEndIcon(Theme.getIcon(R.drawable.ic_telegram, ContextCompat.getColor(activity, R.color.telegram)));
                     cell.setDivider(true);
                 }
@@ -363,6 +367,10 @@ public class SettingsFragment extends Fragment {
                 if (position == dataUsageRow) {
                     cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.DataUsage);
+                    cell.setDivider(true);
+                } else if (position == searchHistoryRow) {
+                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setText(R.string.SearchHistory);
                     cell.setDivider(false);
                 } else if (position == rateGooglePlay) {
                     cell.setMode(TextCell.MODE_ICON);

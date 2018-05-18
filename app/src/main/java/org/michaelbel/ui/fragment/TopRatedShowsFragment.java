@@ -19,13 +19,13 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.app.rest.response.ShowsResponse;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.ExploreActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;

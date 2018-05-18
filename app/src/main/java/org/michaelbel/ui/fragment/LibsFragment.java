@@ -16,13 +16,13 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.Browser;
-import org.michaelbel.app.Source;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.model.Source;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
 import org.michaelbel.ui.view.cell.TextDetailCell;
