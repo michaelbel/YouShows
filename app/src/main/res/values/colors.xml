@@ -11,6 +11,10 @@
     <color name="nb_primaryDark">#18222C</color>
     <color name="nb_accent">#FFAB40</color>
 
+    <color name="nr_primary">#D32F2F</color>
+    <color name="nr_primaryDark">#B71C1C</color>
+    <color name="nr_accent">#FF5252</color>
+
     <color name="red">#F25252</color>
     <color name="green">#4CB050</color>
     <color name="yellow">#FCB22D</color>
@@ -58,4 +62,24 @@
     <color name="nb_switch_trackOff">#4DFFFFFF</color>
     <color name="nb_switch_thumbDisabled">#424242</color>
     <color name="nb_switch_trackDisabled">#1AFFFFFF</color>
+
+    <!--Night Red theme-->
+    <color name="nr_primaryText">#FFFFFF</color>
+    <color name="nr_secondaryText">#B3FFFFFF</color>
+    <color name="nr_disabledHintText">#80FFFFFF</color>
+    <color name="nr_divider">#1FFFFFFF</color>
+    <color name="nr_iconActive">#FFFFFF</color>
+    <color name="nr_iconInactive">#80FFFFFF</color>
+    <color name="nr_statusBar">#000000</color>
+    <color name="nr_appBar">#202020</color>
+    <color name="nr_background">#131313</color>
+    <color name="nr_foreground">#1d1d1d</color>
+    <!--d32f2f red-->
+    <!--Switch-->
+    <color name="nr_switch_thumbOn">#EF9A9A</color>
+    <color name="nr_switch_trackOn">#80EF9A9A</color>
+    <color name="nr_switch_thumbOff">#BDBDBD</color>
+    <color name="nr_switch_trackOff">#4DFFFFFF</color>
+    <color name="nr_switch_thumbDisabled">#424242</color>
+    <color name="nr_switch_trackDisabled">#1AFFFFFF</color>
 </resources>
