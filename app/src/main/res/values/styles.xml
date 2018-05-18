@@ -37,4 +37,10 @@
         <item name="android:background">@color/foreground</item>
         <item name="android:selectableItemBackground">?android:attr/selectableItemBackground</item>
     </style>
+
+    <style name="AlertNightRed" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/nr_accent</item>
+        <item name="android:background">@color/nr_foreground</item>
+        <item name="android:selectableItemBackground">?android:attr/selectableItemBackground</item>
+    </style>
 </resources>
