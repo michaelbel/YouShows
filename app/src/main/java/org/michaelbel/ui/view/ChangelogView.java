@@ -90,6 +90,10 @@ public class ChangelogView extends FrameLayout {
         }
     }
 
+    public void setVersionNameColor(int color) {
+        versionText.setTextColor(color);
+    }
+
     private class ChangeView extends FrameLayout {
 
         private TextView changeText;
