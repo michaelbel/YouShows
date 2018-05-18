@@ -11,7 +11,7 @@
     <uses-permission android:name="com.samsung.permission.SSENSOR"/>
 
     <application
-        android:name="org.michaelbel.app.ShowsApp"
+        android:name="org.michaelbel.app.YouShows"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:label="@string/AppName"
