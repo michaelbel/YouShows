@@ -80,13 +80,14 @@ public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
         notifyItemInserted(shows.size() - 1);
     }
 
-//--------------------------------------------------------------------------------------------------
+    public void removeItem(int position) {
+        shows.remove(position);
+        notifyItemRemoved(position);
+    }
 
     @Beta
     @Override
-    public void onItemSwiped(int position) {
-
-    }
+    public void onItemSwiped(int position) {}
 
     @Beta
     @Override
