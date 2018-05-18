@@ -77,6 +77,7 @@
     <!--search-->
     <string name="Search">Search</string>
     <string name="NoResults">No results</string>
+    <string name="SpeakNow">Speak Now</string>
     <!--settings-->
     <string name="Settings">Settings</string>
     <string name="DefaultTab">Default Tab</string>
@@ -142,6 +143,7 @@
     <string name="CopyLink">Copy Link</string>
     <string name="Open">Open</string>
     <string name="LinkCopied">Link copied to clipboard</string>
+    <string name="Subject">Subject</string>
 
 
 
