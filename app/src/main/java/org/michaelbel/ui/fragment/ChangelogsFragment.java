@@ -85,7 +85,7 @@ public class ChangelogsFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
 
                 readJsonFile();
-                changeMenuIcon();
+                changeActionIcon();
                 return true;
             });
     }
@@ -94,7 +94,7 @@ public class ChangelogsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
-        activity.toolbarTitle.setText(R.string.Changelogs);
+        activity.toolbarTitle.setText(R.string.Changelog);
 
         FrameLayout fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
@@ -162,7 +162,7 @@ public class ChangelogsFragment extends Fragment {
         }
     }
 
-    private void changeMenuIcon() {
+    private void changeActionIcon() {
         SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         boolean dates = prefs.getBoolean("changelog_dates", false);
         if (actionMenu != null) {
@@ -187,6 +187,9 @@ public class ChangelogsFragment extends Fragment {
             view.setDate(log.date);
             view.setChanges(log.changes);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            if (position == 0) {
+                view.setVersionNameColor(ContextCompat.getColor(activity, R.color.green));
+            }
         }
 
         @Override
