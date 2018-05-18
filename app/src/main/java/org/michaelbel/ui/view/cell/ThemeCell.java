@@ -48,12 +48,9 @@ public class ThemeCell extends TextCell {
             iconCheckView.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(context, R.color.nb_iconActive)));
         } else if (theme == Theme.THEME_NIGHT_BLACK) {
             iconCheckView.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(context, R.color.iconActive)));
-        }
-    }
-
-    public ThemeCell setIcon(boolean value) {
-        iconCheckView.setImageDrawable(value ? Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(getContext(), R.color.iconActive)) : null);
-        return this;
+        } /*else if (theme == Theme.THEME_NIGHT_RED) {
+            iconCheckView.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(context, R.color.nr_iconActive)));
+        }*/
     }
 
     public void setIconChecked(boolean value) {
