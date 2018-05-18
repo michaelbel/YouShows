@@ -103,16 +103,14 @@ public class SettingsFragment extends Fragment {
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
         rowCount = 0;
-        // Settings
         themeRow = rowCount++;
         defaultTabRow = rowCount++;
         dateFormatRow = rowCount++;
         enableSortingRow = rowCount++;
         enableAnimationsRow = rowCount++;
         inAppBrowserRow = rowCount++;
-        //dataUsageRow = rowCount++;
+        dataUsageRow = rowCount++;
         emptyRow1 = rowCount++;
-        // About
         aboutRow = rowCount++;
         appInfoRow = rowCount++;
         feedbackRow = rowCount++;
@@ -132,32 +130,11 @@ public class SettingsFragment extends Fragment {
         recyclerView.setAdapter(new SettingsAdapter());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setOnItemClickListener((view, position) -> {
-            /*if (position == languageRow) {
-                SharedPreferences.Editor editor = prefs.edit();
-
-                if (AndroidExtensions.getLanguage() == LANG_EN) {
-                    editor.putInt("language", LANG_RU);
-                } else if (AndroidExtensions.getLanguage() == LANG_RU) {
-                    editor.putInt("language", LANG_EN);
-                }
-
-                editor.apply();
-
-                if (view instanceof TextDetailCell) {
-                    if (AndroidExtensions.getLanguage() == LANG_EN) {
-                        ((TextDetailCell) view).setValue(R.string.LangEnglish);
-                    } else if (AndroidExtensions.getLanguage() == LANG_RU) {
-                        ((TextDetailCell) view).setValue(R.string.LangRussian);
-                    }
-                }
-            } else*/
-
             if (position == themeRow) {
                 activity.startFragment(new ThemeFragment(), "themesFragment");
             } else if (position == defaultTabRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setCellHeight(ScreenUtils.dp(52));
-                builder.setDarkTheme(true);
                 builder.setItemTextColorRes(Theme.Color.primaryText());
                 builder.setBackgroundColorRes(Theme.Color.foreground());
                 builder.setItems(new int[] { R.string.MyShows, R.string.Following }, (dialog, pos) -> {
@@ -332,17 +309,6 @@ public class SettingsFragment extends Fragment {
                 cell.changeLayoutParams();
                 cell.changeSwitchTheme();
 
-                /*if (position == languageRow) {
-                    cell.setMode(TextDetailCell.MODE_DEFAULT);
-                    cell.setText(R.string.Language);
-                    if (AndroidExtensions.getLanguage() == LANG_EN) {
-                        cell.setValue(R.string.LangEnglish);
-                    } else if (AndroidExtensions.getLanguage() == LANG_RU) {
-                        cell.setValue(R.string.LangRussian);
-                    }
-                    cell.setDivider(true);
-                }*/
-
                 if (position == themeRow) {
                     cell.setMode(TextDetailCell.MODE_DEFAULT);
                     cell.setText(R.string.Theme);
@@ -375,7 +341,7 @@ public class SettingsFragment extends Fragment {
                     cell.setText(R.string.InAppBrowser);
                     cell.setValue(R.string.InAppBrowserInfo);
                     cell.setChecked(prefs.getBoolean("in_app_browser", true));
-                    cell.setDivider(false);
+                    cell.setDivider(true);
                 } else if (position == appInfoRow) {
                     cell.setMode(TextDetailCell.MODE_ICONS);
                     cell.setStartIcon(R.drawable.ic_about);
@@ -426,7 +392,7 @@ public class SettingsFragment extends Fragment {
                 } else if (position == changelogsRow) {
                     cell.setMode(TextCell.MODE_ICON);
                     cell.setIcon(R.drawable.ic_file_xml);
-                    cell.setText(R.string.Changelogs);
+                    cell.setText(R.string.Changelog);
                     cell.setDivider(false);
                 }
             }
