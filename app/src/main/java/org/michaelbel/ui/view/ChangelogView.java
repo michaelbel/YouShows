@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.michaelbel.app.Theme;
-import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 
 import java.util.List;

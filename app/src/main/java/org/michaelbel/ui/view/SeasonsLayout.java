@@ -17,13 +17,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.widget.Holder;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.view.RecyclerListView;
+import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
 
 import java.util.ArrayList;

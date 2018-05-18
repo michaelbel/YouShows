@@ -22,8 +22,8 @@ import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.material.annotation.NotTested;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ScreenUtils;
+import org.michaelbel.app.LayoutHelper;
+import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
 
 import java.util.Locale;

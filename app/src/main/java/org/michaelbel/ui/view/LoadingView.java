@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import org.michaelbel.app.Theme;
-import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.app.LayoutHelper;
 
 /**
  * Date: 01 APR 2018

@@ -26,8 +26,8 @@ import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
-import org.michaelbel.old.LayoutHelper;
-import org.michaelbel.old.ScreenUtils;
+import org.michaelbel.app.LayoutHelper;
+import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
 
 /**

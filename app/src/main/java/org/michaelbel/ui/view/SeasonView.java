@@ -20,7 +20,7 @@ import android.widget.TextView;
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 
 import java.util.Locale;

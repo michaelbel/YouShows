@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import org.michaelbel.app.Browser;
 import org.michaelbel.app.Theme;
-import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 
 /**

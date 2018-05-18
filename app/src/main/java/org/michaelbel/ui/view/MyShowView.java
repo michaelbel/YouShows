@@ -26,7 +26,7 @@ import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.old.LayoutHelper;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.view.circleprogress.CircleProgressView;
 import org.michaelbel.ui.view.circleprogress.UnitPosition;

@@ -14,7 +14,14 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.view.View;
 
-import org.michaelbel.old.ScreenUtils;
+import org.michaelbel.app.ScreenUtils;
+
+/**
+ * Date: 18 MAY 2018
+ * Time: 19:59 MSK
+ *
+ * @author Michael Bel
+ */
 
 public class CheckBox extends View {
 
