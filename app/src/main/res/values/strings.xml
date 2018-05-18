@@ -6,6 +6,21 @@
     <string name="Following">Following</string>
     <string name="Sort">Sort</string>
     <string name="SortOrder">Order</string>
+    <string name="Ok">OK</string>
+    <string name="Cancel">Cancel</string>
+    <string name="MyShowsEmpty">Your shows list is empty</string>
+    <string name="NoFollowingShows">No following shows</string>
+    <string name="FirstAndNoLastDates">%1$s - Present</string>
+    <string name="DeleteShowMessage">Are you sure you want to delete this show?</string>
+    <string name="UnfollowMessage">Are you sure you want to unfollow this show?</string>
+    <string name="Delete">Delete</string>
+    <string name="Unfollow">Unfollow</string>
+    <string name="ClickOn">Click on </string>
+    <string name="ClickOn2"> button to start explore shows</string>
+    <string name="ClickOn3"> button to start follow show</string>
+    <string name="ShowIsOverWatched">Full watched</string>
+    <string name="Finished">Finished</string>
+    <string name="NoEpisodesWatched">No Episodes watched</string>
     <string-array name="Sorts">
         <item>By Default</item>
         <item>By Name</item>
@@ -14,10 +29,6 @@
         <item>By Status</item>
         <item>By Progress</item>
     </string-array>
-    <string name="Cancel">Cancel</string>
-    <string name="MyShowsEmpty">Your shows list is empty</string>
-    <string name="NoFollowingShows">No following shows</string>
-    <string name="FirstAndNoLastDates">%1$s - Present</string>
     <plurals name="Episodes">
         <item quantity="zero">No Episodes watched</item>
         <item quantity="one">%d Episode watched</item>
@@ -60,16 +71,15 @@
     <string name="Seasons">Seasons</string>
     <string name="SeasonsCount">Seasons (%1$d)</string>
     <string name="Progress">Progress:</string>
+    <string name="ShowInProduction">Show in production</string>
+    <string name="ShowIsFinished">Show is finished</string>
+    <string name="EpisodeNumber">Episode #%1$d</string>
     <!--search-->
     <string name="Search">Search</string>
     <string name="NoResults">No results</string>
     <!--settings-->
     <string name="Settings">Settings</string>
     <string name="DefaultTab">Default Tab</string>
-    <string-array name="Tabs">
-        <item>My Shows</item>
-        <item>Following</item>
-    </string-array>
     <string name="InAppBrowser">In-App Browser</string>
     <string name="InAppBrowserInfo">Open external links within the app</string>
     <string name="EnableSorting">Enable Sorting</string>
@@ -77,22 +87,48 @@
     <string name="EnableAnimations">Enable Animations</string>
     <string name="EnableAnimationsInfo">Manage all animations in app</string>
     <string name="Theme">Theme</string>
-    <string-array name="Themes">
-        <item>Night Blue</item>
-        <item>Night Black</item>
-    </string-array>
     <string name="DateFormat">Date Format</string>
     <string name="DataUsage">Data Usage</string>
     <string name="DeleteAllShows">Delete all my shows</string>
-    <string name="ShowsSaved">%1$d Shows saved</string>
-    <string name="UnfollowFromShows">Unfollow from all my shows</string>
-    <string name="ShowsFollowing">%1$d Shows following</string>
+    <string name="UnfollowFromShows">Unfollow from all shows</string>
     <string name="CachedShows">Cached Shows</string>
     <string name="AllCachedShows">All cached shows</string>
     <string name="Calculating">Calculating…</string>
+    <string name="DeleteAllShowsMessage">Are you sure you want to delete all shows from local database?\n\nAll progress watch will be lost.\n\nThis action can\'t be undone.</string>
+    <string name="UnfollowFromAllShowsMessage">Are you sure you want to unfollow from all your shows?\n\nThis action can\'t be undone.</string>
+    <string name="YourShowsListEmpty">Your shows list is empty!</string>
+    <string name="YouDoNotFollowShows">You don\'t follow any shows</string>
+    <string name="Done">Done</string>
+    <string name="SearchHistory">Search History</string>
+    <string name="CurrentDateAndTime">%1$s at %2$s</string>
+    <string-array name="Tabs">
+        <item>My Shows</item>
+        <item>Following</item>
+    </string-array>
+    <string-array name="Themes">
+        <item>Night Blue</item>
+        <item>Night Black</item>
+        <!--item>Night Red</item-->
+    </string-array>
+    <plurals name="SavedShows">
+        <item quantity="zero">No shows saved</item>
+        <item quantity="one">%d show saved</item>
+        <item quantity="two">%d shows saved</item>
+        <item quantity="few">%d shows saved</item>
+        <item quantity="many">%d shows saved</item>
+        <item quantity="other">No shows saved</item>
+    </plurals>
+    <plurals name="FollowingShows">
+        <item quantity="zero">No shows following</item>
+        <item quantity="one">%d show following</item>
+        <item quantity="two">%d shows following</item>
+        <item quantity="few">%d shows following</item>
+        <item quantity="many">%d shows following</item>
+        <item quantity="other">No shows following</item>
+    </plurals>
     <!--about-->
     <string name="About">About</string>
-    <string name="Changelogs">Changelogs</string>
+    <string name="Changelog">Changelog</string>
     <string name="Version">Version %1$s</string>
     <string name="EnableDates">Enable Dates</string>
     <string name="AppForAndroid">%1$s for Android</string>
@@ -109,24 +145,13 @@
 
 
 
-
-
-
-
-
-
-
-    <string name="Tune">Tune</string>
+    <string name="EnableAnalytics">Enable Analytics</string>
+    <string name="SupportDevelopment">Support Development</string>
+    <string name="PoweredBy">Powered by <![CDATA[<b>]]>Themoviedb.org<![CDATA[</b>]]></string>
+    <string name="Language">Language</string>
     <string name="ShowImageDesc">Show Poster</string>
     <string name="NoShows">No Shows</string>
-    <string name="ClickOn">Click on </string>
-    <string name="ClickOn2"> button to start explore shows</string>
-    <string name="ClickOn3"> button to start follow show</string>
-    <string name="Finished">Finished</string>
-    <string name="ShowInProduction">Show in production</string>
-    <string name="ShowIsFinished">Show is finished</string>
-    <string name="ShowIsOverWatched">Full watched</string>
-    <string name="NoEpisodesWatched">No Episodes watched</string>
+    <string name="AnalyticsInfo">The application sends anonymous usage reports. You can disable this feature.</string>
     <plurals name="Episodes2">
         <item quantity="zero">No Episodes watched</item>
         <item quantity="one">%1$d/%2$d Episode watched</item>
@@ -143,31 +168,9 @@
         <item quantity="many">%1$d/%2$d Seasons watched</item>
         <item quantity="other">%1$d/%2$d Seasons watched</item>
     </plurals>
-    <string name="EpisodeNumber">Episode #%1$d</string>
-    <string name="Language">Language</string>
-    <string name="LangEnglish">English</string>
-    <string name="LangRussian">Russian</string>
-    <string-array name="ViewTypes">
-        <item>List</item>
-        <item>Cards</item>
-    </string-array>
-    <!--main-->
     <string name="SeasonCount">%1$d Season</string>
     <string name="EpisodeCount">%1$d Episode</string>
     <string name="EpisodesCount">%1$d Episodes</string>
     <string name="Episodes">Episodes</string>
     <string name="NoEpisodes">No Episodes</string>
-    <string name="NoSeries">No Series</string>
-    <string name="SeriesCount">%1$d Series</string>
-    <string name="SpeakNow">Speak now</string>
-    <!--about-->
-    <string name="SupportDevelopment">Support Development</string>
-    <string name="EnableAnalytics">Enable Analytics</string>
-    <string name="ShareApp">Share App</string>
-    <string name="ProjectInfo">%1$s is an open source project maintained by one develop. You can help improve the project in one of the following ways:</string>
-    <string name="AnalyticsInfo">The application sends anonymous usage reports. You can disable this feature.</string>
-    <!--About-->
-    <string name="PoweredBy">Powered by <![CDATA[<b>]]>Themoviedb.org<![CDATA[</b>]]></string>
-    <string name="Link">Link</string>
-    <string name="Subject">Subject</string>
 </resources>
