@@ -4,7 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import org.michaelbel.old.adapter.Holder;
+import org.michaelbel.material.widget.Holder;
 
 /**
  * Date: 27 APR 2018

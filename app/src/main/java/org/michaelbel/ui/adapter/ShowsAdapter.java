@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.annotation.Beta;
-import org.michaelbel.old.adapter.Holder;
+import org.michaelbel.material.widget.Holder;
 import org.michaelbel.ui.adapter.itemTouch.ItemBehavior;
 import org.michaelbel.ui.view.MyShowView;
 
