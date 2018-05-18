@@ -66,5 +66,16 @@
             "Date format changing",
             "Other minor updates"
         ]
+    },
+
+    {
+        "version":"1.0.7",
+        "build":14,
+        "date":"18 May 2018",
+        "changes":[
+            "Data Storage: delete progress for your added shows and unfollow from all your shows",
+            "Tap and hold on show in your lists do display additional options",
+            "Bugs fixed"
+        ]
     }
 ]
