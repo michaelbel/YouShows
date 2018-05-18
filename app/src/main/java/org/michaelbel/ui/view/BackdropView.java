@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -27,7 +26,6 @@ import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
-import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.old.LayoutHelper;
 import org.michaelbel.old.ScreenUtils;
 import org.michaelbel.shows.R;
@@ -83,7 +81,7 @@ public class BackdropView extends FrameLayout {
         labelView.setPreventCornerOverlap(false);
         labelView.setCardBackgroundColor(0x80000000);
         labelView.setRadius(ScreenUtils.dp(5));
-        labelView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 6, 0, 16 + 16 + 56, 4));
+        labelView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 4, 0, 16 + 16 + 56, 4));
         addView(labelView);
 
         textView = new TextView(context);
@@ -94,7 +92,6 @@ public class BackdropView extends FrameLayout {
         textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-        textView.setCompoundDrawablePadding(Extensions.dp(context, 3));
         textView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL, 5, 2.5F, 5, 2.5F));
@@ -107,9 +104,8 @@ public class BackdropView extends FrameLayout {
                .into(backdropImage);
     }
 
-    public void setLabel(String text, @DrawableRes int icon) {
+    public void setLabel(String text) {
         textView.setText(text);
-        textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), icon), null, null, null);
     }
 
     public void showFollowHint(boolean hide, boolean follow) {
