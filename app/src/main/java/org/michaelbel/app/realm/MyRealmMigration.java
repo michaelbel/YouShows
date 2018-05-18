@@ -51,5 +51,12 @@ public class MyRealmMigration implements RealmMigration {
             schema.addField("showProgress", float.class);
             oldVersion++;
         }
+
+        if (oldVersion == 5) {
+            RealmObjectSchema schema = realmSchema.create("SearchItem");
+            schema.addField("query", String.class);
+            schema.addField("date", String.class);
+            oldVersion++;
+        }
     }
 }

@@ -1,11 +1,18 @@
 package org.michaelbel.app.realm;
 
+import org.michaelbel.app.model.SearchItem;
+import org.michaelbel.app.rest.model.Company;
 import org.michaelbel.app.rest.model.Episode;
+import org.michaelbel.app.rest.model.Genre;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.annotation.NotTested;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -66,7 +73,7 @@ public class RealmDb {
             season.airDate = seasonParam.airDate;
             season.overview = seasonParam.overview;
             season.posterPath = seasonParam.posterPath;
-            season.episodeCount = seasonParam.episodeCount; // todo: = 0
+            season.episodeCount = seasonParam.episodeCount;
             season.seasonNumber = seasonParam.seasonNumber;
             season._id = seasonParam._id;
 
@@ -138,12 +145,103 @@ public class RealmDb {
 
     public static boolean isEpisodeExist(int showId, int seasonId, int episodeId) {
         Realm realm = Realm.getDefaultInstance();
-        Episode episode = realm.where(Episode.class)
-                .equalTo("showId", showId)
-                .equalTo("seasonId", seasonId)
-                .equalTo("episodeId", episodeId)
-                .findFirst();
+        Episode episode = realm.where(Episode.class).equalTo("showId", showId).equalTo("seasonId", seasonId).equalTo("episodeId", episodeId).findFirst();
         return episode != null;
+    }
+
+    public static boolean isWatchedEpisodesInShowExist(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Episode> episodes = realm.where(Episode.class).equalTo("showId", showId).findAll();
+        int watchedCount = 0;
+        if (episodes.isLoaded()) {
+            for (Episode episode : episodes) {
+                if (episode.isWatched) {
+                    watchedCount++;
+                }
+            }
+        }
+        return watchedCount > 0;
+    }
+
+//--REMOVE------------------------------------------------------------------------------------------
+
+    public static void deleteAllWatchedShows() {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            RealmResults<Show> results = realm.where(Show.class).findAll();
+            for (Show show : results) {
+                if (isWatchedEpisodesInShowExist(show.showId)) {
+                    show.progress = 0;
+                    show.showProgress = 0F;
+                    deleteAllWatchedEpisodesFromShow(show.showId);
+                    //show.deleteFromRealm();
+                }
+            }
+        });
+        realmDb.close();
+    }
+
+    public static void deleteAllWatchedEpisodesFromShow(int showId) {
+        Realm realmDb = Realm.getDefaultInstance();
+        RealmResults<Episode> episodes = realmDb.where(Episode.class).equalTo("showId", showId).findAll();
+        for (Episode episode : episodes) {
+            episode.isWatched = false;
+            episode.deleteFromRealm();
+        }
+    }
+
+    public static void unfollowFromAllShows() {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            RealmResults<Show> results = realm.where(Show.class).equalTo("isFollow", true).findAll();
+            for (Show show : results) {
+                if (show != null) {
+                    show.isFollow = false;
+                }
+            }
+        });
+        realmDb.close();
+    }
+
+    public static void removeShow(int showId) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.progress = 0;
+                show.showProgress = 0F;
+                deleteAllWatchedEpisodesFromShow(show.showId);
+            }
+        });
+        realmDb.close();
+    }
+
+//--GET DATA----------------------------------------------------------------------------------------
+
+    public static int getMyWatchedShowsCount() {
+        List<Show> list = new ArrayList<>();
+
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Show> results = realm.where(Show.class).findAll();
+        for (Show s : results) {
+            if (RealmDb.isWatchedEpisodesInShowExist(s.showId)) {
+                list.add(s);
+            }
+        }
+
+        return list.size();
+    }
+
+    public static int getFollowingShowsCount() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Show> results = realm.where(Show.class).equalTo("isFollow", true).findAll();
+        return results.size();
+    }
+
+    public static int getCachedShowsCount() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Show> results = realm.where(Show.class).findAll();
+        return results.size();
     }
 
 //--Show--------------------------------------------------------------------------------------------
@@ -156,8 +254,8 @@ public class RealmDb {
 
     public static void followShow(int showId, boolean follow) {
         Realm realmDb = Realm.getDefaultInstance();
-        Show show = realmDb.where(Show.class).equalTo("showId", showId).findFirst();
         realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
             if (show != null) {
                 show.isFollow = follow;
             }
@@ -183,13 +281,19 @@ public class RealmDb {
         return show != null ? show.progress : 0;
     }
 
+    public static float getProgress(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.showProgress : 0;
+    }
+
     public static void updateShowViewsCount(int showId) {
         int views = getShowViews(showId);
         int newViews = views + 1;
 
         Realm realmDb = Realm.getDefaultInstance();
-        Show show = realmDb.where(Show.class).equalTo("showId", showId).findFirst();
         realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
             if (show != null) {
                 show.viewsNumber = newViews;
             }
@@ -197,15 +301,175 @@ public class RealmDb {
         realmDb.close();
     }
 
-    public static void updateProgress(int showId, int progress) {
+    public static void updateProgress(int showId, float progress) {
         Realm realmDb = Realm.getDefaultInstance();
-        Show show = realmDb.where(Show.class).equalTo("showId", showId).findFirst();
         realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
             if (show != null) {
-                show.progress = progress;
+                show.progress = (int) progress;
+                show.showProgress = progress;
             }
         });
         realmDb.close();
+    }
+
+    public static void updateStatus(int showId, boolean status) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.inProduction = status;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static String getOriginalName(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.originalName : null;
+    }
+
+    public static void updateOriginalName(int showId, String name) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.originalName = name;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static String getStatus(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.status : null;
+    }
+
+    public static void updateStatus(int showId, String status) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.status = status;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static String getType(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.type : null;
+    }
+
+    public static void updateType(int showId, String type) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.type = type;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static String getFirstAirDate(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.firstAirDate : null;
+    }
+
+    public static String getLastAirDate(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.lastAirDate : null;
+    }
+
+    public static void updateLastAirDate(int showId, String lastDate) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.lastAirDate = lastDate;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static String getHomepage(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.homepage : null;
+    }
+
+    public static void updateHomepage(int showId, String homepage) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.homepage = homepage;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static void updateGenres(int showId, List<Genre> genres) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            show.genresString.clear();
+            for (Genre genre : genres) {
+                show.genresString.add(genre.name);
+            }
+            realm.insertOrUpdate(show);
+        });
+        realmDb.close();
+    }
+
+    public static RealmList<String> getGenres(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.genresString.size() == 0 ? null : show.genresString : null;
+    }
+
+    public static void updateCountries(int showId, List<String> countries) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            show.countriesString.clear();
+            for (String country : countries) {
+                show.countriesString.add(country);
+            }
+            realm.insertOrUpdate(show);
+        });
+        realmDb.close();
+    }
+
+    public static RealmList<String> getCountries(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.countriesString.size() == 0 ? null : show.countriesString : null;
+    }
+
+    public static void updateCompanies(int showId, List<Company> companies) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            show.companiesString.clear();
+            for (Company company : companies) {
+                show.companiesString.add(company.name);
+            }
+            realm.insertOrUpdate(show);
+        });
+        realmDb.close();
+    }
+
+    public static RealmList<String> getCompanies(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? (show.companiesString.size() != 0 ? show.companiesString : null) : null;
     }
 
 //--Season------------------------------------------------------------------------------------------
@@ -222,7 +486,6 @@ public class RealmDb {
 
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Season> seasons = realm.where(Season.class).equalTo("showId", showId).findAll();
-
         for (Season s : seasons) {
             int watchedEpisodes = getWatchedEpisodesInSeason(showId, s.seasonId);
 
@@ -242,8 +505,8 @@ public class RealmDb {
 
     public static void setSeasonEpisodesCount(int showId, int seasonId, int episodes) {
         Realm realmDb = Realm.getDefaultInstance();
-        Season season = realmDb.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
         realmDb.executeTransaction(realm -> {
+            Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
             if (season != null) {
                 season.episodeCount = episodes;
             }
@@ -259,22 +522,14 @@ public class RealmDb {
 
     public static boolean isEpisodeWatched(int showId, int seasonId, int episodeId) {
         Realm realmDb = Realm.getDefaultInstance();
-        Episode episode = realmDb.where(Episode.class)
-                .equalTo("showId", showId)
-                .equalTo("seasonId", seasonId)
-                .equalTo("episodeId", episodeId)
-                .findFirst();
+        Episode episode = realmDb.where(Episode.class).equalTo("showId", showId).equalTo("seasonId", seasonId).equalTo("episodeId", episodeId).findFirst();
         return episode != null && episode.isWatched;
     }
 
     public static void markEpisodeAsWatched(int showId, int seasonId, int episodeId, boolean watching) {
         Realm realmDb = Realm.getDefaultInstance();
-        Episode episode = realmDb.where(Episode.class)
-                .equalTo("showId", showId)
-                .equalTo("seasonId", seasonId)
-                .equalTo("episodeId", episodeId)
-                .findFirst();
         realmDb.executeTransaction(realm -> {
+            Episode episode = realm.where(Episode.class).equalTo("showId", showId).equalTo("seasonId", seasonId).equalTo("episodeId", episodeId).findFirst();
             if (episode != null) {
                 episode.isWatched = watching;
             }
@@ -327,18 +582,6 @@ public class RealmDb {
     }
 
     @NotTested
-    public static void removeShow(int showId) {
-        Realm realmDb = Realm.getDefaultInstance();
-        realmDb.executeTransaction(realm -> {
-            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
-            if (show != null) {
-                show.deleteFromRealm();
-            }
-        });
-        realmDb.close();
-    }
-
-    @NotTested
     public static void removeSeason(int showId, int seasonId) {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
@@ -373,18 +616,32 @@ public class RealmDb {
         realmDb.close();
     }
 
-    @NotTested
-    public static boolean isWatchedEpisodesInShowIsExist(int showId) {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Episode> episodes = realm.where(Episode.class).equalTo("showId", showId).findAll();
-        int watchedCount = 0;
-        if (episodes.isLoaded()) {
-            for (Episode episode : episodes) {
-                if (episode.isWatched) {
-                    watchedCount++;
-                }
+//--SEARCH HISTORY----------------------------------------------------------------------------------
+
+    public static void insertSearchItem(SearchItem searchItem) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            SearchItem item = realm.where(SearchItem.class).findFirst();
+            if (item == null) {
+                item = realm.createObject(SearchItem.class);
             }
-        }
-        return watchedCount > 0;
+
+            item.query = searchItem.query;
+            item.date = searchItem.date;
+
+            realm.insertOrUpdate(item);
+        });
+        realmDb.close();
+    }
+
+    public static void removeSearchItem(String date) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            SearchItem item = realm.where(SearchItem.class).equalTo("date", date).findFirst();
+            if (item != null) {
+                item.deleteFromRealm();
+            }
+        });
+        realmDb.close();
     }
 }
