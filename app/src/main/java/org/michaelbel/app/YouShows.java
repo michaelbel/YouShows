@@ -17,17 +17,17 @@ import io.realm.RealmConfiguration;
  * @author Michael Bel
  */
 
-public class ShowsApp extends Application {
+public class YouShows extends Application {
 
     public static final String EMAIL = "mchlb@ya.ru";
     public static final String TELEGRAM_URL = "https://t.me/michaelbel";
     public static final String TELEGRAM_FDL = "t.me/michaelbel";
     public static final String PAYPAL_ME = "https://paypal.me/michaelbel";
     public static final String GITHUB_URL = "https://github.com/michaelbel/shows";
-    public static final String ACCOUNT_WEB = "https://play.google.com/store/apps/developer?id=Michael+Bel";
-    public static final String ACCOUNT_MARKET = "market://developer?id=Michael+Bel";
     public static final String APP_WEB = "https://play.google.com/store/apps/details?id=org.michaelbel.shows";
     public static final String APP_MARKET = "market://details?id=org.michaelbel.shows";
+    //public static final String ACCOUNT_WEB = "https://play.google.com/store/apps/developer?id=Michael+Bel";
+    //public static final String ACCOUNT_MARKET = "market://developer?id=Michael+Bel";
 
     public static volatile Context AppContext;
     public static volatile Handler AppHandler;
@@ -48,10 +48,9 @@ public class ShowsApp extends Application {
 
         RealmConfiguration config = new RealmConfiguration.Builder()
             .name(REALM_NAME)
-            .schemaVersion(2)
+            .schemaVersion(6)
             .migration(new MyRealmMigration())
             .build();
-
         Realm.setDefaultConfiguration(config);
     }
 
