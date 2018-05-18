@@ -111,7 +111,7 @@ public class SettingsFragment extends Fragment {
         enableAnimationsRow = rowCount++;
         inAppBrowserRow = rowCount++;
         dataUsageRow = rowCount++;
-        searchHistoryRow = rowCount++;
+        //searchHistoryRow = rowCount++;
         emptyRow1 = rowCount++;
         aboutRow = rowCount++;
         appInfoRow = rowCount++;
@@ -367,7 +367,7 @@ public class SettingsFragment extends Fragment {
                 if (position == dataUsageRow) {
                     cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.DataUsage);
-                    cell.setDivider(true);
+                    cell.setDivider(false);
                 } else if (position == searchHistoryRow) {
                     cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.SearchHistory);
