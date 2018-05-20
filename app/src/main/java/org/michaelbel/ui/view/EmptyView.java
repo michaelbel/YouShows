@@ -28,27 +28,27 @@ public class EmptyView extends LinearLayout {
 
     public EmptyView(Context context) {
         super(context);
-        initialize();
+        initialize(context);
     }
 
     public EmptyView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initialize();
+        initialize(context);
     }
 
-    private void initialize() {
+    private void initialize(Context context) {
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
 
-        emptyIcon = new ImageView(getContext());
+        emptyIcon = new ImageView(context);
         emptyIcon.setLayoutParams(LayoutHelper.makeLinear(52, 52));
         addView(emptyIcon);
 
-        emptyText = new TextView(getContext());
+        emptyText = new TextView(context);
         emptyText.setGravity(Gravity.CENTER);
         emptyText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         emptyText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        emptyText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
+        emptyText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.iconActive()));
         emptyText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 10, 24, 0));
         addView(emptyText);
     }
@@ -63,6 +63,12 @@ public class EmptyView extends LinearLayout {
         } else if (mode == EmptyViewMode.MODE_NO_RESULTS) {
             emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_search_results, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
             emptyText.setText(R.string.NoResults);
+        } else if (mode == EmptyViewMode.MODE_NO_EPISODES) {
+            emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_movie_roll, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
+            emptyText.setText(R.string.NoEpisodes);
+        } else if (mode == EmptyViewMode.MODE_SEARCH_HISTORY) {
+            emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_search_results, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
+            emptyText.setText(R.string.SearchHistoryEmpty);
         }
 
         return this;
