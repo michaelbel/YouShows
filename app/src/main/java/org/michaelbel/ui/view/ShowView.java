@@ -18,12 +18,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.rest.ApiFactory;
-import org.michaelbel.material.annotation.NotTested;
-import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.ScreenUtils;
+import org.michaelbel.app.Theme;
+import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
 import java.util.Locale;
@@ -43,7 +42,7 @@ public class ShowView extends FrameLayout {
     private TextView overviewText;
     private CardView cardView;
     private RatingView ratingView;
-    private DateView dateView;
+    private TextView dateText;
     private ImageView watchIcon;
 
     private Rect rect = new Rect();
@@ -130,9 +129,17 @@ public class ShowView extends FrameLayout {
         ratingView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         //rateAndDateLinear.addView(ratingView);
 
-        dateView = new DateView(context);
-        dateView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL, 0, 0, 0, 0));
-        rateAndDateLinear.addView(dateView);
+        dateText = new TextView(context);
+        dateText.setLines(1);
+        dateText.setMaxLines(1);
+        dateText.setSingleLine();
+        dateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        dateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        dateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        dateText.setCompoundDrawablePadding(Extensions.dp(context, 2));
+        dateText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
+        rateAndDateLinear.addView(dateText);
 
 //--------------------------------------------------------------------------------------------------
 
@@ -172,18 +179,12 @@ public class ShowView extends FrameLayout {
     }
 
     public void setReleaseDate(String releaseDate) {
-        dateView.setDate(TextUtils.isEmpty(releaseDate) ? getContext().getString(R.string.UnknownDate) : AndroidExtensions.formatDate(releaseDate));
+        dateText.setText(TextUtils.isEmpty(releaseDate) ? getContext().getString(R.string.UnknownDate) : AndroidExtensions.formatDate(releaseDate));
     }
 
-    @NotTested
     public void setWatch(boolean watch) {
-        if (watch) {
-            watchIcon.setVisibility(VISIBLE);
-            titleText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, 20, 0));
-        } else {
-            watchIcon.setVisibility(GONE);
-            titleText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, 0, 0));
-        }
+        watchIcon.setVisibility(watch ? VISIBLE : GONE);
+        titleText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, watch ? 20 : 0, 0));
     }
 
     @Override
@@ -228,36 +229,6 @@ public class ShowView extends FrameLayout {
 
         public void setRating(String voteAverage) {
             ratingText.setText(voteAverage);
-        }
-    }
-
-    private class DateView extends LinearLayout {
-
-        private TextView dateText;
-
-        public DateView(Context context) {
-            super(context);
-
-            setOrientation(LinearLayout.HORIZONTAL);
-
-            ImageView dateIcon = new ImageView(context);
-            dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(context, Theme.Color.iconActive())));
-            dateIcon.setLayoutParams(LayoutHelper.makeLinear(16, 16, Gravity.START | Gravity.CENTER_VERTICAL));
-            addView(dateIcon);
-
-            dateText = new TextView(context);
-            dateText.setLines(1);
-            dateText.setMaxLines(1);
-            dateText.setSingleLine();
-            dateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            dateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
-            dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-            dateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 2, 0, 0, 0));
-            addView(dateText);
-        }
-
-        public void setDate(String releaseDate) {
-            dateText.setText(releaseDate);
         }
     }
 }
