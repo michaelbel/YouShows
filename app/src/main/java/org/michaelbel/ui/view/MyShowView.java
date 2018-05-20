@@ -56,8 +56,6 @@ public class MyShowView extends FrameLayout {
     private CardView cardView;
     private TextView statusText;
     private View dividerView;
-    private ImageView dateIcon;
-    private ImageView viewsIcon;
 
     private Paint paint;
     private boolean divider;
@@ -107,9 +105,6 @@ public class MyShowView extends FrameLayout {
         statusText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         statusText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
-        dateIcon = view.findViewById(R.id.date_icon);
-        dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(context, Theme.Color.iconActive())));
-
         datesText = view.findViewById(R.id.dates_text);
         datesText.setLines(1);
         datesText.setMaxLines(1);
@@ -118,9 +113,8 @@ public class MyShowView extends FrameLayout {
         datesText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         datesText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         datesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-
-        viewsIcon = view.findViewById(R.id.views_icon);
-        viewsIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(context, Theme.Color.iconActive())));
+        datesText.setCompoundDrawablePadding(Extensions.dp(context, 4));
+        datesText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
 
         progressWatchedText = view.findViewById(R.id.watched_episodes_text);
         progressWatchedText.setLines(1);
@@ -130,6 +124,8 @@ public class MyShowView extends FrameLayout {
         progressWatchedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         progressWatchedText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
         progressWatchedText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        progressWatchedText.setCompoundDrawablePadding(Extensions.dp(context, 4));
+        progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
 
         dividerView = view.findViewById(R.id.divider_view);
         dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
@@ -239,8 +235,8 @@ public class MyShowView extends FrameLayout {
         datesText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
         dividerView.setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
-        dateIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
-        viewsIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
+        datesText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
+        progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
         paint.setColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
         setWillNotDraw(true);
 
