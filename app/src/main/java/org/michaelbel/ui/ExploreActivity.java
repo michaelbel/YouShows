@@ -38,10 +38,12 @@ import java.util.List;
 
 public class ExploreActivity extends AppCompatActivity {
 
-    public Toolbar toolbar;
-    public TextView toolbarTitle;
+    private final int tab_popular = 0;
+    private final int tab_now_playing = 1;
+    private final int tab_top_rated = 2;
+
     public TabLayout tabLayout;
-    public ViewPager viewPager;
+    private FragmentsPagerAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,23 +55,50 @@ public class ExploreActivity extends AppCompatActivity {
         AppBarLayout appBar = findViewById(R.id.app_bar);
         appBar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setLayoutParams(AndroidExtensions.setScrollFlags(toolbar));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
-        toolbarTitle = findViewById(R.id.toolbar_title);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.ExploreShows);
 
-        FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getSupportFragmentManager());
+        adapter = new FragmentsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new PopularShowsFragment(), R.string.Popular);
         adapter.addFragment(new NowPlayingShowsFragment(), R.string.NowPlaying);
         adapter.addFragment(new TopRatedShowsFragment(), R.string.TopRated);
 
-        viewPager = findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == tab_popular) {
+                    PopularShowsFragment fragment = (PopularShowsFragment) adapter.getItem(tab_popular);
+                    if (fragment.isAdapterEmpty()) {
+                        fragment.loadFirstPage();
+                    }
+                } else if (position == tab_now_playing) {
+                    NowPlayingShowsFragment fragment = (NowPlayingShowsFragment) adapter.getItem(tab_now_playing);
+                    if (fragment.isAdapterEmpty()) {
+                        fragment.loadFirstPage();
+                    }
+                } else if (position == tab_top_rated) {
+                    TopRatedShowsFragment fragment = (TopRatedShowsFragment) adapter.getItem(tab_top_rated);
+                    if (fragment.isAdapterEmpty()) {
+                        fragment.loadFirstPage();
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
 
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
@@ -82,13 +111,6 @@ public class ExploreActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        /*menu.add(R.string.Tune)
-              .setIcon(R.drawable.ic_tune)
-              .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-              .setOnMenuItemClickListener(item -> {
-                  return true;
-              });*/
-
         menu.add(R.string.Search)
             .setIcon(R.drawable.ic_search)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
