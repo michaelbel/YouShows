@@ -74,6 +74,7 @@
     <string name="ShowInProduction">Show in production</string>
     <string name="ShowIsFinished">Show is finished</string>
     <string name="EpisodeNumber">Episode #%1$d</string>
+    <string name="NoEpisodes">No Episodes</string>
     <!--search-->
     <string name="Search">Search</string>
     <string name="NoResults">No results</string>
@@ -101,6 +102,7 @@
     <string name="YouDoNotFollowShows">You don\'t follow any shows</string>
     <string name="Done">Done</string>
     <string name="SearchHistory">Search History</string>
+    <string name="SearchHistoryEmpty">Your search history is empty</string>
     <string name="CurrentDateAndTime">%1$s at %2$s</string>
     <string-array name="Tabs">
         <item>My Shows</item>
@@ -147,6 +149,7 @@
 
 
 
+    <string name="Retry">Retry</string>
     <string name="EnableAnalytics">Enable Analytics</string>
     <string name="SupportDevelopment">Support Development</string>
     <string name="PoweredBy">Powered by <![CDATA[<b>]]>Themoviedb.org<![CDATA[</b>]]></string>
@@ -174,5 +177,4 @@
     <string name="EpisodeCount">%1$d Episode</string>
     <string name="EpisodesCount">%1$d Episodes</string>
     <string name="Episodes">Episodes</string>
-    <string name="NoEpisodes">No Episodes</string>
 </resources>
