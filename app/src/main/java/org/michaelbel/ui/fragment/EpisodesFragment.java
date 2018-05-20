@@ -128,7 +128,7 @@ public class EpisodesFragment extends Fragment {
                         adapter.addEpisodes(season.episodes);
                         progressBar.setVisibility(View.GONE);
                         emptyView.setVisibility(View.GONE);
-                        activity.showFab();
+                        activity.fabButton.show();
 
                         if (!RealmDb.isSeasonExist(showId, season.seasonId)) {
                             RealmDb.insertOrUpdateSeason(showId, season);
