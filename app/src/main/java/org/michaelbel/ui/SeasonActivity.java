@@ -28,11 +28,9 @@ public class SeasonActivity extends AppCompatActivity {
     public int showId;
     public Season season;
 
-    public Toolbar toolbar;
-    public TextView toolbarTitle;
     public FloatingActionButton fabButton;
 
-    public EpisodesFragment fragment;
+    private EpisodesFragment fragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +39,7 @@ public class SeasonActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
         setSupportActionBar(toolbar);
@@ -50,20 +48,17 @@ public class SeasonActivity extends AppCompatActivity {
         showId = getIntent().getIntExtra("showId", 0);
         season = (Season) getIntent().getSerializableExtra("season");
 
-        toolbarTitle = findViewById(R.id.toolbar_title);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(season.name);
 
         fabButton = findViewById(R.id.fab);
         fabButton.setVisibility(View.INVISIBLE);
         fabButton.setClickable(false);
         fabButton.setLongClickable(false);
-        fabButton.setOnClickListener(view -> {
-            markSeasonsAsWatched(showId, season);
-        });
+        fabButton.setOnClickListener(view -> markSeasonsAsWatched(showId, season));
         changeFabStyle(RealmDb.isSeasonWatched(showId, season));
 
         fragment = (EpisodesFragment) getSupportFragmentManager().findFragmentById(R.id.seasonFragment);
-        //loadSeason(season);
         fragment.showEpisodes(showId, season);
     }
 
@@ -82,12 +77,12 @@ public class SeasonActivity extends AppCompatActivity {
         boolean watched = RealmDb.isSeasonWatched(showId, season);
 
         fabButton.setImageDrawable(watched ?
-                Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
-                Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(this, R.color.iconActive))
+            Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
+            Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(this, R.color.iconActive))
         );
         fabButton.setBackgroundTintList(watched ?
-                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
-                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent))
+            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
+            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent))
         );
     }
 
@@ -99,9 +94,5 @@ public class SeasonActivity extends AppCompatActivity {
             fragment.addEpisodesToRealm();
             changeFabStyle(true);
         }
-    }
-
-    public void showFab() {
-        fabButton.show();
     }
 }
