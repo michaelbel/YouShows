@@ -56,7 +56,7 @@ public class SeasonView extends FrameLayout {
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
         if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
-            cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.primary()));
         }
 
         selectIcon = view.findViewById(R.id.select_icon);
