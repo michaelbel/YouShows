@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.LayoutHelper;
@@ -32,6 +31,8 @@ import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SeasonActivity;
 import org.michaelbel.ui.adapter.holder.LoadingHolder;
+import org.michaelbel.ui.view.EmptyView;
+import org.michaelbel.ui.view.EmptyViewMode;
 import org.michaelbel.ui.view.EpisodeOverview;
 import org.michaelbel.ui.view.EpisodeView;
 
@@ -54,7 +55,7 @@ public class EpisodesFragment extends Fragment {
     private SeasonAdapter adapter;
     private SeasonActivity activity;
 
-    private TextView emptyView;
+    private EmptyView emptyView;
     private ProgressBar progressBar;
 
     @Override
@@ -78,9 +79,9 @@ public class EpisodesFragment extends Fragment {
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(progressBar);
 
-        emptyView = new TextView(activity);
-        emptyView.setText(R.string.NoEpisodes);
+        emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.GONE);
+        emptyView.setOnClickListener(v -> showEpisodes(activity.showId, activity.season));
         emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
         fragmentLayout.addView(emptyView);
 
@@ -104,6 +105,9 @@ public class EpisodesFragment extends Fragment {
     }
 
     public void showEpisodes(int showId, Season s) {
+        emptyView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
         service.season(showId, s.seasonNumber, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Season>() {
             @Override
@@ -112,7 +116,7 @@ public class EpisodesFragment extends Fragment {
                     Season season = response.body();
                     if (season != null) {
                         if (season.episodes.isEmpty()) {
-                            emptyView.setVisibility(View.VISIBLE);
+                            showError(EmptyViewMode.MODE_NO_EPISODES);
                         }
 
                         Episode ss = new Episode();
@@ -133,16 +137,14 @@ public class EpisodesFragment extends Fragment {
                             RealmDb.setSeasonEpisodesCount(showId, s.seasonId, s.episodeCount);
                         }
                     } else {
-                        emptyView.setVisibility(View.VISIBLE);
+                        showError(EmptyViewMode.MODE_NO_EPISODES);
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Season> call, @NonNull Throwable t) {
-                t.printStackTrace();
-                progressBar.setVisibility(View.GONE);
-                emptyView.setVisibility(View.VISIBLE);
+                showError(EmptyViewMode.MODE_NO_CONNECTION);
             }
         });
     }
@@ -200,6 +202,12 @@ public class EpisodesFragment extends Fragment {
         RealmDb.updateProgress(activity.showId, percent);
         ((YouShows) activity.getApplication()).bus().send(new Events.UpdateProgress());
         ((YouShows) activity.getApplication()).bus().send(new Events.UpdateSeasonsView());
+    }
+
+    public void showError(int mode) {
+        progressBar.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+        emptyView.setMode(mode);
     }
 
     private class SeasonAdapter extends RecyclerView.Adapter {
