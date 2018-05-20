@@ -7,3 +7,12 @@
 /build
 /captures
 .externalNativeBuild
+/app/src/main/assets/config.properties
+.idea/caches/
+.idea/codeStyles/
+.idea/dictionaries/
+.idea/kotlinc.xml
+ShowsAppSignKey.jks
+app/libs/
+app/releasing/
+app/src/main/res/drawable-xxxhdpi/
