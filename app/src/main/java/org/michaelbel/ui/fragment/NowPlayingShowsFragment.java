@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
@@ -81,7 +80,11 @@ public class NowPlayingShowsFragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                recyclerView.smoothScrollToPosition(0);
+                if (isAdapterEmpty()) {
+                    loadFirstPage();
+                } else {
+                    recyclerView.smoothScrollToPosition(0);
+                }
             }
         });
 
@@ -96,7 +99,7 @@ public class NowPlayingShowsFragment extends Fragment {
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
         fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, Theme.Color.primary()));
         fragmentLayout.setOnRefreshListener(() -> {
-            if (adapter.getList().isEmpty()) {
+            if (isAdapterEmpty()) {
                 loadFirstPage();
             } else {
                 fragmentLayout.setRefreshing(false);
@@ -114,6 +117,7 @@ public class NowPlayingShowsFragment extends Fragment {
 
         emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.GONE);
+        emptyView.setOnClickListener(v -> loadFirstPage());
         emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
         contentLayout.addView(emptyView);
 
@@ -160,10 +164,8 @@ public class NowPlayingShowsFragment extends Fragment {
     }
 
     public void loadFirstPage() {
-        if (AndroidExtensions.typeNotConnected()) {
-            showError(EmptyViewMode.MODE_NO_CONNECTION);
-            return;
-        }
+        emptyView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
         service.nowPlaying(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), page).enqueue(new Callback<ShowsResponse>() {
@@ -189,7 +191,7 @@ public class NowPlayingShowsFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ShowsResponse> call, @NonNull Throwable t) {
-                showError(EmptyViewMode.MODE_NO_SHOWS);
+                showError(EmptyViewMode.MODE_NO_CONNECTION);
             }
         });
     }
@@ -246,5 +248,9 @@ public class NowPlayingShowsFragment extends Fragment {
         progressBar.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
         emptyView.setMode(mode);
+    }
+
+    public boolean isAdapterEmpty() {
+        return adapter.getList().isEmpty();
     }
 }
