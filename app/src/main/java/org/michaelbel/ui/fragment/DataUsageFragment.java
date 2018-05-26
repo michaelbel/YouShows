@@ -97,12 +97,11 @@ public class DataUsageFragment extends Fragment {
                         RealmDb.deleteAllWatchedShows();
                         loadInfo();
                         adapter.updateRows();
-                        Toast.makeText(activity, R.string.Done, Toast.LENGTH_SHORT).show();
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, R.color.red));
                 }
             } else if (position == unfollowAllRow) {
                 if (followingCount == 0) {
@@ -116,12 +115,11 @@ public class DataUsageFragment extends Fragment {
                         RealmDb.unfollowFromAllShows();
                         loadInfo();
                         adapter.updateRows();
-                        Toast.makeText(activity, R.string.Done, Toast.LENGTH_SHORT).show();
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, R.color.red));
                 }
             } else if (position == cachedRow) {
                 activity.startFragment(new CachedShowsFragment(), "cachedFragment");
