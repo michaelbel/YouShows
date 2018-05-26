@@ -75,7 +75,16 @@
         "changes":[
             "Data Storage: delete progress for your added shows and unfollow from all your shows",
             "Tap and hold on show in your lists do display additional options",
-            "Bugs fixed"
+            "Bugs fixes"
+        ]
+    },
+
+    {
+        "version":"1.0.8",
+        "build":16,
+        "date":"26 May 2018",
+        "changes":[
+            "Bugs fixes"
         ]
     }
 ]
