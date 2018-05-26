@@ -19,9 +19,10 @@ public class Theme {
 
     public static final int THEME_NIGHT_BLUE = 0;
     public static final int THEME_NIGHT_BLACK = 1;
+    public static final int THEME_NIGHT_RED = 2;
 
     private static Context getContext() {
-        return ShowsApp.AppContext;
+        return YouShows.AppContext;
     }
 
     public static int getTheme() {
@@ -36,6 +37,8 @@ public class Theme {
                 return R.color.nb_primary;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.primary;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_primary;
             }
 
             return 0;
@@ -46,6 +49,8 @@ public class Theme {
                 return R.color.nb_primaryDark;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.primaryDark;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_primaryDark;
             }
 
             return 0;
@@ -56,6 +61,8 @@ public class Theme {
                 return R.color.nb_accent;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.accent;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_accent;
             }
 
             return 0;
@@ -66,6 +73,8 @@ public class Theme {
                 return R.color.nb_primaryText;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.primaryText;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_primaryText;
             }
 
             return 0;
@@ -76,6 +85,8 @@ public class Theme {
                 return R.color.nb_secondaryText;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.secondaryText;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_secondaryText;
             }
 
             return 0;
@@ -86,6 +97,8 @@ public class Theme {
                 return R.color.nb_disabledHintText;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.disabledHintText;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_disabledHintText;
             }
 
             return 0;
@@ -96,6 +109,8 @@ public class Theme {
                 return R.color.nb_divider;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.divider;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_divider;
             }
 
             return 0;
@@ -106,6 +121,8 @@ public class Theme {
                 return R.color.nb_iconActive;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.iconActive;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_iconActive;
             }
 
             return 0;
@@ -116,6 +133,8 @@ public class Theme {
                 return R.color.nb_iconInactive;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.iconInactive;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_iconInactive;
             }
 
             return 0;
@@ -126,6 +145,8 @@ public class Theme {
                 return R.color.nb_statusBar;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.statusBar;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_statusBar;
             }
 
             return 0;
@@ -136,6 +157,8 @@ public class Theme {
                 return R.color.nb_appBar;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.appBar;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_appBar;
             }
 
             return 0;
@@ -146,6 +169,8 @@ public class Theme {
                 return R.color.nb_background;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.background;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_background;
             }
 
             return 0;
@@ -156,6 +181,8 @@ public class Theme {
                 return R.color.nb_foreground;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.foreground;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_foreground;
             }
 
             return 0;
@@ -166,6 +193,8 @@ public class Theme {
                 return R.color.nb_switch_thumbOn;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.switch_thumbOn;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_switch_thumbOn;
             }
 
             return 0;
@@ -176,6 +205,8 @@ public class Theme {
                 return R.color.nb_switch_thumbOff;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.switch_thumbOff;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_switch_thumbOff;
             }
 
             return 0;
@@ -186,6 +217,8 @@ public class Theme {
                 return R.color.nb_switch_trackOn;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.switch_trackOn;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_switch_trackOn;
             }
 
             return 0;
@@ -196,6 +229,8 @@ public class Theme {
                 return R.color.nb_switch_trackOff;
             } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
                 return R.color.switch_trackOff;
+            } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+                return R.color.nr_switch_trackOff;
             }
 
             return 0;
@@ -207,6 +242,8 @@ public class Theme {
             return R.style.AlertNightBlue;
         } else if (Theme.getTheme() == THEME_NIGHT_BLACK) {
             return R.style.AlertNightBlack;
+        } else if (Theme.getTheme() == THEME_NIGHT_RED) {
+            return R.style.AlertNightRed;
         }
 
         return 0;
