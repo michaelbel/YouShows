@@ -46,20 +46,20 @@
 
     <!--Night Blue theme-->
     <color name="nb_primaryText">#FFFFFF</color>
-    <color name="nb_secondaryText">#B3FFFFFF</color>
+    <color name="nb_secondaryText">#B3FFFFFF</color><!--7a878d-->
     <color name="nb_disabledHintText">#80FFFFFF</color>
     <color name="nb_divider">#1FFFFFFF</color>
-    <color name="nb_iconActive">#7C8F96</color>
+    <color name="nb_iconActive">#7C8E98</color>
     <color name="nb_iconInactive">#807C8F96</color>
     <color name="nb_statusBar">#000000</color>
     <color name="nb_appBar">#111C16</color>
-    <color name="nb_background">#151D26</color>
+    <color name="nb_background">#151C24</color>
     <color name="nb_foreground">#1C2732</color>
     <!--Switch-->
-    <color name="nb_switch_thumbOn">#FFCC80</color>
-    <color name="nb_switch_trackOn">#80FFCC80</color>
-    <color name="nb_switch_thumbOff">#BDBDBD</color>
-    <color name="nb_switch_trackOff">#4DFFFFFF</color>
+    <color name="nb_switch_thumbOn">#FFCC80</color><!--63cefc-->
+    <color name="nb_switch_trackOn">#80FFCC80</color><!--3c7890-->
+    <color name="nb_switch_thumbOff">#BDBDBD</color><!--7a8e97-->
+    <color name="nb_switch_trackOff">#4DFFFFFF</color><!--475965-->
     <color name="nb_switch_thumbDisabled">#424242</color>
     <color name="nb_switch_trackDisabled">#1AFFFFFF</color>
 

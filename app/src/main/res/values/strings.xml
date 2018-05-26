@@ -96,7 +96,7 @@
     <string name="CachedShows">Cached Shows</string>
     <string name="AllCachedShows">All cached shows</string>
     <string name="Calculating">Calculating…</string>
-    <string name="DeleteAllShowsMessage">Are you sure you want to delete all shows from local database?\n\nAll progress watch will be lost.\n\nThis action can\'t be undone.</string>
+    <string name="DeleteAllShowsMessage">Are you sure you want to delete all shows from local database?\n\nAll progress will be lost.\n\nThis action can\'t be undone.</string>
     <string name="UnfollowFromAllShowsMessage">Are you sure you want to unfollow from all your shows?\n\nThis action can\'t be undone.</string>
     <string name="YourShowsListEmpty">Your shows list is empty!</string>
     <string name="YouDoNotFollowShows">You don\'t follow any shows</string>
