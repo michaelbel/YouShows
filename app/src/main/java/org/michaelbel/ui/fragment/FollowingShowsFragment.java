@@ -23,6 +23,7 @@ import android.widget.FrameLayout;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.LayoutHelper;
+import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.YouShows;
 import org.michaelbel.app.eventbus.Events;
@@ -31,7 +32,6 @@ import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.RecyclerListView;
-import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.MainActivity;
 import org.michaelbel.ui.adapter.ShowsAdapter;
