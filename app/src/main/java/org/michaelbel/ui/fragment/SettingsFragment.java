@@ -52,21 +52,21 @@ public class SettingsFragment extends Fragment {
     private int themeRow;
     private int defaultTabRow;
     private int dateFormatRow;
-    private int enableSortingRow;
-    private int enableAnimationsRow;
+    private int sortingRow;
+    private int animationsRow;
     private int inAppBrowserRow;
-    private int dataUsageRow;
     private int searchHistoryRow;
+    private int dataUsageRow;
     private int emptyRow1;
     private int aboutRow;
     private int appInfoRow;
     private int feedbackRow;
-    private int rateGooglePlay;
+    private int rateGooglePlayRow;
     private int forkGithubRow;
     private int libsRow;
     private int shareFriendsRow;
     private int donatePaypalRow;
-    private int changelogsRow;
+    private int changelogRow;
     private int emptyRow2;
 
     private int pressCount = 0;
@@ -107,21 +107,21 @@ public class SettingsFragment extends Fragment {
         themeRow = rowCount++;
         defaultTabRow = rowCount++;
         dateFormatRow = rowCount++;
-        enableSortingRow = rowCount++;
-        enableAnimationsRow = rowCount++;
+        sortingRow = rowCount++;
+        animationsRow = rowCount++;
         inAppBrowserRow = rowCount++;
+        searchHistoryRow = rowCount++;
         dataUsageRow = rowCount++;
-        //searchHistoryRow = rowCount++;
         emptyRow1 = rowCount++;
         aboutRow = rowCount++;
         appInfoRow = rowCount++;
         feedbackRow = rowCount++;
-        rateGooglePlay = rowCount++;
+        rateGooglePlayRow = rowCount++;
         forkGithubRow = rowCount++;
         libsRow = rowCount++;
         shareFriendsRow = rowCount++;
         donatePaypalRow = rowCount++;
-        changelogsRow = rowCount++;
+        changelogRow = rowCount++;
         emptyRow2 = rowCount++;
 
         prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
@@ -160,7 +160,7 @@ public class SettingsFragment extends Fragment {
                     }
                 });
                 builder.show();
-            } else if (position == enableSortingRow) {
+            } else if (position == sortingRow) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 boolean enable = prefs.getBoolean("sorting", false);
                 prefs.edit().putBoolean("sorting", !enable).apply();
@@ -168,7 +168,7 @@ public class SettingsFragment extends Fragment {
                     ((TextDetailCell) view).setChecked(!enable);
                 }
                 ((YouShows) activity.getApplication()).bus().send(new Events.EnableSorting());
-            } else if (position == enableAnimationsRow) {
+            } else if (position == animationsRow) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 boolean enable = prefs.getBoolean("animations", true);
                 prefs.edit().putBoolean("animations", !enable).apply();
@@ -182,6 +182,8 @@ public class SettingsFragment extends Fragment {
                 if (view instanceof TextDetailCell) {
                     ((TextDetailCell) view).setChecked(!enable);
                 }
+            } else if (position == searchHistoryRow) {
+                activity.startFragment(new SearchHistoryFragment(), "searchHistoryFragment");
             } else if (position == dataUsageRow) {
                 activity.startFragment(new DataUsageFragment(), "storageFragment");
             } else if (position == feedbackRow) {
@@ -202,7 +204,7 @@ public class SettingsFragment extends Fragment {
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
-            } else if (position == rateGooglePlay) {
+            } else if (position == rateGooglePlayRow) {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(YouShows.APP_MARKET));
@@ -221,10 +223,8 @@ public class SettingsFragment extends Fragment {
                 startActivity(Intent.createChooser(intent, getString(R.string.ShareVia)));
             } else if (position == donatePaypalRow) {
                 Browser.openUrl(activity, YouShows.PAYPAL_ME);
-            } else if (position == changelogsRow) {
+            } else if (position == changelogRow) {
                 activity.startFragment(new ChangelogsFragment(), "changelogsFragment");
-            } else if (position == searchHistoryRow) {
-                activity.startFragment(new SearchHistoryFragment(), "historyFragment");
             }
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {
@@ -238,7 +238,7 @@ public class SettingsFragment extends Fragment {
                 } else {
                     Toast.makeText(activity, "You are awesome!", Toast.LENGTH_SHORT).show();
                 }
-            } else if (position == rateGooglePlay) {
+            } else if (position == rateGooglePlayRow) {
                 Extensions.copyToClipboard(activity, YouShows.APP_WEB);
                 Toast.makeText(activity, R.string.LinkCopied, Toast.LENGTH_SHORT).show();
             } else if (position == forkGithubRow) {
@@ -328,13 +328,13 @@ public class SettingsFragment extends Fragment {
                     cell.setText(R.string.DateFormat);
                     cell.setValue(prefs.getString("date_format", dateFormats[0]));
                     cell.setDivider(true);
-                } else if (position == enableSortingRow) {
+                } else if (position == sortingRow) {
                     cell.setMode(TextDetailCell.MODE_SWITCH);
                     cell.setText(R.string.EnableSorting);
                     cell.setValue(R.string.EnableSortingInfo);
                     cell.setChecked(prefs.getBoolean("sorting", false));
                     cell.setDivider(true);
-                } else if (position == enableAnimationsRow) {
+                } else if (position == animationsRow) {
                     cell.setMode(TextDetailCell.MODE_SWITCH);
                     cell.setText(R.string.EnableAnimations);
                     cell.setValue(R.string.EnableAnimationsInfo);
@@ -364,15 +364,15 @@ public class SettingsFragment extends Fragment {
                 TextCell cell = (TextCell) holder.itemView;
                 cell.changeLayoutParams();
 
-                if (position == dataUsageRow) {
+                if (position == searchHistoryRow) {
+                    cell.setMode(TextCell.MODE_DEFAULT);
+                    cell.setText(R.string.SearchHistory);
+                    cell.setDivider(true);
+                } else if (position == dataUsageRow) {
                     cell.setMode(TextCell.MODE_DEFAULT);
                     cell.setText(R.string.DataUsage);
                     cell.setDivider(false);
-                } else if (position == searchHistoryRow) {
-                    cell.setMode(TextCell.MODE_DEFAULT);
-                    cell.setText(R.string.SearchHistory);
-                    cell.setDivider(false);
-                } else if (position == rateGooglePlay) {
+                } else if (position == rateGooglePlayRow) {
                     cell.setMode(TextCell.MODE_ICON);
                     cell.setIcon(R.drawable.ic_google_play);
                     cell.setText(R.string.RateGooglePlay);
@@ -397,7 +397,7 @@ public class SettingsFragment extends Fragment {
                     cell.setIcon(R.drawable.ic_paypal);
                     cell.setText(R.string.DonatePaypal);
                     cell.setDivider(true);
-                } else if (position == changelogsRow) {
+                } else if (position == changelogRow) {
                     cell.setMode(TextCell.MODE_ICON);
                     cell.setIcon(R.drawable.ic_file_xml);
                     cell.setText(R.string.Changelog);
@@ -417,7 +417,7 @@ public class SettingsFragment extends Fragment {
                 return 0;
             } else if (position == aboutRow) {
                 return 1;
-            } else if (position == themeRow || position == defaultTabRow || position == dateFormatRow || position == enableSortingRow || position == enableAnimationsRow || position == inAppBrowserRow || position == appInfoRow || position == feedbackRow) {
+            } else if (position == themeRow || position == defaultTabRow || position == dateFormatRow || position == sortingRow || position == animationsRow || position == inAppBrowserRow || position == appInfoRow || position == feedbackRow) {
                 return 2;
             } else {
                 return 3;
