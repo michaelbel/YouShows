@@ -53,19 +53,20 @@ public class InfoLayout extends FrameLayout {
 
         linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 0, 16, 16));
         addView(linearLayout);
 
-        TextView infoTitle = new TextView(context);
-        infoTitle.setLines(1);
-        infoTitle.setMaxLines(1);
-        infoTitle.setSingleLine();
-        infoTitle.setText(R.string.Details);
-        infoTitle.setGravity(Gravity.CENTER_VERTICAL);
-        infoTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        infoTitle.setTextColor(ContextCompat.getColor(context, R.color.yellow));
-        infoTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        infoTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 42, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        linearLayout.addView(infoTitle);
+        TextView detailsTitle = new TextView(context);
+        detailsTitle.setLines(1);
+        detailsTitle.setMaxLines(1);
+        detailsTitle.setSingleLine();
+        detailsTitle.setText(R.string.Details);
+        detailsTitle.setGravity(Gravity.CENTER_VERTICAL);
+        detailsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        detailsTitle.setTextColor(ContextCompat.getColor(context, R.color.yellow));
+        detailsTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        detailsTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 42, Gravity.START | Gravity.CENTER_VERTICAL));
+        linearLayout.addView(detailsTitle);
 
 //------Genres--------------------------------------------------------------------------------------
 
@@ -73,21 +74,53 @@ public class InfoLayout extends FrameLayout {
         genresTitle.setText(context.getString(R.string.GenresTitle));
         genresTitle.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         genresTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        genresTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 16, 0, 16, 0));
+        genresTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
         linearLayout.addView(genresTitle);
 
         genresText = new TextView(context);
         genresText.setText(R.string.Loading);
         genresText.setTextIsSelectable(true);
         genresText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
-        genresText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 0, 16, 0));
+        genresText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         linearLayout.addView(genresText);
 
-//--------------------------------------------------------------------------------------------------
+//------OriginalName--------------------------------------------------------------------------------
+
+        TextView originalName = new TextView(context);
+        originalName.setText(context.getString(R.string.OriginalName));
+        originalName.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        originalName.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        originalName.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 0, 16, 0, 0));
+        linearLayout.addView(originalName);
+
+        originalNameText = new TextView(context);
+        originalNameText.setText(R.string.Loading);
+        originalNameText.setTextIsSelectable(true);
+        originalNameText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        originalNameText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        linearLayout.addView(originalNameText);
+
+//------OriginalCountry-----------------------------------------------------------------------------
+
+        TextView originalCountry = new TextView(context);
+        originalCountry.setText(context.getString(R.string.OriginalCountry));
+        originalCountry.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        originalCountry.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        originalCountry.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 0, 16, 0, 0));
+        linearLayout.addView(originalCountry);
+
+        originalCountryText = new TextView(context);
+        originalCountryText.setText(R.string.Loading);
+        originalCountryText.setTextIsSelectable(true);
+        originalCountryText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        originalCountryText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+        linearLayout.addView(originalCountryText);
+
+//------Status, ShowType, FirstAirDate, LastAirDate-------------------------------------------------
 
         LinearLayout spansLayout = new LinearLayout(context);
         spansLayout.setOrientation(LinearLayout.HORIZONTAL);
-        spansLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 16));
+        spansLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 16, 0, 0));
         linearLayout.addView(spansLayout);
 
 //------OriginalName, Status, FirstAirDate----------------------------------------------------------
@@ -97,25 +130,11 @@ public class InfoLayout extends FrameLayout {
         layoutSpan1.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START, 1.0F));
         spansLayout.addView(layoutSpan1);
 
-        TextView originalName = new TextView(context);
-        originalName.setText(context.getString(R.string.OriginalName));
-        originalName.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
-        originalName.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        originalName.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
-        layoutSpan1.addView(originalName);
-
-        originalNameText = new TextView(context);
-        originalNameText.setText(R.string.Loading);
-        originalNameText.setTextIsSelectable(true);
-        originalNameText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
-        originalNameText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-        layoutSpan1.addView(originalNameText);
-
         TextView statusTitle = new TextView(context);
         statusTitle.setText(context.getString(R.string.Status));
         statusTitle.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         statusTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        statusTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 0, 16, 0, 0));
+        statusTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
         layoutSpan1.addView(statusTitle);
 
         statusText = new TextView(context);
@@ -146,25 +165,11 @@ public class InfoLayout extends FrameLayout {
         layoutSpan2.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START, 1.0F));
         spansLayout.addView(layoutSpan2);
 
-        TextView originalCountry = new TextView(context);
-        originalCountry.setText(context.getString(R.string.OriginalCountry));
-        originalCountry.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
-        originalCountry.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        originalCountry.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
-        layoutSpan2.addView(originalCountry);
-
-        originalCountryText = new TextView(context);
-        originalCountryText.setText(R.string.Loading);
-        originalCountryText.setTextIsSelectable(true);
-        originalCountryText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
-        originalCountryText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
-        layoutSpan2.addView(originalCountryText);
-
         TextView typeTitle = new TextView(context);
         typeTitle.setText(context.getString(R.string.ShowType));
         typeTitle.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         typeTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        typeTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 0, 16, 0, 0));
+        typeTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
         layoutSpan2.addView(typeTitle);
 
         typeText = new TextView(context);
@@ -194,14 +199,14 @@ public class InfoLayout extends FrameLayout {
         companiesTitle.setText(context.getString(R.string.CompaniesTitle));
         companiesTitle.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         companiesTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        companiesTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 16, 0, 16, 0));
+        companiesTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 0, 16, 0, 0));
         linearLayout.addView(companiesTitle);
 
         companiesText = new TextView(context);
         companiesText.setText(R.string.Loading);
         companiesText.setTextIsSelectable(true);
         companiesText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
-        companiesText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 0, 16, 0));
+        companiesText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         linearLayout.addView(companiesText);
 
 //------Homepage------------------------------------------------------------------------------------
@@ -210,7 +215,7 @@ public class InfoLayout extends FrameLayout {
         homepageTitle.setText(context.getString(R.string.HomepageTitle));
         homepageTitle.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
         homepageTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        homepageTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 0));
+        homepageTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, 0, 16, 0, 0));
         homepageTitle.setOnClickListener(v -> homepageText.performClick());
         linearLayout.addView(homepageTitle);
 
@@ -218,7 +223,7 @@ public class InfoLayout extends FrameLayout {
         homepageText.setText(R.string.Loading);
         homepageText.setTextIsSelectable(true);
         homepageText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
-        homepageText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 0, 16, 16));
+        homepageText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         homepageText.setOnClickListener(v -> Browser.openUrl(context, homepageText.getText().toString()));
         linearLayout.addView(homepageText);
     }
