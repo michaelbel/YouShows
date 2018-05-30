@@ -82,6 +82,8 @@ public class ChangelogView extends FrameLayout {
     }
 
     public void setChanges(List<String> changes) {
+        changesLayout.removeAllViews();
+
         for (String log : changes) {
             ChangeView view = new ChangeView(getContext());
             view.addChange(log);
@@ -108,8 +110,8 @@ public class ChangelogView extends FrameLayout {
 
             changeText = new TextView(context);
             changeText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            changeText.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
             changeText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+            changeText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
             changeText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 12, 0, 0, 0));
             addView(changeText);
         }
