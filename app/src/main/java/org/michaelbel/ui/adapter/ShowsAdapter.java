@@ -9,7 +9,7 @@ import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.annotation.Beta;
 import org.michaelbel.material.widget.Holder;
-import org.michaelbel.ui.adapter.itemTouch.ItemBehavior;
+import org.michaelbel.ui.adapter.TouchHelper.ItemBehavior;
 import org.michaelbel.ui.view.MyShowView;
 
 import java.util.ArrayList;
@@ -51,6 +51,7 @@ public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
         view.setPoster(show.posterPath);
         view.setStatus(show.inProduction);
         view.setDates(show.firstAirDate, show.lastAirDate);
+        view.setExpandIcon(false);
         view.setDivider(position != shows.size() - 1);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         view.changeTheme();
