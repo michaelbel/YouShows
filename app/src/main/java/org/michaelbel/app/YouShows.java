@@ -48,7 +48,7 @@ public class YouShows extends Application {
 
         RealmConfiguration config = new RealmConfiguration.Builder()
             .name(REALM_NAME)
-            .schemaVersion(7)
+            .schemaVersion(8)
             .migration(new MyRealmMigration())
             .build();
         Realm.setDefaultConfiguration(config);

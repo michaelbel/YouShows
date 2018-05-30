@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.michaelbel.app.realm.Realmed;
 import org.michaelbel.app.rest.Response;
+import org.michaelbel.material.annotation.New;
 
 import java.util.List;
 
@@ -149,6 +150,14 @@ public class Show extends RealmObject /*implements Parcelable*/ {
 
     @Realmed
     public float showProgress;
+
+    @New
+    @Realmed
+    public String lastChangesDate;
+
+    @New
+    @Realmed
+    public String startFollowingDate;
 
     //@Realmed
     //public String lastViewedTime;

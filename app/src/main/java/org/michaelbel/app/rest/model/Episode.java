@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.michaelbel.app.realm.Realmed;
 import org.michaelbel.app.rest.Response;
+import org.michaelbel.material.annotation.New;
 
 import java.io.Serializable;
 
@@ -71,4 +72,8 @@ public class Episode extends RealmObject implements Serializable {
 
     @Realmed
     public boolean isWatched;
+
+    @New
+    @Realmed
+    public String watchDate;
 }

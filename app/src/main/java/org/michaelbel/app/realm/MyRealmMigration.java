@@ -64,5 +64,12 @@ public class MyRealmMigration implements RealmMigration {
             schema.addField("voice", boolean.class);
             oldVersion++;
         }
+
+        if (oldVersion == 7) {
+            realmSchema.get("Show").addField("lastChangesDate", String.class);
+            realmSchema.get("Show").addField("startFollowingDate", String.class);
+            realmSchema.get("Episode").addField("watchDate", String.class);
+            oldVersion++;
+        }
     }
 }

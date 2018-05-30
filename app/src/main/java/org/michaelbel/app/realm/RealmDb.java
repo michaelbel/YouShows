@@ -314,6 +314,28 @@ public class RealmDb {
         realmDb.close();
     }
 
+    public static void updateLastChangesDate(int showId, String lastChangesDate) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.lastChangesDate = lastChangesDate;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static void updateStartFollowingDate(int showId, String date) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            if (show != null) {
+                show.startFollowingDate = date;
+            }
+        });
+        realmDb.close();
+    }
+
     public static void updateStatus(int showId, boolean status) {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
@@ -533,6 +555,17 @@ public class RealmDb {
             Episode episode = realm.where(Episode.class).equalTo("showId", showId).equalTo("seasonId", seasonId).equalTo("episodeId", episodeId).findFirst();
             if (episode != null) {
                 episode.isWatched = watching;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static void setEpisodeWatchDate(int showId, int seasonId, int episodeId, String date) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Episode episode = realm.where(Episode.class).equalTo("showId", showId).equalTo("seasonId", seasonId).equalTo("episodeId", episodeId).findFirst();
+            if (episode != null) {
+                episode.watchDate = date;
             }
         });
         realmDb.close();
