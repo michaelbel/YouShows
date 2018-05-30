@@ -19,13 +19,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.YouShows;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.ApiFactory;
@@ -106,16 +105,13 @@ public class ShowActivity extends AppCompatActivity {
 
         collapsingView = findViewById(R.id.backdrop_image);
         collapsingView.setImage(extraBackdrop);
-        collapsingView.labelView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                SharedPreferences prefs = YouShows.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-                boolean label = prefs.getBoolean("collapsing_label", true);
-                prefs.edit().putBoolean("collapsing_label", !label).apply();
-                setCollapsingLabel();
-                AndroidExtensions.startVibrate(15);
-                return true;
-            }
+        collapsingView.labelView.setOnLongClickListener(v -> {
+            SharedPreferences prefs = YouShows.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+            boolean label = prefs.getBoolean("collapsing_label", true);
+            prefs.edit().putBoolean("collapsing_label", !label).apply();
+            setCollapsingLabel();
+            AndroidExtensions.startVibrate(15);
+            return true;
         });
         setCollapsingLabel();
 
@@ -303,6 +299,9 @@ public class ShowActivity extends AppCompatActivity {
 
     private void followShow(boolean status) {
         RealmDb.followShow(extraId, status);
+        if (status) {
+            RealmDb.updateStartFollowingDate(extraId, AndroidExtensions.getCurrentDateAndTime());
+        }
     }
 
     public void startSeason(Season season) {
