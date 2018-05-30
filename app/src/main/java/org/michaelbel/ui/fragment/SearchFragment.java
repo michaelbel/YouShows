@@ -1,5 +1,7 @@
 package org.michaelbel.ui.fragment;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -122,7 +124,7 @@ public class SearchFragment extends Fragment {
     }
 
     public void search(String query) {
-        searchQuery = query;
+        searchQuery = query.trim();
         searchStart();
 
         if (AndroidExtensions.typeNotConnected()) {
@@ -146,9 +148,6 @@ public class SearchFragment extends Fragment {
                         }
                         showResults(results, true);
                     }
-
-                    SearchItem item = new SearchItem(searchQuery, AndroidExtensions.getCurrentDateAndTimeWithMilliseconds());
-                    RealmDb.insertSearchItem(item);
                 } else {
                     showError(EmptyViewMode.MODE_NO_RESULTS);
                 }
@@ -159,6 +158,18 @@ public class SearchFragment extends Fragment {
                 showError(EmptyViewMode.MODE_NO_CONNECTION);
             }
         });
+    }
+
+    public void addToSearchHistory(String query, boolean voice) {
+        SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean enable = prefs.getBoolean("search_history", true);
+        if (enable) {
+            SearchItem item = new SearchItem();
+            item.query = query;
+            item.date = AndroidExtensions.getCurrentDateAndTime();
+            item.voice = voice;
+            RealmDb.insertSearchItem(item);
+        }
     }
 
     private void loadNext() {
