@@ -1,5 +1,6 @@
 package org.michaelbel.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,8 @@ import org.michaelbel.ui.fragment.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    public SharedPreferences prefs;
+
     public Toolbar toolbar;
     public TextView toolbarTitle;
 
@@ -28,6 +31,8 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        prefs = getSharedPreferences("mainconfig", MODE_PRIVATE);
 
         getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
 
