@@ -58,5 +58,11 @@ public class MyRealmMigration implements RealmMigration {
             schema.addField("date", String.class);
             oldVersion++;
         }
+
+        if (oldVersion == 6) {
+            RealmObjectSchema schema = realmSchema.get("SearchItem");
+            schema.addField("voice", boolean.class);
+            oldVersion++;
+        }
     }
 }
