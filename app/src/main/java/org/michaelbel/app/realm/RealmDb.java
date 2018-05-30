@@ -14,6 +14,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Date: 27 MAR 2018
@@ -621,14 +622,10 @@ public class RealmDb {
     public static void insertSearchItem(SearchItem searchItem) {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
-            SearchItem item = realm.where(SearchItem.class).findFirst();
-            if (item == null) {
-                item = realm.createObject(SearchItem.class);
-            }
-
+            SearchItem item = realm.createObject(SearchItem.class);
             item.query = searchItem.query;
             item.date = searchItem.date;
-
+            item.voice = searchItem.voice;
             realm.insertOrUpdate(item);
         });
         realmDb.close();
@@ -643,5 +640,26 @@ public class RealmDb {
             }
         });
         realmDb.close();
+    }
+
+    public static void clearSearchHistory() {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            RealmResults<SearchItem> results = realm.where(SearchItem.class).findAll();
+            results.deleteAllFromRealm();
+        });
+        realmDb.close();
+    }
+
+    public static boolean isSearchItemsExist() {
+        Realm realmDb = Realm.getDefaultInstance();
+        RealmResults<SearchItem> searchItems = realmDb.where(SearchItem.class).findAll();
+        return searchItems.size() > 0;
+    }
+
+    public static RealmResults<SearchItem> getSearchItems() {
+        Realm realmDb = Realm.getDefaultInstance();
+        RealmResults<SearchItem> results = realmDb.where(SearchItem.class).sort("date", Sort.DESCENDING).findAll();
+        return results;
     }
 }
