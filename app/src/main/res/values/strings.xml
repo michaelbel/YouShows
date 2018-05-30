@@ -102,7 +102,11 @@
     <string name="YouDoNotFollowShows">You don\'t follow any shows</string>
     <string name="Done">Done</string>
     <string name="SearchHistory">Search History</string>
+    <string name="NoSearchHistory">No Search History</string>
     <string name="SearchHistoryEmpty">Your search history is empty</string>
+    <string name="EnableHistory">Enable History</string>
+    <string name="ClearHistory">Clear History</string>
+    <string name="ClearHistoryMessage">Are you sure you want to clear search history?</string>
     <string name="CurrentDateAndTime">%1$s at %2$s</string>
     <string-array name="Tabs">
         <item>My Shows</item>
