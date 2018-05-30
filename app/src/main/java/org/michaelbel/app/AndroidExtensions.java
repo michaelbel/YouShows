@@ -30,7 +30,6 @@ import org.michaelbel.shows.R;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -335,29 +334,10 @@ public class AndroidExtensions extends Extensions {
     }
 
     public static String getCurrentDateAndTime() {
-        String datePattern = "dd.MM.yy";
-        String timePattern = "HH:mm";
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 0);
-
-        String formatDate = formatDate(datePattern, calendar.getTime());
-        String formatTime = formatDate(timePattern, Calendar.getInstance().getTime());
-
-        return YouShows.AppContext.getString(R.string.CurrentDateAndTime, formatDate, formatTime);
-    }
-
-    public static String getCurrentDateAndTimeWithMilliseconds() {
-        String datePattern = "dd.MM.yy";
-        String timePattern = "HH:mm:ss";
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 0);
-
-        String formatDate = formatDate(datePattern, calendar.getTime());
-        String formatTime = formatDate(timePattern, Calendar.getInstance().getTime());
-
-        return YouShows.AppContext.getString(R.string.CurrentDateAndTime, formatDate, formatTime);
+        String pattern = "dd.MM.yy-HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String currentDateAndTime = simpleDateFormat.format(new Date());
+        return currentDateAndTime;
     }
 
     public static float convertPixelsToDp(float px, Context context) {
