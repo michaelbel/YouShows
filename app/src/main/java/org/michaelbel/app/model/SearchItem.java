@@ -17,10 +17,5 @@ public class SearchItem extends RealmObject {
 
     public String date;
 
-    public SearchItem() {}
-
-    public SearchItem(String query, String date) {
-        this.query = query;
-        this.date = date;
-    }
+    public boolean voice;
 }
