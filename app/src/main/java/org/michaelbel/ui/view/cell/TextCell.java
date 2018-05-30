@@ -2,6 +2,7 @@ package org.michaelbel.ui.view.cell;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -11,6 +12,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
@@ -23,10 +25,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
-import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.ScreenUtils;
+import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
 /**
@@ -209,6 +211,34 @@ public class TextCell extends FrameLayout {
             params.rightMargin = ScreenUtils.dp(56);
         }
         setLayoutParams(params);
+    }
+
+    public void changeSwitchTheme() {
+        int thumbOn = ContextCompat.getColor(getContext(), Theme.Color.thumbOn());
+        int thumbOff = ContextCompat.getColor(getContext(), Theme.Color.thumbOff());
+
+        int trackOn = ContextCompat.getColor(getContext(), Theme.Color.trackOn());
+        int trackOff = ContextCompat.getColor(getContext(), Theme.Color.trackOff());
+
+        DrawableCompat.setTintList(switchCompat.getThumbDrawable(), new ColorStateList(
+            new int[][] {
+                new int[]{android.R.attr.state_checked},
+                new int[]{}
+            },
+            new int[] {
+                thumbOn,
+                thumbOff
+            }));
+
+        DrawableCompat.setTintList(switchCompat.getTrackDrawable(), new ColorStateList(
+            new int[][] {
+                new int[]{android.R.attr.state_checked},
+                new int[]{}
+            },
+            new int[] {
+                trackOn,
+                trackOff
+            }));
     }
 
     public void setTextColor(@ColorRes int color) {
