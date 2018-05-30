@@ -68,7 +68,7 @@ public class EmptyView extends LinearLayout {
             emptyText.setText(R.string.NoEpisodes);
         } else if (mode == EmptyViewMode.MODE_SEARCH_HISTORY) {
             emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_search_results, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
-            emptyText.setText(R.string.SearchHistoryEmpty);
+            emptyText.setText(R.string.NoSearchHistory);
         }
 
         return this;
