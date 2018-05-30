@@ -230,7 +230,7 @@ public class MyShowsFragment extends Fragment {
     public void refreshLayout() {
         SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         int sortFilter = prefs.getInt("myshows_sort_type", SortView.SORT_BY_DEFAULT);
-        Sort sortOrder = prefs.getBoolean("myshows_sort_order", SortView.ORDER_ASCENDING) ? Sort.ASCENDING : Sort.DESCENDING;
+        Sort sort = prefs.getBoolean("myshows_sort_order", SortView.ORDER_ASCENDING) ? Sort.ASCENDING : Sort.DESCENDING;
 
         adapter.getShows().clear();
         adapter.notifyDataSetChanged();
@@ -241,15 +241,17 @@ public class MyShowsFragment extends Fragment {
         if (sortFilter == SortView.SORT_BY_DEFAULT) {
             results = realm.where(Show.class).findAll();
         } else if (sortFilter == SortView.SORT_BY_NAME) {
-            results = realm.where(Show.class).sort("name", sortOrder).findAll();
+            results = realm.where(Show.class).sort("name", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_FIRST_AIR_DATE) {
-            results = realm.where(Show.class).sort("firstAirDate", sortOrder).findAll();
+            results = realm.where(Show.class).sort("firstAirDate", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_LAST_AIR_DATE) {
-            results = realm.where(Show.class).sort("lastAirDate", sortOrder).findAll();
+            results = realm.where(Show.class).sort("lastAirDate", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_STATUS) {
-            results = realm.where(Show.class).sort("inProduction", sortOrder).findAll();
+            results = realm.where(Show.class).sort("inProduction", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_PROGRESS) {
-            results = realm.where(Show.class).sort("progress", sortOrder).findAll();
+            results = realm.where(Show.class).sort("progress", sort).findAll();
+        } else if (sortFilter == SortView.SORT_BY_LAST_CHANGES) {
+            results = realm.where(Show.class).sort("lastChangesDate", sort).findAll();
         }
 
         if (results != null) {
@@ -262,7 +264,7 @@ public class MyShowsFragment extends Fragment {
                 }
 
                 adapter.addShows(list);
-                if (sortFilter == SortView.SORT_BY_DEFAULT && sortOrder == Sort.DESCENDING) {
+                if (sortFilter == SortView.SORT_BY_DEFAULT && sort == Sort.DESCENDING) {
                     Collections.reverse(adapter.getShows());
                 }
             } else {
