@@ -1,4 +1,4 @@
-package org.michaelbel.ui.adapter.itemTouch;
+package org.michaelbel.ui.adapter.TouchHelper;
 
 /**
  * Date: 27 APR 2018
