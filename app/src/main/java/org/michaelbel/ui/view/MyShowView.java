@@ -23,10 +23,10 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.view.circleprogress.CircleProgressView;
 import org.michaelbel.ui.view.circleprogress.UnitPosition;
@@ -55,7 +55,9 @@ public class MyShowView extends FrameLayout {
     private CircleProgressView circleProgressView;
     private CardView cardView;
     private TextView statusText;
+    public ImageView expandIcon;
     private View dividerView;
+    private FrameLayout expandIconLayout;
 
     private Paint paint;
     private boolean divider;
@@ -148,6 +150,12 @@ public class MyShowView extends FrameLayout {
         circleProgressView.setRimWidth(Extensions.dp(context, 5));
         circleProgressView.setUnit("%");
         circleProgressView.setUnitPosition(UnitPosition.RIGHT_BOTTOM);
+
+        expandIconLayout = view.findViewById(R.id.expand_icon_layout);
+
+        expandIcon = view.findViewById(R.id.expand_icon);
+        expandIcon.setFocusable(false);
+        expandIcon.setScaleType(ImageView.ScaleType.CENTER);
     }
 
     public void setPoster(@NonNull String posterPath) {
@@ -195,18 +203,18 @@ public class MyShowView extends FrameLayout {
             spannable = new SpannableStringBuilder(text);
             spannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.green)), 0, pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            progressWatchedText.setText(spannable);
+            progressWatchedText.setQuery(spannable);
         } else if (choice == TYPE_EPISODES) {
             progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
 
             if (count == 0) {
-                progressWatchedText.setText(getResources().getString(R.string.NoEpisodesWatched));
+                progressWatchedText.setQuery(getResources().getString(R.string.NoEpisodesWatched));
             } else {
-                progressWatchedText.setText(getResources().getQuantityString(R.plurals.Episodes, count, count2));
+                progressWatchedText.setQuery(getResources().getQuantityString(R.plurals.Episodes, count, count2));
             }
         } else if (choice == TYPE_SHOW) {
             progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
-            progressWatchedText.setText(getResources().getString(R.string.ShowIsOverWatched));
+            progressWatchedText.setQuery(getResources().getString(R.string.ShowIsOverWatched));
         }
     }*/
 
@@ -224,6 +232,10 @@ public class MyShowView extends FrameLayout {
     public void setDivider(boolean divider) {
         this.divider = divider;
         setWillNotDraw(!divider);
+    }
+
+    public void setExpandIcon(boolean expand) {
+        expandIconLayout.setVisibility(expand ? VISIBLE : GONE);
     }
 
     public void changeTheme() {
@@ -271,4 +283,15 @@ public class MyShowView extends FrameLayout {
 
         return super.onTouchEvent(event);
     }
+
+    /*@Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (cardView.getBackground() != null && expandIcon != null) {
+            expandIcon.getHitRect(rect);
+            if (rect.contains((int) event.getX(), (int) event.getY())) {
+                return true;
+            }
+        }
+        return super.onTouchEvent(event);
+    }*/
 }
