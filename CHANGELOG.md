@@ -1,5 +1,12 @@
 ## List of changes in application versions
 
+### Version 1.0.9 (Build 17) 30 May 2018
+* Search history
+* Sorting shows by last changes
+
+### Version 1.0.8 (Build 16) 26 May 2018
+* Bugs fixed
+
 ### Version 1.0.7 (Build 14) 18 May 2018
 * Data Storage: delete progress for your added shows and unfollow from all your shows
 * Tap and hold on show in your lists do display additional options
