@@ -223,7 +223,6 @@ public class FollowingShowsFragment extends Fragment {
         adapter.getShows().clear();
         adapter.notifyDataSetChanged();
 
-        // todo move to RealmDb.class
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Show> results = null;
 
