@@ -105,7 +105,11 @@ public class SearchActivity extends AppCompatActivity {
         });
         searchEditText.setOnEditorActionListener((view, actionId, event) -> {
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_SEARCH)) {
-                searchFragment.search(view.getText().toString().trim());
+                String text = view.getText().toString().trim();
+                if (!TextUtils.isEmpty(text)) {
+                    searchFragment.search(text);
+                    searchFragment.addToSearchHistory(text, false);
+                }
                 hideKeyboard(searchEditText);
                 return true;
             }
@@ -162,6 +166,7 @@ public class SearchActivity extends AppCompatActivity {
                             searchEditText.setSelection(searchEditText.getText().length());
                             changeActionIcon();
                             searchFragment.search(textResults);
+                            searchFragment.addToSearchHistory(textResults, true);
                         }
                     }
                 }
