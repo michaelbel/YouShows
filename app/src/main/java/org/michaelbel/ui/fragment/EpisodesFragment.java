@@ -119,11 +119,11 @@ public class EpisodesFragment extends Fragment {
                             showError(EmptyViewMode.MODE_NO_EPISODES);
                         }
 
-                        Episode ss = new Episode();
-                        ss.airDate = AndroidExtensions.formatDate(season.airDate);
-                        ss.overview = season.overview;
-                        ss.seasonId = s.episodeCount;
-                        adapter.addOverview(ss);
+                        Episode episode = new Episode();
+                        episode.airDate = AndroidExtensions.formatDate(season.airDate);
+                        episode.overview = season.overview;
+                        episode.seasonId = s.episodeCount;
+                        adapter.addOverview(episode);
 
                         adapter.addEpisodes(season.episodes);
                         progressBar.setVisibility(View.GONE);
@@ -158,6 +158,7 @@ public class EpisodesFragment extends Fragment {
             ((EpisodeView) checkedView).setChecked(!watched, true);
         } else {
             RealmDb.insertOrUpdateEpisode(activity.showId, activity.season.seasonId, episode);
+            RealmDb.setEpisodeWatchDate(activity.showId, activity.season.seasonId, episode.episodeId, AndroidExtensions.getCurrentDateAndTime());
             RealmDb.markEpisodeAsWatched(activity.showId, activity.season.seasonId, episode.episodeId, true);
             ((EpisodeView) checkedView).setChecked(true, true);
         }
@@ -176,6 +177,7 @@ public class EpisodesFragment extends Fragment {
                     RealmDb.markEpisodeAsWatched(activity.showId, activity.season.seasonId, episode.episodeId, true);
                 } else {
                     RealmDb.insertOrUpdateEpisode(activity.showId, activity.season.seasonId, episode);
+                    RealmDb.setEpisodeWatchDate(activity.showId, activity.season.seasonId, episode.episodeId, AndroidExtensions.getCurrentDateAndTime());
                     RealmDb.markEpisodeAsWatched(activity.showId, activity.season.seasonId, episode.episodeId, true);
                 }
             }
@@ -200,6 +202,7 @@ public class EpisodesFragment extends Fragment {
         float percent = (watchedEpisodes * 100F) / allEpisodes;
 
         RealmDb.updateProgress(activity.showId, percent);
+        RealmDb.updateLastChangesDate(activity.showId, AndroidExtensions.getCurrentDateAndTime());
         ((YouShows) activity.getApplication()).bus().send(new Events.UpdateProgress());
         ((YouShows) activity.getApplication()).bus().send(new Events.UpdateSeasonsView());
     }
