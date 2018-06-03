@@ -71,5 +71,17 @@ public class MyRealmMigration implements RealmMigration {
             realmSchema.get("Episode").addField("watchDate", String.class);
             oldVersion++;
         }
+
+        if (oldVersion == 8) {
+            RealmObjectSchema schema = realmSchema.get("Show");
+            schema.addRealmListField("seasonsList", realmSchema.get("Season"));
+            oldVersion++;
+        }
+
+        if (oldVersion == 9) {
+            RealmObjectSchema schema = realmSchema.get("Season");
+            schema.addRealmListField("episodesList", realmSchema.get("Episode"));
+            oldVersion++;
+        }
     }
 }
