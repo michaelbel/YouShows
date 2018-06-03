@@ -8,6 +8,7 @@ import org.michaelbel.app.rest.Response;
 import java.io.Serializable;
 import java.util.List;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.RealmClass;
@@ -66,4 +67,7 @@ public class Season extends RealmObject implements Serializable {
 
     @Realmed
     public String lastWatchDate;
+
+    @Realmed
+    public RealmList<Episode> episodesList;
 }

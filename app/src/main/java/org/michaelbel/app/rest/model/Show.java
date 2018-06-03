@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.michaelbel.app.realm.Realmed;
 import org.michaelbel.app.rest.Response;
-import org.michaelbel.material.annotation.New;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ import io.realm.annotations.RealmClass;
 
 @SuppressWarnings("all")
 @RealmClass
-public class Show extends RealmObject /*implements Parcelable*/ {
+public class Show extends RealmObject {
 
     @Response
     @SerializedName("id")
@@ -151,16 +150,14 @@ public class Show extends RealmObject /*implements Parcelable*/ {
     @Realmed
     public float showProgress;
 
-    @New
     @Realmed
     public String lastChangesDate;
 
-    @New
     @Realmed
     public String startFollowingDate;
 
-    //@Realmed
-    //public String lastViewedTime;
+    @Realmed
+    public RealmList<Season> seasonsList;
 
     /*@New
     @Realmed
@@ -173,53 +170,4 @@ public class Show extends RealmObject /*implements Parcelable*/ {
     @New
     @Realmed
     public String companiesString;*/
-
-    /*public Show() {}
-
-    protected Show(Parcel in) {
-        showId = in.readInt();
-        name = in.readString();
-        posterPath = in.readString();
-        backdropPath = in.readString();
-        popularity = in.readFloat();
-        voteAverage = in.readFloat();
-        overview = in.readString();
-        firstAirDate = in.readString();
-        originalLanguage = in.readString();
-        voteCount = in.readInt();
-        originalName = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(showId);
-        dest.writeString(name);
-        dest.writeString(posterPath);
-        dest.writeString(backdropPath);
-        dest.writeFloat(popularity);
-        dest.writeFloat(voteAverage);
-        dest.writeString(overview);
-        dest.writeString(firstAirDate);
-        dest.writeString(originalLanguage);
-        dest.writeInt(voteCount);
-        dest.writeString(originalName);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Show> CREATOR = new Parcelable.Creator<Show>() {
-        @Override
-        public Show createFromParcel(Parcel in) {
-            return new Show(in);
-        }
-
-        @Override
-        public Show[] newArray(int size) {
-            return new Show[size];
-        }
-    };*/
 }
