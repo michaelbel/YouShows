@@ -495,6 +495,33 @@ public class RealmDb {
         return show != null ? (show.companiesString.size() != 0 ? show.companiesString : null) : null;
     }
 
+    public static void updateSeasonsList(int showId, List<Season> seasons) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+            show.seasonsList.clear();
+
+            for (Season season : seasons) {
+                show.seasonsList.add(season);
+            }
+
+            realm.insertOrUpdate(show);
+        });
+        realmDb.close();
+    }
+
+    public static RealmList<Season> getShowSeasons(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.seasonsList != null ? show.seasonsList : null : null;
+    }
+
+    public static boolean isShowSeasonsEmpty(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
+        return show != null ? show.seasonsList != null ? show.seasonsList.isEmpty() : true : true;
+    }
+
 //--Season------------------------------------------------------------------------------------------
 
     public static int getSeasonsInShow(int showId) {
@@ -537,8 +564,53 @@ public class RealmDb {
         realmDb.close();
     }
 
-    public static boolean isSeasonWatched(int showId, Season season) {
-        return season.episodeCount == getWatchedEpisodesInSeason(showId, season.seasonId);
+    public static boolean isSeasonWatched(int showId, int seasonId, int episodeCount) {
+        return episodeCount == getWatchedEpisodesInSeason(showId, seasonId);
+    }
+
+    public static String getSeasonOverview(int showId, int seasonId) {
+        Realm realm = Realm.getDefaultInstance();
+        Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
+        return season != null ? season.overview : null;
+    }
+
+    public static String getSeasonAirDate(int showId, int seasonId) {
+        Realm realm = Realm.getDefaultInstance();
+        Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
+        return season != null ? season.airDate : null;
+    }
+
+    public static int getSeasonEpisodesCount(int showId, int seasonId) {
+        Realm realm = Realm.getDefaultInstance();
+        Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
+        return season != null ? season.episodeCount : 0;
+    }
+
+    public static void updateEpisodesList(int showId, int seasonId, List<Episode> episodes) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
+            season.episodesList.clear();
+
+            for (Episode episode : episodes) {
+                season.episodesList.add(episode);
+            }
+
+            realm.insertOrUpdate(season);
+        });
+        realmDb.close();
+    }
+
+    public static RealmList<Episode> getSeasonEpisodes(int showId, int seasonId) {
+        Realm realm = Realm.getDefaultInstance();
+        Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
+        return season != null ? season.episodesList != null ? season.episodesList : null : null;
+    }
+
+    public static boolean isSeasonEpisodesEmpty(int showId, int seasonId) {
+        Realm realm = Realm.getDefaultInstance();
+        Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
+        return season != null ? season.episodesList != null ? season.episodesList.isEmpty() : true : true;
     }
 
 //--Episode-----------------------------------------------------------------------------------------
@@ -675,6 +747,12 @@ public class RealmDb {
         realmDb.close();
     }
 
+    public static boolean isSearchItemsExist() {
+        Realm realmDb = Realm.getDefaultInstance();
+        RealmResults<SearchItem> searchItems = realmDb.where(SearchItem.class).findAll();
+        return searchItems.size() > 0;
+    }
+
     public static void clearSearchHistory() {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
@@ -682,12 +760,6 @@ public class RealmDb {
             results.deleteAllFromRealm();
         });
         realmDb.close();
-    }
-
-    public static boolean isSearchItemsExist() {
-        Realm realmDb = Realm.getDefaultInstance();
-        RealmResults<SearchItem> searchItems = realmDb.where(SearchItem.class).findAll();
-        return searchItems.size() > 0;
     }
 
     public static RealmResults<SearchItem> getSearchItems() {
