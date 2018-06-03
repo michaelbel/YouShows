@@ -30,8 +30,8 @@ import java.util.List;
 @SuppressLint({"ClickableViewAccessibility", "InflateParams"})
 public class ChangelogView extends FrameLayout {
 
-    private TextView versionText;
     private TextView dateText;
+    private TextView versionText;
     private LinearLayout changesLayout;
 
     public ChangelogView(Context context) {
@@ -48,7 +48,6 @@ public class ChangelogView extends FrameLayout {
         versionText.setMaxLines(1);
         versionText.setSingleLine();
         versionText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        versionText.setTextColor(ContextCompat.getColor(context, R.color.yellow));
         versionText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         versionText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         layout.addView(versionText);
@@ -84,15 +83,15 @@ public class ChangelogView extends FrameLayout {
     public void setChanges(List<String> changes) {
         changesLayout.removeAllViews();
 
-        for (String log : changes) {
+        for (String change : changes) {
             ChangeView view = new ChangeView(getContext());
-            view.addChange(log);
+            view.addChange(change);
             view.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
             changesLayout.addView(view);
         }
     }
 
-    public void setVersionNameColor(int color) {
+    public void setVersionColor(int color) {
         versionText.setTextColor(color);
     }
 
@@ -104,7 +103,7 @@ public class ChangelogView extends FrameLayout {
             super(context);
 
             View view = new View(context);
-            view.setBackgroundResource(R.drawable.dot_divider);
+            view.setBackground(Theme.getIcon(R.drawable.dot_divider, ContextCompat.getColor(context, Theme.Color.secondaryText())));
             view.setLayoutParams(LayoutHelper.makeFrame(5, 5, Gravity.START | Gravity.TOP, 0, 8, 0, 0));
             addView(view);
 
