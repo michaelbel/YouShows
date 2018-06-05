@@ -220,20 +220,12 @@ public class AndroidExtensions extends Extensions {
     }
 
     public static String formatCountries(List<String> countries) {
-        if (countries == null) {
+        if (countries == null || countries.isEmpty()) {
             return "";
         }
 
         StringBuilder text = new StringBuilder();
         for (String country : countries) {
-            if (country.equals("United States of America")) {
-                country = "USA";
-            } else if (country.equals("United Kingdom")) {
-                country = "UK";
-            } else if (country.equals("United Arab Emirates")) {
-                country = "UAE";
-            }
-
             text.append(country).append(", ");
         }
 
@@ -306,7 +298,7 @@ public class AndroidExtensions extends Extensions {
         return prefs.getInt("language", 0);
     }
 
-    public static void startVibrate(int milliseconds) {
+    public static void vibrate(int milliseconds) {
         Vibrator vibrator = (Vibrator) YouShows.AppContext.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator != null) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
