@@ -1,5 +1,12 @@
 ## List of changes in application versions
 
+### Version 1.1.1 (Build 19) 5 Jun 2018
+* Episode preview: tap and hold on episode to show more details
+
+### Version 1.1.0 (Build 18) 1 Jun 2018
+* Offline work: app will cache your shows to save access when internet is off
+* Bugs fixed
+
 ### Version 1.0.9 (Build 17) 30 May 2018
 * Search history
 * Sorting shows by last changes
