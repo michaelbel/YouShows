@@ -188,7 +188,9 @@ public class ChangelogsFragment extends Fragment {
             view.setChanges(log.changes);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             if (position == 0) {
-                view.setVersionNameColor(ContextCompat.getColor(activity, R.color.green));
+                view.setVersionColor(ContextCompat.getColor(activity, R.color.green));
+            } else {
+                view.setVersionColor(ContextCompat.getColor(activity, R.color.yellow));
             }
         }
 
