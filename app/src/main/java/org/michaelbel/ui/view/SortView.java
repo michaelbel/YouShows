@@ -66,7 +66,7 @@ public class SortView extends FrameLayout {
         setBackgroundColor(ContextCompat.getColor(context, Theme.Color.primary()));
 
         dividerView = new View(context);
-        dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+        dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.Color.sortDivider()));
         dividerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, 1, Gravity.TOP));
         addView(dividerView);
 
@@ -89,7 +89,7 @@ public class SortView extends FrameLayout {
         sortTypeTextView.setSingleLine();
         sortTypeTextView.setEllipsize(TextUtils.TruncateAt.END);
         sortTypeTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        sortTypeTextView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        sortTypeTextView.setTextColor(ContextCompat.getColor(context, Theme.Color.tabPrimaryText()));
         sortTypeTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         sortTypeTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         sortLinearLayout.addView(sortTypeTextView);
@@ -120,7 +120,7 @@ public class SortView extends FrameLayout {
         orderTextView.setText(R.string.SortOrder);
         orderTextView.setEllipsize(TextUtils.TruncateAt.END);
         orderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        orderTextView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        orderTextView.setTextColor(ContextCompat.getColor(context, Theme.Color.tabPrimaryText()));
         orderTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         orderTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         orderLinearLayout.addView(orderTextView);

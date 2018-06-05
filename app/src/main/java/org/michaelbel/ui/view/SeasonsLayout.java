@@ -21,7 +21,6 @@ import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Season;
-import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
@@ -39,7 +38,8 @@ import java.util.List;
 @SuppressLint("ClickableViewAccessibility")
 public class SeasonsLayout extends FrameLayout {
 
-    private Show show;
+    private int showId;
+
     private SeasonsAdapter adapter;
     private List<Season> seasons = new ArrayList<>();
 
@@ -69,8 +69,8 @@ public class SeasonsLayout extends FrameLayout {
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
             boolean seasonCountVisible = prefs.getBoolean("seasons_count_visible", false);
             prefs.edit().putBoolean("seasons_count_visible", !seasonCountVisible).apply();
-            setShowTitle(show);
-            AndroidExtensions.startVibrate(20);
+            setSeasonsTitleCount();
+            AndroidExtensions.vibrate(20);
             return true;
         });
         seasonsTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 42, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
@@ -92,37 +92,24 @@ public class SeasonsLayout extends FrameLayout {
         addView(progressBar);
     }
 
-    public void setShow(Show show) {
-        this.show = show;
-    }
-
-    public void setShowTitle(Show show) {
+    public void setSeasonsTitleCount() {
         SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
         boolean seasonCountVisible = prefs.getBoolean("seasons_count_visible", false);
-        seasonsTitle.setText(seasonCountVisible ? getContext().getString(R.string.SeasonsCount, show.numberSeasons) : getContext().getString(R.string.Seasons));
+        seasonsTitle.setText(seasonCountVisible ? getContext().getString(R.string.SeasonsCount, RealmDb.getSeasonsInShow(showId)) : getContext().getString(R.string.Seasons));
     }
 
-    public void setSeasons(List<Season> items) {
-        for (Season season : items) {
-            if (season.seasonNumber != 0) {
-                seasons.add(season);
-            }
-        }
+    public void setSeasons(int showId, List<Season> seasons) {
+        this.showId = showId;
 
+        this.seasons.addAll(seasons);
         adapter.notifyDataSetChanged();
         recyclerView.setVisibility(VISIBLE);
         removeView(progressBar);
     }
 
-    public void updateAdapter(List<Season> items) {
-        seasons.clear();
-
-        for (Season season : items) {
-            if (season.seasonNumber != 0) {
-                seasons.add(season);
-            }
-        }
-
+    public void updateAdapter(List<Season> seasons) {
+        this.seasons.clear();
+        this.seasons.addAll(seasons);
         adapter.notifyDataSetChanged();
     }
 
@@ -143,7 +130,7 @@ public class SeasonsLayout extends FrameLayout {
             Season season = seasons.get(position);
 
             int allEpisodes = season.episodeCount;
-            int watchedEpisodes = RealmDb.getWatchedEpisodesInSeason(show.showId, season.seasonId);
+            int watchedEpisodes = RealmDb.getWatchedEpisodesInSeason(showId, season.seasonId);
 
             SeasonView view = (SeasonView) holder.itemView;
             view.setName(season.name);
