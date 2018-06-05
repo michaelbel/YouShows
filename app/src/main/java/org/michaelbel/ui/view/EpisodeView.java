@@ -46,7 +46,7 @@ public class EpisodeView extends FrameLayout {
     public EpisodeView(Context context) {
         super(context);
 
-        setElevation(ScreenUtils.dp(1));
+        setElevation(Extensions.dp(context, 1));
         setForeground(Extensions.selectableItemBackgroundDrawable(context));
         setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
 
@@ -81,7 +81,7 @@ public class EpisodeView extends FrameLayout {
         layout.addView(valueText);
 
         View dotDivider = new View(context);
-        dotDivider.setBackgroundResource(R.drawable.dot_divider);
+        dotDivider.setBackground(Theme.getIcon(R.drawable.dot_divider, ContextCompat.getColor(context, Theme.Color.secondaryText())));
         dotDivider.setLayoutParams(LayoutHelper.makeLinear(4, 4, Gravity.CENTER_VERTICAL, 6, 1, 6, 0));
         layout.addView(dotDivider);
 
