@@ -28,6 +28,7 @@ import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.ScreenUtils;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
 /**
@@ -80,7 +81,7 @@ public class BackdropView extends FrameLayout {
         labelView.setUseCompatPadding(false);
         labelView.setPreventCornerOverlap(false);
         labelView.setCardBackgroundColor(0x80000000);
-        labelView.setRadius(ScreenUtils.dp(5));
+        labelView.setRadius(Extensions.dp(context, 5));
         labelView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 4, 0, 16 + 16 + 56, 4));
         addView(labelView);
 
