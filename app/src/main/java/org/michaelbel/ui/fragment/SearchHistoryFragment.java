@@ -160,13 +160,13 @@ public class SearchHistoryFragment extends Fragment {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int type) {
-            View cell = null;
+            View cell;
 
             if (type == ROW_ENABLE_HISTORY || type == ROW_CLEAR_HISTORY) {
                 cell = new TextCell(activity);
             } else if (type == ROW_EMPTY_CELL) {
                 cell = new EmptyCell(activity);
-            } else if (type == ROW_SEARCH_ITEM) {
+            } else {
                 cell = new SearchItemCell(activity);
             }
 
@@ -195,7 +195,7 @@ public class SearchHistoryFragment extends Fragment {
                 EmptyCell cell = (EmptyCell) holder.itemView;
                 cell.setMode(EmptyCell.MODE_DEFAULT);
                 cell.setHeight(Extensions.dp(activity,12));
-            } else if (getItemViewType(position) == ROW_SEARCH_ITEM) {
+            } else {
                 SearchItemCell cell = (SearchItemCell) holder.itemView;
                 cell.changeLayoutParams();
                 cell.setQuery(item.query);
