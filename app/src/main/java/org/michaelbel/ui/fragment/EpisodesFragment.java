@@ -1,5 +1,10 @@
 package org.michaelbel.ui.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -30,10 +36,10 @@ import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SeasonActivity;
-import org.michaelbel.ui.adapter.holder.LoadingHolder;
 import org.michaelbel.ui.view.EmptyView;
 import org.michaelbel.ui.view.EmptyViewMode;
 import org.michaelbel.ui.view.EpisodeOverview;
+import org.michaelbel.ui.view.EpisodePeekView;
 import org.michaelbel.ui.view.EpisodeView;
 
 import java.util.ArrayList;
@@ -52,11 +58,19 @@ import retrofit2.Response;
 
 public class EpisodesFragment extends Fragment {
 
+    private String seasonAirDate;
+    private String seasonOverview;
+
     private SeasonAdapter adapter;
     private SeasonActivity activity;
 
     private EmptyView emptyView;
     private ProgressBar progressBar;
+    private FrameLayout episodeLayout;
+    private RecyclerListView recyclerView;
+    private EpisodePeekView episodePeekView;
+
+    private boolean peekViewVisible = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,9 +78,17 @@ public class EpisodesFragment extends Fragment {
         activity = (SeasonActivity) getActivity();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        activity.toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
+
         FrameLayout fragmentLayout = new FrameLayout(activity);
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
@@ -81,14 +103,14 @@ public class EpisodesFragment extends Fragment {
 
         emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.GONE);
-        emptyView.setOnClickListener(v -> showEpisodes(activity.showId, activity.season));
+        emptyView.setOnClickListener(v -> showEpisodes());
         emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
         fragmentLayout.addView(emptyView);
 
         adapter = new SeasonAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
 
-        RecyclerListView recyclerView = new RecyclerListView(activity);
+        recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setVerticalScrollBarEnabled(true);
@@ -99,43 +121,150 @@ public class EpisodesFragment extends Fragment {
                 addEpisodeToRealm(episode, view);
             }
         });
+        recyclerView.setOnItemLongClickListener((view, position) -> {
+            if (view instanceof EpisodeView) {
+                Episode episode = adapter.getEpisodes().get(position);
+                setEpisodeDetails(episode);
+                showEpisodePeekView();
+                AndroidExtensions.vibrate(10);
+                return false;
+            }
+            return false;
+        });
         recyclerView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                if (e.getAction() == MotionEvent.ACTION_UP) {
+                    if (peekViewVisible) {
+                        hideEpisodePeekView();
+                    }
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
+        });
         contentLayout.addView(recyclerView);
+
+        episodeLayout = new FrameLayout(activity);
+        episodeLayout.setVisibility(View.GONE);
+        episodeLayout.setAlpha(0.0F);
+        episodeLayout.setBackgroundColor(0x80000000);
+        episodeLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        fragmentLayout.addView(episodeLayout);
+
+        episodePeekView = new EpisodePeekView(activity);
+        episodePeekView.setAlpha(0.0F);
+        episodePeekView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 24, 56, 24, 56));
+        episodeLayout.addView(episodePeekView);
         return fragmentLayout;
     }
 
-    public void showEpisodes(int showId, Season s) {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        showEpisodes();
+    }
+
+    private void setEpisodeDetails(Episode episode) {
+        episodePeekView.setTitle(episode.name);
+        episodePeekView.setOverview(episode.overview);
+        episodePeekView.setNumber(episode.episodeNumber);
+        episodePeekView.setStillImage(episode.still_path);
+        episodePeekView.setAirDate(AndroidExtensions.formatDate(episode.airDate));
+    }
+
+    private void showEpisodePeekView() {
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+            ObjectAnimator.ofFloat(episodeLayout, "alpha", 0F, 1F),
+            ObjectAnimator.ofFloat(episodePeekView, "alpha", 0F, 1F)
+        );
+        set.setDuration(250);
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                peekViewVisible = true;
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                episodeLayout.setVisibility(View.VISIBLE);
+            }
+        });
+        set.start();
+    }
+
+    private void hideEpisodePeekView() {
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+            ObjectAnimator.ofFloat(episodeLayout, "alpha", 1F, 0F),
+            ObjectAnimator.ofFloat(episodePeekView, "alpha", 1F, 0F)
+        );
+        set.setDuration(250);
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                episodeLayout.setVisibility(View.GONE);
+                peekViewVisible = false;
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                episodeLayout.setVisibility(View.VISIBLE);
+            }
+        });
+        set.start();
+    }
+
+    public void showEpisodes() {
         emptyView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
 
+        if (!RealmDb.isSeasonEpisodesEmpty(activity.showId, activity.seasonId)) {
+            seasonAirDate = AndroidExtensions.formatDate(RealmDb.getSeasonAirDate(activity.showId, activity.seasonId));
+            seasonOverview = RealmDb.getSeasonOverview(activity.showId, activity.seasonId);
+            adapter.addOverview();
+
+            adapter.addEpisodes(RealmDb.getSeasonEpisodes(activity.showId, activity.seasonId));
+            progressBar.setVisibility(View.GONE);
+            emptyView.setVisibility(View.GONE);
+            activity.fabButton.show();
+        }
+
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.season(showId, s.seasonNumber, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Season>() {
+        service.season(activity.showId, activity.seasonNumber, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Season>() {
             @Override
             public void onResponse(@NonNull Call<Season> call, @NonNull Response<Season> response) {
                 if (response.isSuccessful()) {
                     Season season = response.body();
                     if (season != null) {
-                        if (season.episodes.isEmpty()) {
-                            showError(EmptyViewMode.MODE_NO_EPISODES);
+                        if (RealmDb.isSeasonEpisodesEmpty(activity.showId, activity.seasonId)) {
+                            if (season.episodes.isEmpty()) {
+                                showError(EmptyViewMode.MODE_NO_EPISODES);
+                            }
+
+                            seasonAirDate = AndroidExtensions.formatDate(season.airDate);
+                            seasonOverview = season.overview;
+                            adapter.addOverview();
+
+                            adapter.addEpisodes(season.episodes);
+                            progressBar.setVisibility(View.GONE);
+                            emptyView.setVisibility(View.GONE);
+                            activity.fabButton.show();
                         }
 
-                        Episode episode = new Episode();
-                        episode.airDate = AndroidExtensions.formatDate(season.airDate);
-                        episode.overview = season.overview;
-                        episode.seasonId = s.episodeCount;
-                        adapter.addOverview(episode);
-
-                        adapter.addEpisodes(season.episodes);
-                        progressBar.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.GONE);
-                        activity.fabButton.show();
-
-                        if (!RealmDb.isSeasonExist(showId, season.seasonId)) {
-                            RealmDb.insertOrUpdateSeason(showId, season);
-                            RealmDb.setSeasonEpisodesCount(showId, s.seasonId, s.episodeCount);
-                        } else {
-                            RealmDb.setSeasonEpisodesCount(showId, s.seasonId, s.episodeCount);
-                        }
+                        updateData(season);
                     } else {
                         showError(EmptyViewMode.MODE_NO_EPISODES);
                     }
@@ -149,17 +278,23 @@ public class EpisodesFragment extends Fragment {
         });
     }
 
+    private void updateData(Season season) {
+        RealmDb.insertOrUpdateSeason(activity.showId, season);
+        RealmDb.setSeasonEpisodesCount(activity.showId, activity.seasonId, activity.seasonEpisodeCount);
+        RealmDb.updateEpisodesList(activity.showId, activity.seasonId, season.episodes);
+    }
+
     private void addEpisodeToRealm(Episode episode, View checkedView) {
-        boolean exist = RealmDb.isEpisodeExist(activity.showId, activity.season.seasonId, episode.episodeId);
+        boolean exist = RealmDb.isEpisodeExist(activity.showId, activity.seasonId, episode.episodeId);
 
         if (exist) {
-            boolean watched = RealmDb.isEpisodeWatched(activity.showId, activity.season.seasonId, episode.episodeId);
-            RealmDb.markEpisodeAsWatched(activity.showId, activity.season.seasonId, episode.episodeId, !watched);
+            boolean watched = RealmDb.isEpisodeWatched(activity.showId, activity.seasonId, episode.episodeId);
+            RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, !watched);
             ((EpisodeView) checkedView).setChecked(!watched, true);
         } else {
-            RealmDb.insertOrUpdateEpisode(activity.showId, activity.season.seasonId, episode);
-            RealmDb.setEpisodeWatchDate(activity.showId, activity.season.seasonId, episode.episodeId, AndroidExtensions.getCurrentDateAndTime());
-            RealmDb.markEpisodeAsWatched(activity.showId, activity.season.seasonId, episode.episodeId, true);
+            RealmDb.insertOrUpdateEpisode(activity.showId, activity.seasonId, episode);
+            RealmDb.setEpisodeWatchDate(activity.showId, activity.seasonId, episode.episodeId, AndroidExtensions.getCurrentDateAndTime());
+            RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, true);
             ((EpisodeView) checkedView).setChecked(true, true);
         }
 
@@ -171,14 +306,14 @@ public class EpisodesFragment extends Fragment {
         List<Episode> list = adapter.getEpisodes();
         for (Episode episode : list) {
             if (episode != list.get(0)) { // Item != Overview
-                boolean exist = RealmDb.isEpisodeExist(activity.showId, activity.season.seasonId, episode.episodeId);
+                boolean exist = RealmDb.isEpisodeExist(activity.showId, activity.seasonId, episode.episodeId);
 
                 if (exist) {
-                    RealmDb.markEpisodeAsWatched(activity.showId, activity.season.seasonId, episode.episodeId, true);
+                    RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, true);
                 } else {
-                    RealmDb.insertOrUpdateEpisode(activity.showId, activity.season.seasonId, episode);
-                    RealmDb.setEpisodeWatchDate(activity.showId, activity.season.seasonId, episode.episodeId, AndroidExtensions.getCurrentDateAndTime());
-                    RealmDb.markEpisodeAsWatched(activity.showId, activity.season.seasonId, episode.episodeId, true);
+                    RealmDb.insertOrUpdateEpisode(activity.showId, activity.seasonId, episode);
+                    RealmDb.setEpisodeWatchDate(activity.showId, activity.seasonId, episode.episodeId, AndroidExtensions.getCurrentDateAndTime());
+                    RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, true);
                 }
             }
         }
@@ -189,7 +324,7 @@ public class EpisodesFragment extends Fragment {
 
     public void removeEpisodesFromRealm() {
         for (Episode episode : adapter.getEpisodes()) {
-            RealmDb.markEpisodeAsWatched(activity.showId, activity.season.seasonId, episode.episodeId, false);
+            RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, false);
         }
 
         adapter.notifyDataSetChanged();
@@ -224,8 +359,8 @@ public class EpisodesFragment extends Fragment {
             episodes = new ArrayList<>();
         }
 
-        public void addOverview(Episode ep) {
-            episodes.add(ep);
+        public void addOverview() {
+            episodes.add(new Episode());
             notifyItemInserted(episodes.size() - 1);
         }
 
@@ -241,33 +376,33 @@ public class EpisodesFragment extends Fragment {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int type) {
-            RecyclerView.ViewHolder viewHolder = null;
+            View view;
 
-            if (type == ITEM_EPISODE) {
-                viewHolder = new Holder(new EpisodeView(parent.getContext()));
-            } else if (type == ITEM_OVERVIEW) {
-                viewHolder = new LoadingHolder(new EpisodeOverview(parent.getContext()));
+            if (type == ITEM_OVERVIEW) {
+                view = new EpisodeOverview(parent.getContext());
+            } else {
+                view = new EpisodeView(parent.getContext());
             }
 
-            return viewHolder;
+            return new Holder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             Episode episode = episodes.get(position);
 
-            if (getItemViewType(position) == ITEM_EPISODE) {
-                EpisodeView view = (EpisodeView) ((Holder) holder).itemView;
+            if (getItemViewType(position) == ITEM_OVERVIEW) {
+                EpisodeOverview view = (EpisodeOverview) holder.itemView;
+                view.setEpisodes(activity.seasonEpisodeCount);
+                view.setDate(seasonAirDate);
+                view.setOverview(seasonOverview);
+            } else {
+                EpisodeView view = (EpisodeView) holder.itemView;
                 view.setName(episode.name);
-                view.setChecked(RealmDb.isEpisodeWatched(activity.showId, activity.season.seasonId, episode.episodeId), false);
+                view.setChecked(RealmDb.isEpisodeWatched(activity.showId, activity.seasonId, episode.episodeId), false);
                 view.setNumber(getString(R.string.EpisodeNumber, episode.episodeNumber));
                 view.setDate(AndroidExtensions.formatDate(episode.airDate));
                 view.setDivider(position != episodes.size() - 1);
-            } else if (getItemViewType(position) == ITEM_OVERVIEW) {
-                EpisodeOverview view = (EpisodeOverview) ((LoadingHolder) holder).itemView;
-                view.setEpisodes(episodes.get(0).seasonId);
-                view.setDate(episodes.get(0).airDate);
-                view.setOverview(episodes.get(0).overview);
             }
         }
 
