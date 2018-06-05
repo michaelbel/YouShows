@@ -65,7 +65,8 @@ public class SeasonActivity extends AppCompatActivity {
         fabButton.setOnClickListener(view -> markSeasonsAsWatched());
         changeFabStyle(RealmDb.isSeasonWatched(showId, seasonId, seasonEpisodeCount));
 
-        startFragment(new EpisodesFragment());
+        fragment = new EpisodesFragment();
+        startFragment(fragment);
     }
 
     public void startFragment(Fragment fragment) {
