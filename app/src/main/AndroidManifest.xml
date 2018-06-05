@@ -13,7 +13,7 @@
     <application
         android:name="org.michaelbel.app.YouShows"
         android:allowBackup="true"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:label="@string/AppName"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme.Start"
