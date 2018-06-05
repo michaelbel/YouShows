@@ -116,7 +116,7 @@
     <string-array name="Themes">
         <item>Night Blue</item>
         <item>Night Black</item>
-        <!--item>Night Red</item-->
+        <item>Cyan</item>
     </string-array>
     <plurals name="SavedShows">
         <item quantity="zero">No shows saved</item>
