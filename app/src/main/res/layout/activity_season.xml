@@ -46,9 +46,8 @@
         app:layout_anchor="@+id/toolbar"
         app:layout_anchorGravity="bottom|end"/>
 
-    <fragment
-        class="org.michaelbel.ui.fragment.EpisodesFragment"
-        android:id="@+id/seasonFragment"
+    <FrameLayout
+        android:id="@+id/fragment_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
