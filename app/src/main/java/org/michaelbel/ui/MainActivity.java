@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -20,8 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import org.michaelbel.app.YouShows;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.eventbus.Events;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Show;
@@ -73,8 +74,9 @@ public class MainActivity extends AppCompatActivity {
         floatingButton = findViewById(R.id.fab);
         floatingButton.setClickable(!animations);
         floatingButton.setImageResource(R.drawable.ic_plus);
-        floatingButton.setTranslationY(Extensions.dp(this, animations ? 88 : 0));
         floatingButton.setOnClickListener(v -> startExplore());
+        floatingButton.setTranslationY(Extensions.dp(this, animations ? 88 : 0));
+        floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.cy_accent)));
 
         viewPager = findViewById(R.id.view_pager);
 
@@ -102,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         tabLayout.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, Theme.Color.primaryText()));
-        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.secondaryText()), ContextCompat.getColor(this, Theme.Color.primaryText()));
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
+        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabSecondaryText()), ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
 
         sortView = findViewById(R.id.sort_view);
         sortView.sortLayout.setOnClickListener(v -> {

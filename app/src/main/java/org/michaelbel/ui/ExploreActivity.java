@@ -105,8 +105,8 @@ public class ExploreActivity extends AppCompatActivity {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         tabLayout.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, Theme.Color.primaryText()));
-        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.secondaryText()), ContextCompat.getColor(this, Theme.Color.primaryText()));
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
+        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabSecondaryText()), ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
     }
 
     @Override

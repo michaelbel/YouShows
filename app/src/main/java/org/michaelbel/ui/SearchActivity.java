@@ -85,8 +85,8 @@ public class SearchActivity extends AppCompatActivity {
         searchEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         searchEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        searchEditText.setTextColor(ContextCompat.getColor(this, Theme.Color.primaryText()));
-        searchEditText.setHintTextColor(ContextCompat.getColor(this, Theme.Color.disabledHintText()));
+        searchEditText.setTextColor(ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
+        searchEditText.setHintTextColor(ContextCompat.getColor(this, Theme.Color.searchHintText()));
         searchEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override

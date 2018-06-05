@@ -36,6 +36,8 @@ import org.michaelbel.ui.fragment.ShowFragment;
 import org.michaelbel.ui.view.BackdropView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -110,7 +112,7 @@ public class ShowActivity extends AppCompatActivity {
             boolean label = prefs.getBoolean("collapsing_label", true);
             prefs.edit().putBoolean("collapsing_label", !label).apply();
             setCollapsingLabel();
-            AndroidExtensions.startVibrate(15);
+            AndroidExtensions.vibrate(15);
             return true;
         });
         setCollapsingLabel();
@@ -126,7 +128,7 @@ public class ShowActivity extends AppCompatActivity {
         followButton.setOnLongClickListener(v -> {
             boolean follow = RealmDb.isShowFollow(extraId);
             collapsingView.showFollowHint(false, !follow);
-            AndroidExtensions.startVibrate(15);
+            AndroidExtensions.vibrate(15);
             return true;
         });
         if (RealmDb.isShowExist(extraId)) {
@@ -139,6 +141,7 @@ public class ShowActivity extends AppCompatActivity {
         fragment.setName(extraName);
         fragment.setOverview(extraOverview);
         setDetails();
+        setSeasons();
 
         loadDetails();
     }
@@ -201,11 +204,19 @@ public class ShowActivity extends AppCompatActivity {
         //fragment.setCompanies(RealmDb.getCompanies(extraId));
 
         if (RealmDb.isShowExist(extraId)) {
+            //fragment.setSeasons(extraId, RealmDb.getShowSeasons(extraId));
+
             fragment.setOriginalName(RealmDb.getOriginalName(extraId));
             fragment.setStatus(RealmDb.getStatus(extraId));
             fragment.setType(RealmDb.getType(extraId));
             fragment.setDates(RealmDb.getFirstAirDate(extraId), RealmDb.getLastAirDate(extraId));
             fragment.setHomepage(RealmDb.getHomepage(extraId));
+        }
+    }
+
+    private void setSeasons() {
+        if (!RealmDb.isShowSeasonsEmpty(extraId)) {
+            fragment.setSeasons(extraId, RealmDb.getShowSeasons(extraId));
         }
     }
 
@@ -247,39 +258,18 @@ public class ShowActivity extends AppCompatActivity {
 
                             setCollapsingLabel();
                             setDetails();
-
-                            //fragment.setGenres(RealmDb.getGenres(extraId));
-                            //fragment.setOriginalCountries(RealmDb.getCountries(extraId));
-                            //fragment.setCompanies(RealmDb.getCompanies(extraId));
-                        } else {
-                            // Update if changed
-                            RealmDb.updateShowViewsCount(extraId);
-                            RealmDb.updateStatus(extraId, show.inProduction);
-                            RealmDb.updateOriginalName(extraId, show.originalName);
-                            RealmDb.updateStatus(extraId, show.status);
-                            RealmDb.updateType(extraId, show.type);
-                            RealmDb.updateLastAirDate(extraId, show.lastAirDate);
-                            RealmDb.updateHomepage(extraId, show.homepage);
-
-                            /*RealmDb.updateGenres(extraId, show.genres);
-                            fragment.setGenres(RealmDb.getGenres(extraId));
-
-                            RealmDb.updateCountries(extraId, show.countries);
-                            fragment.setOriginalCountries(RealmDb.getCountries(extraId));
-
-                            RealmDb.updateCompanies(extraId, show.companies);
-                            fragment.setCompanies(RealmDb.getCompanies(extraId));*/
                         }
 
-                        //fragment.setGenres(RealmDb.getGenres(extraId));
-                        //fragment.setOriginalCountries(RealmDb.getCountries(extraId));
-                        //fragment.setCompanies(RealmDb.getCompanies(extraId));
+                        if (RealmDb.isShowSeasonsEmpty(extraId)) {
+                            fragment.setSeasons(show);
+                        }
 
-                        fragment.setSeasons(show);
                         fragment.setGenres(show.genres);
                         fragment.setOriginalCountries(show.countries);
                         fragment.setCompanies(show.companies);
                         fragmentLoaded();
+
+                        updateData(show);
                     }
                 }
             }
@@ -289,6 +279,24 @@ public class ShowActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void updateData(Show show) {
+        RealmDb.updateShowViewsCount(extraId);
+        RealmDb.updateStatus(extraId, show.inProduction);
+        RealmDb.updateOriginalName(extraId, show.originalName);
+        RealmDb.updateStatus(extraId, show.status);
+        RealmDb.updateType(extraId, show.type);
+        RealmDb.updateLastAirDate(extraId, show.lastAirDate);
+        RealmDb.updateHomepage(extraId, show.homepage);
+
+        List<Season> list = new ArrayList<>();
+        for (Season season : show.seasons) {
+            if (season.seasonNumber != 0) {
+                list.add(season);
+            }
+        }
+        RealmDb.updateSeasonsList(extraId, list);
     }
 
     private void fragmentLoaded() {
@@ -307,7 +315,10 @@ public class ShowActivity extends AppCompatActivity {
     public void startSeason(Season season) {
         Intent intent = new Intent(this, SeasonActivity.class);
         intent.putExtra("showId", extraId);
-        intent.putExtra("season", season);
+        intent.putExtra("seasonId", season.seasonId);
+        intent.putExtra("seasonName", season.name);
+        intent.putExtra("seasonNumber", season.seasonNumber);
+        intent.putExtra("seasonEpisodeCount", season.episodeCount);
         startActivity(intent);
     }
 }

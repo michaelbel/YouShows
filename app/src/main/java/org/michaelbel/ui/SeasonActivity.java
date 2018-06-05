@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.EpisodesFragment;
 
@@ -26,8 +26,12 @@ import org.michaelbel.ui.fragment.EpisodesFragment;
 public class SeasonActivity extends AppCompatActivity {
 
     public int showId;
-    public Season season;
+    public int seasonId;
+    public int seasonNumber;
+    public int seasonEpisodeCount;
+    public String seasonName;
 
+    public TextView toolbarTitle;
     public FloatingActionButton fabButton;
 
     private EpisodesFragment fragment;
@@ -46,20 +50,29 @@ public class SeasonActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> finish());
 
         showId = getIntent().getIntExtra("showId", 0);
-        season = (Season) getIntent().getSerializableExtra("season");
+        seasonId = getIntent().getIntExtra("seasonId", 0);
+        seasonNumber = getIntent().getIntExtra("seasonNumber", 0);
+        seasonEpisodeCount = getIntent().getIntExtra("seasonEpisodeCount", 0);
+        seasonName = getIntent().getStringExtra("seasonName");
 
-        TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(season.name);
+        toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(seasonName);
 
         fabButton = findViewById(R.id.fab);
         fabButton.setVisibility(View.INVISIBLE);
         fabButton.setClickable(false);
         fabButton.setLongClickable(false);
-        fabButton.setOnClickListener(view -> markSeasonsAsWatched(showId, season));
-        changeFabStyle(RealmDb.isSeasonWatched(showId, season));
+        fabButton.setOnClickListener(view -> markSeasonsAsWatched());
+        changeFabStyle(RealmDb.isSeasonWatched(showId, seasonId, seasonEpisodeCount));
 
-        fragment = (EpisodesFragment) getSupportFragmentManager().findFragmentById(R.id.seasonFragment);
-        fragment.showEpisodes(showId, season);
+        startFragment(new EpisodesFragment());
+    }
+
+    public void startFragment(Fragment fragment) {
+        getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.fragment_view, fragment)
+            .commit();
     }
 
     public void changeFabStyle(boolean watched) {
@@ -74,7 +87,7 @@ public class SeasonActivity extends AppCompatActivity {
     }
 
     public void changeFabStyle() {
-        boolean watched = RealmDb.isSeasonWatched(showId, season);
+        boolean watched = RealmDb.isSeasonWatched(showId, seasonId, seasonEpisodeCount);
 
         fabButton.setImageDrawable(watched ?
             Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
@@ -86,8 +99,8 @@ public class SeasonActivity extends AppCompatActivity {
         );
     }
 
-    public void markSeasonsAsWatched(int showId, Season season) {
-        if (RealmDb.isSeasonWatched(showId, season)) {
+    public void markSeasonsAsWatched() {
+        if (RealmDb.isSeasonWatched(showId, seasonId, seasonEpisodeCount)) {
             fragment.removeEpisodesFromRealm();
             changeFabStyle(false);
         } else {
