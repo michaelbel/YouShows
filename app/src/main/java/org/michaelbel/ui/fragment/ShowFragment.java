@@ -13,22 +13,25 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.YouShows;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
+import org.michaelbel.app.YouShows;
 import org.michaelbel.app.eventbus.Events;
+import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Company;
 import org.michaelbel.app.rest.model.Genre;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
-import org.michaelbel.material.annotation.Beta;
-import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.ShowActivity;
 import org.michaelbel.ui.view.InfoLayout;
 import org.michaelbel.ui.view.OverviewLayout;
 import org.michaelbel.ui.view.SeasonsLayout;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.RealmList;
 
 /**
  * Date: 19 MAR 2018
@@ -40,7 +43,7 @@ import java.util.List;
 @SuppressLint("CheckResult")
 public class ShowFragment extends Fragment {
 
-    private List<Season> list;
+    private List<Season> list = new ArrayList<>();
     private ShowActivity activity;
 
     private OverviewLayout overviewLayout;
@@ -152,12 +155,24 @@ public class ShowFragment extends Fragment {
         infoLayout.setCompanies(AndroidExtensions.formatCompanies(companies));
     }
 
-    @Beta
     public void setSeasons(Show show) {
-        seasonsLayout.setShow(show);
-        seasonsLayout.setShowTitle(show);
-        seasonsLayout.setSeasons(show.seasons);
+        seasonsLayout.setSeasonsTitleCount();
 
-        list = show.seasons;
+        for (Season season : show.seasons) {
+            if (season.seasonNumber != 0) {
+                list.add(season);
+            }
+        }
+
+        seasonsLayout.setSeasons(show.showId, list);
+    }
+
+    public void setSeasons(int showId, RealmList<Season> seasons) {
+        seasonsLayout.setSeasonsTitleCount();
+
+        list.addAll(seasons);
+
+        seasonsLayout.setSeasons(showId, list);
+        RealmDb.updateSeasonsList(showId, list);
     }
 }
