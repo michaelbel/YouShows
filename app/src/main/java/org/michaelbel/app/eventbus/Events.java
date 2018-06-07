@@ -9,27 +9,15 @@ package org.michaelbel.app.eventbus;
 
 public class Events {
 
-    public static class UpdateSeasonsView {
-        public UpdateSeasonsView() {}
-    }
+    public static class UpdateSeasonsView {}
 
-    public static class ChangeDefaultTab {
-        public ChangeDefaultTab() {}
-    }
+    public static class ChangeDefaultTab {}
 
-    public static class EnableSorting {
-        public EnableSorting() {}
-    }
+    public static class EnableSorting {}
 
-    public static class ChangeTheme {
-        public ChangeTheme() {}
-    }
+    public static class ChangeTheme {}
 
-    public static class UpdateProgress {
-        public UpdateProgress() {}
-    }
+    public static class UpdateProgress {}
 
-    public static class RemoveProgress {
-        public RemoveProgress() {}
-    }
+    public static class RemoveProgress {}
 }
