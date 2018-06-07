@@ -80,16 +80,17 @@ public class SettingsFragment extends Fragment {
     private String[] tabs;
     private String[] themes;
     private SharedPreferences prefs;
+    private SettingsAdapter adapter;
     private SettingsActivity activity;
     private LinearLayoutManager linearLayoutManager;
 
+    private FrameLayout fragmentLayout;
     private RecyclerListView recyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (SettingsActivity) getActivity();
-
         tabs = getResources().getStringArray(R.array.Tabs);
         themes = getResources().getStringArray(R.array.Themes);
     }
@@ -98,9 +99,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finish());
-        activity.toolbarTitle.setText(R.string.Settings);
 
-        FrameLayout fragmentLayout = new FrameLayout(activity);
+        fragmentLayout = new FrameLayout(activity);
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
 
         rowCount = 0;
@@ -124,16 +124,17 @@ public class SettingsFragment extends Fragment {
         changelogRow = rowCount++;
         emptyRow2 = rowCount++;
 
+        adapter = new SettingsAdapter();
         prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
 
         recyclerView = new RecyclerListView(activity);
+        recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new SettingsAdapter());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setOnItemClickListener((view, position) -> {
             if (position == themeRow) {
-                activity.startFragment(new ThemeFragment(), "themesFragment");
+                activity.startFragment(new ThemeFragment(), R.string.Theme);
             } else if (position == defaultTabRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setCellHeight(ScreenUtils.dp(52));
@@ -183,9 +184,9 @@ public class SettingsFragment extends Fragment {
                     ((TextDetailCell) view).setChecked(!enable);
                 }
             } else if (position == searchHistoryRow) {
-                activity.startFragment(new SearchHistoryFragment(), "searchHistoryFragment");
+                activity.startFragment(new SearchHistoryFragment(), R.string.SearchHistory);
             } else if (position == dataUsageRow) {
-                activity.startFragment(new DataUsageFragment(), "storageFragment");
+                activity.startFragment(new DataUsageFragment(), R.string.DataUsage);
             } else if (position == feedbackRow) {
                 try {
                     PackageManager packageManager = activity.getPackageManager();
@@ -215,7 +216,7 @@ public class SettingsFragment extends Fragment {
             } else if (position == forkGithubRow) {
                 Browser.openUrl(activity, YouShows.GITHUB_URL);
             } else if (position == libsRow) {
-                activity.startFragment(new LibsFragment(), "libsFragment");
+                activity.startFragment(new LibsFragment(), R.string.OpenSourceLibs);
             } else if (position == shareFriendsRow) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
@@ -224,7 +225,7 @@ public class SettingsFragment extends Fragment {
             } else if (position == donatePaypalRow) {
                 Browser.openUrl(activity, YouShows.PAYPAL_ME);
             } else if (position == changelogRow) {
-                activity.startFragment(new ChangelogsFragment(), "changelogsFragment");
+                activity.startFragment(new ChangelogsFragment(), R.string.Changelog);
             }
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {
@@ -266,6 +267,12 @@ public class SettingsFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.onRestoreInstanceState(state);
+    }
+
+    public void changeTheme() {
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
     }
 
     private class SettingsAdapter extends RecyclerView.Adapter {
