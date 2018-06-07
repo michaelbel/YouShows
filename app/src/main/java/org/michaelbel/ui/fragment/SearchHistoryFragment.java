@@ -66,7 +66,6 @@ public class SearchHistoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
-        activity.toolbarTitle.setText(R.string.SearchHistory);
 
         FrameLayout fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
@@ -79,7 +78,7 @@ public class SearchHistoryFragment extends Fragment {
         recyclerView.setClipToPadding(false);
         recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (position == 0) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
@@ -102,8 +101,8 @@ public class SearchHistoryFragment extends Fragment {
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
                 }
             }
         });
@@ -123,7 +122,7 @@ public class SearchHistoryFragment extends Fragment {
         refreshLayout();
     }
 
-    public void refreshLayout() {
+    private void refreshLayout() {
         searchItems.clear();
         adapter.notifyDataSetChanged();
 
