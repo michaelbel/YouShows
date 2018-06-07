@@ -1,4 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.michaelbel.shows">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="org.michaelbel.shows">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -12,12 +14,13 @@
 
     <application
         android:name="org.michaelbel.app.YouShows"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:supportsRtl="false"
         android:label="@string/AppName"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/AppTheme.Start"
-        android:roundIcon="@mipmap/ic_launcher_round">
+        android:theme="@style/Theme.YouShows.Start"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name="org.michaelbel.ui.MainActivity"
