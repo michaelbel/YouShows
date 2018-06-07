@@ -67,7 +67,6 @@ public class DataUsageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
-        activity.toolbarTitle.setText(R.string.DataUsage);
 
         FrameLayout fragmentLayout = new FrameLayout(activity);
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
@@ -100,8 +99,8 @@ public class DataUsageFragment extends Fragment {
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, R.color.red));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
                 }
             } else if (position == unfollowAllRow) {
                 if (followingCount == 0) {
@@ -118,11 +117,11 @@ public class DataUsageFragment extends Fragment {
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, R.color.red));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
                 }
             } else if (position == cachedRow) {
-                activity.startFragment(new CachedShowsFragment(), "cachedFragment");
+                //activity.startFragment(new CachedShowsFragment(), "cachedFragment");
             }
         });
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
