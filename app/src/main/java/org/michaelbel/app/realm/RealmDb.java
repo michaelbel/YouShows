@@ -1,5 +1,7 @@
 package org.michaelbel.app.realm;
 
+import android.util.Log;
+
 import org.michaelbel.app.model.SearchItem;
 import org.michaelbel.app.rest.model.Company;
 import org.michaelbel.app.rest.model.Episode;
@@ -323,6 +325,7 @@ public class RealmDb {
             }
         });
         realmDb.close();
+        Log.e("2580", "Update lastChangesDate");
     }
 
     public static void updateStartFollowingDate(int showId, String date) {
