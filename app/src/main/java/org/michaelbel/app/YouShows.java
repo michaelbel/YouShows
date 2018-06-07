@@ -39,16 +39,14 @@ public class YouShows extends Application {
     public void onCreate() {
         super.onCreate();
 
+        rxBus = new RxBus();
         AppContext = getApplicationContext();
         AppHandler = new Handler(getApplicationContext().getMainLooper());
 
-        rxBus = new RxBus();
-
-        Realm.init(this);
-
+        Realm.init(getApplicationContext());
         RealmConfiguration config = new RealmConfiguration.Builder()
             .name(REALM_NAME)
-            .schemaVersion(8)
+            .schemaVersion(10)
             .migration(new MyRealmMigration())
             .build();
         Realm.setDefaultConfiguration(config);
