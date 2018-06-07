@@ -63,7 +63,7 @@ public class ChangelogsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (SettingsActivity) getActivity();
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(false);
     }
 
     @Override
@@ -94,7 +94,6 @@ public class ChangelogsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
-        activity.toolbarTitle.setText(R.string.Changelog);
 
         FrameLayout fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
@@ -187,11 +186,7 @@ public class ChangelogsFragment extends Fragment {
             view.setDate(log.date);
             view.setChanges(log.changes);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            if (position == 0) {
-                view.setVersionColor(ContextCompat.getColor(activity, R.color.green));
-            } else {
-                view.setVersionColor(ContextCompat.getColor(activity, R.color.yellow));
-            }
+            view.setVersionTextColor(ContextCompat.getColor(activity, position == 0 ? Theme.Color.changelogCurrentVersionText() : Theme.Color.changelogVersionText()));
         }
 
         @Override
