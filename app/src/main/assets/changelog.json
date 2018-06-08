@@ -96,5 +96,24 @@
             "Search history",
             "Sorting shows by last changes"
         ]
+    },
+
+    {
+        "version":"1.1.0",
+        "build":18,
+        "date":"1 Jun 2018",
+        "changes":[
+            "Offline work: app will cache your shows to save access when internet is off",
+            "Bugs fixes"
+        ]
+    },
+
+    {
+        "version":"1.1.1",
+        "build":19,
+        "date":"5 Jun 2018",
+        "changes":[
+            "Episode preview: tap and hold on episode to show more details"
+        ]
     }
 ]
