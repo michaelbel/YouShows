@@ -75,9 +75,19 @@ public class ThemeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        activity.prefs.edit().putInt("theme", view == lightCell ? Theme.THEME_LIGHT : Theme.THEME_NIGHT).apply();
-        changeCellTheme();
-        changeFragmentTheme();
+        if (view == lightCell) {
+            if (!Theme.themeLight()) {
+                activity.prefs.edit().putInt("theme", view == lightCell ? Theme.THEME_LIGHT : Theme.THEME_NIGHT).apply();
+                changeCellTheme();
+                changeFragmentTheme();
+            }
+        } else {
+            if (Theme.themeLight()) {
+                activity.prefs.edit().putInt("theme", view == lightCell ? Theme.THEME_LIGHT : Theme.THEME_NIGHT).apply();
+                changeCellTheme();
+                changeFragmentTheme();
+            }
+        }
     }
 
     private void changeCellTheme() {
