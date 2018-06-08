@@ -9,12 +9,16 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -338,4 +342,53 @@ public class AndroidExtensions extends Extensions {
         float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return dp;
     }
+
+    public static Drawable getIcon(Context context, @DrawableRes int resource, int colorFilter) {
+        return getIcon(context, resource, colorFilter, PorterDuff.Mode.MULTIPLY);
+    }
+
+    public static Drawable getIcon(Context context, @DrawableRes int resource, int colorFilter, PorterDuff.Mode mode) {
+        Drawable iconDrawable = ContextCompat.getDrawable(context, resource);
+
+        if (iconDrawable != null) {
+            iconDrawable.clearColorFilter();
+            iconDrawable.mutate().setColorFilter(colorFilter, mode);
+        }
+
+        return iconDrawable;
+    }
+
+    /*
+    public static int getAttrColor(@NonNull Context context, @AttrRes int colorAttr) {
+        int color = 0;
+        int[] attrs = new int[] {
+                colorAttr
+        };
+
+        try {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs);
+            color = typedArray.getColor(0, 0);
+            typedArray.recycle();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return color;
+    }
+
+    public static int[] getColorArray(@NonNull Context context, @ArrayRes int arrayRes) {
+        if (arrayRes == 0) {
+            return null;
+        }
+
+        TypedArray ta = context.getResources().obtainTypedArray(arrayRes);
+        int[] colors = new int[ta.length()];
+
+        for (int i = 0; i < ta.length(); i++) {
+            colors[i] = ta.getColor(i, 0);
+        }
+
+        ta.recycle();
+        return colors;
+    }*/
 }
