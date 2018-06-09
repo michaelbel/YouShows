@@ -3,6 +3,7 @@ package org.michaelbel.ui.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +22,7 @@ import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.app.rest.model.Season;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
@@ -50,7 +52,8 @@ public class SeasonsLayout extends FrameLayout {
     public SeasonsLayout(@NonNull Context context) {
         super(context);
 
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+        setElevation(Extensions.dp(context, 1));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -63,7 +66,7 @@ public class SeasonsLayout extends FrameLayout {
         seasonsTitle.setText(R.string.Seasons);
         seasonsTitle.setGravity(Gravity.CENTER_VERTICAL);
         seasonsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        seasonsTitle.setTextColor(ContextCompat.getColor(context, R.color.yellow));
+        seasonsTitle.setTextColor(ContextCompat.getColor(context, Theme.Color.changelogVersionText()));
         seasonsTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         seasonsTitle.setOnLongClickListener(view -> {
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
@@ -88,6 +91,7 @@ public class SeasonsLayout extends FrameLayout {
 
         progressBar = new ProgressBar(context);
         progressBar.setVisibility(VISIBLE);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 16 + 40, 0, 16));
         addView(progressBar);
     }

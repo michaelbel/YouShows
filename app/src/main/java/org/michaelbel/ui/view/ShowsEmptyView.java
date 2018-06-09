@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
@@ -45,14 +46,14 @@ public class ShowsEmptyView extends LinearLayout {
         setGravity(Gravity.CENTER);
 
         ImageView emptyIcon = new ImageView(getContext());
-        emptyIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_show, ContextCompat.getColor(getContext(), Theme.Color.iconActive())));
+        emptyIcon.setImageDrawable(AndroidExtensions.getIcon(getContext(), R.drawable.ic_show, ContextCompat.getColor(getContext(), Theme.iconActiveColor())));
         emptyIcon.setLayoutParams(LayoutHelper.makeLinear(62, 62));
         addView(emptyIcon);
 
         titleText = new TextView(getContext());
         titleText.setGravity(Gravity.CENTER);
         titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        titleText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.primaryText()));
+        titleText.setTextColor(ContextCompat.getColor(getContext(), Theme.primaryTextColor()));
         titleText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         titleText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 8, 24, 0));
         addView(titleText);
@@ -67,7 +68,7 @@ public class ShowsEmptyView extends LinearLayout {
         descText1.setGravity(Gravity.CENTER);
         descText1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         descText1.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        descText1.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
+        descText1.setTextColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
         descText1.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
         layout.addView(descText1);
 
@@ -79,7 +80,7 @@ public class ShowsEmptyView extends LinearLayout {
         descText2.setGravity(Gravity.CENTER);
         descText2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         descText2.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        descText2.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
+        descText2.setTextColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
         descText2.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
         layout.addView(descText2);
     }
@@ -87,11 +88,11 @@ public class ShowsEmptyView extends LinearLayout {
     public void setMode(int mode) {
         if (mode == MY_SHOWS_MODE) {
             titleText.setText(R.string.MyShowsEmpty);
-            plusIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(getContext(), R.color.accent)));
+            plusIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(getContext(), Theme.accentColor())));
             descText2.setText(R.string.ClickOn2);
         } else if (mode == FOLLOWING_MODE) {
             titleText.setText(R.string.NoFollowingShows);
-            plusIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_eye_plus, ContextCompat.getColor(getContext(), R.color.accent)));
+            plusIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_eye_plus, ContextCompat.getColor(getContext(), Theme.accentColor())));
             descText2.setText(R.string.ClickOn3);
         }
     }

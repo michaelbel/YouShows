@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.LayoutHelper;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
 import at.blogc.android.views.ExpandableTextView;
@@ -35,12 +36,13 @@ public class OverviewLayout extends LinearLayout {
         super(context);
 
         setOrientation(VERTICAL);
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+        setElevation(Extensions.dp(context, 1));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         titleText = new TextView(context);
         titleText.setTextIsSelectable(true);
         titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
-        titleText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        titleText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         titleText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         titleText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 12, 12, 16 + 56 + 8, 0));
         addView(titleText);
@@ -53,7 +55,7 @@ public class OverviewLayout extends LinearLayout {
         overviewText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         overviewText.setInterpolator(new OvershootInterpolator(0));
         overviewText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        overviewText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        overviewText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         overviewText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 12, 2, 12, 12));
         overviewText.setOnClickListener(view -> overviewText.toggle());
         addView(overviewText);

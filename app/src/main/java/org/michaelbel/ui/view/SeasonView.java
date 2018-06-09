@@ -54,10 +54,7 @@ public class SeasonView extends FrameLayout {
 
         cardView = view.findViewById(R.id.card_view);
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
-        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
-        if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
-            cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.primary()));
-        }
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.seasonViewBackground()));
 
         selectIcon = view.findViewById(R.id.select_icon);
 
@@ -68,7 +65,7 @@ public class SeasonView extends FrameLayout {
         nameText.setEllipsize(TextUtils.TruncateAt.END);
         nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        nameText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        nameText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
 
         airDateText = view.findViewById(R.id.date_text);
         airDateText.setLines(1);
@@ -77,7 +74,7 @@ public class SeasonView extends FrameLayout {
         airDateText.setEllipsize(TextUtils.TruncateAt.END);
         airDateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         airDateText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        airDateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        airDateText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
 
         episodesText = view.findViewById(R.id.episodes_text);
         episodesText.setLines(1);
@@ -86,10 +83,10 @@ public class SeasonView extends FrameLayout {
         episodesText.setGravity(Gravity.CENTER_VERTICAL);
         episodesText.setEllipsize(TextUtils.TruncateAt.END);
         episodesText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        episodesText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        episodesText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         episodesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         episodesText.setCompoundDrawablePadding(Extensions.dp(context, 4));
-        episodesText.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_right), null);
+        episodesText.setCompoundDrawablesWithIntrinsicBounds(null, null, AndroidExtensions.getIcon(context, R.drawable.ic_chevron_right, ContextCompat.getColor(context, Theme.Color.primaryTextColor())), null);
     }
 
     public void setName(String name) {
@@ -106,8 +103,8 @@ public class SeasonView extends FrameLayout {
 
     public void setSelected(boolean selected) {
         selectIcon.setImageDrawable(selected ?
-            Theme.getIcon(R.drawable.ic_check_circle, ContextCompat.getColor(getContext(), R.color.green)) :
-            Theme.getIcon(R.drawable.ic_check_outline, ContextCompat.getColor(getContext(), R.color.iconActive))
+            AndroidExtensions.getIcon(getContext(), R.drawable.ic_check_circle, ContextCompat.getColor(getContext(), R.color.green)) :
+                AndroidExtensions.getIcon(getContext(), R.drawable.ic_check_outline, ContextCompat.getColor(getContext(), Theme.iconActiveColor()))
         );
     }
 
