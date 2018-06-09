@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -63,6 +66,7 @@ public class EpisodesFragment extends Fragment {
 
     private SeasonAdapter adapter;
     private SeasonActivity activity;
+    private LinearLayoutManager linearLayoutManager;
 
     private EmptyView emptyView;
     private ProgressBar progressBar;
@@ -70,6 +74,7 @@ public class EpisodesFragment extends Fragment {
     private RecyclerListView recyclerView;
     private EpisodePeekView episodePeekView;
 
+    private int scrollPosition;
     private boolean peekViewVisible = false;
 
     @Override
@@ -82,62 +87,69 @@ public class EpisodesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        activity.toolbarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(0);
-            }
-        });
+        activity.toolbarTitle.setOnClickListener(view -> recyclerView.smoothScrollToPosition(0));
 
         FrameLayout fragmentLayout = new FrameLayout(activity);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         LinearLayout contentLayout = new LinearLayout(activity);
         contentLayout.setOrientation(LinearLayout.VERTICAL);
         fragmentLayout.addView(contentLayout);
 
         progressBar = new ProgressBar(activity);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accent()), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accentColor()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(progressBar);
 
         emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.GONE);
-        emptyView.setOnClickListener(v -> showEpisodes());
-        emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
+        emptyView.setOnClickListener(view -> showEpisodes());
+        emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(emptyView);
 
+        episodeLayout = new FrameLayout(activity);
+        episodeLayout.setAlpha(0);
+        episodeLayout.setVisibility(View.GONE);
+        episodeLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.transparent50));
+        episodeLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        fragmentLayout.addView(episodeLayout);
+
+        episodePeekView = new EpisodePeekView(activity);
+        episodePeekView.setAlpha(0);
+        episodePeekView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 24, 56, 24, 56));
+        episodeLayout.addView(episodePeekView);
+
         adapter = new SeasonAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
 
         recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof EpisodeView) {
-                Episode episode = adapter.getEpisodes().get(position);
+                Episode episode = adapter.episodes.get(position);
                 addEpisodeToRealm(episode, view);
             }
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {
             if (view instanceof EpisodeView) {
-                Episode episode = adapter.getEpisodes().get(position);
+                Episode episode = adapter.episodes.get(position);
                 setEpisodeDetails(episode);
-                showEpisodePeekView();
+                showHidePeekView(true);
                 AndroidExtensions.vibrate(10);
                 return false;
             }
             return false;
         });
-        recyclerView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                episodePeekView.onTouchEvent(e);
+
                 if (e.getAction() == MotionEvent.ACTION_UP) {
                     if (peekViewVisible) {
-                        hideEpisodePeekView();
+                        showHidePeekView(false);
                     }
                 }
 
@@ -150,19 +162,8 @@ public class EpisodesFragment extends Fragment {
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
         });
+        recyclerView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         contentLayout.addView(recyclerView);
-
-        episodeLayout = new FrameLayout(activity);
-        episodeLayout.setVisibility(View.GONE);
-        episodeLayout.setAlpha(0.0F);
-        episodeLayout.setBackgroundColor(0x80000000);
-        episodeLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
-        fragmentLayout.addView(episodeLayout);
-
-        episodePeekView = new EpisodePeekView(activity);
-        episodePeekView.setAlpha(0.0F);
-        episodePeekView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 24, 56, 24, 56));
-        episodeLayout.addView(episodePeekView);
         return fragmentLayout;
     }
 
@@ -170,6 +171,13 @@ public class EpisodesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         showEpisodes();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        scrollPosition = linearLayoutManager.findFirstVisibleItemPosition();
+        RealmDb.setSeasonScrollPosition(activity.showId, activity.seasonId, scrollPosition);
     }
 
     private void setEpisodeDetails(Episode episode) {
@@ -180,51 +188,35 @@ public class EpisodesFragment extends Fragment {
         episodePeekView.setAirDate(AndroidExtensions.formatDate(episode.airDate));
     }
 
-    private void showEpisodePeekView() {
-        AnimatorSet set = new AnimatorSet();
-        set.playTogether(
-            ObjectAnimator.ofFloat(episodeLayout, "alpha", 0F, 1F),
-            ObjectAnimator.ofFloat(episodePeekView, "alpha", 0F, 1F)
+    private void showHidePeekView(boolean state) {
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(
+            ObjectAnimator.ofFloat(episodeLayout, "alpha", state ? 0 : 1, state ? 1 : 0),
+            ObjectAnimator.ofFloat(episodePeekView, "alpha", state ? 0 : 1, state ? 1 : 0)
         );
-        set.setDuration(250);
-        set.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                peekViewVisible = true;
-            }
-
+        animatorSet.setDuration(300);
+        animatorSet.setInterpolator(new DecelerateInterpolator());
+        animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                episodeLayout.setVisibility(View.VISIBLE);
+                if (state) {
+                    episodeLayout.setVisibility(View.VISIBLE);
+                }
             }
-        });
-        set.start();
-    }
 
-    private void hideEpisodePeekView() {
-        AnimatorSet set = new AnimatorSet();
-        set.playTogether(
-            ObjectAnimator.ofFloat(episodeLayout, "alpha", 1F, 0F),
-            ObjectAnimator.ofFloat(episodePeekView, "alpha", 1F, 0F)
-        );
-        set.setDuration(250);
-        set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                episodeLayout.setVisibility(View.GONE);
-                peekViewVisible = false;
-            }
-
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                episodeLayout.setVisibility(View.VISIBLE);
+                if (state) {
+                    peekViewVisible = true;
+                } else {
+                    episodeLayout.setVisibility(View.GONE);
+                    peekViewVisible = false;
+                }
             }
         });
-        set.start();
+        AndroidExtensions.runOnUIThread(animatorSet:: start);
     }
 
     public void showEpisodes() {
@@ -240,6 +232,12 @@ public class EpisodesFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
             emptyView.setVisibility(View.GONE);
             activity.fabButton.show();
+
+            SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+            if (prefs.getBoolean("season_scroll_position", true)) {
+                scrollPosition = RealmDb.getSeasonScrollPosition(activity.showId, activity.seasonId);
+                recyclerView.scrollToPosition(scrollPosition);
+            }
         }
 
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
@@ -273,15 +271,11 @@ public class EpisodesFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<Season> call, @NonNull Throwable t) {
-                showError(EmptyViewMode.MODE_NO_CONNECTION);
+                if (adapter.episodes.isEmpty()) {
+                    showError(EmptyViewMode.MODE_NO_CONNECTION);
+                }
             }
         });
-    }
-
-    private void updateData(Season season) {
-        RealmDb.insertOrUpdateSeason(activity.showId, season);
-        RealmDb.setSeasonEpisodesCount(activity.showId, activity.seasonId, activity.seasonEpisodeCount);
-        RealmDb.updateEpisodesList(activity.showId, activity.seasonId, season.episodes);
     }
 
     private void addEpisodeToRealm(Episode episode, View checkedView) {
@@ -298,37 +292,45 @@ public class EpisodesFragment extends Fragment {
             ((EpisodeView) checkedView).setChecked(true, true);
         }
 
-        activity.changeFabStyle();
+        boolean watched = RealmDb.isSeasonWatched(activity.showId, activity.seasonId, activity.seasonEpisodeCount);
+        activity.changeFabStyle(watched);
+
         updateRealmDb();
     }
 
-    public void addEpisodesToRealm() {
-        List<Episode> list = adapter.getEpisodes();
-        for (Episode episode : list) {
-            if (episode != list.get(0)) { // Item != Overview
-                boolean exist = RealmDb.isEpisodeExist(activity.showId, activity.seasonId, episode.episodeId);
+    public void markSeasonAsWatch(boolean watched) {
+        if (watched) {
+            List<Episode> episodes = adapter.episodes;
+            for (Episode episode : episodes) {
+                if (episode != episodes.get(adapter.ITEM_OVERVIEW)) {
+                    boolean exist = RealmDb.isEpisodeExist(activity.showId, activity.seasonId, episode.episodeId);
 
-                if (exist) {
-                    RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, true);
-                } else {
-                    RealmDb.insertOrUpdateEpisode(activity.showId, activity.seasonId, episode);
-                    RealmDb.setEpisodeWatchDate(activity.showId, activity.seasonId, episode.episodeId, AndroidExtensions.getCurrentDateAndTime());
-                    RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, true);
+                    if (exist) {
+                        RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, true);
+                    } else {
+                        RealmDb.insertOrUpdateEpisode(activity.showId, activity.seasonId, episode);
+                        RealmDb.setEpisodeWatchDate(activity.showId, activity.seasonId, episode.episodeId, AndroidExtensions.getCurrentDateAndTime());
+                        RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, true);
+                    }
                 }
             }
-        }
 
-        adapter.notifyDataSetChanged();
-        updateRealmDb();
+            adapter.notifyDataSetChanged();
+            updateRealmDb();
+        } else {
+            for (Episode episode : adapter.episodes) {
+                RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, false);
+            }
+
+            adapter.notifyDataSetChanged();
+            updateRealmDb();
+        }
     }
 
-    public void removeEpisodesFromRealm() {
-        for (Episode episode : adapter.getEpisodes()) {
-            RealmDb.markEpisodeAsWatched(activity.showId, activity.seasonId, episode.episodeId, false);
-        }
-
-        adapter.notifyDataSetChanged();
-        updateRealmDb();
+    private void updateData(Season season) {
+        RealmDb.insertOrUpdateSeason(activity.showId, season);
+        RealmDb.setSeasonEpisodesCount(activity.showId, activity.seasonId, activity.seasonEpisodeCount);
+        RealmDb.updateEpisodesList(activity.showId, activity.seasonId, season.episodes);
     }
 
     private void updateRealmDb() {
@@ -350,14 +352,10 @@ public class EpisodesFragment extends Fragment {
 
     private class SeasonAdapter extends RecyclerView.Adapter {
 
-        private final int ITEM_OVERVIEW = 1;
-        private final int ITEM_EPISODE = 2;
+        private final int ITEM_OVERVIEW = 0;
+        private final int ITEM_EPISODE = 1;
 
-        private List<Episode> episodes;
-
-        private SeasonAdapter() {
-            episodes = new ArrayList<>();
-        }
+        public List<Episode> episodes = new ArrayList<>();
 
         public void addOverview() {
             episodes.add(new Episode());
@@ -367,10 +365,6 @@ public class EpisodesFragment extends Fragment {
         private void addEpisodes(List<Episode> results) {
             episodes.addAll(results);
             notifyItemRangeInserted(episodes.size() + 1, results.size());
-        }
-
-        public List<Episode> getEpisodes() {
-            return episodes;
         }
 
         @NonNull
