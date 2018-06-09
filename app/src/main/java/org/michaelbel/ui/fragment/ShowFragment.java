@@ -48,7 +48,7 @@ public class ShowFragment extends Fragment {
 
     private OverviewLayout overviewLayout;
     private SeasonsLayout seasonsLayout;
-    private InfoLayout infoLayout;
+    private InfoLayout detailsLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,10 +61,10 @@ public class ShowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LinearLayout fragmentLayout = new LinearLayout(activity);
         fragmentLayout.setOrientation(LinearLayout.VERTICAL);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.appBar()));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         overviewLayout = new OverviewLayout(activity);
-        overviewLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, 0));
+        overviewLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         fragmentLayout.addView(overviewLayout);
 
         seasonsLayout = new SeasonsLayout(activity);
@@ -72,20 +72,12 @@ public class ShowFragment extends Fragment {
             Season season = seasonsLayout.getSeasons().get(position);
             activity.startSeason(season);
         });
-        seasonsLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 6, 0, 0));
+        seasonsLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 7, 0, 0));
         fragmentLayout.addView(seasonsLayout);
 
-        infoLayout = new InfoLayout(activity);
-        infoLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 6, 0, 0));
-        fragmentLayout.addView(infoLayout);
-
-        if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
-            fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
-            overviewLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.foreground()));
-            seasonsLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.foreground()));
-            infoLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.foreground()));
-        }
-
+        detailsLayout = new InfoLayout(activity);
+        detailsLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 7, 0, 0));
+        fragmentLayout.addView(detailsLayout);
         return fragmentLayout;
     }
 
@@ -109,50 +101,50 @@ public class ShowFragment extends Fragment {
     }
 
     public void setOriginalName(String name) {
-        infoLayout.setOriginalName(name);
+        detailsLayout.setOriginalName(name);
     }
 
     public void setStatus(String status) {
-        infoLayout.setStatus(status);
+        detailsLayout.setStatus(status);
     }
 
     public void setType(String type) {
-        infoLayout.setType(type);
+        detailsLayout.setType(type);
     }
 
     public void setDates(String firstAirDate, String lastAirDate) {
-        infoLayout.setDates(
+        detailsLayout.setDates(
             AndroidExtensions.formatDate(firstAirDate),
             AndroidExtensions.formatDate(lastAirDate)
         );
     }
 
     public void setHomepage(String homepage) {
-        infoLayout.setHomepage(homepage);
+        detailsLayout.setHomepage(homepage);
     }
 
     /*public void setGenres(RealmList<String> genres) {
-        infoLayout.setGenres(AndroidExtensions.formatGenres(genres));
+        detailsLayout.setGenres(AndroidExtensions.formatGenres(genres));
     }*/
 
     public void setGenres(List<Genre> genres) {
-        infoLayout.setGenres(AndroidExtensions.formatGenres(genres));
+        detailsLayout.setGenres(AndroidExtensions.formatGenres(genres));
     }
 
     /*public void setOriginalCountries(RealmList<String> countries) {
-        infoLayout.setCountries(AndroidExtensions.formatCountries(countries));
+        detailsLayout.setCountries(AndroidExtensions.formatCountries(countries));
     }*/
 
     public void setOriginalCountries(List<String> countries) {
-        infoLayout.setCountries(AndroidExtensions.formatCountries(countries));
+        detailsLayout.setCountries(AndroidExtensions.formatCountries(countries));
     }
 
     /*public void setCompanies(RealmList<String> companies) {
-        infoLayout.setCompanies(AndroidExtensions.formatCompanies(companies));
+        detailsLayout.setCompanies(AndroidExtensions.formatCompanies(companies));
     }*/
 
     public void setCompanies(List<Company> companies) {
-        infoLayout.setCompanies(AndroidExtensions.formatCompanies(companies));
+        detailsLayout.setCompanies(AndroidExtensions.formatCompanies(companies));
     }
 
     public void setSeasons(Show show) {
