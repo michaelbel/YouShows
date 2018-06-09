@@ -7,15 +7,13 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
 import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.ScreenUtils;
+import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 
 /**
  * Date: 02 MAR 2018
@@ -45,8 +43,8 @@ public class EmptyCell extends FrameLayout {
         textView = new TextView(context);
         textView.setVisibility(GONE);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
-        textView.setPadding(ScreenUtils.dp(16), ScreenUtils.dp(12), ScreenUtils.dp(16), ScreenUtils.dp(4));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        textView.setPadding(Extensions.dp(context,16), Extensions.dp(context,12), Extensions.dp(context,16), Extensions.dp(context,4));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         addView(textView);
 
@@ -88,15 +86,6 @@ public class EmptyCell extends FrameLayout {
         }
     }
 
-    public void changeLayoutParams() {
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if (AndroidExtensions.isLandscape()) {
-            params.leftMargin = ScreenUtils.dp(56);
-            params.rightMargin = ScreenUtils.dp(56);
-        }
-        setLayoutParams(params);
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -108,7 +97,7 @@ public class EmptyCell extends FrameLayout {
             width = getMeasuredWidth();
             height = getMeasuredHeight();
         } else if (currentMode == MODE_LOADING) {
-            height = MeasureSpec.makeMeasureSpec(ScreenUtils.dp(54), MeasureSpec.EXACTLY);
+            height = MeasureSpec.makeMeasureSpec(Extensions.dp(getContext(),54), MeasureSpec.EXACTLY);
         } else if (currentMode == MODE_DEFAULT) {
             height = mHeight;
         }

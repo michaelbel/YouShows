@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -17,8 +16,8 @@ import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
 /**
@@ -37,19 +36,17 @@ public class SearchItemCell extends FrameLayout {
 
     private Paint paint;
     private boolean divider;
-    private Rect rect = new Rect();
 
     public SearchItemCell(Context context) {
         super(context);
 
-        setElevation(ScreenUtils.dp(1));
-        //setForeground(Extensions.selectableItemBackgroundDrawable(context));
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+        setElevation(Extensions.dp(context,1));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         if (paint == null) {
             paint = new Paint();
             paint.setStrokeWidth(1);
-            paint.setColor(ContextCompat.getColor(context, Theme.Color.divider()));
+            paint.setColor(ContextCompat.getColor(context, Theme.dividerColor()));
         }
 
         textView = new TextView(context);
@@ -57,7 +54,7 @@ public class SearchItemCell extends FrameLayout {
         textView.setMaxLines(1);
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 5, 16, 0));
         addView(textView);
 
@@ -66,7 +63,7 @@ public class SearchItemCell extends FrameLayout {
         valueText.setMaxLines(1);
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.5F);
-        valueText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 27, 16, 0));
         addView(valueText);
 
@@ -74,7 +71,7 @@ public class SearchItemCell extends FrameLayout {
         endIconView.setFocusable(false);
         endIconView.setScaleType(ImageView.ScaleType.CENTER);
         endIconView.setBackground(AndroidExtensions.selectableItemBackgroundBorderlessDrawable(context));
-        endIconView.setImageDrawable(Theme.getIcon(R.drawable.ic_close_circle, ContextCompat.getColor(context, Theme.Color.iconActive())));
+        endIconView.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_close_circle, ContextCompat.getColor(context, Theme.iconActiveColor())));
         endIconView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         //addView(endIconView);
     }
@@ -91,7 +88,7 @@ public class SearchItemCell extends FrameLayout {
 
     /*public void setVoiceQuery(boolean voice) {
         if (voice) {
-            textView.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_mic_mini, ContextCompat.getColor(getContext(), Theme.Color.primaryText())), null, null, null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_mic_mini, ContextCompat.getColor(getContext(), Theme.Color.primaryTextColor())), null, null, null);
         }
     }*/
 
@@ -100,15 +97,15 @@ public class SearchItemCell extends FrameLayout {
         setWillNotDraw(!divider);
     }
 
-    public void setOnIconClickListener(OnClickListener listener) {
+    /*public void setOnIconClickListener(OnClickListener listener) {
         endIconView.setOnClickListener(listener);
-    }
+    }*/
 
     public void changeLayoutParams() {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (AndroidExtensions.isLandscape()) {
-            params.leftMargin = ScreenUtils.dp(56);
-            params.rightMargin = ScreenUtils.dp(56);
+            params.leftMargin = Extensions.dp(getContext(),56);
+            params.rightMargin = Extensions.dp(getContext(),56);
         }
         setLayoutParams(params);
     }
@@ -117,7 +114,7 @@ public class SearchItemCell extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.makeMeasureSpec(widthMeasureSpec, MeasureSpec.EXACTLY);
-        int height = ScreenUtils.dp(48) + (divider ? 1 : 0);
+        int height = Extensions.dp(getContext(),48) + (divider ? 1 : 0);
         setMeasuredDimension(width, height);
     }
 
@@ -127,30 +124,4 @@ public class SearchItemCell extends FrameLayout {
             canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(), getHeight() - 1, paint);
         }
     }
-
-    /*@Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (getForeground() != null) {
-            if (rect.contains((int) event.getX(), (int) event.getY())) {
-                return true;
-            }
-
-            if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
-                getForeground().setHotspot(event.getX(), event.getY());
-            }
-        }
-
-        return super.onTouchEvent(event);
-    }*/
-
-    /*@Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (getBackground() != null && endIconView != null) {
-            endIconView.getHitRect(rect);
-            if (rect.contains((int) event.getX(), (int) event.getY())) {
-                return true;
-            }
-        }
-        return super.onTouchEvent(event);
-    }*/
 }

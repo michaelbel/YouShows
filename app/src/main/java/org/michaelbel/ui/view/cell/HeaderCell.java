@@ -12,10 +12,9 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.michaelbel.app.Theme;
 import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.ScreenUtils;
-import org.michaelbel.shows.R;
+import org.michaelbel.app.Theme;
+import org.michaelbel.material.extensions.Extensions;
 
 /**
  * Date: 02 MAR 2018
@@ -31,16 +30,16 @@ public class HeaderCell extends FrameLayout {
     public HeaderCell(Context context) {
         super(context);
 
-        setElevation(ScreenUtils.dp(1));
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+        setElevation(Extensions.dp(context,1));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         textView = new AppCompatTextView(context);
         textView.setLines(1);
         textView.setMaxLines(1);
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.yellow));
         textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.changelogVersionText()));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 16, 16, 16, 8));
         addView(textView);
     }

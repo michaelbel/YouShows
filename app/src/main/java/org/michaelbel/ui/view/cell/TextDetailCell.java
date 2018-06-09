@@ -25,11 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.ScreenUtils;
-import org.michaelbel.shows.R;
 
 /**
  * Date: 02 MAR 2018
@@ -70,14 +68,14 @@ public class TextDetailCell extends FrameLayout {
     public TextDetailCell(Context context) {
         super(context);
 
-        setElevation(ScreenUtils.dp(1));
+        setElevation(Extensions.dp(context,1));
         setForeground(Extensions.selectableItemBackgroundDrawable(context));
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         if (paint == null) {
             paint = new Paint();
             paint.setStrokeWidth(1);
-            paint.setColor(ContextCompat.getColor(context, Theme.Color.divider()));
+            paint.setColor(ContextCompat.getColor(context, Theme.dividerColor()));
         }
 
         startIconView = new ImageView(context);
@@ -90,7 +88,7 @@ public class TextDetailCell extends FrameLayout {
         textView.setMaxLines(1);
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 16, 0));
         addView(textView);
 
@@ -99,7 +97,7 @@ public class TextDetailCell extends FrameLayout {
         valueText.setMaxLines(1);
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        valueText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
         addView(valueText);
 
@@ -130,7 +128,7 @@ public class TextDetailCell extends FrameLayout {
     public void setStartIcon(@DrawableRes int icon) {
         startIconView.setVisibility(icon == 0 ? INVISIBLE : VISIBLE);
         if (icon != 0) {
-            startIconView.setImageDrawable(Theme.getIcon(icon, ContextCompat.getColor(getContext(), R.color.iconActive)));
+            startIconView.setImageDrawable(Theme.getIcon(icon, ContextCompat.getColor(getContext(), Theme.iconActiveColor())));
         }
 
         if (currentMode == MODE_ICONS) {
@@ -225,18 +223,18 @@ public class TextDetailCell extends FrameLayout {
     public void changeLayoutParams() {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (AndroidExtensions.isLandscape()) {
-            params.leftMargin = ScreenUtils.dp(56);
-            params.rightMargin = ScreenUtils.dp(56);
+            params.leftMargin = Extensions.dp(getContext(),56);
+            params.rightMargin = Extensions.dp(getContext(),56);
         }
         setLayoutParams(params);
     }
 
     public void changeSwitchTheme() {
-        int thumbOn = ContextCompat.getColor(getContext(), Theme.Color.thumbOn());
-        int thumbOff = ContextCompat.getColor(getContext(), Theme.Color.thumbOff());
+        int thumbOn = ContextCompat.getColor(getContext(), Theme.thumbOnColor());
+        int thumbOff = ContextCompat.getColor(getContext(), Theme.thumbOffColor());
 
-        int trackOn = ContextCompat.getColor(getContext(), Theme.Color.trackOn());
-        int trackOff = ContextCompat.getColor(getContext(), Theme.Color.trackOff());
+        int trackOn = ContextCompat.getColor(getContext(), Theme.trackOnColor());
+        int trackOff = ContextCompat.getColor(getContext(), Theme.trackOffColor());
 
         DrawableCompat.setTintList(switchCompat.getThumbDrawable(), new ColorStateList(
                 new int[][]{
@@ -263,11 +261,11 @@ public class TextDetailCell extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.makeMeasureSpec(widthMeasureSpec, MeasureSpec.EXACTLY);
-        int height = multiline ? getMeasuredHeight() : ScreenUtils.dp(64) + (divider ? 1 : 0);
+        int height = multiline ? getMeasuredHeight() : Extensions.dp(getContext(),64) + (divider ? 1 : 0);
         /*if (multiline) {
             height = getMeasuredHeight();
         } else {
-            height = ScreenUtils.dp(64) + (divider ? 1 : 0);
+            height = ScreenUtils.dp(64) + (dividerColor ? 1 : 0);
         }*/
         setMeasuredDimension(width, height);
     }
