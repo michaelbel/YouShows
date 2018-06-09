@@ -66,12 +66,10 @@ public class MyShowView extends FrameLayout {
     public MyShowView(Context context) {
         super(context);
 
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
-
         if (paint == null) {
             paint = new Paint();
             paint.setStrokeWidth(1);
-            paint.setColor(ContextCompat.getColor(context, Theme.Color.background()));
+            paint.setColor(ContextCompat.getColor(context, Theme.backgroundColor()));
         }
 
         View view = LayoutInflater.from(context).inflate(R.layout.item_myshow, null);
@@ -80,10 +78,10 @@ public class MyShowView extends FrameLayout {
 
         cardView = view.findViewById(R.id.card_item);
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
-        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         CardView cardPoster = view.findViewById(R.id.card_poster);
-        cardPoster.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+        cardPoster.setCardBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         posterImage = view.findViewById(R.id.poster_image);
 
@@ -91,11 +89,11 @@ public class MyShowView extends FrameLayout {
         nameText.setMaxLines(2);
         nameText.setEllipsize(TextUtils.TruncateAt.END);
         nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        nameText.setTextColor(ContextCompat.getColor(context, R.color.yellow));
+        nameText.setTextColor(ContextCompat.getColor(context, Theme.accentColor()));
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         statusCard = view.findViewById(R.id.status_card);
-        statusCard.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+        statusCard.setCardBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));
 
         statusText = view.findViewById(R.id.status_text);
         statusText.setLines(1);
@@ -104,7 +102,7 @@ public class MyShowView extends FrameLayout {
         statusText.setText(context.getString(R.string.Finished).toUpperCase());
         statusText.setEllipsize(TextUtils.TruncateAt.END);
         statusText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-        statusText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        statusText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         statusText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         datesText = view.findViewById(R.id.dates_text);
@@ -113,10 +111,10 @@ public class MyShowView extends FrameLayout {
         datesText.setSingleLine();
         datesText.setEllipsize(TextUtils.TruncateAt.END);
         datesText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        datesText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        datesText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         datesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         datesText.setCompoundDrawablePadding(Extensions.dp(context, 4));
-        datesText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
+        datesText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(context, R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActiveColor())), null, null, null);
 
         progressWatchedText = view.findViewById(R.id.watched_episodes_text);
         progressWatchedText.setLines(1);
@@ -124,26 +122,26 @@ public class MyShowView extends FrameLayout {
         progressWatchedText.setSingleLine();
         progressWatchedText.setEllipsize(TextUtils.TruncateAt.END);
         progressWatchedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        progressWatchedText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        progressWatchedText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         progressWatchedText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         progressWatchedText.setCompoundDrawablePadding(Extensions.dp(context, 4));
-        progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
+        progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(context, R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.Color.iconActiveColor())), null, null, null);
 
         dividerView = view.findViewById(R.id.divider_view);
-        dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+        dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));
 
         circleProgressView = view.findViewById(R.id.progress_view);
         circleProgressView.setTextSize(Extensions.dp(context, 10));
         circleProgressView.setTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        circleProgressView.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
-        circleProgressView.setUnitColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        circleProgressView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        circleProgressView.setUnitColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         circleProgressView.setUnitTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         circleProgressView.setUnitVisible(true);
         circleProgressView.setUnitSize(Extensions.dp(context, 6));
         circleProgressView.setBarColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, R.color.red));
-        if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
-            circleProgressView.setRimColor(ContextCompat.getColor(context, Theme.Color.iconActive()));
-        } else if (Theme.getTheme() == Theme.THEME_NIGHT_BLACK) {
+        if (Theme.getTheme() == Theme.THEME_LIGHT) {
+            circleProgressView.setRimColor(ContextCompat.getColor(context, Theme.iconActiveColor()));
+        } else if (Theme.getTheme() == Theme.THEME_NIGHT) {
             circleProgressView.setRimColor(ContextCompat.getColor(context, R.color.background));
         }
         circleProgressView.setBarWidth(Extensions.dp(context, 5.2F));
@@ -205,7 +203,7 @@ public class MyShowView extends FrameLayout {
 
             progressWatchedText.setQuery(spannable);
         } else if (choice == TYPE_EPISODES) {
-            progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
+            progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
 
             if (count == 0) {
                 progressWatchedText.setQuery(getResources().getString(R.string.NoEpisodesWatched));
@@ -213,7 +211,7 @@ public class MyShowView extends FrameLayout {
                 progressWatchedText.setQuery(getResources().getQuantityString(R.plurals.Episodes, count, count2));
             }
         } else if (choice == TYPE_SHOW) {
-            progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
+            progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
             progressWatchedText.setQuery(getResources().getString(R.string.ShowIsOverWatched));
         }
     }*/
@@ -239,26 +237,25 @@ public class MyShowView extends FrameLayout {
     }
 
     public void changeTheme() {
-        setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.foreground()));
-        nameText.setTextColor(ContextCompat.getColor(getContext(), R.color.yellow));
-        statusCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
-        statusText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.primaryText()));
-        datesText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
-        progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
-        dividerView.setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
-        datesText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
-        progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(Theme.getIcon(R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.Color.iconActive())), null, null, null);
-        paint.setColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), Theme.foregroundColor()));
+        nameText.setTextColor(ContextCompat.getColor(getContext(), Theme.accentColor()));
+        statusCard.setCardBackgroundColor(ContextCompat.getColor(getContext(), Theme.backgroundColor()));
+        statusText.setTextColor(ContextCompat.getColor(getContext(), Theme.primaryTextColor()));
+        datesText.setTextColor(ContextCompat.getColor(getContext(), Theme.primaryTextColor()));
+        progressWatchedText.setTextColor(ContextCompat.getColor(getContext(), Theme.primaryTextColor()));
+        dividerView.setBackgroundColor(ContextCompat.getColor(getContext(), Theme.backgroundColor()));
+        datesText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(getContext(), R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.iconActiveColor())), null, null, null);
+        progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(getContext(), R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.iconActiveColor())), null, null, null);
+        paint.setColor(ContextCompat.getColor(getContext(), Theme.backgroundColor()));
         setWillNotDraw(true);
 
-        circleProgressView.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
-        circleProgressView.setUnitColor(ContextCompat.getColor(getContext(), Theme.Color.secondaryText()));
+        circleProgressView.setTextColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
+        circleProgressView.setUnitColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
         circleProgressView.setBarColor(ContextCompat.getColor(getContext(), R.color.green));
-        if (Theme.getTheme() == Theme.THEME_NIGHT_BLUE) {
-            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), Theme.Color.iconActive()));
-        } else if (Theme.getTheme() == Theme.THEME_NIGHT_BLACK) {
-            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), R.color.secondaryText));
+        if (Theme.getTheme() == Theme.THEME_LIGHT) {
+            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
+        } else if (Theme.getTheme() == Theme.THEME_NIGHT) {
+            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
         }
     }
 
@@ -283,15 +280,4 @@ public class MyShowView extends FrameLayout {
 
         return super.onTouchEvent(event);
     }
-
-    /*@Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (cardView.getBackground() != null && expandIcon != null) {
-            expandIcon.getHitRect(rect);
-            if (rect.contains((int) event.getX(), (int) event.getY())) {
-                return true;
-            }
-        }
-        return super.onTouchEvent(event);
-    }*/
 }

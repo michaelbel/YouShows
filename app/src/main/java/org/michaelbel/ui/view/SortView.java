@@ -15,10 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
 
 /**
@@ -63,7 +62,7 @@ public class SortView extends FrameLayout {
 
     private void initialize(@NonNull Context context) {
         sorts = getResources().getStringArray(R.array.Sorts);
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.primary()));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.primaryColor()));
 
         dividerView = new View(context);
         dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.Color.sortDivider()));
@@ -74,7 +73,7 @@ public class SortView extends FrameLayout {
 
         sortLayout = new FrameLayout(context);
         sortLayout.setForeground(Extensions.selectableItemBackgroundBorderlessDrawable(context));
-        sortLayout.setPadding(ScreenUtils.dp(24), 0, ScreenUtils.dp(24), 0);
+        sortLayout.setPadding(Extensions.dp(context,24), 0, Extensions.dp(context,24), 0);
         sortLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START));
         addView(sortLayout);
 
@@ -89,7 +88,7 @@ public class SortView extends FrameLayout {
         sortTypeTextView.setSingleLine();
         sortTypeTextView.setEllipsize(TextUtils.TruncateAt.END);
         sortTypeTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        sortTypeTextView.setTextColor(ContextCompat.getColor(context, Theme.Color.tabPrimaryText()));
+        sortTypeTextView.setTextColor(ContextCompat.getColor(context, R.color.white));
         sortTypeTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         sortTypeTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         sortLinearLayout.addView(sortTypeTextView);
@@ -103,8 +102,8 @@ public class SortView extends FrameLayout {
 //--------------------------------------------------------------------------------------------------
 
         orderLayout = new FrameLayout(context);
-        orderLayout.setPadding(ScreenUtils.dp(24), 0, ScreenUtils.dp(24), 0);
         orderLayout.setForeground(Extensions.selectableItemBackgroundBorderlessDrawable(context));
+        orderLayout.setPadding(Extensions.dp(context,24), 0, Extensions.dp(context,24), 0);
         orderLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END));
         addView(orderLayout);
 
@@ -120,7 +119,7 @@ public class SortView extends FrameLayout {
         orderTextView.setText(R.string.SortOrder);
         orderTextView.setEllipsize(TextUtils.TruncateAt.END);
         orderTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        orderTextView.setTextColor(ContextCompat.getColor(context, Theme.Color.tabPrimaryText()));
+        orderTextView.setTextColor(ContextCompat.getColor(context, R.color.white));
         orderTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         orderTextView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         orderLinearLayout.addView(orderTextView);
@@ -141,9 +140,9 @@ public class SortView extends FrameLayout {
     }
 
     public void changeTheme() {
-        setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.primary()));
-        dividerView.setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.background()));
-        sortTypeTextView.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.primaryText()));
-        orderTextView.setTextColor(ContextCompat.getColor(getContext(), Theme.Color.primaryText()));
+        setBackgroundColor(ContextCompat.getColor(getContext(), Theme.primaryColor()));
+        dividerView.setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.sortDivider()));
+        sortTypeTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+        orderTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
     }
 }
