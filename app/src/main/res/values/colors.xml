@@ -1,85 +1,65 @@
-<!--Usability: https://material.io/guidelines/style/color.html#color-usability-->
-<!--Themes: https://material.io/guidelines/style/color.html#color-themes-->
-<!--Switch: https://material.io/guidelines/components/selection-controls.html#selection-controls-switch-->
-
 <resources>
-    <color name="primary">#212121</color>
-    <color name="primaryDark">#1A1A1A</color>
-    <color name="accent">#0091EA</color>
+    <!--LIGHT-->
+    <color name="primary">#0097A7</color>
+    <color name="primaryDark">#00717D</color>
+    <color name="accent">#26C6DA</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#777777</color>
+    <color name="disabledHintText">#61000000</color>
+    <color name="divider">#1F000000</color>
+    <color name="iconActive">#7d858f</color><!--7d7d7d-->
+    <color name="iconInactive">#807D858F</color>
+    <color name="statusBar">#E0E0E0</color>
+    <color name="appBar">#F5F5F5</color>
+    <color name="background">#EEEEEE</color>
+    <color name="foreground">#FFFFFF</color>
+    <color name="switch_thumbOn">#00BCD4</color>
+    <color name="switch_trackOn">#B2EBF2</color>
+    <color name="switch_thumbOff">#E8E8E8</color>
+    <color name="switch_trackOff">#C7C7C7</color>
+    <color name="tabUnselected">#b2e0e4</color>
 
-    <color name="nb_primary">#202E3B</color>
-    <color name="nb_primaryDark">#18222C</color>
-    <color name="nb_accent">#FFAB40</color>
+    <color name="sortDivider">#408a92</color>
 
-    <color name="nr_primary">#D32F2F</color>
-    <color name="nr_primaryDark">#B71C1C</color>
-    <color name="nr_accent">#FF5252</color>
+    <!--NIGHT-->
+    <color name="n_primary">#202E3B</color>
+    <color name="n_primaryDark">#18222C</color>
+    <color name="n_accent">#61a9e1</color>
+    <color name="n_primaryText">#FFFFFF</color>
+    <color name="n_secondaryText">#7d8e98</color>
+    <color name="n_disabledHintText">#80FFFFFF</color>
+    <color name="n_divider">#1FFFFFFF</color>
+    <color name="n_iconActive">#7C8E98</color>
+    <color name="n_iconInactive">#807C8F96</color>
+    <color name="n_statusBar">#000000</color>
+    <color name="n_appBar">#111C16</color>
+    <color name="n_background">#151C24</color>
+    <color name="n_foreground">#1C2732</color>
+    <color name="n_switch_thumbOn">#64CEFD</color>
+    <color name="n_switch_trackOn">#417597</color>
+    <color name="n_switch_thumbOff">#7A8E99</color>
+    <color name="n_switch_trackOff">#495966</color>
+    <color name="n_tabUnselected">#bcc0c4</color>
 
+    <!--Other colors-->
     <color name="red">#F25252</color>
+    <color name="blue">#0091EA</color>
+    <color name="white">#FFFFFF</color>
     <color name="green">#4CB050</color>
+    <color name="green_dark">#388E3C</color>
     <color name="yellow">#FCB22D</color>
     <color name="orange">#FA8E22</color>
-
     <color name="youtube">#F44336</color>
     <color name="telegram">#2FADE6</color>
 
-    <color name="transparent">#33000000</color>
-
-    <!--Night Black theme-->
-    <color name="primaryText">#FFFFFF</color>
-    <color name="secondaryText">#B3FFFFFF</color>
-    <color name="disabledHintText">#80FFFFFF</color>
-    <color name="divider">#1FFFFFFF</color>
-    <color name="iconActive">#FFFFFF</color>
-    <color name="iconInactive">#80FFFFFF</color>
-    <color name="statusBar">#000000</color>
-    <color name="appBar">#212121</color>
-    <color name="background">#303030</color>
-    <color name="foreground">#424242</color>
-    <!--Switch-->
-    <color name="switch_thumbOn">#FFCC80</color>
-    <color name="switch_trackOn">#80FFCC80</color>
-    <color name="switch_thumbOff">#BDBDBD</color>
-    <color name="switch_trackOff">#4DFFFFFF</color>
-    <color name="switch_thumbDisabled">#424242</color>
-    <color name="switch_trackDisabled">#1AFFFFFF</color>
-
-    <!--Night Blue theme-->
-    <color name="nb_primaryText">#FFFFFF</color>
-    <color name="nb_secondaryText">#B3FFFFFF</color><!--7a878d-->
-    <color name="nb_disabledHintText">#80FFFFFF</color>
-    <color name="nb_divider">#1FFFFFFF</color>
-    <color name="nb_iconActive">#7C8E98</color>
-    <color name="nb_iconInactive">#807C8F96</color>
-    <color name="nb_statusBar">#000000</color>
-    <color name="nb_appBar">#111C16</color>
-    <color name="nb_background">#151C24</color>
-    <color name="nb_foreground">#1C2732</color>
-    <!--Switch-->
-    <color name="nb_switch_thumbOn">#FFCC80</color><!--63cefc-->
-    <color name="nb_switch_trackOn">#80FFCC80</color><!--3c7890-->
-    <color name="nb_switch_thumbOff">#BDBDBD</color><!--7a8e97-->
-    <color name="nb_switch_trackOff">#4DFFFFFF</color><!--475965-->
-    <color name="nb_switch_thumbDisabled">#424242</color>
-    <color name="nb_switch_trackDisabled">#1AFFFFFF</color>
-
-    <!--Night Red theme-->
-    <color name="nr_primaryText">#FFFFFF</color>
-    <color name="nr_secondaryText">#B3FFFFFF</color>
-    <color name="nr_disabledHintText">#80FFFFFF</color>
-    <color name="nr_divider">#1FFFFFFF</color>
-    <color name="nr_iconActive">#FFFFFF</color>
-    <color name="nr_iconInactive">#80FFFFFF</color>
-    <color name="nr_statusBar">#000000</color>
-    <color name="nr_appBar">#202020</color>
-    <color name="nr_background">#131313</color>
-    <color name="nr_foreground">#1d1d1d</color>
-    <!--d32f2f red-->
-    <!--Switch-->
-    <color name="nr_switch_thumbOn">#EF9A9A</color>
-    <color name="nr_switch_trackOn">#80EF9A9A</color>
-    <color name="nr_switch_thumbOff">#BDBDBD</color>
-    <color name="nr_switch_trackOff">#4DFFFFFF</color>
-    <color name="nr_switch_thumbDisabled">#424242</color>
-    <color name="nr_switch_trackDisabled">#1AFFFFFF</color>
+    <!--Transparent-->
+    <color name="transparent10">#1A000000</color><!--10% opacity-->
+    <color name="transparent20">#33000000</color><!--20% opacity-->
+    <color name="transparent30">#4D000000</color><!--30% opacity-->
+    <color name="transparent40">#66000000</color><!--40% opacity-->
+    <color name="transparent50">#80000000</color><!--50% opacity-->
+    <color name="transparent60">#99000000</color><!--60% opacity-->
+    <color name="transparent70">#B3000000</color><!--70% opacity-->
+    <color name="transparent80">#CC000000</color><!--80% opacity-->
+    <color name="transparent90">#E6000000</color><!--90% opacity-->
 </resources>
