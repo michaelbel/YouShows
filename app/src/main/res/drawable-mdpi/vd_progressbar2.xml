@@ -19,7 +19,7 @@
       <path
         android:name="progress_bar"
         android:pathData="M 0,-120 a 120,120 0 1,1 0,240 a 120,120 0 1,1 0,-240"
-        android:strokeColor="@color/white"
+        android:strokeColor="@color/iconActive"
         android:strokeLineCap="square"
         android:strokeLineJoin="miter"
         android:strokeWidth="20"

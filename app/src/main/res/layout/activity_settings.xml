@@ -14,28 +14,75 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="">
 
-            <TextView
-                android:id="@+id/toolbar_title"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textSize="20sp"
-                android:ellipsize="end"
-                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:gravity="center_vertical"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="20sp"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+
+                <TextView
+                    android:id="@+id/toolbar_title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:gravity="center_vertical"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="20sp"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+
+            </FrameLayout>
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/fragment_view"
+        android:id="@+id/fragments_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/fragment_view1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <FrameLayout
+                android:id="@+id/shadow_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_view2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

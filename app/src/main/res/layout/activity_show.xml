@@ -32,7 +32,6 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:minHeight="56dp"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:layout_collapseMode="pin">
@@ -61,7 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:elevation="2dp"
-        app:borderWidth="0dp"
         app:elevation="2dp"
         app:layout_anchor="@+id/app_bar"
         app:layout_anchorGravity="bottom|end"/>

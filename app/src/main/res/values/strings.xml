@@ -76,6 +76,7 @@
     <string name="ShowIsFinished">Show is finished</string>
     <string name="EpisodeNumber">Episode #%1$d</string>
     <string name="NoEpisodes">No Episodes</string>
+    <string name="NoStillImage">No still image</string>
     <!--search-->
     <string name="Search">Search</string>
     <string name="NoResults">No results</string>
@@ -114,9 +115,8 @@
         <item>Following</item>
     </string-array>
     <string-array name="Themes">
-        <item>Night Blue</item>
-        <item>Night Black</item>
-        <item>Cyan</item>
+        <item>Light</item>
+        <item>Night</item>
     </string-array>
     <plurals name="SavedShows">
         <item quantity="zero">No shows saved</item>
@@ -134,6 +134,8 @@
         <item quantity="many">%d shows following</item>
         <item quantity="other">No shows following</item>
     </plurals>
+    <string name="SeasonScrollPosition">Season Scroll Position</string>
+    <string name="SeasonScrollPositionInfo">Save list position for every season</string>
     <!--about-->
     <string name="About">About</string>
     <string name="Changelog">Changelog</string>
