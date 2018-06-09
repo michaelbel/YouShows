@@ -91,7 +91,7 @@ public class ShowActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> finish());
 
         scrollView = findViewById(R.id.scroll_view);
-        scrollView.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.appBar()));
+        scrollView.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.appBarColor()));
 
         collapsingToolbarLayout = findViewById(R.id.collapsing_layout);
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, Theme.primaryColor()));
