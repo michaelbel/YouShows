@@ -90,14 +90,9 @@ public class NowPlayingShowsFragment extends Fragment {
 
         fragmentLayout = new SwipeRefreshLayout(activity);
         fragmentLayout.setRefreshing(false);
-        fragmentLayout.setColorSchemeColors(
-            ContextCompat.getColor(activity, R.color.yellow),
-            ContextCompat.getColor(activity, R.color.red),
-            ContextCompat.getColor(activity, R.color.green),
-            ContextCompat.getColor(activity, R.color.accent)
-        );
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
-        fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, Theme.Color.primary()));
+        fragmentLayout.setColorSchemeColors(ContextCompat.getColor(activity, R.color.white));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
+        fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, Theme.primaryColor()));
         fragmentLayout.setOnRefreshListener(() -> {
             if (isAdapterEmpty()) {
                 loadFirstPage();
@@ -111,13 +106,13 @@ public class NowPlayingShowsFragment extends Fragment {
         fragmentLayout.addView(contentLayout);
 
         progressBar = new ProgressBar(activity);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accent()), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         contentLayout.addView(progressBar);
 
         emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.GONE);
-        emptyView.setOnClickListener(v -> loadFirstPage());
+        emptyView.setOnClickListener(view -> loadFirstPage());
         emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
         contentLayout.addView(emptyView);
 

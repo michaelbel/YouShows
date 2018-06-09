@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import org.michaelbel.app.AndroidExtensions;
@@ -53,14 +54,14 @@ public class ThemeFragment extends Fragment implements View.OnClickListener {
 
         fragmentView = new LinearLayout(activity);
         fragmentView.setOrientation(LinearLayout.VERTICAL);
-        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         lightCell = new ThemeCell(activity, Theme.THEME_LIGHT);
         lightCell.setDivider(true);
         lightCell.setText(themes[0]);
         lightCell.setOnClickListener(this);
         lightCell.setIconChecked(Theme.getTheme() == Theme.THEME_LIGHT);
-        lightCell.setIcon(Theme.getIcon(R.drawable.ic_theme_light, ContextCompat.getColor(activity, Theme.Color.iconActive())));
+        lightCell.setIcon(AndroidExtensions.getIcon(activity, R.drawable.ic_theme_light, ContextCompat.getColor(activity, Theme.iconActiveColor())));
         fragmentView.addView(lightCell);
 
         nightCell = new ThemeCell(activity, Theme.THEME_NIGHT);
@@ -68,7 +69,7 @@ public class ThemeFragment extends Fragment implements View.OnClickListener {
         nightCell.setText(themes[1]);
         nightCell.setOnClickListener(this);
         nightCell.setIconChecked(Theme.getTheme() == Theme.THEME_NIGHT);
-        nightCell.setIcon(Theme.getIcon(R.drawable.ic_theme_night, ContextCompat.getColor(activity, Theme.Color.iconActive())));
+        nightCell.setIcon(AndroidExtensions.getIcon(activity, R.drawable.ic_theme_night, ContextCompat.getColor(activity, Theme.iconActiveColor())));
         fragmentView.addView(nightCell);
         return fragmentView;
     }
@@ -93,11 +94,11 @@ public class ThemeFragment extends Fragment implements View.OnClickListener {
     private void changeCellTheme() {
         lightCell.changeTheme();
         lightCell.setIconChecked(Theme.getTheme() == Theme.THEME_LIGHT);
-        lightCell.setIcon(Theme.getIcon(R.drawable.ic_theme_light, ContextCompat.getColor(activity, Theme.Color.iconActive())));
+        lightCell.setIcon(AndroidExtensions.getIcon(activity, R.drawable.ic_theme_light, ContextCompat.getColor(activity, Theme.iconActiveColor())));
 
         nightCell.changeTheme();
         nightCell.setIconChecked(Theme.getTheme() == Theme.THEME_NIGHT);
-        nightCell.setIcon(Theme.getIcon(R.drawable.ic_theme_night, ContextCompat.getColor(activity, Theme.Color.iconActive())));
+        nightCell.setIcon(AndroidExtensions.getIcon(activity, R.drawable.ic_theme_night, ContextCompat.getColor(activity, Theme.iconActiveColor())));
     }
 
     private void changeFragmentTheme() {
@@ -124,6 +125,7 @@ public class ThemeFragment extends Fragment implements View.OnClickListener {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(statusBarAnim, toolbarAnim, fragmentAnim);
         animatorSet.setDuration(300);
+        animatorSet.setInterpolator(new DecelerateInterpolator(2));
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

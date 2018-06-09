@@ -2,7 +2,6 @@ package org.michaelbel.ui.fragment;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -92,14 +91,9 @@ public class TopRatedShowsFragment extends Fragment {
 
         fragmentLayout = new SwipeRefreshLayout(activity);
         fragmentLayout.setRefreshing(false);
-        fragmentLayout.setColorSchemeColors(
-            ContextCompat.getColor(activity, R.color.yellow),
-            ContextCompat.getColor(activity, R.color.red),
-            ContextCompat.getColor(activity, R.color.green),
-            ContextCompat.getColor(activity, R.color.accent)
-        );
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
-        fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, Theme.Color.primary()));
+        fragmentLayout.setColorSchemeColors(ContextCompat.getColor(activity, R.color.white));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
+        fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, Theme.primaryColor()));
         fragmentLayout.setOnRefreshListener(() -> {
             if (isAdapterEmpty()) {
                 loadFirstPage();
@@ -113,13 +107,13 @@ public class TopRatedShowsFragment extends Fragment {
         fragmentLayout.addView(contentLayout);
 
         progressBar = new ProgressBar(activity);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accent()), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         contentLayout.addView(progressBar);
 
         emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.GONE);
-        emptyView.setOnClickListener(v -> loadFirstPage());
+        emptyView.setOnClickListener(view -> loadFirstPage());
         emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
         contentLayout.addView(emptyView);
 
@@ -164,19 +158,19 @@ public class TopRatedShowsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState == null) {
             loadFirstPage();
-        } else {
-            //adapter.addAll(savedInstanceState.getParcelableArrayList("array_list"));
+        } /*else {
+            adapter.addAll(savedInstanceState.getParcelableArrayList("array_list"));
             recyclerView.getLayoutManager().onRestoreInstanceState(savedInstanceState.getParcelable("recycler_state"));
-        }
+        }*/
     }
 
-    @Override
+    /*@Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         Parcelable state = recyclerView.getLayoutManager().onSaveInstanceState();
         outState.putParcelable("recycler_state", state);
-        //outState.putParcelableArrayList("array_list", adapter.getList());
+        outState.putParcelableArrayList("array_list", adapter.getList());
         super.onSaveInstanceState(outState);
-    }
+    }*/
 
     public void loadFirstPage() {
         emptyView.setVisibility(View.GONE);
