@@ -83,5 +83,11 @@ public class MyRealmMigration implements RealmMigration {
             schema.addRealmListField("episodesList", realmSchema.get("Episode"));
             oldVersion++;
         }
+
+        if (oldVersion == 10) {
+            RealmObjectSchema schema = realmSchema.get("Season");
+            schema.addField("scrollPosition", int.class);
+            oldVersion++;
+        }
     }
 }
