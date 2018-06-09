@@ -1,13 +1,12 @@
 package org.michaelbel.app.realm;
 
-import android.util.Log;
-
 import org.michaelbel.app.model.SearchItem;
 import org.michaelbel.app.rest.model.Company;
 import org.michaelbel.app.rest.model.Episode;
 import org.michaelbel.app.rest.model.Genre;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.material.annotation.Beta;
 import org.michaelbel.material.annotation.NotTested;
 
 import java.util.ArrayList;
@@ -325,7 +324,6 @@ public class RealmDb {
             }
         });
         realmDb.close();
-        Log.e("2580", "Update lastChangesDate");
     }
 
     public static void updateStartFollowingDate(int showId, String date) {
@@ -610,10 +608,34 @@ public class RealmDb {
         return season != null ? season.episodesList != null ? season.episodesList : null : null;
     }
 
+    @Beta
+    public static List<Episode> getShowEpisodes(int showId) {
+        Realm realm = Realm.getDefaultInstance();
+        List<Episode> episodes = new ArrayList<>(realm.where(Episode.class).equalTo("showId", showId).findAll());
+        return episodes;
+    }
+
     public static boolean isSeasonEpisodesEmpty(int showId, int seasonId) {
         Realm realm = Realm.getDefaultInstance();
         Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
         return season != null ? season.episodesList != null ? season.episodesList.isEmpty() : true : true;
+    }
+
+    public static void setSeasonScrollPosition(int showId, int seasonId, int scrollPosition) {
+        Realm realmDb = Realm.getDefaultInstance();
+        realmDb.executeTransaction(realm -> {
+            Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
+            if (season != null) {
+                season.scrollPosition = scrollPosition;
+            }
+        });
+        realmDb.close();
+    }
+
+    public static int getSeasonScrollPosition(int showId, int seasonId) {
+        Realm realm = Realm.getDefaultInstance();
+        Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
+        return season != null ? season.scrollPosition : 0;
     }
 
 //--Episode-----------------------------------------------------------------------------------------
