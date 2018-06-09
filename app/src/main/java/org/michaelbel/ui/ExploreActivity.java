@@ -50,15 +50,15 @@ public class ExploreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
 
         AppBarLayout appBar = findViewById(R.id.app_bar);
-        appBar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
+        appBar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setLayoutParams(AndroidExtensions.setScrollFlags(toolbar));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
@@ -104,9 +104,8 @@ public class ExploreActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-        tabLayout.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
-        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabSecondaryText()), ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
+        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabUnselectedText()), ContextCompat.getColor(this, R.color.white));
     }
 
     @Override
