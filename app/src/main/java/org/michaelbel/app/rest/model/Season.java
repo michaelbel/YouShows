@@ -63,11 +63,16 @@ public class Season extends RealmObject implements Serializable {
     public int episodeWatchedCount;
 
     @Realmed
+    public RealmList<Episode> episodesList;
+
+    @Realmed
+    public int scrollPosition;
+
+//--@Deprecated-------------------------------------------------------------------------------------
+
+    @Deprecated
     public boolean isWatched;
 
-    @Realmed
+    @Deprecated
     public String lastWatchDate;
-
-    @Realmed
-    public RealmList<Episode> episodesList;
 }
