@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
@@ -37,8 +38,6 @@ public class ChangelogView extends FrameLayout {
     public ChangelogView(Context context) {
         super(context);
 
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
-
         FrameLayout layout = new FrameLayout(context);
         layout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 0));
         addView(layout);
@@ -57,7 +56,7 @@ public class ChangelogView extends FrameLayout {
         dateText.setMaxLines(1);
         dateText.setSingleLine();
         dateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        dateText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        dateText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         dateText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
         layout.addView(dateText);
@@ -91,7 +90,7 @@ public class ChangelogView extends FrameLayout {
         }
     }
 
-    public void setVersionColor(int color) {
+    public void setVersionTextColor(int color) {
         versionText.setTextColor(color);
     }
 
@@ -103,14 +102,14 @@ public class ChangelogView extends FrameLayout {
             super(context);
 
             View view = new View(context);
-            view.setBackground(Theme.getIcon(R.drawable.dot_divider, ContextCompat.getColor(context, Theme.Color.secondaryText())));
+            view.setBackground(AndroidExtensions.getIcon(context, R.drawable.dot_divider, ContextCompat.getColor(context, Theme.primaryTextColor())));
             view.setLayoutParams(LayoutHelper.makeFrame(5, 5, Gravity.START | Gravity.TOP, 0, 8, 0, 0));
             addView(view);
 
             changeText = new TextView(context);
             changeText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             changeText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-            changeText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+            changeText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
             changeText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 12, 0, 0, 0));
             addView(changeText);
         }

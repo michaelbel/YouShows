@@ -45,7 +45,6 @@ public class BackdropView extends FrameLayout {
     private TextView textView;
     private ImageView backdropImage;
     private TextView followHintTextView;
-    private ImageView playIcon;
 
     private Runnable followHintHideRunnable;
     private AnimatorSet followHintAnimation;
@@ -61,18 +60,18 @@ public class BackdropView extends FrameLayout {
     }
 
     private void initialize(@NonNull Context context) {
-        setBackgroundColor(ContextCompat.getColor(getContext(), Theme.Color.primary()));
+        setBackgroundColor(ContextCompat.getColor(getContext(), Theme.primaryColor()));
 
         backdropImage = new ImageView(context);
         backdropImage.setScaleType(ImageView.ScaleType.FIT_XY);
         backdropImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(backdropImage);
 
-        playIcon = new ImageView(context);
+        /*ImageView playIcon = new ImageView(context);
         playIcon.setScaleType(ImageView.ScaleType.FIT_XY);
         playIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_play_circle, 0x4DFFFFFF));
         playIcon.setLayoutParams(LayoutHelper.makeFrame(42, 42, Gravity.CENTER));
-        //addView(playIcon);
+        addView(playIcon);*/
 
 //------Show Status Label---------------------------------------------------------------------------
 
@@ -80,8 +79,8 @@ public class BackdropView extends FrameLayout {
         labelView.setCardElevation(0);
         labelView.setUseCompatPadding(false);
         labelView.setPreventCornerOverlap(false);
-        labelView.setCardBackgroundColor(0x80000000);
         labelView.setRadius(Extensions.dp(context, 5));
+        labelView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.transparent50));
         labelView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 4, 0, 16 + 16 + 56, 4));
         addView(labelView);
 
@@ -93,7 +92,7 @@ public class BackdropView extends FrameLayout {
         textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        textView.setTextColor(ContextCompat.getColor(context, R.color.white));
         textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL, 5, 2.5F, 5, 2.5F));
         labelView.addView(textView);
@@ -113,16 +112,18 @@ public class BackdropView extends FrameLayout {
         if (hide && followHintTextView == null) {
             return;
         }
+
         if (followHintTextView == null) {
             followHintTextView = new TextView(getContext());
             followHintTextView.setAlpha(0.0F);
             followHintTextView.setGravity(Gravity.CENTER_VERTICAL);
             followHintTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-            followHintTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryText));
+            followHintTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
             followHintTextView.setBackgroundDrawable(createRoundRectDrawable(ScreenUtils.dp(3), 0xCC111111));
             followHintTextView.setPadding(ScreenUtils.dp(8), ScreenUtils.dp(7), ScreenUtils.dp(8), ScreenUtils.dp(7));
             addView(followHintTextView, 1, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.BOTTOM, 5, 0, 5, 5 + 28));
         }
+
         if (hide) {
             if (followHintAnimation != null) {
                 followHintAnimation.cancel();
@@ -151,7 +152,7 @@ public class BackdropView extends FrameLayout {
 
         followHintTextView.setVisibility(View.VISIBLE);
         followHintAnimation = new AnimatorSet();
-        followHintAnimation.playTogether(ObjectAnimator.ofFloat(followHintTextView, "alpha", 1.0f));
+        followHintAnimation.playTogether(ObjectAnimator.ofFloat(followHintTextView, "alpha", 1));
         followHintAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -175,7 +176,7 @@ public class BackdropView extends FrameLayout {
     private void hideFollowHint() {
         followHintAnimation = new AnimatorSet();
         followHintAnimation.playTogether(
-                ObjectAnimator.ofFloat(followHintTextView, "alpha", 0.0F)
+            ObjectAnimator.ofFloat(followHintTextView, "alpha", 0)
         );
         followHintAnimation.addListener(new AnimatorListenerAdapter() {
             @Override

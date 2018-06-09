@@ -2,6 +2,7 @@ package org.michaelbel.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.ApiFactory;
@@ -42,6 +44,7 @@ public class EpisodePeekView extends FrameLayout {
     private ProgressBar progressBar;
     private TextView numberText;
     private TextView airDateText;
+    private TextView emptyImageText;
 
     private ImageView noIconImage;
     private ImageView yesIconImage;
@@ -57,7 +60,7 @@ public class EpisodePeekView extends FrameLayout {
         cardView.setPreventCornerOverlap(false);
         cardView.setRadius(Extensions.dp(context,4));
         cardView.setCardElevation(Extensions.dp(context, 4));
-        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.background()));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));
         cardView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(cardView);
 
@@ -82,8 +85,22 @@ public class EpisodePeekView extends FrameLayout {
 
         progressBar = new ProgressBar(context);
         progressBar.setVisibility(VISIBLE);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         posterLayout.addView(progressBar);
+
+        emptyImageText = new TextView(context);
+        emptyImageText.setLines(1);
+        emptyImageText.setMaxLines(1);
+        emptyImageText.setSingleLine();
+        emptyImageText.setVisibility(GONE);
+        emptyImageText.setText(R.string.NoStillImage);
+        emptyImageText.setEllipsize(TextUtils.TruncateAt.END);
+        emptyImageText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        emptyImageText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        emptyImageText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        emptyImageText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        posterLayout.addView(emptyImageText);
 
 //------Name----------------------------------------------------------------------------------------
 
@@ -92,7 +109,7 @@ public class EpisodePeekView extends FrameLayout {
         nameText.setMaxLines(2);
         nameText.setEllipsize(TextUtils.TruncateAt.END);
         nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
-        nameText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        nameText.setTextColor(ContextCompat.getColor(context, Theme.Color.dialogButtonText()));
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         nameText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 8, 8, 0));
         contentLayout.addView(nameText);
@@ -109,13 +126,13 @@ public class EpisodePeekView extends FrameLayout {
         numberText.setMaxLines(1);
         numberText.setSingleLine();
         numberText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        numberText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        numberText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         numberText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         numberText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(numberText);
 
         View dotDivider = new View(context);
-        dotDivider.setBackground(Theme.getIcon(R.drawable.dot_divider, ContextCompat.getColor(context, Theme.Color.secondaryText())));
+        dotDivider.setBackground(AndroidExtensions.getIcon(context, R.drawable.dot_divider, ContextCompat.getColor(context, Theme.primaryTextColor())));
         dotDivider.setLayoutParams(LayoutHelper.makeLinear(4, 4, Gravity.CENTER_VERTICAL, 6, 1, 6, 0));
         layout.addView(dotDivider);
 
@@ -124,7 +141,7 @@ public class EpisodePeekView extends FrameLayout {
         airDateText.setMaxLines(1);
         airDateText.setSingleLine();
         airDateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        airDateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        airDateText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         airDateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         airDateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(airDateText);
@@ -135,7 +152,7 @@ public class EpisodePeekView extends FrameLayout {
         overviewText.setEllipsize(TextUtils.TruncateAt.END);
         overviewText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         overviewText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        overviewText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        overviewText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         overviewText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 2, 8, 12));
         contentLayout.addView(overviewText);
 
@@ -144,7 +161,7 @@ public class EpisodePeekView extends FrameLayout {
         LinearLayout buttonsLayout = new LinearLayout(context);
         buttonsLayout.setOrientation(LinearLayout.HORIZONTAL);
         buttonsLayout.setElevation(Extensions.dp(context, 2));
-        buttonsLayout.setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+        buttonsLayout.setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
         buttonsLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, 48, Gravity.BOTTOM));
         //cardView.addView(buttonsLayout);
 
@@ -173,18 +190,21 @@ public class EpisodePeekView extends FrameLayout {
 
     public void setStillImage(String path) {
         progressBar.setVisibility(VISIBLE);
+        emptyImageText.setVisibility(GONE);
 
         Picasso.with(getContext())
                .load(String.format(Locale.US, ApiFactory.TMDB_IMAGE, "original", path))
                .into(stillImage, new Callback() {
                    @Override
                    public void onSuccess() {
+                       emptyImageText.setVisibility(GONE);
                        stillImage.setVisibility(VISIBLE);
                        progressBar.setVisibility(GONE);
                    }
 
                    @Override
                    public void onError() {
+                       emptyImageText.setVisibility(VISIBLE);
                        progressBar.setVisibility(GONE);
                    }
                });

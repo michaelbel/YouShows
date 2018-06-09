@@ -17,10 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
 
 /**
@@ -33,11 +33,10 @@ import org.michaelbel.shows.R;
 @SuppressLint("ClickableViewAccessibility")
 public class EpisodeView extends FrameLayout {
 
-    protected TextView nameText;
-    protected TextView valueText;
-    protected TextView airDateText;
-    protected CheckBox checkBox;
-    protected ImageView selectIcon;
+    private TextView nameText;
+    private TextView valueText;
+    private TextView airDateText;
+    private CheckBox checkBox;
 
     private Paint paint;
     private boolean divider;
@@ -48,12 +47,12 @@ public class EpisodeView extends FrameLayout {
 
         setElevation(Extensions.dp(context, 1));
         setForeground(Extensions.selectableItemBackgroundDrawable(context));
-        setBackgroundColor(ContextCompat.getColor(context, Theme.Color.foreground()));
+        setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
 
         if (paint == null) {
             paint = new Paint();
             paint.setStrokeWidth(1);
-            paint.setColor(ContextCompat.getColor(context, Theme.Color.divider()));
+            paint.setColor(ContextCompat.getColor(context, Theme.dividerColor()));
         }
 
         nameText = new TextView(context);
@@ -62,7 +61,7 @@ public class EpisodeView extends FrameLayout {
         nameText.setSingleLine();
         nameText.setEllipsize(TextUtils.TruncateAt.END);
         nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        nameText.setTextColor(ContextCompat.getColor(context, R.color.yellow));
+        nameText.setTextColor(ContextCompat.getColor(context, Theme.Color.changelogVersionText()));
         nameText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 56, 0));
         addView(nameText);
 
@@ -76,12 +75,12 @@ public class EpisodeView extends FrameLayout {
         valueText.setMaxLines(1);
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        valueText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         valueText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(valueText);
 
         View dotDivider = new View(context);
-        dotDivider.setBackground(Theme.getIcon(R.drawable.dot_divider, ContextCompat.getColor(context, Theme.Color.secondaryText())));
+        dotDivider.setBackground(AndroidExtensions.getIcon(context, R.drawable.dot_divider, ContextCompat.getColor(context, Theme.secondaryTextColor())));
         dotDivider.setLayoutParams(LayoutHelper.makeLinear(4, 4, Gravity.CENTER_VERTICAL, 6, 1, 6, 0));
         layout.addView(dotDivider);
 
@@ -90,19 +89,19 @@ public class EpisodeView extends FrameLayout {
         airDateText.setMaxLines(1);
         airDateText.setSingleLine();
         airDateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-        airDateText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        airDateText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         airDateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(airDateText);
 
-        selectIcon = new ImageView(context);
+        ImageView selectIcon = new ImageView(context);
         selectIcon.setVisibility(VISIBLE);
-        selectIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_check_outline, ContextCompat.getColor(context, R.color.green)));
+        selectIcon.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_check_outline, ContextCompat.getColor(context, R.color.green)));
         selectIcon.setLayoutParams(LayoutHelper.makeFrame(29, 29, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 14, 0));
         addView(selectIcon);
 
         checkBox = new CheckBox(context, R.drawable.round_check2);
         checkBox.setVisibility(VISIBLE);
-        checkBox.setColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, Theme.Color.foreground()));
+        checkBox.setColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, Theme.foregroundColor()));
         checkBox.setLayoutParams(LayoutHelper.makeFrame(24, 24, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
     }
@@ -115,8 +114,12 @@ public class EpisodeView extends FrameLayout {
         valueText.setText(text);
     }
 
-    public void setDate(@NonNull String text) {
-        airDateText.setText(text);
+    public void setDate(String text) {
+        if (TextUtils.isEmpty(text)) {
+            airDateText.setText(R.string.UnknownDate);
+        } else {
+            airDateText.setText(text);
+        }
     }
 
     public void setChecked(boolean value, boolean animated) {
@@ -132,7 +135,7 @@ public class EpisodeView extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = MeasureSpec.makeMeasureSpec(widthMeasureSpec, MeasureSpec.EXACTLY);
-        int height = ScreenUtils.dp(64) + (divider ? 1 : 0);
+        int height = Extensions.dp(getContext(),64) + (divider ? 1 : 0);
         setMeasuredDimension(width, height);
     }
 

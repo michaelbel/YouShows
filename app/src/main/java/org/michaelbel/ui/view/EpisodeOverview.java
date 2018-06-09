@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
@@ -35,16 +36,21 @@ public class EpisodeOverview extends FrameLayout {
     public EpisodeOverview(@NonNull Context context) {
         super(context);
 
+        setBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));
+
         View view = LayoutInflater.from(context).inflate(R.layout.item_season_overview, null);
         view.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(view);
 
+        View dividerView = view.findViewById(R.id.divider_view);
+        dividerView.setBackground(AndroidExtensions.getIcon(context, R.drawable.dot_divider, ContextCompat.getColor(context, Theme.primaryTextColor())));
+
         episodesText = view.findViewById(R.id.episodes_text);
-        episodesText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        episodesText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         episodesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         dateText = view.findViewById(R.id.date_text);
-        dateText.setTextColor(ContextCompat.getColor(context, Theme.Color.primaryText()));
+        dateText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         overviewText = view.findViewById(R.id.expandable_text);
@@ -53,7 +59,7 @@ public class EpisodeOverview extends FrameLayout {
         overviewText.setTextIsSelectable(false);
         overviewText.setEllipsize(TextUtils.TruncateAt.END);
         overviewText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        overviewText.setTextColor(ContextCompat.getColor(context, Theme.Color.secondaryText()));
+        overviewText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         overviewText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         overviewText.setOnClickListener(v -> overviewText.toggle());
     }
