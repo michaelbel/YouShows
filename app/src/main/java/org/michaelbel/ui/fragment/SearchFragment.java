@@ -73,7 +73,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(activity);
-        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         emptyView = new EmptyView(activity);
         emptyView.setMode(EmptyViewMode.MODE_NO_RESULTS);
@@ -82,7 +82,7 @@ public class SearchFragment extends Fragment {
 
         progressBar = new ProgressBar(activity);
         progressBar.setVisibility(View.INVISIBLE);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accent()), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentView.addView(progressBar);
 
