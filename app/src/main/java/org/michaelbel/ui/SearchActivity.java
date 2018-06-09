@@ -60,11 +60,11 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
@@ -85,7 +85,7 @@ public class SearchActivity extends AppCompatActivity {
         searchEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         searchEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        searchEditText.setTextColor(ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
+        searchEditText.setTextColor(ContextCompat.getColor(this, R.color.white));
         searchEditText.setHintTextColor(ContextCompat.getColor(this, Theme.Color.searchHintText()));
         searchEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         searchEditText.addTextChangedListener(new TextWatcher() {

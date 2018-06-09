@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -58,17 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Theme_YouShows);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
 
-        prefs = getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-        boolean animations = prefs.getBoolean("animations", true);
+        prefs = getSharedPreferences("mainconfig", MODE_PRIVATE);
         int currentTab = prefs.getInt("default_tab", tab_shows);
+        boolean animations = prefs.getBoolean("animations", true);
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
         setSupportActionBar(toolbar);
 
         floatingButton = findViewById(R.id.fab);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         floatingButton.setImageResource(R.drawable.ic_plus);
         floatingButton.setOnClickListener(v -> startExplore());
         floatingButton.setTranslationY(Extensions.dp(this, animations ? 88 : 0));
-        floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.cy_accent)));
+        floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, Theme.accentColor())));
 
         viewPager = findViewById(R.id.view_pager);
 
@@ -103,48 +103,41 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-        tabLayout.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
-        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabSecondaryText()), ContextCompat.getColor(this, Theme.Color.tabPrimaryText()));
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
+        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabUnselectedText()), ContextCompat.getColor(this, R.color.white));
 
         sortView = findViewById(R.id.sort_view);
         sortView.sortLayout.setOnClickListener(v -> {
             if (viewPager.getCurrentItem() == tab_shows) {
                 int checkedItem = prefs.getInt("myshows_sort_type", SortView.SORT_BY_DEFAULT);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, Theme.alertTheme());
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, Theme.alertDialogStyle());
                 builder.setTitle(R.string.Sort);
                 builder.setSingleChoiceItems(R.array.Sorts, checkedItem, (dialog, which) -> {
-                    SharedPreferences prefs1 = getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-                    prefs1.edit().putInt("myshows_sort_type", which).apply();
+                    prefs.edit().putInt("myshows_sort_type", which).apply();
                     sortView.setType(which);
                     dialog.dismiss();
 
                     MyShowsFragment fragment = (MyShowsFragment) adapter.getItem(tab_shows);
                     fragment.refreshLayout();
                 });
-                builder.setNegativeButton(R.string.Cancel, null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(MainActivity.this, Theme.Color.accent()));
             } else if (viewPager.getCurrentItem() == tab_follow) {
                 int checkedItem = prefs.getInt("following_sort_type", SortView.SORT_BY_DEFAULT);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, Theme.alertTheme());
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, Theme.alertDialogStyle());
                 builder.setTitle(R.string.Sort);
                 builder.setSingleChoiceItems(R.array.Sorts, checkedItem, (dialog, which) -> {
-                    SharedPreferences prefs1 = getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-                    prefs1.edit().putInt("following_sort_type", which).apply();
+                    prefs.edit().putInt("following_sort_type", which).apply();
                     sortView.setType(which);
                     dialog.dismiss();
 
                     FollowingShowsFragment fragment = (FollowingShowsFragment) adapter.getItem(tab_follow);
                     fragment.refreshLayout();
                 });
-                builder.setNegativeButton(R.string.Cancel, null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(MainActivity.this, Theme.Color.accent()));
             }
         });
         sortView.orderLayout.setOnClickListener(v -> {
@@ -188,16 +181,15 @@ public class MainActivity extends AppCompatActivity {
 
         ((YouShows) getApplication()).bus().toObservable().subscribe(object -> {
             if (object instanceof Events.ChangeDefaultTab) {
-                SharedPreferences prefs = getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 viewPager.setCurrentItem(prefs.getInt("default_tab", 0));
             } else if (object instanceof Events.EnableSorting) {
                 sortViewVisibility();
             } else if (object instanceof Events.ChangeTheme) {
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
-                tabLayout.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
-                tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, Theme.Color.primaryText()));
-                tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.secondaryText()), ContextCompat.getColor(this, Theme.Color.primaryText()));
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
+                toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
+                tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
+                tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabUnselectedText()), ContextCompat.getColor(this, R.color.white));
+                floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, Theme.accentColor())));
                 sortView.changeTheme();
             }
         });
@@ -217,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sortViewVisibility() {
-        SharedPreferences prefs = getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         boolean visible = prefs.getBoolean("sorting", false);
         sortView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }

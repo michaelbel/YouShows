@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.shows.R;
@@ -41,11 +42,11 @@ public class SeasonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_season);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.Color.primaryDark()));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.primary()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
@@ -59,9 +60,9 @@ public class SeasonActivity extends AppCompatActivity {
         toolbarTitle.setText(seasonName);
 
         fabButton = findViewById(R.id.fab);
-        fabButton.setVisibility(View.INVISIBLE);
         fabButton.setClickable(false);
         fabButton.setLongClickable(false);
+        fabButton.setVisibility(View.INVISIBLE);
         fabButton.setOnClickListener(view -> markSeasonsAsWatched());
         changeFabStyle(RealmDb.isSeasonWatched(showId, seasonId, seasonEpisodeCount));
 
@@ -72,40 +73,28 @@ public class SeasonActivity extends AppCompatActivity {
     public void startFragment(Fragment fragment) {
         getSupportFragmentManager()
             .beginTransaction()
-            .replace(R.id.fragment_view, fragment)
+            .replace(R.id.fragment_view1, fragment)
             .commit();
     }
 
     public void changeFabStyle(boolean watched) {
         fabButton.setImageDrawable(watched ?
-            Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
-            Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(this, R.color.iconActive))
+            AndroidExtensions.getIcon(this, R.drawable.ic_done, ContextCompat.getColor(this, R.color.white)) :
+            AndroidExtensions.getIcon(this, R.drawable.ic_plus, ContextCompat.getColor(this, Theme.fabShowFollowIconColor()))
         );
+
         fabButton.setBackgroundTintList(watched ?
             ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent))
-        );
-    }
-
-    public void changeFabStyle() {
-        boolean watched = RealmDb.isSeasonWatched(showId, seasonId, seasonEpisodeCount);
-
-        fabButton.setImageDrawable(watched ?
-            Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(this, R.color.iconActive)) :
-            Theme.getIcon(R.drawable.ic_plus, ContextCompat.getColor(this, R.color.iconActive))
-        );
-        fabButton.setBackgroundTintList(watched ?
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.accent))
+            ColorStateList.valueOf(ContextCompat.getColor(this, Theme.fabShowFollowColor()))
         );
     }
 
     public void markSeasonsAsWatched() {
         if (RealmDb.isSeasonWatched(showId, seasonId, seasonEpisodeCount)) {
-            fragment.removeEpisodesFromRealm();
+            fragment.markSeasonAsWatch(false);
             changeFabStyle(false);
         } else {
-            fragment.addEpisodesToRealm();
+            fragment.markSeasonAsWatch(true);
             changeFabStyle(true);
         }
     }
