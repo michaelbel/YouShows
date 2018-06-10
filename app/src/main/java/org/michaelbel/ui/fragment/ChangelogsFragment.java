@@ -94,6 +94,7 @@ public class ChangelogsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
+        activity.toolbarTitle2.setOnClickListener(view -> recyclerView.smoothScrollToPosition(0));
 
         FrameLayout fragmentView = new FrameLayout(activity);
         fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
