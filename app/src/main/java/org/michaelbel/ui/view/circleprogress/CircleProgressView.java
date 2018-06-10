@@ -55,15 +55,11 @@ import java.text.DecimalFormat;
 //@SuppressWarnings("unused")
 public class CircleProgressView extends View {
 
-    /**
-     * The log tag.
-     */
     private final static String TAG = "CircleView";
     private static final boolean DEBUG = false;
-    //----------------------------------
     //region members
     //Colors (with defaults)
-    private final int mBarColorStandard = 0xff009688; //stylish blue
+    private final int mBarColorStandard = 0x00000000; // stylish blue 0xff009688
     protected int mLayoutHeight = 0;
     protected int mLayoutWidth = 0;
     //Rectangles
@@ -116,11 +112,10 @@ public class CircleProgressView extends View {
     private int mStartAngle = 270;
     private float mOuterContourSize = 1;
     private float mInnerContourSize = 1;
-
     // Bar start/end width and type
     private int mBarStartEndLineWidth = 0;
     private BarStartEndLine mBarStartEndLine = BarStartEndLine.NONE;
-    private int mBarStartEndLineColor = 0xAA000000;
+    private int mBarStartEndLineColor = 0x00000000; // 0xAA000000
     private float mBarStartEndLineSweep = 10f;
     //Default text sizes
     private int mUnitTextSize = 10;
@@ -128,11 +123,11 @@ public class CircleProgressView extends View {
     //Text scale
     private float mTextScale = 1;
     private float mUnitScale = 1;
-    private int mOuterContourColor = 0xAA000000;
-    private int mInnerContourColor = 0xAA000000;
+    private int mOuterContourColor = 0x00000000; // 0xAA000000
+    private int mInnerContourColor = 0x00000000; // 0xAA000000
     private int mSpinnerColor = mBarColorStandard; //stylish blue
     private int mBackgroundCircleColor = 0x00000000;  //transparent
-    private int mRimColor = 0xAA83d0c9;
+    private int mRimColor = 0x00000000; // 0xAA83d0c9
     private int mTextColor = 0xFF000000;
     private int mUnitColor = 0xFF000000;
     private boolean mIsAutoColorEnabled = false;
@@ -355,7 +350,7 @@ public class CircleProgressView extends View {
         if (blockCount > 1) {
             mShowBlock = true;
             mBlockCount = blockCount;
-            mBlockDegree = 360.0f / blockCount;
+            mBlockDegree = 360.0F / blockCount;
             mBlockScaleDegree = mBlockDegree * mBlockScale;
         } else {
             mShowBlock = false;
