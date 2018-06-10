@@ -148,8 +148,6 @@ public class ShowFragment extends Fragment {
     }
 
     public void setSeasons(Show show) {
-        seasonsLayout.setSeasonsTitleCount();
-
         for (Season season : show.seasons) {
             if (season.seasonNumber != 0) {
                 list.add(season);
@@ -157,14 +155,14 @@ public class ShowFragment extends Fragment {
         }
 
         seasonsLayout.setSeasons(show.showId, list);
+        seasonsLayout.setSeasonsTitleCount();
     }
 
     public void setSeasons(int showId, RealmList<Season> seasons) {
-        seasonsLayout.setSeasonsTitleCount();
-
         list.addAll(seasons);
 
         seasonsLayout.setSeasons(showId, list);
+        seasonsLayout.setSeasonsTitleCount();
         RealmDb.updateSeasonsList(showId, list);
     }
 }
