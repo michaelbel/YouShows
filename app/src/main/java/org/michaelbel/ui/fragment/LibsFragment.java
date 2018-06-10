@@ -83,9 +83,9 @@ public class LibsFragment extends Fragment {
             BottomSheet.Builder builder = new BottomSheet.Builder(activity);
             builder.setCellHeight(Extensions.dp(activity,52));
             builder.setTitle(sources.get(position).url).setTitleMultiline(true);
-            builder.setTitleTextColorRes(Theme.Color.secondaryText());
+            builder.setTitleTextColorRes(Theme.Color.secondaryTextColor());
             builder.setBackgroundColorRes(Theme.Color.foreground());
-            builder.setItemTextColorRes(Theme.Color.primaryText());
+            builder.setItemTextColorRes(Theme.Color.primaryTextColor());
             builder.setItems(new int[] {R.string.Open, R.string.CopyLink}, (dialogInterface, i) -> {
                 if (i == 0) {
                     Browser.openUrl(activity, sources.get(position).url);

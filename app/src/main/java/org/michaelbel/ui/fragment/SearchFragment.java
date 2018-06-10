@@ -1,5 +1,8 @@
 package org.michaelbel.ui.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -8,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -26,16 +30,21 @@ import org.michaelbel.app.rest.ApiFactory;
 import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.app.rest.response.ShowsResponse;
+import org.michaelbel.material.extensions.Extensions;
+import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
+import org.michaelbel.shows.R;
 import org.michaelbel.ui.SearchActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;
 import org.michaelbel.ui.view.EmptyView;
 import org.michaelbel.ui.view.EmptyViewMode;
 import org.michaelbel.ui.view.ShowView;
+import org.michaelbel.ui.view.cell.TextCell;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,6 +68,9 @@ public class SearchFragment extends Fragment {
     private SearchActivity activity;
     private PaginationShowsAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
+
+    private SuggestionsAdapter suggestionsAdapter;
+    private RecyclerListView suggestionsRecyclerView;
 
     private EmptyView emptyView;
     private ProgressBar progressBar;
@@ -91,7 +103,6 @@ public class SearchFragment extends Fragment {
 
         RecyclerListView recyclerView = new RecyclerListView(activity);
         recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setEmptyView(emptyView);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
@@ -120,10 +131,50 @@ public class SearchFragment extends Fragment {
             }
         });
         fragmentView.addView(recyclerView);
+
+        suggestionsAdapter = new SuggestionsAdapter();
+
+        suggestionsRecyclerView = new RecyclerListView(activity);
+        suggestionsRecyclerView.setVisibility(View.GONE);
+        suggestionsRecyclerView.setAdapter(suggestionsAdapter);
+        suggestionsRecyclerView.setElevation(Extensions.dp(activity, 2));
+        suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+        suggestionsRecyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP));
+        suggestionsRecyclerView.setOnItemClickListener((view, position) -> {
+            SearchItem item = suggestionsAdapter.suggestions.get(position);
+            searchFromSuggestion(item.query);
+        });
+        suggestionsRecyclerView.setOnItemLongClickListener((view, position) -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertDialogStyle());
+            builder.setTitle(R.string.AppName);
+            builder.setMessage(R.string.ClearHistoryMessage);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Ok, (dialog, which) -> {
+                RealmDb.clearSearchHistory();
+                emptyView.setVisibility(View.VISIBLE);
+                hideSuggestionsList();
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+            return true;
+        });
+        fragmentView.addView(suggestionsRecyclerView);
         return fragmentView;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        showSuggestions();
+    }
+
     public void search(String query) {
+        if (suggestionsRecyclerView.getVisibility() == View.VISIBLE) {
+            hideSuggestionsList();
+        }
+
         searchQuery = query.trim();
         searchStart();
 
@@ -229,5 +280,80 @@ public class SearchFragment extends Fragment {
         progressBar.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
         emptyView.setMode(mode);
+    }
+
+    private void showSuggestions() {
+        SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        boolean suggestions = prefs.getBoolean("enable_suggestions", true);
+        if (suggestions) {
+            RealmResults<SearchItem> results = RealmDb.getSearchItems();
+            if (results != null) {
+                if (results.isLoaded()) {
+                    suggestionsAdapter.addSuggestions(results);
+                    suggestionsRecyclerView.setVisibility(View.VISIBLE);
+                    if (!suggestionsAdapter.suggestions.isEmpty()) {
+                        emptyView.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }
+    }
+
+    private void searchFromSuggestion(String text) {
+        activity.searchEditText.setText(text);
+        activity.searchEditText.setSelection(activity.searchEditText.getText().length());
+        activity.hideKeyboard(activity.searchEditText);
+        hideSuggestionsList();
+        search(text);
+    }
+
+    private void hideSuggestionsList() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(suggestionsRecyclerView, "translationY", 0, -suggestionsRecyclerView.getMeasuredWidth());
+        animator.setDuration(300);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                suggestionsRecyclerView.setVisibility(View.GONE);
+            }
+        });
+        AndroidExtensions.runOnUIThread(animator:: start);
+    }
+
+    private class SuggestionsAdapter extends RecyclerView.Adapter {
+
+        private List<SearchItem> suggestions = new ArrayList<>();
+
+        private void addSuggestions(List<SearchItem> results) {
+            for (SearchItem item : results) {
+                if (suggestions.size() < 5){
+                    suggestions.add(item);
+                }
+            }
+
+            notifyItemRangeInserted(suggestions.size() + 1, results.size());
+        }
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int type) {
+            return new Holder(new TextCell(parent.getContext()));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            SearchItem item = suggestions.get(position);
+
+            TextCell cell = (TextCell) holder.itemView;
+            cell.setMode(TextCell.MODE_ICON);
+            cell.setHeight(Extensions.dp(activity, 48));
+            cell.setText(item.query);
+            cell.setIcon(R.drawable.ic_history);
+        }
+
+        @Override
+        public int getItemCount() {
+            return suggestions != null ? suggestions.size() : 0;
+        }
     }
 }

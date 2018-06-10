@@ -140,13 +140,13 @@ public class MyShowsFragment extends Fragment {
                 builder.setCellHeight(ScreenUtils.dp(52));
                 builder.setTitle(show.name);
                 builder.setTitleMultiline(true);
-                builder.setTitleTextColorRes(Theme.Color.secondaryText());
-                builder.setItemTextColorRes(Theme.Color.primaryText());
-                builder.setIconColorRes(Theme.Color.iconActive());
+                builder.setTitleTextColorRes(Theme.Color.secondaryTextColor());
+                builder.setItemTextColorRes(Theme.Color.primaryTextColor());
+                builder.setIconColorRes(Theme.Color.iconActiveColor());
                 builder.setBackgroundColorRes(Theme.Color.foreground());
                 builder.setItems(new int[]{R.string.Delete}, new int[]{R.drawable.ic_delete}, (dialog, whichRow) -> {
                     if (whichRow == 0) {
-                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity, Theme.alertTheme());
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity, Theme.alertDialogStyle());
                         alertBuilder.setTitle(R.string.AppName);
                         alertBuilder.setMessage(R.string.DeleteShowMessage);
                         alertBuilder.setNegativeButton(R.string.Cancel, null);
@@ -157,8 +157,8 @@ public class MyShowsFragment extends Fragment {
                         });
                         AlertDialog alertDialog = alertBuilder.create();
                         alertDialog.show();
-                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
-                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accentColor()));
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accentColor()));
                     }
                 });
                 builder.show();

@@ -62,6 +62,7 @@ public class FollowingShowsFragment extends Fragment {
     private final AccelerateDecelerateInterpolator floatingInterpolator = new AccelerateDecelerateInterpolator();
 
     private ShowsAdapter adapter;
+    //private FollowingAdapter adapter;
     private MainActivity activity;
     private LinearLayoutManager linearLayoutManager;
 
@@ -100,6 +101,7 @@ public class FollowingShowsFragment extends Fragment {
         fragmentLayout.addView(emptyView);
 
         adapter = new ShowsAdapter();
+        //adapter = new FollowingAdapter();
         linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
 
         recyclerView = new RecyclerListView(activity);
@@ -137,13 +139,13 @@ public class FollowingShowsFragment extends Fragment {
                 builder.setCellHeight(ScreenUtils.dp(52));
                 builder.setTitle(show.name);
                 builder.setTitleMultiline(true);
-                builder.setTitleTextColorRes(Theme.Color.secondaryText());
-                builder.setItemTextColorRes(Theme.Color.primaryText());
-                builder.setIconColorRes(Theme.Color.iconActive());
+                builder.setTitleTextColorRes(Theme.Color.secondaryTextColor());
+                builder.setItemTextColorRes(Theme.Color.primaryTextColor());
+                builder.setIconColorRes(Theme.Color.iconActiveColor());
                 builder.setBackgroundColorRes(Theme.Color.foreground());
                 builder.setItems(new int[]{ R.string.Unfollow}, new int[]{R.drawable.ic_eye}, (dialog, whichRow) -> {
                     if (whichRow == 0) {
-                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity, Theme.alertTheme());
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity, Theme.alertDialogStyle());
                         alertBuilder.setTitle(R.string.AppName);
                         alertBuilder.setMessage(R.string.UnfollowMessage);
                         alertBuilder.setNegativeButton(R.string.Cancel, null);
@@ -153,8 +155,8 @@ public class FollowingShowsFragment extends Fragment {
                         });
                         AlertDialog alertDialog = alertBuilder.create();
                         alertDialog.show();
-                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
-                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accent()));
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accentColor()));
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accentColor()));
                     }
                 });
                 builder.show();
@@ -240,6 +242,7 @@ public class FollowingShowsFragment extends Fragment {
             results = realm.where(Show.class).equalTo("isFollow", true).sort("progress", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_LAST_CHANGES) {
             results = realm.where(Show.class).equalTo("isFollow", true).sort("lastChangesDate", sort).findAll();
+            //Log.e("2580", "last changes date get: " + results.get(0).lastChangesDate);
         }
 
         if (results != null) {

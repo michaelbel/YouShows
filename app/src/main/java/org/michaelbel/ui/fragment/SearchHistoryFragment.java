@@ -80,18 +80,25 @@ public class SearchHistoryFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
-            if (position == 0) {
+            if (position == adapter.ROW_ENABLE_HISTORY) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 boolean enable = prefs.getBoolean("search_history", true);
                 prefs.edit().putBoolean("search_history", !enable).apply();
                 if (view instanceof TextCell) {
                     ((TextCell) view).setChecked(!enable);
                 }
-            } else if (position == 1) {
+            } else if (position == adapter.ROW_SHOW_SUGGESTIONS) {
+                SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                boolean enable = prefs.getBoolean("enable_suggestions", true);
+                prefs.edit().putBoolean("enable_suggestions", !enable).apply();
+                if (view instanceof TextCell) {
+                    ((TextCell) view).setChecked(!enable);
+                }
+            } else if (position == adapter.ROW_CLEAR_HISTORY) {
                 if (!RealmDb.isSearchItemsExist()) {
                     Toast.makeText(activity, R.string.SearchHistoryEmpty, Toast.LENGTH_SHORT).show();
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertTheme());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertDialogStyle());
                     builder.setTitle(R.string.AppName);
                     builder.setMessage(R.string.ClearHistoryMessage);
                     builder.setNegativeButton(R.string.Cancel, null);
@@ -129,6 +136,7 @@ public class SearchHistoryFragment extends Fragment {
         searchItems.add(new SearchItem());
         searchItems.add(new SearchItem());
         searchItems.add(new SearchItem());
+        searchItems.add(new SearchItem());
 
         RealmResults<SearchItem> results = RealmDb.getSearchItems();
         if (results != null) {
@@ -151,7 +159,8 @@ public class SearchHistoryFragment extends Fragment {
 
     private class SearchHistoryAdapter extends RecyclerView.Adapter {
 
-        private final int ROW_ENABLE_HISTORY = 1;
+        private final int ROW_ENABLE_HISTORY = 0;
+        private final int ROW_SHOW_SUGGESTIONS = 1;
         private final int ROW_CLEAR_HISTORY = 2;
         private final int ROW_EMPTY_CELL = 3;
         private final int ROW_SEARCH_ITEM = 4;
@@ -161,7 +170,7 @@ public class SearchHistoryFragment extends Fragment {
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int type) {
             View cell;
 
-            if (type == ROW_ENABLE_HISTORY || type == ROW_CLEAR_HISTORY) {
+            if (type == ROW_ENABLE_HISTORY || type == ROW_SHOW_SUGGESTIONS || type == ROW_CLEAR_HISTORY) {
                 cell = new TextCell(activity);
             } else if (type == ROW_EMPTY_CELL) {
                 cell = new EmptyCell(activity);
@@ -183,6 +192,14 @@ public class SearchHistoryFragment extends Fragment {
                 cell.setMode(TextCell.MODE_SWITCH);
                 cell.setText(getString(R.string.EnableHistory));
                 cell.setChecked(activity.prefs.getBoolean("search_history", true));
+                cell.setDivider(true);
+            } else if (getItemViewType(position) == ROW_SHOW_SUGGESTIONS) {
+                TextCell cell = (TextCell) holder.itemView;
+                cell.changeLayoutParams();
+                cell.changeSwitchTheme();
+                cell.setMode(TextCell.MODE_SWITCH);
+                cell.setText(getString(R.string.ShowSuggestions));
+                cell.setChecked(activity.prefs.getBoolean("enable_suggestions", true));
                 cell.setDivider(true);
             } else if (getItemViewType(position) == ROW_CLEAR_HISTORY) {
                 TextCell cell = (TextCell) holder.itemView;
@@ -220,8 +237,10 @@ public class SearchHistoryFragment extends Fragment {
             if (position == 0) {
                 return ROW_ENABLE_HISTORY;
             } else if (position == 1) {
-                return ROW_CLEAR_HISTORY;
+                return ROW_SHOW_SUGGESTIONS;
             } else if (position == 2) {
+                return ROW_CLEAR_HISTORY;
+            } else if (position == 3) {
                 return ROW_EMPTY_CELL;
             } else {
                 return ROW_SEARCH_ITEM;

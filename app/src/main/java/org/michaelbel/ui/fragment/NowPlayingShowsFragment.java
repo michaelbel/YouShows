@@ -24,7 +24,6 @@ import org.michaelbel.app.rest.ApiService;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.app.rest.response.ShowsResponse;
 import org.michaelbel.material.widget.RecyclerListView;
-import org.michaelbel.shows.R;
 import org.michaelbel.ui.ExploreActivity;
 import org.michaelbel.ui.adapter.PaginationShowsAdapter;
 import org.michaelbel.ui.view.EmptyView;
@@ -90,8 +89,8 @@ public class NowPlayingShowsFragment extends Fragment {
 
         fragmentLayout = new SwipeRefreshLayout(activity);
         fragmentLayout.setRefreshing(false);
-        fragmentLayout.setColorSchemeColors(ContextCompat.getColor(activity, R.color.white));
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
+        fragmentLayout.setColorSchemeColors(ContextCompat.getColor(activity, Theme.swipeRefreshProgressColor()));
         fragmentLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(activity, Theme.primaryColor()));
         fragmentLayout.setOnRefreshListener(() -> {
             if (isAdapterEmpty()) {

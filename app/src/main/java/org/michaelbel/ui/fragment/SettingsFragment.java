@@ -55,6 +55,7 @@ public class SettingsFragment extends Fragment {
     private int sortingRow;
     private int animationsRow;
     private int inAppBrowserRow;
+    private int seasonScrollPosRow;
     private int searchHistoryRow;
     private int dataUsageRow;
     private int emptyRow1;
@@ -110,6 +111,7 @@ public class SettingsFragment extends Fragment {
         sortingRow = rowCount++;
         animationsRow = rowCount++;
         inAppBrowserRow = rowCount++;
+        seasonScrollPosRow = rowCount++;
         searchHistoryRow = rowCount++;
         dataUsageRow = rowCount++;
         emptyRow1 = rowCount++;
@@ -138,7 +140,7 @@ public class SettingsFragment extends Fragment {
             } else if (position == defaultTabRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setCellHeight(ScreenUtils.dp(52));
-                builder.setItemTextColorRes(Theme.Color.primaryText());
+                builder.setItemTextColorRes(Theme.Color.primaryTextColor());
                 builder.setBackgroundColorRes(Theme.Color.foreground());
                 builder.setItems(new int[] { R.string.MyShows, R.string.Following }, (dialog, pos) -> {
                     prefs.edit().putInt("default_tab", pos).apply();
@@ -152,7 +154,7 @@ public class SettingsFragment extends Fragment {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setCellHeight(ScreenUtils.dp(52));
                 builder.setDarkTheme(true);
-                builder.setItemTextColorRes(Theme.Color.primaryText());
+                builder.setItemTextColorRes(Theme.Color.primaryTextColor());
                 builder.setBackgroundColorRes(Theme.Color.foreground());
                 builder.setItems(dateFormats, (dialog, pos) -> {
                     prefs.edit().putString("date_format", dateFormats[pos]).apply();
@@ -180,6 +182,13 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
                 boolean enable = prefs.getBoolean("in_app_browser", true);
                 prefs.edit().putBoolean("in_app_browser", !enable).apply();
+                if (view instanceof TextDetailCell) {
+                    ((TextDetailCell) view).setChecked(!enable);
+                }
+            } else if (position == seasonScrollPosRow) {
+                SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                boolean enable = prefs.getBoolean("season_scroll_position", true);
+                prefs.edit().putBoolean("season_scroll_position", !enable).apply();
                 if (view instanceof TextDetailCell) {
                     ((TextDetailCell) view).setChecked(!enable);
                 }
@@ -270,7 +279,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public void changeTheme() {
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
@@ -353,6 +362,12 @@ public class SettingsFragment extends Fragment {
                     cell.setValue(R.string.InAppBrowserInfo);
                     cell.setChecked(prefs.getBoolean("in_app_browser", true));
                     cell.setDivider(true);
+                } else if (position == seasonScrollPosRow) {
+                    cell.setMode(TextDetailCell.MODE_SWITCH);
+                    cell.setText(R.string.SeasonScrollPosition);
+                    cell.setValue(R.string.SeasonScrollPositionInfo);
+                    cell.setChecked(prefs.getBoolean("season_scroll_position", true));
+                    cell.setDivider(true);
                 } else if (position == appInfoRow) {
                     cell.setMode(TextDetailCell.MODE_ICONS);
                     cell.setStartIcon(R.drawable.ic_about);
@@ -424,7 +439,7 @@ public class SettingsFragment extends Fragment {
                 return 0;
             } else if (position == aboutRow) {
                 return 1;
-            } else if (position == themeRow || position == defaultTabRow || position == dateFormatRow || position == sortingRow || position == animationsRow || position == inAppBrowserRow || position == appInfoRow || position == feedbackRow) {
+            } else if (position == themeRow || position == defaultTabRow || position == dateFormatRow || position == sortingRow || position == animationsRow || position == inAppBrowserRow || position == seasonScrollPosRow || position == appInfoRow || position == feedbackRow) {
                 return 2;
             } else {
                 return 3;

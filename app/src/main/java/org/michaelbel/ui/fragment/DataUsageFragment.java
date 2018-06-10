@@ -20,9 +20,9 @@ import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
-import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
 import org.michaelbel.ui.view.cell.EmptyCell;
@@ -69,7 +69,7 @@ public class DataUsageFragment extends Fragment {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
 
         FrameLayout fragmentLayout = new FrameLayout(activity);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         rowCount = 0;
         deleteAllRow = rowCount++;
@@ -88,7 +88,7 @@ public class DataUsageFragment extends Fragment {
                 if (myshowsCount == 0) {
                     Toast.makeText(activity, R.string.YourShowsListEmpty, Toast.LENGTH_SHORT).show();
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertTheme());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertDialogStyle());
                     builder.setTitle(R.string.AppName);
                     builder.setMessage(R.string.DeleteAllShowsMessage);
                     builder.setNegativeButton(R.string.Cancel, null);
@@ -106,7 +106,7 @@ public class DataUsageFragment extends Fragment {
                 if (followingCount == 0) {
                     Toast.makeText(activity, R.string.YouDoNotFollowShows, Toast.LENGTH_SHORT).show();
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertTheme());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity, Theme.alertDialogStyle());
                     builder.setTitle(R.string.AppName);
                     builder.setMessage(R.string.UnfollowFromAllShowsMessage);
                     builder.setNegativeButton(R.string.Cancel, null);
@@ -186,7 +186,7 @@ public class DataUsageFragment extends Fragment {
 
                 if (position == emptyRow1) {
                     cell.setMode(EmptyCell.MODE_DEFAULT);
-                    cell.setHeight(ScreenUtils.dp(12));
+                    cell.setHeight(Extensions.dp(activity,12));
                 }
             } else if (type == 1) {
                 HeaderCell cell = (HeaderCell) holder.itemView;
@@ -240,7 +240,6 @@ public class DataUsageFragment extends Fragment {
             for (int i = 0; i < count; i++) {
                 View child = recyclerView.getChildAt(i);
                 Holder holder = (Holder) recyclerView.getChildViewHolder(child);
-                int type = holder.getItemViewType();
                 int pos = holder.getAdapterPosition();
                 if (pos == deleteAllRow) {
                     TextDetailCell cell = (TextDetailCell) holder.itemView;
