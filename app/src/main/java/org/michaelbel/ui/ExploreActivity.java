@@ -3,7 +3,6 @@ package org.michaelbel.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,18 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.NowPlayingShowsFragment;
 import org.michaelbel.ui.fragment.PopularShowsFragment;
 import org.michaelbel.ui.fragment.TopRatedShowsFragment;
+import org.michaelbel.ui.view.TabView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Date: 19 MAR 2018
@@ -38,8 +37,8 @@ import java.util.List;
 
 public class ExploreActivity extends AppCompatActivity {
 
-    private final int tab_popular = 0;
-    private final int tab_now_playing = 1;
+    private final int tab_now_playing = 0;
+    private final int tab_popular = 1;
     private final int tab_top_rated = 2;
 
     public TabLayout tabLayout;
@@ -56,19 +55,16 @@ public class ExploreActivity extends AppCompatActivity {
         appBar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setLayoutParams(AndroidExtensions.setScrollFlags(toolbar));
+        //toolbar.setLayoutParams(AndroidExtensions.setScrollFlags(toolbar));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
-        TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(R.string.ExploreShows);
-
         adapter = new FragmentsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PopularShowsFragment(), R.string.Popular);
-        adapter.addFragment(new NowPlayingShowsFragment(), R.string.NowPlaying);
-        adapter.addFragment(new TopRatedShowsFragment(), R.string.TopRated);
+        adapter.addFragment(new NowPlayingShowsFragment());
+        adapter.addFragment(new PopularShowsFragment());
+        adapter.addFragment(new TopRatedShowsFragment());
 
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
@@ -78,6 +74,8 @@ public class ExploreActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                setTabs(position);
+
                 if (position == tab_popular) {
                     PopularShowsFragment fragment = (PopularShowsFragment) adapter.getItem(tab_popular);
                     if (fragment.isAdapterEmpty()) {
@@ -102,10 +100,18 @@ public class ExploreActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
-        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabUnselectedText()), ContextCompat.getColor(this, R.color.white));
+
+        int tab = viewPager.getCurrentItem();
+
+        Objects.requireNonNull(tabLayout.getTabAt(tab_now_playing)).setCustomView(new TabView(this)
+                .setTab(R.string.NowPlaying, R.drawable.ic_play_circle, tab == tab_now_playing));
+        Objects.requireNonNull(tabLayout.getTabAt(tab_popular)).setCustomView(new TabView(this)
+                .setTab(R.string.Popular, R.drawable.ic_fire, tab == tab_popular));
+        Objects.requireNonNull(tabLayout.getTabAt(tab_top_rated)).setCustomView(new TabView(this)
+                .setTab(R.string.TopRated, R.drawable.ic_star_circle, tab == tab_top_rated));
     }
 
     @Override
@@ -130,22 +136,22 @@ public class ExploreActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void setTabs(int currentTab) {
+        ((TabView) Objects.requireNonNull(Objects.requireNonNull(tabLayout.getTabAt(tab_now_playing)).getCustomView())).setSelect(currentTab == tab_now_playing);
+        ((TabView) Objects.requireNonNull(Objects.requireNonNull(tabLayout.getTabAt(tab_popular)).getCustomView())).setSelect(currentTab == tab_popular);
+        ((TabView) Objects.requireNonNull(Objects.requireNonNull(tabLayout.getTabAt(tab_top_rated)).getCustomView())).setSelect(currentTab == tab_top_rated);
+    }
+
     private class FragmentsPagerAdapter extends FragmentPagerAdapter {
 
-        private final List<Fragment> fragments = new ArrayList<>();
-        private final List<CharSequence> titles = new ArrayList<>();
+        private List<Fragment> fragments = new ArrayList<>();
 
         private FragmentsPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
-        private void addFragment(Fragment fragment, CharSequence title) {
+        private void addFragment(Fragment fragment) {
             fragments.add(fragment);
-            titles.add(title);
-        }
-
-        private void addFragment(Fragment fragment, @StringRes int stringId) {
-            addFragment(fragment, getText(stringId));
         }
 
         @Override
@@ -159,13 +165,7 @@ public class ExploreActivity extends AppCompatActivity {
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
-            return titles.get(position);
-        }
-
-        @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            // For Save Instance Fragments
             //super.destroyItem(container, position, object);
         }
     }

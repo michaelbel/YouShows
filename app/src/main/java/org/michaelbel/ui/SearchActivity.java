@@ -24,10 +24,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.fragment.SearchFragment;
 
@@ -52,7 +52,7 @@ public class SearchActivity extends AppCompatActivity {
     private int iconActionMode;
 
     private Menu actionMenu;
-    private EditText searchEditText;
+    public EditText searchEditText;
     private SearchFragment searchFragment;
 
     @Override
@@ -174,15 +174,6 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    public void startShow(Show show) {
-        Intent intent = new Intent(this, ShowActivity.class);
-        intent.putExtra("id", show.showId);
-        intent.putExtra("name", show.name);
-        intent.putExtra("overview", show.overview);
-        intent.putExtra("backdropPath", show.backdropPath);
-        startActivity(intent);
-    }
-
     private void changeActionIcon() {
         if (actionMenu != null) {
             if (searchEditText.getText().toString().trim().isEmpty()) {
@@ -195,7 +186,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void hideKeyboard(View view) {
+    public void hideKeyboard(View view) {
         if (view == null) {
             return;
         }
@@ -209,5 +200,14 @@ public class SearchActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void startShow(Show show) {
+        Intent intent = new Intent(this, ShowActivity.class);
+        intent.putExtra("id", show.showId);
+        intent.putExtra("name", show.name);
+        intent.putExtra("overview", show.overview);
+        intent.putExtra("backdropPath", show.backdropPath);
+        startActivity(intent);
     }
 }
