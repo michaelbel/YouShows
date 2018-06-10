@@ -89,7 +89,7 @@ public class MyShowView extends FrameLayout {
         nameText.setMaxLines(2);
         nameText.setEllipsize(TextUtils.TruncateAt.END);
         nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        nameText.setTextColor(ContextCompat.getColor(context, Theme.accentColor()));
+        nameText.setTextColor(ContextCompat.getColor(context, Theme.showNameColor()));
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
         statusCard = view.findViewById(R.id.status_card);
@@ -131,23 +131,25 @@ public class MyShowView extends FrameLayout {
         dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));
 
         circleProgressView = view.findViewById(R.id.progress_view);
+        circleProgressView.setUnit("%");
+        circleProgressView.setUnitVisible(true);
+        circleProgressView.setUnitPosition(UnitPosition.RIGHT_BOTTOM);
+        circleProgressView.setUnitSize(Extensions.dp(context, 6));
         circleProgressView.setTextSize(Extensions.dp(context, 10));
-        circleProgressView.setTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         circleProgressView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         circleProgressView.setUnitColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        circleProgressView.setTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         circleProgressView.setUnitTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        circleProgressView.setUnitVisible(true);
-        circleProgressView.setUnitSize(Extensions.dp(context, 6));
-        circleProgressView.setBarColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, R.color.red));
-        if (Theme.getTheme() == Theme.THEME_LIGHT) {
-            circleProgressView.setRimColor(ContextCompat.getColor(context, Theme.iconActiveColor()));
-        } else if (Theme.getTheme() == Theme.THEME_NIGHT) {
-            circleProgressView.setRimColor(ContextCompat.getColor(context, R.color.background));
-        }
-        circleProgressView.setBarWidth(Extensions.dp(context, 5.2F));
+        circleProgressView.setBarColor(ContextCompat.getColor(context, R.color.green));
+
         circleProgressView.setRimWidth(Extensions.dp(context, 5));
-        circleProgressView.setUnit("%");
-        circleProgressView.setUnitPosition(UnitPosition.RIGHT_BOTTOM);
+        circleProgressView.setBarWidth(Extensions.dp(context, 6));
+
+        if (Theme.getTheme() == Theme.THEME_LIGHT) {
+            circleProgressView.setRimColor(ContextCompat.getColor(context, R.color.background));
+        } else if (Theme.getTheme() == Theme.THEME_NIGHT) {
+            circleProgressView.setRimColor(ContextCompat.getColor(context, R.color.n_background));
+        }
 
         expandIconLayout = view.findViewById(R.id.expand_icon_layout);
 
@@ -248,14 +250,14 @@ public class MyShowView extends FrameLayout {
         progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(getContext(), R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.iconActiveColor())), null, null, null);
         paint.setColor(ContextCompat.getColor(getContext(), Theme.backgroundColor()));
         setWillNotDraw(true);
-
         circleProgressView.setTextColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
         circleProgressView.setUnitColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
         circleProgressView.setBarColor(ContextCompat.getColor(getContext(), R.color.green));
+
         if (Theme.getTheme() == Theme.THEME_LIGHT) {
-            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
+            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), R.color.background));
         } else if (Theme.getTheme() == Theme.THEME_NIGHT) {
-            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), Theme.secondaryTextColor()));
+            circleProgressView.setRimColor(ContextCompat.getColor(getContext(), R.color.n_background));
         }
     }
 
