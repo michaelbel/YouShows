@@ -17,25 +17,12 @@
             android:layout_height="56dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <TextView
-                android:id="@+id/toolbar_title"
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textSize="20sp"
-                android:ellipsize="end"
-                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+                android:layout_height="match_parent"/>
 
         </android.support.v7.widget.Toolbar>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"/>
 
     </android.support.design.widget.AppBarLayout>
 
