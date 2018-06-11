@@ -7,22 +7,21 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 16
+        versionCode 22
+        versionName "1.1.4"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField "String", "VERSION_DATE", '"26 May 2018"'
-        //project.ext.set("archivesBaseName", "shows-v" + versionName)
-        //resConfigs "en", "ru"
-        //resConfigs "mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"
+        buildConfigField "String", "VERSION_DATE", '"11 Jun 2018"'
+        project.ext.set("archivesBaseName", "youshows-v" + versionName)
     }
 
-    signingConfigs {
+    /*signingConfigs {
         config {
-            keyAlias 'shows'
-            keyPassword '****************'
-            storeFile file('C:/Users/Michael/ShowsAppSignKey.jks')
+            keyAlias '********'
+            keyPassword '************'
+            storeFile file('********')
             storePassword '**********'
         }
-    }
+    }*/
 
     buildTypes {
         /*debug {
@@ -41,19 +40,16 @@ android {
     productFlavors {
         releasing {
             minSdkVersion 21
-            versionName "1.0.8"
-            applicationId "org.michaelbel.shows"
-
             flavorDimensions "market"
-            signingConfig signingConfigs.config
+            applicationId "org.michaelbel.shows"
+            //signingConfig signingConfigs.config
         }
 
         developing {
             minSdkVersion 21
-            versionName "1.0.8-beta"
-            applicationId "org.michaelbel.shows.beta"
-
             flavorDimensions "develop"
+            versionName "1.1.4-beta"
+            applicationId "org.michaelbel.shows.beta"
         }
     }
 
