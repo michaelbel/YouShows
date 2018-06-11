@@ -1,5 +1,6 @@
 package org.michaelbel.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,6 +42,8 @@ public class ExploreActivity extends AppCompatActivity {
     private final int tab_popular = 1;
     private final int tab_top_rated = 2;
 
+    private Context context;
+
     public TabLayout tabLayout;
     private FragmentsPagerAdapter adapter;
 
@@ -49,15 +52,17 @@ public class ExploreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
+        context = ExploreActivity.this;
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(context, Theme.primaryDarkColor()));
 
         AppBarLayout appBar = findViewById(R.id.app_bar);
-        appBar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
+        appBar.setBackgroundColor(ContextCompat.getColor(context, Theme.primaryColor()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         //toolbar.setLayoutParams(AndroidExtensions.setScrollFlags(toolbar));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(context, Theme.primaryColor()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
@@ -102,15 +107,15 @@ public class ExploreActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(context, Theme.tabSelectColor()));
 
         int tab = viewPager.getCurrentItem();
 
-        Objects.requireNonNull(tabLayout.getTabAt(tab_now_playing)).setCustomView(new TabView(this)
+        Objects.requireNonNull(tabLayout.getTabAt(tab_now_playing)).setCustomView(new TabView(context)
                 .setTab(R.string.NowPlaying, R.drawable.ic_play_circle, tab == tab_now_playing));
-        Objects.requireNonNull(tabLayout.getTabAt(tab_popular)).setCustomView(new TabView(this)
+        Objects.requireNonNull(tabLayout.getTabAt(tab_popular)).setCustomView(new TabView(context)
                 .setTab(R.string.Popular, R.drawable.ic_fire, tab == tab_popular));
-        Objects.requireNonNull(tabLayout.getTabAt(tab_top_rated)).setCustomView(new TabView(this)
+        Objects.requireNonNull(tabLayout.getTabAt(tab_top_rated)).setCustomView(new TabView(context)
                 .setTab(R.string.TopRated, R.drawable.ic_star_circle, tab == tab_top_rated));
     }
 
@@ -120,15 +125,21 @@ public class ExploreActivity extends AppCompatActivity {
             .setIcon(R.drawable.ic_search)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             .setOnMenuItemClickListener(item -> {
-                startActivity(new Intent(ExploreActivity.this, SearchActivity.class));
+                startActivity(new Intent(context, SearchActivity.class));
                 return true;
             });
 
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        context = null;
+    }
+
     public void startShow(Show show) {
-        Intent intent = new Intent(this, ShowActivity.class);
+        Intent intent = new Intent(context, ShowActivity.class);
         intent.putExtra("id", show.showId);
         intent.putExtra("name", show.name);
         intent.putExtra("overview", show.overview);

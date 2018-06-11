@@ -51,6 +51,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private int iconActionMode;
 
+    private Context context;
+
     private Menu actionMenu;
     public EditText searchEditText;
     private SearchFragment searchFragment;
@@ -60,21 +62,23 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
+        context = SearchActivity.this;
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(context, Theme.primaryDarkColor()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(context, Theme.primaryColor()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
         iconActionMode = MODE_ACTION_VOICE;
 
-        FrameLayout toolbarLayout = new FrameLayout(this);
+        FrameLayout toolbarLayout = new FrameLayout(context);
         toolbarLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         toolbar.addView(toolbarLayout);
 
-        searchEditText = new EditText(this);
+        searchEditText = new EditText(context);
         searchEditText.setLines(1);
         searchEditText.setMaxLines(1);
         searchEditText.setSingleLine();
@@ -85,8 +89,8 @@ public class SearchActivity extends AppCompatActivity {
         searchEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         searchEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        searchEditText.setTextColor(ContextCompat.getColor(this, R.color.white));
-        searchEditText.setHintTextColor(ContextCompat.getColor(this, Theme.Color.searchHintText()));
+        searchEditText.setTextColor(ContextCompat.getColor(context, R.color.white));
+        searchEditText.setHintTextColor(ContextCompat.getColor(context, R.color.n_disabledHintText));
         searchEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -174,6 +178,12 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        context = null;
+    }
+
     private void changeActionIcon() {
         if (actionMenu != null) {
             if (searchEditText.getText().toString().trim().isEmpty()) {
@@ -203,7 +213,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void startShow(Show show) {
-        Intent intent = new Intent(this, ShowActivity.class);
+        Intent intent = new Intent(context, ShowActivity.class);
         intent.putExtra("id", show.showId);
         intent.putExtra("name", show.name);
         intent.putExtra("overview", show.overview);

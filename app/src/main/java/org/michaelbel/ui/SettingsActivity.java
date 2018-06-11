@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,8 +33,9 @@ import org.michaelbel.ui.fragment.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private Context context;
     public SharedPreferences prefs;
-    private AccelerateDecelerateInterpolator accelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator();
+    private SettingsFragment settingsFragment;
 
     public Toolbar toolbar;
     public TextView toolbarTitle;
@@ -43,19 +45,19 @@ public class SettingsActivity extends AppCompatActivity {
     public FrameLayout frameLayout2;
     public FrameLayout shadowLayout;
 
-    private SettingsFragment settingsFragment;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        context = SettingsActivity.this;
+
         prefs = getSharedPreferences("mainconfig", MODE_PRIVATE);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
+        getWindow().setStatusBarColor(ContextCompat.getColor(context, Theme.primaryDarkColor()));
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(context, Theme.primaryColor()));
         setSupportActionBar(toolbar);
 
         toolbarTitle = findViewById(R.id.toolbar_title);
@@ -63,14 +65,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         toolbarTitle2 = findViewById(R.id.toolbar_title2);
         toolbarTitle2.setAlpha(0);
-        toolbarTitle2.setX(Extensions.dp(this, 56));
+        toolbarTitle2.setX(Extensions.dp(context, 56));
         toolbarTitle2.setVisibility(View.INVISIBLE);
 
         frameLayout1 = findViewById(R.id.fragment_view1);
 
         frameLayout2 = findViewById(R.id.fragment_view2);
         frameLayout2.setVisibility(View.INVISIBLE);
-        frameLayout2.setElevation(Extensions.dp(this, 2));
+        frameLayout2.setElevation(Extensions.dp(context, 2));
 
         settingsFragment = new SettingsFragment();
         setRootFragment(settingsFragment);
@@ -78,7 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
         shadowLayout = findViewById(R.id.shadow_layout);
         shadowLayout.setAlpha(0);
         shadowLayout.setVisibility(View.INVISIBLE);
-        shadowLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent20));
+        shadowLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent20));
     }
 
     @Override
@@ -88,6 +90,12 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        context = null;
     }
 
     public void setRootFragment(Fragment fragment) {
@@ -105,16 +113,16 @@ public class SettingsActivity extends AppCompatActivity {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(
             ObjectAnimator.ofFloat(shadowLayout, "alpha", 0, 1),
-            ObjectAnimator.ofFloat(frameLayout1, "translationX", 0, -Extensions.dp(this, 100)),
+            ObjectAnimator.ofFloat(frameLayout1, "translationX", 0, -Extensions.dp(context, 100)),
             ObjectAnimator.ofFloat(frameLayout2, "translationX", frameLayout2.getMeasuredWidth(), 0),
 
             ObjectAnimator.ofFloat(toolbarTitle, "alpha", 1, 0),
-            ObjectAnimator.ofFloat(toolbarTitle, "translationX", 0, -Extensions.dp(this, 56)),
+            ObjectAnimator.ofFloat(toolbarTitle, "translationX", 0, -Extensions.dp(context, 56)),
 
             ObjectAnimator.ofFloat(toolbarTitle2, "alpha", 0, 1),
-            ObjectAnimator.ofFloat(toolbarTitle2, "translationX", Extensions.dp(this, 56), 0)
+            ObjectAnimator.ofFloat(toolbarTitle2, "translationX", Extensions.dp(context, 56), 0)
         );
-        animatorSet.setInterpolator(accelerateDecelerateInterpolator);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.setDuration(300);
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -137,17 +145,17 @@ public class SettingsActivity extends AppCompatActivity {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(
             ObjectAnimator.ofFloat(shadowLayout, "alpha", 1, 0),
-            ObjectAnimator.ofFloat(frameLayout1, "translationX", -Extensions.dp(this, 100), 0),
+            ObjectAnimator.ofFloat(frameLayout1, "translationX", -Extensions.dp(context, 100), 0),
             ObjectAnimator.ofFloat(frameLayout2, "translationX", 0, frameLayout2.getMeasuredWidth()),
 
             ObjectAnimator.ofFloat(toolbarTitle, "alpha", 0, 1),
-            ObjectAnimator.ofFloat(toolbarTitle, "translationX", -Extensions.dp(this, 56), 0),
+            ObjectAnimator.ofFloat(toolbarTitle, "translationX", -Extensions.dp(context, 56), 0),
 
             ObjectAnimator.ofFloat(toolbarTitle2, "alpha", 1, 0),
-            ObjectAnimator.ofFloat(toolbarTitle2, "translationX", 0, Extensions.dp(this, 56))
+            ObjectAnimator.ofFloat(toolbarTitle2, "translationX", 0, Extensions.dp(context, 56))
         );
         animatorSet.setDuration(300);
-        animatorSet.setInterpolator(accelerateDecelerateInterpolator);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

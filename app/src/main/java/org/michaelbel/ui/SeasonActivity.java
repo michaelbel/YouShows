@@ -1,5 +1,6 @@
 package org.michaelbel.ui;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,21 +33,24 @@ public class SeasonActivity extends AppCompatActivity {
     public int seasonEpisodeCount;
     public String seasonName;
 
+    private Context context;
+    private EpisodesFragment fragment;
+
     public TextView toolbarTitle;
     public FloatingActionButton fabButton;
-
-    private EpisodesFragment fragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_season);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
+        context = SeasonActivity.this;
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(context, Theme.primaryDarkColor()));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(context, Theme.primaryColor()));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
@@ -70,6 +74,12 @@ public class SeasonActivity extends AppCompatActivity {
         startFragment(fragment);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        context = null;
+    }
+
     public void startFragment(Fragment fragment) {
         getSupportFragmentManager()
             .beginTransaction()
@@ -79,13 +89,13 @@ public class SeasonActivity extends AppCompatActivity {
 
     public void changeFabStyle(boolean watched) {
         fabButton.setImageDrawable(watched ?
-            AndroidExtensions.getIcon(this, R.drawable.ic_done, ContextCompat.getColor(this, R.color.white)) :
-            AndroidExtensions.getIcon(this, R.drawable.ic_plus, ContextCompat.getColor(this, Theme.fabShowFollowIconColor()))
+            AndroidExtensions.getIcon(context, R.drawable.ic_done, ContextCompat.getColor(context, R.color.white)) :
+            AndroidExtensions.getIcon(context, R.drawable.ic_plus, ContextCompat.getColor(context, Theme.fabShowFollowIconColor()))
         );
 
         fabButton.setBackgroundTintList(watched ?
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
-            ColorStateList.valueOf(ContextCompat.getColor(this, Theme.fabShowFollowColor()))
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)) :
+            ColorStateList.valueOf(ContextCompat.getColor(context, Theme.fabShowFollowColor()))
         );
     }
 

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -45,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private final int tab_shows = 0;
     private final int tab_follow = 1;
 
+    private Context context;
     private SharedPreferences prefs;
     private FragmentsPagerAdapter adapter;
-    private final AccelerateDecelerateInterpolator floatingInterpolator = new AccelerateDecelerateInterpolator();
 
     public Toolbar toolbar;
     public SortView sortView;
@@ -61,26 +62,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
+        context = MainActivity.this;
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(context, Theme.primaryDarkColor()));
 
         prefs = getSharedPreferences("mainconfig", MODE_PRIVATE);
         int currentTab = prefs.getInt("default_tab", tab_shows);
         boolean animations = prefs.getBoolean("animations", true);
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
+        toolbar.setBackgroundColor(ContextCompat.getColor(context, Theme.primaryColor()));
         setSupportActionBar(toolbar);
 
         floatingButton = findViewById(R.id.fab);
         floatingButton.setClickable(!animations);
         floatingButton.setImageResource(R.drawable.ic_plus);
-        floatingButton.setOnClickListener(v -> startExplore());
-        floatingButton.setTranslationY(Extensions.dp(this, animations ? 88 : 0));
-        floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, Theme.accentColor())));
+        floatingButton.setOnClickListener(view -> startExplore());
+        floatingButton.setTranslationY(Extensions.dp(context, animations ? 88 : 0));
+        floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, Theme.accentColor())));
 
         viewPager = findViewById(R.id.view_pager);
 
-        adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());
+        adapter = new FragmentsPagerAdapter(context, getSupportFragmentManager());
         adapter.addFragment(new MyShowsFragment(), R.string.MyShows);
         adapter.addFragment(new FollowingShowsFragment(), R.string.Following);
 
@@ -103,15 +106,15 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
-        tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabUnselectedText()), ContextCompat.getColor(this, R.color.white));
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(context, Theme.tabSelectColor()));
+        tabLayout.setTabTextColors(ContextCompat.getColor(context, Theme.tabUnselectColor()), ContextCompat.getColor(context, Theme.tabSelectColor()));
 
         sortView = findViewById(R.id.sort_view);
-        sortView.sortLayout.setOnClickListener(v -> {
+        sortView.sortLayout.setOnClickListener(view -> {
             if (viewPager.getCurrentItem() == tab_shows) {
                 int checkedItem = prefs.getInt("myshows_sort_type", SortView.SORT_BY_DEFAULT);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, Theme.alertDialogStyle());
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, Theme.alertDialogStyle());
                 builder.setTitle(R.string.Sort);
                 builder.setSingleChoiceItems(R.array.Sorts, checkedItem, (dialog, which) -> {
                     prefs.edit().putInt("myshows_sort_type", which).apply();
@@ -126,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (viewPager.getCurrentItem() == tab_follow) {
                 int checkedItem = prefs.getInt("following_sort_type", SortView.SORT_BY_DEFAULT);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, Theme.alertDialogStyle());
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, Theme.alertDialogStyle());
                 builder.setTitle(R.string.Sort);
                 builder.setSingleChoiceItems(R.array.Sorts, checkedItem, (dialog, which) -> {
                     prefs.edit().putInt("following_sort_type", which).apply();
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-        sortView.orderLayout.setOnClickListener(v -> {
+        sortView.orderLayout.setOnClickListener(view -> {
             if (viewPager.getCurrentItem() == tab_shows) {
                 boolean order = prefs.getBoolean("myshows_sort_order", SortView.ORDER_ASCENDING);
                 prefs.edit().putBoolean("myshows_sort_order", !order).apply();
@@ -162,17 +165,23 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentTab == tab_shows) {
             if (RealmDb.getMyWatchedShowsCount() == 0) {
-                if (floatingButton.getTranslationY() == Extensions.dp(this,88)) {
+                if (floatingButton.getTranslationY() == Extensions.dp(context,88)) {
                     floatingButtonAppear();
                 }
             }
         } else if (currentTab == tab_follow)  {
             if (RealmDb.getFollowingShowsCount() == 0) {
-                if (floatingButton.getTranslationY() == Extensions.dp(this,88)) {
+                if (floatingButton.getTranslationY() == Extensions.dp(context,88)) {
                     floatingButtonAppear();
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        context = null;
     }
 
     @Override
@@ -181,15 +190,15 @@ public class MainActivity extends AppCompatActivity {
 
         ((YouShows) getApplication()).bus().toObservable().subscribe(object -> {
             if (object instanceof Events.ChangeDefaultTab) {
-                viewPager.setCurrentItem(prefs.getInt("default_tab", 0));
+                viewPager.setCurrentItem(prefs.getInt("default_tab", tab_shows));
             } else if (object instanceof Events.EnableSorting) {
                 sortViewVisibility();
             } else if (object instanceof Events.ChangeTheme) {
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, Theme.primaryColor()));
-                tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.white));
-                tabLayout.setTabTextColors(ContextCompat.getColor(this, Theme.Color.tabUnselectedText()), ContextCompat.getColor(this, R.color.white));
-                floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, Theme.accentColor())));
+                getWindow().setStatusBarColor(ContextCompat.getColor(context, Theme.primaryDarkColor()));
+                toolbar.setBackgroundColor(ContextCompat.getColor(context, Theme.primaryColor()));
+                tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(context, Theme.tabSelectColor()));
+                tabLayout.setTabTextColors(ContextCompat.getColor(context, Theme.tabUnselectColor()), ContextCompat.getColor(context, Theme.tabSelectColor()));
+                floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, Theme.accentColor())));
                 sortView.changeTheme();
             }
         });
@@ -201,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             .setIcon(R.drawable.ic_settings)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             .setOnMenuItemClickListener(item -> {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                startActivity(new Intent(context, SettingsActivity.class));
                 return true;
             });
 
@@ -225,9 +234,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void floatingButtonAppear() {
         ObjectAnimator animator = ObjectAnimator.ofFloat(floatingButton, "translationY", -0);
-        animator.setInterpolator(floatingInterpolator);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.setDuration(300);
-        animator.start();
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -235,14 +243,15 @@ public class MainActivity extends AppCompatActivity {
                 floatingButton.setClickable(true);
             }
         });
+        animator.start();
     }
 
     public void startExplore() {
-        startActivity(new Intent(MainActivity.this, ExploreActivity.class));
+        startActivity(new Intent(context, ExploreActivity.class));
     }
 
     public void startShow(Show show) {
-        Intent intent = new Intent(this, ShowActivity.class);
+        Intent intent = new Intent(context, ShowActivity.class);
         intent.putExtra("id", show.showId);
         intent.putExtra("name", show.name);
         intent.putExtra("overview", show.overview);

@@ -1,6 +1,7 @@
 package org.michaelbel.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -58,6 +59,10 @@ public class ShowActivity extends AppCompatActivity {
     public String extraBackdrop;
     public String extraOverview;
 
+    private Context context;
+    private SharedPreferences prefs;
+    private ShowFragment fragment;
+
     public Toolbar toolbar;
     public TextView toolbarTitle;
     public BackdropView collapsingView;
@@ -65,18 +70,17 @@ public class ShowActivity extends AppCompatActivity {
     public FloatingActionButton followButton;
     public CollapsingToolbarLayout collapsingToolbarLayout;
 
-    private SharedPreferences prefs;
-    private ShowFragment fragment;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, Theme.primaryDarkColor()));
+        context = ShowActivity.this;
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(context, Theme.primaryDarkColor()));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent20));
+        getWindow().setStatusBarColor(ContextCompat.getColor(context, R.color.transparent20));
 
         prefs = getSharedPreferences("mainconfig", MODE_PRIVATE);
 
@@ -91,11 +95,11 @@ public class ShowActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> finish());
 
         scrollView = findViewById(R.id.scroll_view);
-        scrollView.setBackgroundColor(ContextCompat.getColor(this, Theme.Color.appBarColor()));
+        scrollView.setBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));
 
         collapsingToolbarLayout = findViewById(R.id.collapsing_layout);
-        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, Theme.primaryColor()));
-        collapsingToolbarLayout.setStatusBarScrimColor(ContextCompat.getColor(this, android.R.color.transparent));
+        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context, Theme.primaryColor()));
+        collapsingToolbarLayout.setStatusBarScrimColor(ContextCompat.getColor(context, android.R.color.transparent));
 
         toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(extraName);
@@ -115,7 +119,7 @@ public class ShowActivity extends AppCompatActivity {
         followButton = findViewById(R.id.follow_fab);
         followButton.setClickable(false);
         followButton.setLongClickable(false);
-        followButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, Theme.fabShowFollowColor())));
+        followButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, Theme.fabShowFollowColor())));
         followButton.setOnClickListener(view -> {
             boolean follow = RealmDb.isShowFollow(extraId);
             followShow(!follow);
@@ -175,6 +179,12 @@ public class ShowActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        context = null;
+    }
+
     private void setCollapsingLabel() {
         boolean label = prefs.getBoolean("collapsing_label", true);
         if (RealmDb.isShowExist(extraId)) {
@@ -210,7 +220,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void followButtonSwapAnimation() {
-        Drawable avd = AnimatedVectorDrawableCompat.create(this, Theme.fabProgressBar());
+        Drawable avd = AnimatedVectorDrawableCompat.create(context, Theme.fabProgressBar());
         followButton.setImageDrawable(avd);
         if (avd != null) {
             ((Animatable) avd).start();
@@ -222,12 +232,12 @@ public class ShowActivity extends AppCompatActivity {
 
     private void changeFabStyle(boolean follow) {
         followButton.setImageDrawable(follow ?
-            AndroidExtensions.getIcon(this, R.drawable.ic_done, ContextCompat.getColor(this, R.color.white)) :
-            AndroidExtensions.getIcon(this, R.drawable.ic_eye_plus, ContextCompat.getColor(this, Theme.fabShowFollowIconColor()))
+            AndroidExtensions.getIcon(context, R.drawable.ic_done, ContextCompat.getColor(context, R.color.white)) :
+            AndroidExtensions.getIcon(context, R.drawable.ic_eye_plus, ContextCompat.getColor(context, Theme.fabShowFollowIconColor()))
         );
         followButton.setBackgroundTintList(follow ?
-            ColorStateList.valueOf(ContextCompat.getColor(this, R.color.green)) :
-            ColorStateList.valueOf(ContextCompat.getColor(this, Theme.fabShowFollowColor()))
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)) :
+            ColorStateList.valueOf(ContextCompat.getColor(context, Theme.fabShowFollowColor()))
         );
     }
 
@@ -302,7 +312,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     public void startSeason(Season season) {
-        Intent intent = new Intent(this, SeasonActivity.class);
+        Intent intent = new Intent(context, SeasonActivity.class);
         intent.putExtra("showId", extraId);
         intent.putExtra("seasonId", season.seasonId);
         intent.putExtra("seasonName", season.name);
