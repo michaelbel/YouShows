@@ -1,4 +1,4 @@
-## List of changes in application versions
+## YouShows Changelog
 
 ### Version 1.1.4 (Build 22) 11 Jun 2018
 * Bugs fixes
