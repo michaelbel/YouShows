@@ -52,6 +52,16 @@ Simple app to track and save your TV shows
 * android.permission.READ_EXTERNAL_STORAGE
 * android.permission.WRITE_EXTERNAL_STORAGE
 
+## Libraries
+* [BottomSheet](https://github.com/michaelbel/BottomSheet)
+* [Gson](https://github.com/google/gson)
+* [Retrofit](https://github.com/square/retrofit)
+* [Picasso](https://github.com/square/picasso)
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [Realm](https://github.com/realm/realm-java)
+* [ExpandableTextView](https://github.com/Blogcat/Android-ExpandableTextView)
+* [CircleProgressView](https://github.com/jakob-grabner/Circle-Progress-View)
+
 ## Changelog
 Cangelog is available [here][cangelog].
 
