@@ -14,7 +14,7 @@
         "date":"26 April 2018",
         "changes":[
             "List of your shows and following shows fixed",
-            "New design for settings",
+            "New settings design",
             "Other minor updates"
         ]
     },
@@ -73,7 +73,7 @@
         "build":14,
         "date":"18 May 2018",
         "changes":[
-            "Data Storage: delete progress for your added shows and unfollow from all your shows",
+            "Data Usage: delete progress for your added shows and unfollow from all your shows",
             "Tap and hold on show in your lists do display additional options",
             "Bugs fixes"
         ]
@@ -114,6 +114,26 @@
         "date":"5 Jun 2018",
         "changes":[
             "Episode preview: tap and hold on episode to show more details"
+        ]
+    },
+
+    {
+        "version":"1.1.2",
+        "build":20,
+        "date":"9 Jun 2018",
+        "changes":[
+            "Save season position",
+            "Light and Night themes updates",
+            "Other minor updates"
+        ]
+    },
+
+    {
+        "version":"1.1.3",
+        "build":21,
+        "date":"10 Jun 2018",
+        "changes":[
+            "Search suggestions"
         ]
     }
 ]
