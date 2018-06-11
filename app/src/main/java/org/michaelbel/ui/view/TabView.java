@@ -15,7 +15,6 @@ import android.widget.TextView;
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
-import org.michaelbel.shows.R;
 
 /**
  * Date: 10 JUN 2018
@@ -48,7 +47,6 @@ public class TabView extends FrameLayout {
         tabNameText.setMaxLines(1);
         tabNameText.setSingleLine();
         tabNameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9.5F);
-        tabNameText.setTextColor(ContextCompat.getColor(context, R.color.white));
         tabNameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         tabNameText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL, 0, 2,0,0));
         linearLayout.addView(tabNameText);
@@ -56,7 +54,7 @@ public class TabView extends FrameLayout {
 
     public TabView setTab(@StringRes int nameResId, @DrawableRes int iconResId, boolean selected) {
         icon = iconResId;
-        int color = ContextCompat.getColor(getContext(), selected ? R.color.white : Theme.Color.tabUnselectedText());
+        int color = ContextCompat.getColor(getContext(), selected ? Theme.tabSelectColor() : Theme.tabUnselectColor());
 
         tabNameText.setText(getResources().getString(nameResId).toUpperCase());
         tabNameText.setTextColor(color);
@@ -65,7 +63,7 @@ public class TabView extends FrameLayout {
     }
 
     public void setSelect(boolean selected) {
-        int color = ContextCompat.getColor(getContext(), selected ? R.color.white : Theme.Color.tabUnselectedText());
+        int color = ContextCompat.getColor(getContext(), selected ? Theme.tabSelectColor() : Theme.tabUnselectColor());
 
         tabNameText.setTextColor(color);
         tabIcon.setImageDrawable(AndroidExtensions.getIcon(getContext(), icon, color));
