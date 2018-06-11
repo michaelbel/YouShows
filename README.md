@@ -7,12 +7,12 @@
 
 [launcher-path]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
 
-[minsdk-badge]:       https://img.shields.io/badge/minSdkVersion-21-009688.svg
-[paypal-badge]:       https://img.shields.io/badge/Donate-Paypal-009688.svg
-[license-badge]:      https://img.shields.io/badge/License-Apache_v2.0-009688.svg
-[arsenal-badge]:      https://img.shields.io/badge/Android%20Arsenal-BottomSheet-009688.svg?style=flat
-[platform-badge]:     https://img.shields.io/badge/Platform-Android-009688.svg
-[googleplay-badge]:   https://img.shields.io/badge/Google_Play-Demo-009688.svg
+[minsdk-badge]:       https://img.shields.io/badge/minSdkVersion-21-0097A7.svg
+[paypal-badge]:       https://img.shields.io/badge/Donate-Paypal-0097A7.svg
+[license-badge]:      https://img.shields.io/badge/License-Apache_v2.0-0097A7.svg
+[arsenal-badge]:      https://img.shields.io/badge/Android%20Arsenal-BottomSheet-0097A7.svg?style=flat
+[platform-badge]:     https://img.shields.io/badge/Platform-Android-0097A7.svg
+[googleplay-badge]:   https://img.shields.io/badge/Google_Play-Demo-0097A7.svg
 
 <!------------------------------------------------------------------------------------------------------------------------------------->
 
@@ -39,6 +39,8 @@ Simple app to track and save your TV shows
     <img style="margin-left:0px;" src="/images/render/5.png" width="33%">
     <img style="margin-left:0px;" src="/images/render/6.png" width="33%">
     <img style="margin-left:0px;" src="/images/render/7.png" width="33%">
+    <img style="margin-left:0px;" src="/images/render/8.png" width="33%">
+    <img style="margin-left:0px;" src="/images/render/9.png" width="33%">
 </div>
 
 ## Permissions
