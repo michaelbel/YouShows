@@ -15,22 +15,23 @@
 [googleplay-badge]:   https://img.shields.io/badge/Google_Play-Demo-0097A7.svg
 
 <!------------------------------------------------------------------------------------------------------------------------------------->
-
-<!--[![Launcher][Launcher-path]][github-url]-->
-# YouShows
-
 [![Platform][platform-badge]][github-url]
 [![MinSdk][minsdk-badge]][github-url]
 [![License][license-badge]][licence-url]
 [![GooglePlay][googleplay-badge]][googleplay-url]
 [![Paypal][paypal-badge]][paypal-url]
 
-<a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows" target="_blank">
-  <img alt="App on Google Play" src="https://goo.gl/cR2qQH" height="100"/>
-</a>
+# YouShows
+<img src="https://github.com/michaelbel/YouShows/blob/master/images/icon_512x512.png" align="left" width="200" hspace="0" vspace="0">
+Simple app to track and save your TV shows.
 
-Simple app to track and save your TV shows
+<div style="display:flex;">
+  <a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows">
+    <img alt="Get it on Google Play" height="100"         src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"/>
+  </a>
+</div>
 
+## Screenshots
 <div style="dispaly:flex">
     <img style="margin-left:0px;" src="/images/render/1.png" width="33%">
     <img style="margin-left:0px;" src="/images/render/2.png" width="33%">
