@@ -43,6 +43,11 @@ Simple app to track and save your TV shows
     <img style="margin-left:0px;" src="/images/render/9.png" width="33%">
 </div>
 
+## Features
+* Sorting shows
+* Search history
+* Light and Night themes
+
 ## Permissions
 * android.permission.VIBRATE
 * android.permission.INTERNET
