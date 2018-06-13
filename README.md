@@ -5,7 +5,7 @@
 [googleplay-url]:   https://play.google.com/store/apps/details?id=org.michaelbel.shows
 [cangelog]:         https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
 
-[launcher-path]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
+[launcher-path]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
 
 [minsdk-badge]:       https://img.shields.io/badge/minSdkVersion-21-0097A7.svg
 [paypal-badge]:       https://img.shields.io/badge/Donate-Paypal-0097A7.svg
@@ -21,6 +21,7 @@
 [![GooglePlay][googleplay-badge]][googleplay-url]
 [![Paypal][paypal-badge]][paypal-url]
 
+[![Launcher][Launcher-path]][googleplay-url]
 # YouShows
 Simple app to track and save your TV shows.
 
