@@ -1,9 +1,10 @@
-[apk-url]:          https://github.com/michaelbel/youshows/blob/master/app/release/shows-v1.0.2.apk
-[paypal-url]:       https://paypal.me/michaelbel
-[github-url]:       https://github.com/michaelbel/youshows
-[licence-url]:      http://www.apache.org/licenses/LICENSE-2.0
-[googleplay-url]:   https://play.google.com/store/apps/details?id=org.michaelbel.shows
-[cangelog]:         https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
+[apk-url]:        https://github.com/michaelbel/youshows/blob/master/app/release/shows-v1.0.2.apk
+[paypal-url]:     https://paypal.me/michaelbel
+[github-url]:     https://github.com/michaelbel/youshows
+[licence-url]:    http://www.apache.org/licenses/LICENSE-2.0
+[googleplay-url]: https://play.google.com/store/apps/details?id=org.michaelbel.shows
+[cangelog]:       https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
+[issue]:          https://github.com/michaelbel/YouShows/issues
 
 [launcher-path]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
 
@@ -67,6 +68,9 @@ Simple app to track and save your TV shows.
 * [Realm](https://github.com/realm/realm-java)
 * [ExpandableTextView](https://github.com/Blogcat/Android-ExpandableTextView)
 * [CircleProgressView](https://github.com/jakob-grabner/Circle-Progress-View)
+
+## Issues
+If you find any problems or would like to suggest a feature, please feel free to file an [issue][issue].
 
 ## Changelog
 Cangelog is available [here][cangelog].
