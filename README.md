@@ -44,6 +44,7 @@ Simple app to track and save your TV shows
 </div>
 
 ## Features
+* Material design
 * Sorting shows
 * Search history
 * Light and Night themes
