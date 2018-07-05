@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.LayoutHelper;
@@ -22,6 +23,7 @@ import org.michaelbel.app.rest.model.Company;
 import org.michaelbel.app.rest.model.Genre;
 import org.michaelbel.app.rest.model.Season;
 import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.ShowActivity;
 import org.michaelbel.ui.view.InfoLayout;
@@ -98,6 +100,11 @@ public class ShowFragment extends Fragment {
 
     public void setOverview(String overview) {
         overviewLayout.setOverview(TextUtils.isEmpty(overview) ? getString(R.string.NoOverview) : overview);
+        overviewLayout.overviewText.setOnLongClickListener(v -> {
+            Extensions.copyToClipboard(activity, overview);
+            Toast.makeText(activity, R.string.OverviewCopied, Toast.LENGTH_SHORT).show();
+            return true;
+        });
     }
 
     public void setOriginalName(String name) {
