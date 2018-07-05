@@ -59,6 +59,7 @@ import retrofit2.Response;
  * @author Michael Bel
  */
 
+@SuppressLint("ClickableViewAccessibility")
 public class EpisodesFragment extends Fragment {
 
     private String seasonAirDate;
@@ -83,7 +84,6 @@ public class EpisodesFragment extends Fragment {
         activity = (SeasonActivity) getActivity();
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class EpisodesFragment extends Fragment {
         fragmentLayout.addView(contentLayout);
 
         progressBar = new ProgressBar(activity);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.Color.accentColor()), PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
         progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(progressBar);
 
