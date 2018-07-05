@@ -200,6 +200,12 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.setTabTextColors(ContextCompat.getColor(context, Theme.tabUnselectColor()), ContextCompat.getColor(context, Theme.tabSelectColor()));
                 floatingButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, Theme.accentColor())));
                 sortView.changeTheme();
+
+                MyShowsFragment fragment1 = (MyShowsFragment) adapter.getItem(tab_shows);
+                fragment1.changeEmptyViewTheme();
+
+                FollowingShowsFragment fragment2 = (FollowingShowsFragment) adapter.getItem(tab_follow);
+                fragment2.changeEmptyViewTheme();
             }
         });
     }
