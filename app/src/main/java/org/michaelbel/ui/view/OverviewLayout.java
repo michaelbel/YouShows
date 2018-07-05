@@ -30,7 +30,7 @@ import at.blogc.android.views.ExpandableTextView;
 public class OverviewLayout extends LinearLayout {
 
     private TextView titleText;
-    private ExpandableTextView overviewText;
+    public ExpandableTextView overviewText;
 
     public OverviewLayout(@NonNull Context context) {
         super(context);
