@@ -77,6 +77,7 @@
     <string name="EpisodeNumber">Episode #%1$d</string>
     <string name="NoEpisodes">No Episodes</string>
     <string name="NoStillImage">No still image</string>
+    <string name="OverviewCopied">Overview copied to clipboard</string>
     <!--search-->
     <string name="Search">Search</string>
     <string name="NoResults">No results</string>
@@ -107,12 +108,18 @@
     <string name="NoSearchHistory">No Search History</string>
     <string name="SearchHistoryEmpty">Your search history is empty</string>
     <string name="EnableHistory">Enable History</string>
+    <string name="ShowSuggestions">Show Suggestions</string>
     <string name="ClearHistory">Clear History</string>
     <string name="ClearHistoryMessage">Are you sure you want to clear search history?</string>
     <string name="CurrentDateAndTime">%1$s at %2$s</string>
     <string-array name="Tabs">
         <item>My Shows</item>
         <item>Following</item>
+    </string-array>
+    <string-array name="ShowTabs">
+        <item>Now Playing</item>
+        <item>Popular</item>
+        <item>Top Rated</item>
     </string-array>
     <string-array name="Themes">
         <item>Light</item>
@@ -184,4 +191,8 @@
     <string name="EpisodeCount">%1$d Episode</string>
     <string name="EpisodesCount">%1$d Episodes</string>
     <string name="Episodes">Episodes</string>
+
+
+    <string name="search_app_name" translatable="false">SearchView</string>
+    <string name="search_behavior" translatable="false">com.lapism.searchview.widget.SearchBehavior</string>
 </resources>
