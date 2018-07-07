@@ -44,6 +44,7 @@ public class LibsFragment extends Fragment {
 
     private static final String LICENSE_APACHE = "Apache License 2.0";
     private static final String LICENSE_MIT = "The MIT License (MIT)";
+    private static final String LICENSE_GPL2 = "GNU GPL v2";
 
     private LibsAdapter adapter;
     private SettingsActivity activity;
@@ -75,6 +76,7 @@ public class LibsFragment extends Fragment {
         adapter.addSource("Realm Java", "https://github.com/realm/realm-java", LICENSE_APACHE);
         adapter.addSource("ExpandableTextView", "https://github.com/blogcat/android-expandabletextview", LICENSE_APACHE);
         adapter.addSource("CircleProgressView", "https://github.com/jakob-grabner/circle-progress-view", LICENSE_MIT);
+        adapter.addSource("Telegram for Android", "https://github.com/drklo/telegram", LICENSE_GPL2);
 
         linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
 
