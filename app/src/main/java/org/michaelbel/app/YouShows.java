@@ -26,6 +26,7 @@ public class YouShows extends Application {
     public static final String GITHUB_URL = "https://github.com/michaelbel/shows";
     public static final String APP_WEB = "https://play.google.com/store/apps/details?id=org.michaelbel.shows";
     public static final String APP_MARKET = "market://details?id=org.michaelbel.shows";
+    public static final String TMDB_URL = "https://themoviedb.org";
     //public static final String ACCOUNT_WEB = "https://play.google.com/store/apps/developer?id=Michael+Bel";
     //public static final String ACCOUNT_MARKET = "market://developer?id=Michael+Bel";
 
