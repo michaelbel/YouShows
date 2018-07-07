@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import org.michaelbel.app.AndroidExtensions;
 import org.michaelbel.app.Browser;
 import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
@@ -30,7 +31,6 @@ import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
-import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.BuildConfig;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
@@ -102,7 +102,7 @@ public class SettingsFragment extends Fragment {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finish());
 
         fragmentLayout = new FrameLayout(activity);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         rowCount = 0;
         themeRow = rowCount++;
@@ -136,12 +136,12 @@ public class SettingsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setOnItemClickListener((view, position) -> {
             if (position == themeRow) {
-                activity.startFragment(new ThemeFragment(), R.string.Theme);
+                activity.startFragment(new ThemeFragment2(), R.string.Theme);
             } else if (position == defaultTabRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
-                builder.setCellHeight(ScreenUtils.dp(52));
-                builder.setItemTextColorRes(Theme.Color.primaryTextColor());
-                builder.setBackgroundColorRes(Theme.Color.foreground());
+                builder.setCellHeight(Extensions.dp(activity,52));
+                builder.setItemTextColorRes(Theme.primaryTextColor());
+                builder.setBackgroundColorRes(Theme.foregroundColor());
                 builder.setItems(new int[] { R.string.MyShows, R.string.Following }, (dialog, pos) -> {
                     prefs.edit().putInt("default_tab", pos).apply();
                     if (view instanceof TextDetailCell) {
@@ -152,10 +152,10 @@ public class SettingsFragment extends Fragment {
                 builder.show();
             } else if (position == dateFormatRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
-                builder.setCellHeight(ScreenUtils.dp(52));
+                builder.setCellHeight(Extensions.dp(activity,52));
                 builder.setDarkTheme(true);
-                builder.setItemTextColorRes(Theme.Color.primaryTextColor());
-                builder.setBackgroundColorRes(Theme.Color.foreground());
+                builder.setItemTextColorRes(Theme.primaryTextColor());
+                builder.setBackgroundColorRes(Theme.foregroundColor());
                 builder.setItems(dateFormats, (dialog, pos) -> {
                     prefs.edit().putString("date_format", dateFormats[pos]).apply();
                     if (view instanceof TextDetailCell) {
@@ -313,7 +313,7 @@ public class SettingsFragment extends Fragment {
 
                 if (position == emptyRow1 || position == emptyRow2) {
                     cell.setMode(EmptyCell.MODE_DEFAULT);
-                    cell.setHeight(ScreenUtils.dp(12));
+                    cell.setHeight(Extensions.dp(activity,12));
                 } else if (position == aboutRow) {
                     cell.setMode(EmptyCell.MODE_TEXT);
                     cell.setText(R.string.About);
@@ -379,7 +379,7 @@ public class SettingsFragment extends Fragment {
                     cell.setStartIcon(R.drawable.ic_message_alert);
                     cell.setText(R.string.Feedback);
                     cell.setValue(YouShows.TELEGRAM_FDL);
-                    cell.setEndIcon(Theme.getIcon(R.drawable.ic_telegram, ContextCompat.getColor(activity, R.color.telegram)));
+                    cell.setEndIcon(AndroidExtensions.getIcon(activity, R.drawable.ic_telegram, ContextCompat.getColor(activity, R.color.telegram)));
                     cell.setDivider(true);
                 }
             } else {
