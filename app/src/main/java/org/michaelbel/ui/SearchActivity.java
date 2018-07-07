@@ -49,9 +49,8 @@ public class SearchActivity extends AppCompatActivity {
     private final int MODE_ACTION_CLEAR = 1;
     private final int MODE_ACTION_VOICE = 2;
 
-    private int iconActionMode;
-
     private Context context;
+    private int iconActionMode;
 
     private Menu actionMenu;
     public EditText searchEditText;
@@ -82,8 +81,8 @@ public class SearchActivity extends AppCompatActivity {
         searchEditText.setLines(1);
         searchEditText.setMaxLines(1);
         searchEditText.setSingleLine();
-        searchEditText.setHint(R.string.Search);
         searchEditText.setBackground(null);
+        searchEditText.setHint(R.string.Search);
         searchEditText.setTypeface(Typeface.DEFAULT);
         searchEditText.setEllipsize(TextUtils.TruncateAt.END);
         searchEditText.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -128,10 +127,10 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.actionMenu = menu;
+        actionMenu = menu;
 
         menu.add(null)
-            .setIcon(R.drawable.ic_mic)
+            .setIcon(Theme.themeLight() ? R.drawable.ic_mic : R.drawable.ic_mic_color)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             .setOnMenuItemClickListener(menuItem -> {
                 if (iconActionMode == MODE_ACTION_VOICE) {
@@ -188,7 +187,7 @@ public class SearchActivity extends AppCompatActivity {
         if (actionMenu != null) {
             if (searchEditText.getText().toString().trim().isEmpty()) {
                 iconActionMode = MODE_ACTION_VOICE;
-                actionMenu.getItem(MENU_ITEM_INDEX).setIcon(R.drawable.ic_mic);
+                actionMenu.getItem(MENU_ITEM_INDEX).setIcon(Theme.themeLight() ? R.drawable.ic_mic : R.drawable.ic_mic_color);
             } else {
                 iconActionMode = MODE_ACTION_CLEAR;
                 actionMenu.getItem(MENU_ITEM_INDEX).setIcon(R.drawable.ic_clear);
