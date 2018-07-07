@@ -1,12 +1,17 @@
 package org.michaelbel.ui.view.cell;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +27,7 @@ import org.michaelbel.material.extensions.Extensions;
  * @author Michael Bel
  */
 
+@SuppressLint("ClickableViewAccessibility")
 public class EmptyCell extends FrameLayout {
 
     public static final int MODE_DEFAULT = 10;
@@ -34,11 +40,21 @@ public class EmptyCell extends FrameLayout {
     private int mHeight = 8;
     private int currentMode = MODE_DEFAULT;
 
+    private Paint paint;
+    private boolean divider;
+    private Rect rect = new Rect();
+
+    public TextView textView;
     private ProgressBar progressBar;
-    private TextView textView;
 
     public EmptyCell(Context context) {
         super(context);
+
+        if (paint == null) {
+            paint = new Paint();
+            paint.setStrokeWidth(1);
+            paint.setColor(ContextCompat.getColor(context, Theme.dividerColor()));
+        }
 
         textView = new TextView(context);
         textView.setVisibility(GONE);
@@ -86,6 +102,11 @@ public class EmptyCell extends FrameLayout {
         }
     }
 
+    public void setDivider(boolean divider) {
+        this.divider = divider;
+        setWillNotDraw(!divider);
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -103,5 +124,27 @@ public class EmptyCell extends FrameLayout {
         }
 
         setMeasuredDimension(width, height);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (divider) {
+            canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(), getHeight() - 1, paint);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (getForeground() != null) {
+            if (rect.contains((int) event.getX(), (int) event.getY())) {
+                return true;
+            }
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+                getForeground().setHotspot(event.getX(), event.getY());
+            }
+        }
+
+        return super.onTouchEvent(event);
     }
 }
