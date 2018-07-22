@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'realm-android'
+apply plugin: 'org.jetbrains.kotlin.kapt'
 //apply plugin: 'io.fabric'
 
 android {
@@ -7,10 +9,10 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 22
-        versionName "1.1.4"
+        versionCode 23
+        versionName "1.1.5"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField "String", "VERSION_DATE", '"11 Jun 2018"'
+        buildConfigField "String", "VERSION_DATE", '"7 Jul 2018"'
         project.ext.set("archivesBaseName", "youshows-v" + versionName)
     }
 
@@ -48,7 +50,7 @@ android {
         developing {
             minSdkVersion 21
             flavorDimensions "develop"
-            versionName "1.1.4-beta"
+            versionName "1.1.5-beta"
             applicationId "org.michaelbel.shows.beta"
         }
     }
@@ -67,8 +69,8 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'org.michaelbel:material:0.3.4'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'org.michaelbel:material:0.3.5'
     implementation 'org.michaelbel:bottomsheet:1.2.2'
     implementation 'io.realm:android-adapters:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
@@ -78,6 +80,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'at.blogc:expandabletextview:1.0.5'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.30"
+}
+repositories {
+    mavenCentral()
 }
 
 //apply plugin: 'com.google.gms.google-services'
