@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.app.Theme;
 import org.michaelbel.app.realm.RealmDb;
 import org.michaelbel.material.extensions.Extensions;
@@ -99,8 +99,8 @@ public class DataUsageFragment extends Fragment {
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
                 }
             } else if (position == unfollowAllRow) {
                 if (followingCount == 0) {
@@ -117,14 +117,14 @@ public class DataUsageFragment extends Fragment {
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
                 }
             } else if (position == cachedRow) {
                 //activity.startFragment(new CachedShowsFragment(), "cachedFragment");
             }
         });
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         fragmentLayout.addView(recyclerView);
         return fragmentLayout;
     }
