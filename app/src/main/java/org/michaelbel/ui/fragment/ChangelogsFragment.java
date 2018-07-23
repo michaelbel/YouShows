@@ -19,14 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.michaelbel.app.LayoutHelper;
 import org.michaelbel.app.Theme;
-import org.michaelbel.app.model.Changelog;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
 import org.michaelbel.ui.SettingsActivity;
@@ -59,6 +60,21 @@ public class ChangelogsFragment extends Fragment {
     private Menu actionMenu;
     private RecyclerListView recyclerView;
 
+    private class Changelog {
+
+        @SerializedName("version")
+        public String version;
+
+        @SerializedName("build")
+        public int build;
+
+        @SerializedName("date")
+        public String date;
+
+        @SerializedName("changes")
+        public ArrayList<String> changes = new ArrayList<>();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +84,9 @@ public class ChangelogsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        actionMenu = menu;
         prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         boolean enableDates = prefs.getBoolean("changelog_dates", false);
-
-        actionMenu = menu;
 
         menu.add(R.string.EnableDates)
             .setIcon(enableDates ? R.drawable.ic_calendar_check : R.drawable.ic_calendar_text)
@@ -84,7 +99,7 @@ public class ChangelogsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 recyclerView.setAdapter(adapter);
 
-                readJsonFile();
+                readJson();
                 changeActionIcon();
                 return true;
             });
@@ -97,7 +112,7 @@ public class ChangelogsFragment extends Fragment {
         activity.toolbarTitle2.setOnClickListener(view -> recyclerView.smoothScrollToPosition(0));
 
         FrameLayout fragmentView = new FrameLayout(activity);
-        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         adapter = new ChangesAdapter();
         layoutManager = new LinearLayoutManager(activity);
@@ -108,7 +123,7 @@ public class ChangelogsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setVerticalScrollBarEnabled(false);
         recyclerView.setPadding(0, 0, 0, Extensions.dp(activity,16));
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         fragmentView.addView(recyclerView);
         return fragmentView;
     }
@@ -116,7 +131,7 @@ public class ChangelogsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        readJsonFile();
+        readJson();
     }
 
     @Override
@@ -128,7 +143,7 @@ public class ChangelogsFragment extends Fragment {
         layoutManager.onRestoreInstanceState(state);
     }
 
-    private void readJsonFile() {
+    private void readJson() {
         String json;
         try {
             InputStream inputStream = activity.getAssets().open(CHANGELOG_FILE_NAME);
@@ -187,7 +202,7 @@ public class ChangelogsFragment extends Fragment {
             view.setDate(log.date);
             view.setChanges(log.changes);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            view.setVersionTextColor(ContextCompat.getColor(activity, position == 0 ? Theme.Color.changelogCurrentVersionText() : Theme.Color.changelogVersionText()));
+            view.setVersionTextColor(ContextCompat.getColor(activity, position == 0 ? Theme.changelogCurrentVersionText() : Theme.changelogVersionText()));
         }
 
         @Override
