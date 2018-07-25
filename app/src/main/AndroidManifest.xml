@@ -13,7 +13,7 @@
     <uses-permission android:name="com.samsung.permission.SSENSOR"/>
 
     <application
-        android:name="org.michaelbel.app.YouShows"
+        android:name="org.michaelbel.youshows.YouShows"
         android:allowBackup="false"
         android:supportsRtl="false"
         android:label="@string/AppName"
@@ -23,7 +23,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="org.michaelbel.ui.MainActivity"
+            android:name="org.michaelbel.youshows.ui.MainActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize">
             <intent-filter>
@@ -33,30 +33,30 @@
         </activity>
 
         <activity
-            android:name="org.michaelbel.ui.ExploreActivity"
+            android:name="org.michaelbel.youshows.ui.ExploreActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
-            android:name="org.michaelbel.ui.SearchActivity"
+            android:name="org.michaelbel.youshows.ui.SearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
 
         <activity
-            android:name="org.michaelbel.ui.ShowActivity"
+            android:name="org.michaelbel.youshows.ui.ShowActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
 
         <activity
-            android:name="org.michaelbel.ui.SeasonActivity"
+            android:name="org.michaelbel.youshows.ui.SeasonActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
 
         <activity
-            android:name="org.michaelbel.ui.SettingsActivity"
+            android:name="org.michaelbel.youshows.ui.SettingsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
