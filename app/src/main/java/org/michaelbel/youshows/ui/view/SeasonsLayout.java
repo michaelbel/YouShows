@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,11 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.model.Season;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.model.Season;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
@@ -66,7 +66,7 @@ public class SeasonsLayout extends FrameLayout {
         seasonsTitle.setText(R.string.Seasons);
         seasonsTitle.setGravity(Gravity.CENTER_VERTICAL);
         seasonsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        seasonsTitle.setTextColor(ContextCompat.getColor(context, Theme.Color.changelogVersionText()));
+        seasonsTitle.setTextColor(ContextCompat.getColor(context, Theme.changelogVersionText()));
         seasonsTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         seasonsTitle.setOnLongClickListener(view -> {
             SharedPreferences prefs = getContext().getSharedPreferences("mainconfig", Context.MODE_PRIVATE);
@@ -76,7 +76,7 @@ public class SeasonsLayout extends FrameLayout {
             AndroidExtensions.vibrate(20);
             return true;
         });
-        seasonsTitle.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 42, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        seasonsTitle.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, 42, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         linearLayout.addView(seasonsTitle);
 
         adapter = new SeasonsAdapter();
@@ -86,13 +86,13 @@ public class SeasonsLayout extends FrameLayout {
         recyclerView.setHasFixedSize(true);
         recyclerView.setVisibility(INVISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 8, 0, 6));
+        recyclerView.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 8, 0, 6));
         linearLayout.addView(recyclerView);
 
         progressBar = new ProgressBar(context);
         progressBar.setVisibility(VISIBLE);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
-        progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 16 + 40, 0, 16));
+        progressBar.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 16 + 40, 0, 16));
         addView(progressBar);
     }
 

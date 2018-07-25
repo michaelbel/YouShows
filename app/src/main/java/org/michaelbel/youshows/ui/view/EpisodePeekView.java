@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,10 +19,10 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.rest.ApiFactory;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
@@ -61,32 +61,32 @@ public class EpisodePeekView extends FrameLayout {
         cardView.setRadius(Extensions.dp(context,4));
         cardView.setCardElevation(Extensions.dp(context, 4));
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));
-        cardView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        cardView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(cardView);
 
 //------ContentLayout-------------------------------------------------------------------------------
 
         LinearLayout contentLayout = new LinearLayout(context);
         contentLayout.setOrientation(LinearLayout.VERTICAL);
-        contentLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, /*48*/0));
+        contentLayout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, /*48*/0));
         cardView.addView(contentLayout);
 
 //------EpisodePosterLayout-------------------------------------------------------------------------
 
         FrameLayout posterLayout = new FrameLayout(context);
-        posterLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 165));
+        posterLayout.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, 165));
         contentLayout.addView(posterLayout);
 
         stillImage = new ImageView(context);
         stillImage.setVisibility(GONE);
         stillImage.setScaleType(ImageView.ScaleType.FIT_XY);
-        stillImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        stillImage.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         posterLayout.addView(stillImage);
 
         progressBar = new ProgressBar(context);
         progressBar.setVisibility(VISIBLE);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
-        progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        progressBar.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         posterLayout.addView(progressBar);
 
         emptyImageText = new TextView(context);
@@ -99,7 +99,7 @@ public class EpisodePeekView extends FrameLayout {
         emptyImageText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         emptyImageText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         emptyImageText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        emptyImageText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        emptyImageText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         posterLayout.addView(emptyImageText);
 
 //------Name----------------------------------------------------------------------------------------
@@ -109,16 +109,16 @@ public class EpisodePeekView extends FrameLayout {
         nameText.setMaxLines(2);
         nameText.setEllipsize(TextUtils.TruncateAt.END);
         nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
-        nameText.setTextColor(ContextCompat.getColor(context, Theme.Color.dialogButtonText()));
+        nameText.setTextColor(ContextCompat.getColor(context, Theme.dialogButtonText()));
         nameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        nameText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 8, 8, 0));
+        nameText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 8, 8, 0));
         contentLayout.addView(nameText);
 
 //------Number and AirDate--------------------------------------------------------------------------
 
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 2, 8, 0));
+        layout.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 2, 8, 0));
         contentLayout.addView(layout);
 
         numberText = new TextView(context);
@@ -128,12 +128,12 @@ public class EpisodePeekView extends FrameLayout {
         numberText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         numberText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         numberText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        numberText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        numberText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(numberText);
 
         View dotDivider = new View(context);
         dotDivider.setBackground(AndroidExtensions.getIcon(context, R.drawable.dot_divider, ContextCompat.getColor(context, Theme.primaryTextColor())));
-        dotDivider.setLayoutParams(LayoutHelper.makeLinear(4, 4, Gravity.CENTER_VERTICAL, 6, 1, 6, 0));
+        dotDivider.setLayoutParams(LayoutHelper.makeLinear(context, 4, 4, Gravity.CENTER_VERTICAL, 6, 1, 6, 0));
         layout.addView(dotDivider);
 
         airDateText = new TextView(context);
@@ -143,7 +143,7 @@ public class EpisodePeekView extends FrameLayout {
         airDateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         airDateText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         airDateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        airDateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        airDateText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(airDateText);
 
 //------Overview------------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ public class EpisodePeekView extends FrameLayout {
         overviewText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         overviewText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         overviewText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        overviewText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 2, 8, 12));
+        overviewText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 8, 2, 8, 12));
         contentLayout.addView(overviewText);
 
 //------ActionButtonsLayout-------------------------------------------------------------------------
@@ -162,29 +162,29 @@ public class EpisodePeekView extends FrameLayout {
         buttonsLayout.setOrientation(LinearLayout.HORIZONTAL);
         buttonsLayout.setElevation(Extensions.dp(context, 2));
         buttonsLayout.setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
-        buttonsLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, 48, Gravity.BOTTOM));
+        buttonsLayout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, 48, Gravity.BOTTOM));
         //cardView.addView(buttonsLayout);
 
         // No button
 
         noButtonLayout = new FrameLayout(context);
-        noButtonLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 1.0F));
+        noButtonLayout.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 1.0F));
         buttonsLayout.addView(noButtonLayout);
 
         noIconImage = new ImageView(context);
-        noIconImage.setImageDrawable(Theme.getIcon(R.drawable.ic_clear, ContextCompat.getColor(context, R.color.red)));
-        noIconImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        noIconImage.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_clear, ContextCompat.getColor(context, R.color.red)));
+        noIconImage.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         noButtonLayout.addView(noIconImage);
 
         // Yes button
 
         yesButtonLayout = new FrameLayout(context);
-        yesButtonLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 1.0F));
+        yesButtonLayout.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 1.0F));
         buttonsLayout.addView(yesButtonLayout);
 
         yesIconImage = new ImageView(context);
-        yesIconImage.setImageDrawable(Theme.getIcon(R.drawable.ic_done, ContextCompat.getColor(context, R.color.green)));
-        yesIconImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        yesIconImage.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_done, ContextCompat.getColor(context, R.color.green)));
+        yesIconImage.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         yesButtonLayout.addView(yesIconImage);
     }
 

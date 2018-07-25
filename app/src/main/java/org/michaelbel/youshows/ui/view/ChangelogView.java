@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,9 +14,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.LayoutHelper;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.shows.R;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class ChangelogView extends FrameLayout {
         super(context);
 
         FrameLayout layout = new FrameLayout(context);
-        layout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 0));
+        layout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 16, 16, 16, 0));
         addView(layout);
 
         versionText = new TextView(context);
@@ -48,7 +48,7 @@ public class ChangelogView extends FrameLayout {
         versionText.setSingleLine();
         versionText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         versionText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        versionText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        versionText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         layout.addView(versionText);
 
         dateText = new TextView(context);
@@ -58,12 +58,12 @@ public class ChangelogView extends FrameLayout {
         dateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         dateText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        dateText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        dateText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
         layout.addView(dateText);
 
         changesLayout = new LinearLayout(context);
         changesLayout.setOrientation(LinearLayout.VERTICAL);
-        changesLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP, 32, 48, 16, 0));
+        changesLayout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP, 32, 48, 16, 0));
         addView(changesLayout);
     }
 
@@ -85,7 +85,7 @@ public class ChangelogView extends FrameLayout {
         for (String change : changes) {
             ChangeView view = new ChangeView(getContext());
             view.addChange(change);
-            view.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+            view.setLayoutParams(LayoutHelper.makeLinear(getContext(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
             changesLayout.addView(view);
         }
     }
@@ -103,14 +103,14 @@ public class ChangelogView extends FrameLayout {
 
             View view = new View(context);
             view.setBackground(AndroidExtensions.getIcon(context, R.drawable.dot_divider, ContextCompat.getColor(context, Theme.primaryTextColor())));
-            view.setLayoutParams(LayoutHelper.makeFrame(5, 5, Gravity.START | Gravity.TOP, 0, 8, 0, 0));
+            view.setLayoutParams(LayoutHelper.makeFrame(context, 5, 5, Gravity.START | Gravity.TOP, 0, 7.5f, 0, 0));
             addView(view);
 
             changeText = new TextView(context);
             changeText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             changeText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
             changeText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
-            changeText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 12, 0, 0, 0));
+            changeText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 12, 0, 0, 0));
             addView(changeText);
         }
 

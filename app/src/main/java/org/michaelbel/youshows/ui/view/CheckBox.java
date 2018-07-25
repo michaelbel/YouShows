@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -14,7 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.view.View;
 
-import org.michaelbel.app.ScreenUtils;
+import org.michaelbel.material.extensions.Extensions;
 
 /**
  * Date: 18 MAY 2018
@@ -65,14 +65,14 @@ public class CheckBox extends View {
             eraser2 = new Paint(Paint.ANTI_ALIAS_FLAG);
             eraser2.setColor(0);
             eraser2.setStyle(Paint.Style.STROKE);
-            eraser2.setStrokeWidth(ScreenUtils.dp(28));
+            eraser2.setStrokeWidth(Extensions.dp(context,28));
             eraser2.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
             backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             backgroundPaint.setColor(0xFFFFFFFF);
             backgroundPaint.setStyle(Paint.Style.STROKE);
-            backgroundPaint.setStrokeWidth(ScreenUtils.dp(2));
+            backgroundPaint.setStrokeWidth(Extensions.dp(context,2));
             textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-            textPaint.setTextSize(ScreenUtils.dp(18));
+            textPaint.setTextSize(Extensions.dp(context,18));
             //textPaint.setTypeface(ScreenUtils.getTypeface("fonts/rmedium.ttf"));
         }
 
@@ -83,9 +83,9 @@ public class CheckBox extends View {
     public void setVisibility(int visibility) {
         super.setVisibility(visibility);
         if (visibility == VISIBLE && drawBitmap == null) {
-            drawBitmap = Bitmap.createBitmap(ScreenUtils.dp(size), ScreenUtils.dp(size), Bitmap.Config.ARGB_4444);
+            drawBitmap = Bitmap.createBitmap(Extensions.dp(getContext(), size), Extensions.dp(getContext(),size), Bitmap.Config.ARGB_4444);
             bitmapCanvas = new Canvas(drawBitmap);
-            checkBitmap = Bitmap.createBitmap(ScreenUtils.dp(size), ScreenUtils.dp(size), Bitmap.Config.ARGB_4444);
+            checkBitmap = Bitmap.createBitmap(Extensions.dp(getContext(),size), Extensions.dp(getContext(),size), Bitmap.Config.ARGB_4444);
             checkCanvas = new Canvas(checkBitmap);
         }
     }
@@ -218,7 +218,7 @@ public class CheckBox extends View {
             return;
         }
         if (drawBackground || progress != 0) {
-            eraser2.setStrokeWidth(ScreenUtils.dp(size + 6));
+            eraser2.setStrokeWidth(Extensions.dp(getContext(),size + 6));
 
             drawBitmap.eraseColor(0);
             float rad = getMeasuredWidth() / 2;
@@ -228,20 +228,20 @@ public class CheckBox extends View {
 
             float roundProgressCheckState = isCheckAnimation ? progress : (1.0f - progress);
             if (roundProgressCheckState < progressBounceDiff) {
-                rad -= ScreenUtils.dp(2) * roundProgressCheckState / progressBounceDiff;
+                rad -= Extensions.dp(getContext(),2) * roundProgressCheckState / progressBounceDiff;
             } else if (roundProgressCheckState < progressBounceDiff * 2) {
-                rad -= ScreenUtils.dp(2) - ScreenUtils.dp(2) * (roundProgressCheckState - progressBounceDiff) / progressBounceDiff;
+                rad -= Extensions.dp(getContext(),2) - Extensions.dp(getContext(),2) * (roundProgressCheckState - progressBounceDiff) / progressBounceDiff;
             }
             if (drawBackground) {
                 paint.setColor(0x44000000);
-                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad - ScreenUtils.dp(1), paint);
-                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad - ScreenUtils.dp(1), backgroundPaint);
+                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad - Extensions.dp(getContext(),1), paint);
+                canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad - Extensions.dp(getContext(),1), backgroundPaint);
             }
 
             paint.setColor(color);
 
             if (hasBorder) {
-                rad -= ScreenUtils.dp(2);
+                rad -= Extensions.dp(getContext(),2);
             }
             bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad, paint);
             bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad * (1 - roundProgress), eraser);
@@ -250,7 +250,7 @@ public class CheckBox extends View {
             checkBitmap.eraseColor(0);
             if (checkedText != null) {
                 int w = (int) Math.ceil(textPaint.measureText(checkedText));
-                checkCanvas.drawText(checkedText, (getMeasuredWidth() - w) / 2, ScreenUtils.dp(21), textPaint);
+                checkCanvas.drawText(checkedText, (getMeasuredWidth() - w) / 2, Extensions.dp(getContext(),21), textPaint);
             } else {
                 int w = checkDrawable.getIntrinsicWidth();
                 int h = checkDrawable.getIntrinsicHeight();
@@ -260,7 +260,7 @@ public class CheckBox extends View {
                 checkDrawable.setBounds(x, y + checkOffset, x + w, y + h + checkOffset);
                 checkDrawable.draw(checkCanvas);
             }
-            checkCanvas.drawCircle(getMeasuredWidth() / 2 - ScreenUtils.dp(2.5f), getMeasuredHeight() / 2 + ScreenUtils.dp(4), ((getMeasuredWidth() + ScreenUtils.dp(6)) / 2) * (1 - checkProgress), eraser2);
+            checkCanvas.drawCircle(getMeasuredWidth() / 2 - Extensions.dp(getContext(),2.5f), getMeasuredHeight() / 2 + Extensions.dp(getContext(),4), ((getMeasuredWidth() + Extensions.dp(getContext(),6)) / 2) * (1 - checkProgress), eraser2);
 
             canvas.drawBitmap(checkBitmap, 0, 0, null);
         }

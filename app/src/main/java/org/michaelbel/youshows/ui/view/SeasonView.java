@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,10 +17,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.app.LayoutHelper;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.shows.R;
 
 import java.util.Locale;
@@ -49,12 +49,12 @@ public class SeasonView extends FrameLayout {
         super(context);
 
         View view = LayoutInflater.from(context).inflate(R.layout.item_season, null);
-        view.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 12, 0, 12, 6));
+        view.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 12, 0, 12, 6));
         addView(view);
 
         cardView = view.findViewById(R.id.card_view);
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
-        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.Color.seasonViewBackground()));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.seasonViewBackground()));
 
         selectIcon = view.findViewById(R.id.select_icon);
 
@@ -86,7 +86,7 @@ public class SeasonView extends FrameLayout {
         episodesText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         episodesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         episodesText.setCompoundDrawablePadding(Extensions.dp(context, 4));
-        episodesText.setCompoundDrawablesWithIntrinsicBounds(null, null, AndroidExtensions.getIcon(context, R.drawable.ic_chevron_right, ContextCompat.getColor(context, Theme.Color.primaryTextColor())), null);
+        episodesText.setCompoundDrawablesWithIntrinsicBounds(null, null, AndroidExtensions.getIcon(context, R.drawable.ic_chevron_right, ContextCompat.getColor(context, Theme.primaryTextColor())), null);
     }
 
     public void setName(String name) {

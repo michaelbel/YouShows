@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.shows.R;
 
 /**
@@ -32,7 +32,7 @@ public class EmptyView extends LinearLayout {
         setOrientation(VERTICAL);
 
         emptyIcon = new ImageView(context);
-        emptyIcon.setLayoutParams(LayoutHelper.makeLinear(52, 52, Gravity.CENTER));
+        emptyIcon.setLayoutParams(LayoutHelper.makeLinear(context, 52, 52, Gravity.CENTER));
         addView(emptyIcon);
 
         emptyText = new TextView(context);
@@ -40,7 +40,7 @@ public class EmptyView extends LinearLayout {
         emptyText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         emptyText.setTextColor(ContextCompat.getColor(context, Theme.iconActiveColor()));
         emptyText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        emptyText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 10, 24, 0));
+        emptyText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 10, 24, 0));
         addView(emptyText);
     }
 

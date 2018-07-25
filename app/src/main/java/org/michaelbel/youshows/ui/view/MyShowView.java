@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,14 +22,14 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.rest.ApiFactory;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.view.circleprogress.CircleProgressView;
-import org.michaelbel.ui.view.circleprogress.UnitPosition;
+import org.michaelbel.youshows.ui.view.circleprogress.CircleProgressView;
+import org.michaelbel.youshows.ui.view.circleprogress.UnitPosition;
 
 import java.util.Locale;
 
@@ -73,7 +73,7 @@ public class MyShowView extends FrameLayout {
         }
 
         View view = LayoutInflater.from(context).inflate(R.layout.item_myshow, null);
-        view.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 6, 0, 6, 0));
+        view.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 6, 0, 6, 0));
         addView(view);
 
         cardView = view.findViewById(R.id.card_item);
@@ -114,7 +114,7 @@ public class MyShowView extends FrameLayout {
         datesText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         datesText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         datesText.setCompoundDrawablePadding(Extensions.dp(context, 4));
-        datesText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(context, R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActiveColor())), null, null, null);
+        datesText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(context, R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.iconActiveColor())), null, null, null);
 
         progressWatchedText = view.findViewById(R.id.watched_episodes_text);
         progressWatchedText.setLines(1);
@@ -125,7 +125,7 @@ public class MyShowView extends FrameLayout {
         progressWatchedText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         progressWatchedText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         progressWatchedText.setCompoundDrawablePadding(Extensions.dp(context, 4));
-        progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(context, R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.Color.iconActiveColor())), null, null, null);
+        progressWatchedText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(context, R.drawable.ic_clipboard_check_outline, ContextCompat.getColor(getContext(), Theme.iconActiveColor())), null, null, null);
 
         dividerView = view.findViewById(R.id.divider_view);
         dividerView.setBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));

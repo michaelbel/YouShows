@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,10 +17,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.rest.ApiFactory;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.rest.ApiFactory;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
@@ -56,13 +56,13 @@ public class ShowView extends FrameLayout {
         cardView.setCardElevation(Extensions.dp(context,1.0F));
         cardView.setForeground(Extensions.selectableItemBackgroundDrawable(context));
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
-        cardView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 5.5F, 5.5F, 5.5F, 0));
+        cardView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 5.5F, 5.5F, 5.5F, 0));
         addView(cardView);
 
 //--------------------------------------------------------------------------------------------------
 
         FrameLayout contentLayout = new FrameLayout(context);
-        contentLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        contentLayout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         cardView.addView(contentLayout);
 
 //--------------------------------------------------------------------------------------------------
@@ -73,12 +73,12 @@ public class ShowView extends FrameLayout {
         posterLayout.setPreventCornerOverlap(false);
         posterLayout.setRadius(Extensions.dp(context,2));
         posterLayout.setCardBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
-        posterLayout.setLayoutParams(LayoutHelper.makeFrame(110, 170, Gravity.START | Gravity.CENTER_VERTICAL, 4, 4, 0, 4));
+        posterLayout.setLayoutParams(LayoutHelper.makeFrame(context, 110, 170, Gravity.START | Gravity.CENTER_VERTICAL, 4, 4, 0, 4));
         contentLayout.addView(posterLayout);
 
         posterImage = new ImageView(context);
         posterImage.setScaleType(ImageView.ScaleType.FIT_XY);
-        posterImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        posterImage.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         posterLayout.addView(posterImage);
 
 //--------------------------------------------------------------------------------------------------
@@ -87,13 +87,13 @@ public class ShowView extends FrameLayout {
 
         LinearLayout infoLayout = new LinearLayout(context);
         infoLayout.setOrientation(LinearLayout.VERTICAL);
-        infoLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, posterPadding + 8 + 4, 8, 8, 8));
+        infoLayout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, posterPadding + 8 + 4, 8, 8, 8));
         contentLayout.addView(infoLayout);
 
 //--------------------------------------------------------------------------------------------------
 
         FrameLayout layout1 = new FrameLayout(context);
-        layout1.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        layout1.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         infoLayout.addView(layout1);
 
         titleText = new TextView(context);
@@ -103,29 +103,29 @@ public class ShowView extends FrameLayout {
         titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
         titleText.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
         titleText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        titleText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, 20, 0));
+        titleText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, 20, 0));
         layout1.addView(titleText);
 
         watchIcon = new ImageView(context);
-        watchIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_eye, ContextCompat.getColor(context, Theme.iconActiveColor())));
-        watchIcon.setLayoutParams(LayoutHelper.makeFrame(16, 16, Gravity.END | Gravity.TOP, 0, 6, 0, 0));
+        watchIcon.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_eye, ContextCompat.getColor(context, Theme.iconActiveColor())));
+        watchIcon.setLayoutParams(LayoutHelper.makeFrame(context, 16, 16, Gravity.END | Gravity.TOP, 0, 6, 0, 0));
         layout1.addView(watchIcon);
 
 //--------------------------------------------------------------------------------------------------
 
         FrameLayout frameLayout = new FrameLayout(context);
-        frameLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, 28));
+        frameLayout.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, 28));
         infoLayout.addView(frameLayout);
 
 //--------------------------------------------------------------------------------------------------
 
         LinearLayout rateAndDateLinear = new LinearLayout(context);
         rateAndDateLinear.setOrientation(LinearLayout.HORIZONTAL);
-        rateAndDateLinear.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        rateAndDateLinear.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         frameLayout.addView(rateAndDateLinear);
 
         ratingView = new RatingView(context);
-        ratingView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        ratingView.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         //rateAndDateLinear.addView(ratingView);
 
         dateText = new TextView(context);
@@ -135,9 +135,9 @@ public class ShowView extends FrameLayout {
         dateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         dateText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         dateText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        dateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        dateText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         dateText.setCompoundDrawablePadding(Extensions.dp(context, 2));
-        dateText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(context, R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.Color.iconActiveColor())), null, null, null);
+        dateText.setCompoundDrawablesWithIntrinsicBounds(AndroidExtensions.getIcon(context, R.drawable.ic_event, ContextCompat.getColor(getContext(), Theme.iconActiveColor())), null, null, null);
         rateAndDateLinear.addView(dateText);
 
 //--------------------------------------------------------------------------------------------------
@@ -149,7 +149,7 @@ public class ShowView extends FrameLayout {
         overviewText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         overviewText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         overviewText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        overviewText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        overviewText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         infoLayout.addView(overviewText);
     }
 
@@ -183,7 +183,7 @@ public class ShowView extends FrameLayout {
 
     public void setWatch(boolean watch) {
         watchIcon.setVisibility(watch ? VISIBLE : GONE);
-        titleText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, watch ? 20 : 0, 0));
+        titleText.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 0, watch ? 20 : 0, 0));
     }
 
     @Override
@@ -212,7 +212,7 @@ public class ShowView extends FrameLayout {
 
             ImageView averageIcon = new ImageView(context);
             averageIcon.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_star_circle, ContextCompat.getColor(context, Theme.iconActiveColor())));
-            averageIcon.setLayoutParams(LayoutHelper.makeLinear(16, 16, Gravity.START | Gravity.CENTER_VERTICAL));
+            averageIcon.setLayoutParams(LayoutHelper.makeLinear(context, 16, 16, Gravity.START | Gravity.CENTER_VERTICAL));
             addView(averageIcon);
 
             ratingText = new TextView(context);
@@ -222,7 +222,7 @@ public class ShowView extends FrameLayout {
             ratingText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             ratingText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
             ratingText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-            ratingText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 1, 0, 0, 0));
+            ratingText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 1, 0, 0, 0));
             addView(ratingText);
         }
 

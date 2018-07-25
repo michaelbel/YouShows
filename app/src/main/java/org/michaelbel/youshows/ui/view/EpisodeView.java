@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,9 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
@@ -61,13 +61,13 @@ public class EpisodeView extends FrameLayout {
         nameText.setSingleLine();
         nameText.setEllipsize(TextUtils.TruncateAt.END);
         nameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        nameText.setTextColor(ContextCompat.getColor(context, Theme.Color.changelogVersionText()));
-        nameText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 56, 0));
+        nameText.setTextColor(ContextCompat.getColor(context, Theme.changelogVersionText()));
+        nameText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 56, 0));
         addView(nameText);
 
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
+        layout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
         addView(layout);
 
         valueText = new TextView(context);
@@ -76,12 +76,12 @@ public class EpisodeView extends FrameLayout {
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        valueText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        valueText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(valueText);
 
         View dotDivider = new View(context);
         dotDivider.setBackground(AndroidExtensions.getIcon(context, R.drawable.dot_divider, ContextCompat.getColor(context, Theme.secondaryTextColor())));
-        dotDivider.setLayoutParams(LayoutHelper.makeLinear(4, 4, Gravity.CENTER_VERTICAL, 6, 1, 6, 0));
+        dotDivider.setLayoutParams(LayoutHelper.makeLinear(context, 4, 4, Gravity.CENTER_VERTICAL, 6, 1, 6, 0));
         layout.addView(dotDivider);
 
         airDateText = new TextView(context);
@@ -90,19 +90,19 @@ public class EpisodeView extends FrameLayout {
         airDateText.setSingleLine();
         airDateText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         airDateText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        airDateText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
+        airDateText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL));
         layout.addView(airDateText);
 
         ImageView selectIcon = new ImageView(context);
         selectIcon.setVisibility(VISIBLE);
         selectIcon.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_check_outline, ContextCompat.getColor(context, R.color.green)));
-        selectIcon.setLayoutParams(LayoutHelper.makeFrame(29, 29, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 14, 0));
+        selectIcon.setLayoutParams(LayoutHelper.makeFrame(context, 29, 29, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 14, 0));
         addView(selectIcon);
 
         checkBox = new CheckBox(context, R.drawable.round_check2);
         checkBox.setVisibility(VISIBLE);
         checkBox.setColor(ContextCompat.getColor(context, R.color.green), ContextCompat.getColor(context, Theme.foregroundColor()));
-        checkBox.setLayoutParams(LayoutHelper.makeFrame(24, 24, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        checkBox.setLayoutParams(LayoutHelper.makeFrame(context, 24, 24, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
     }
 

@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 
 /**
  * Date: 10 JUN 2018
@@ -35,11 +35,11 @@ public class TabView extends FrameLayout {
 
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        linearLayout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(linearLayout);
 
         tabIcon = new ImageView(context);
-        tabIcon.setLayoutParams(LayoutHelper.makeLinear(20, 20, Gravity.CENTER_HORIZONTAL));
+        tabIcon.setLayoutParams(LayoutHelper.makeLinear(context, 20, 20, Gravity.CENTER_HORIZONTAL));
         linearLayout.addView(tabIcon);
 
         tabNameText = new TextView(context);
@@ -48,7 +48,7 @@ public class TabView extends FrameLayout {
         tabNameText.setSingleLine();
         tabNameText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9.5F);
         tabNameText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        tabNameText.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL, 0, 2,0,0));
+        tabNameText.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL, 0, 2,0,0));
         linearLayout.addView(tabNameText);
     }
 

@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -7,8 +7,8 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 
 /**
  * Date: 01 APR 2018
@@ -26,7 +26,7 @@ public class LoadingView extends FrameLayout {
 
         ProgressBar progressBar = new ProgressBar(context);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
-        progressBar.setLayoutParams(LayoutHelper.makeFrame(24, 24, Gravity.CENTER, 0, 12, 0, 12));
+        progressBar.setLayoutParams(LayoutHelper.makeFrame(context, 24, 24, Gravity.CENTER, 0, 12, 0, 12));
         addView(progressBar);
     }
 

@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -24,10 +24,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.ScreenUtils;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
@@ -64,7 +63,7 @@ public class BackdropView extends FrameLayout {
 
         backdropImage = new ImageView(context);
         backdropImage.setScaleType(ImageView.ScaleType.FIT_XY);
-        backdropImage.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        backdropImage.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(backdropImage);
 
         /*ImageView playIcon = new ImageView(context);
@@ -81,7 +80,7 @@ public class BackdropView extends FrameLayout {
         labelView.setPreventCornerOverlap(false);
         labelView.setRadius(Extensions.dp(context, 5));
         labelView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.transparent50));
-        labelView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 4, 0, 16 + 16 + 56, 4));
+        labelView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 4, 0, 16 + 16 + 56, 4));
         addView(labelView);
 
         textView = new TextView(context);
@@ -94,7 +93,7 @@ public class BackdropView extends FrameLayout {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
         textView.setTextColor(ContextCompat.getColor(context, R.color.white));
         textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL, 5, 2.5F, 5, 2.5F));
+        textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL, 5, 2.5F, 5, 2.5F));
         labelView.addView(textView);
     }
 
@@ -119,9 +118,9 @@ public class BackdropView extends FrameLayout {
             followHintTextView.setGravity(Gravity.CENTER_VERTICAL);
             followHintTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
             followHintTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-            followHintTextView.setBackgroundDrawable(createRoundRectDrawable(ScreenUtils.dp(3), 0xCC111111));
-            followHintTextView.setPadding(ScreenUtils.dp(8), ScreenUtils.dp(7), ScreenUtils.dp(8), ScreenUtils.dp(7));
-            addView(followHintTextView, 1, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.BOTTOM, 5, 0, 5, 5 + 28));
+            followHintTextView.setBackgroundDrawable(createRoundRectDrawable(Extensions.dp(getContext(),3), 0xCC111111));
+            followHintTextView.setPadding(Extensions.dp(getContext(),8), Extensions.dp(getContext(),7), Extensions.dp(getContext(),8), Extensions.dp(getContext(),7));
+            addView(followHintTextView, 1, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.BOTTOM, 5, 0, 5, 5 + 28));
         }
 
         if (hide) {

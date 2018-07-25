@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view;
+package org.michaelbel.youshows.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,9 +12,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.LayoutHelper;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.shows.R;
 
 import at.blogc.android.views.ExpandableTextView;
@@ -39,7 +39,7 @@ public class EpisodeOverview extends FrameLayout {
         setBackgroundColor(ContextCompat.getColor(context, Theme.backgroundColor()));
 
         View view = LayoutInflater.from(context).inflate(R.layout.item_season_overview, null);
-        view.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        view.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(view);
 
         View dividerView = view.findViewById(R.id.divider_view);
