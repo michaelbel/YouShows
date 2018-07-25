@@ -24,7 +24,7 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <org.michaelbel.ui.view.SortView
+        <org.michaelbel.youshows.ui.view.SortView
             android:id="@+id/sort_view"
             android:layout_width="match_parent"
             android:layout_height="48dp"

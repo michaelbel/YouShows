@@ -21,7 +21,7 @@
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <org.michaelbel.ui.view.BackdropView
+            <org.michaelbel.youshows.ui.view.BackdropView
                 android:id="@+id/backdrop_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -73,7 +73,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <fragment
-            class="org.michaelbel.ui.fragment.ShowFragment"
+            class="org.michaelbel.youshows.ui.fragment.ShowFragment"
             android:id="@+id/showFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

@@ -20,7 +20,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <fragment
-        class="org.michaelbel.ui.fragment.SearchFragment"
+        class="org.michaelbel.youshows.ui.fragment.SearchFragment"
         android:id="@+id/searchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
