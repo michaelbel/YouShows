@@ -1,4 +1,4 @@
-package org.michaelbel.ui.adapter.TouchHelper;
+package org.michaelbel.youshows.ui.adapter.TouchHelper;
 
 /**
  * Date: 27 APR 2018

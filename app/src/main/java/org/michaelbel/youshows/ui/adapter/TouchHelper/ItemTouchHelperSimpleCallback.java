@@ -1,4 +1,4 @@
-package org.michaelbel.ui.adapter.TouchHelper;
+package org.michaelbel.youshows.ui.adapter.TouchHelper;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;

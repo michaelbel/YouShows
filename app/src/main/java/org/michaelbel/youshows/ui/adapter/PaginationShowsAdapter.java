@@ -1,15 +1,14 @@
-package org.michaelbel.ui.adapter;
+package org.michaelbel.youshows.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.model.Show;
 import org.michaelbel.material.widget.Holder;
-import org.michaelbel.ui.adapter.holder.LoadingHolder;
-import org.michaelbel.ui.view.LoadingView;
-import org.michaelbel.ui.view.ShowView;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.model.Show;
+import org.michaelbel.youshows.ui.view.LoadingView;
+import org.michaelbel.youshows.ui.view.ShowView;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class PaginationShowsAdapter extends PaginationAdapter {
         if (viewType == ITEM) {
             viewHolder = new Holder(new ShowView(parent.getContext()));
         } else if (viewType == LOADING) {
-            viewHolder = new LoadingHolder(new LoadingView(parent.getContext()));
+            viewHolder = new Holder(new LoadingView(parent.getContext()));
         }
 
         return viewHolder;

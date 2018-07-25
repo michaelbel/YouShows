@@ -1,16 +1,16 @@
-package org.michaelbel.ui.adapter;
+package org.michaelbel.youshows.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.model.Show;
 import org.michaelbel.material.annotation.Beta;
 import org.michaelbel.material.widget.Holder;
-import org.michaelbel.ui.adapter.TouchHelper.ItemBehavior;
-import org.michaelbel.ui.view.MyShowView;
+import org.michaelbel.youshows.ui.adapter.TouchHelper.ItemBehavior;
+import org.michaelbel.youshows.ui.view.MyShowView;
 
 import java.util.ArrayList;
 import java.util.Collections;
