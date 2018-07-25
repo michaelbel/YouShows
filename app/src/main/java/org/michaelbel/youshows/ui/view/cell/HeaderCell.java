@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view.cell;
+package org.michaelbel.youshows.ui.view.cell;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -12,8 +12,8 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.material.extensions.Extensions;
 
 /**
@@ -39,8 +39,8 @@ public class HeaderCell extends FrameLayout {
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        textView.setTextColor(ContextCompat.getColor(context, Theme.Color.changelogVersionText()));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 16, 16, 16, 8));
+        textView.setTextColor(ContextCompat.getColor(context, Theme.changelogVersionText()));
+        textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 16, 16, 16, 8));
         addView(textView);
     }
 

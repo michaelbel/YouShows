@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view.cell;
+package org.michaelbel.youshows.ui.view.cell;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,9 +14,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
 
@@ -55,7 +55,7 @@ public class SearchItemCell extends FrameLayout {
         textView.setSingleLine();
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 5, 16, 0));
+        textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 5, 16, 0));
         addView(textView);
 
         valueText = new TextView(context);
@@ -64,7 +64,7 @@ public class SearchItemCell extends FrameLayout {
         valueText.setSingleLine();
         valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.5F);
         valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 27, 16, 0));
+        valueText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 27, 16, 0));
         addView(valueText);
 
         endIconView = new ImageView(context);
@@ -72,7 +72,7 @@ public class SearchItemCell extends FrameLayout {
         endIconView.setScaleType(ImageView.ScaleType.CENTER);
         endIconView.setBackground(AndroidExtensions.selectableItemBackgroundBorderlessDrawable(context));
         endIconView.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_close_circle, ContextCompat.getColor(context, Theme.iconActiveColor())));
-        endIconView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        endIconView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         //addView(endIconView);
     }
 

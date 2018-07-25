@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view.cell;
+package org.michaelbel.youshows.ui.view.cell;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,8 +16,8 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.material.extensions.Extensions;
 
 /**
@@ -61,12 +61,12 @@ public class EmptyCell extends FrameLayout {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         textView.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
         textView.setPadding(Extensions.dp(context,16), Extensions.dp(context,12), Extensions.dp(context,16), Extensions.dp(context,4));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         addView(textView);
 
         progressBar = new ProgressBar(context);
         progressBar.setVisibility(INVISIBLE);
-        progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        progressBar.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         addView(progressBar);
     }
 

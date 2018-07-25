@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view.cell;
+package org.michaelbel.youshows.ui.view.cell;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
@@ -14,9 +15,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -25,9 +24,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.material.extensions.Extensions;
 
 /**
@@ -38,41 +37,36 @@ import org.michaelbel.material.extensions.Extensions;
  */
 
 @SuppressLint("ClickableViewAccessibility")
-public class TextCell extends FrameLayout {
+public class TextDetailCell extends FrameLayout {
 
     public static final int MODE_DEFAULT = 100;
-    public static final int MODE_VALUE_TEXT = 200;
-    public static final int MODE_SWITCH = 300;
-    public static final int MODE_CHECKBOX = 400;
-    public static final int MODE_COLOR = 500;
-    public static final int MODE_ICON = 600;
+    public static final int MODE_SWITCH = 200;
+    public static final int MODE_CHECKBOX = 300;
+    public static final int MODE_ICONS = 400;
 
     @IntDef({
         MODE_DEFAULT,
-        MODE_VALUE_TEXT,
         MODE_SWITCH,
         MODE_CHECKBOX,
-        MODE_COLOR,
-        MODE_ICON
+        MODE_ICONS
     })
     private @interface Mode {}
 
     protected TextView textView;
     protected TextView valueText;
-    protected ImageView iconView;
     protected SwitchCompat switchCompat;
     protected AppCompatCheckBox checkBox;
+    protected ImageView startIconView;
+    protected ImageView endIconView;
 
-    protected Paint paint;
+    private Paint paint;
     private boolean divider;
+    private boolean multiline;
     private Rect rect = new Rect();
-    private int cellHeight;
     private int currentMode = MODE_DEFAULT;
 
-    public TextCell(Context context) {
+    public TextDetailCell(Context context) {
         super(context);
-
-        cellHeight = Extensions.dp(context, 52);
 
         setElevation(Extensions.dp(context,1));
         setForeground(Extensions.selectableItemBackgroundDrawable(context));
@@ -84,56 +78,62 @@ public class TextCell extends FrameLayout {
             paint.setColor(ContextCompat.getColor(context, Theme.dividerColor()));
         }
 
-        iconView = new ImageView(context);
-        iconView.setVisibility(INVISIBLE);
-        iconView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 0, 0));
-        addView(iconView);
+        startIconView = new ImageView(context);
+        startIconView.setVisibility(INVISIBLE);
+        startIconView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 0, 0));
+        addView(startIconView);
 
-        textView = new AppCompatTextView(context);
+        textView = new TextView(context);
         textView.setLines(1);
         textView.setMaxLines(1);
         textView.setSingleLine();
-        textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         textView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
-        textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 16, 0));
         addView(textView);
 
-        valueText = new AppCompatTextView(context);
+        valueText = new TextView(context);
         valueText.setLines(1);
         valueText.setMaxLines(1);
         valueText.setSingleLine();
-        valueText.setVisibility(INVISIBLE);
-        valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        valueText.setTextColor(ContextCompat.getColor(context, Theme.accentColor()));
-        valueText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        valueText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+        valueText.setTextColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
+        valueText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 35, 16, 0));
         addView(valueText);
 
         switchCompat = new SwitchCompat(context);
         switchCompat.setClickable(false);
         switchCompat.setFocusable(false);
         switchCompat.setVisibility(INVISIBLE);
-        switchCompat.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        switchCompat.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(switchCompat);
 
         checkBox = new AppCompatCheckBox(context);
         checkBox.setClickable(false);
         checkBox.setFocusable(false);
         checkBox.setVisibility(INVISIBLE);
-        checkBox.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        checkBox.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
         addView(checkBox);
+
+        endIconView = new ImageView(context);
+        endIconView.setClickable(false);
+        endIconView.setFocusable(false);
+        endIconView.setVisibility(INVISIBLE);
+        endIconView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 0, 0, 16, 0));
+        addView(endIconView);
 
         setMode(currentMode);
     }
 
-    public void setIcon(@DrawableRes int icon) {
-        iconView.setVisibility(icon == 0 ? INVISIBLE : VISIBLE);
+    public void setStartIcon(@DrawableRes int icon) {
+        startIconView.setVisibility(icon == 0 ? INVISIBLE : VISIBLE);
         if (icon != 0) {
-            iconView.setImageDrawable(AndroidExtensions.getIcon(getContext(), icon, ContextCompat.getColor(getContext(), Theme.iconActiveColor())));
+            startIconView.setImageDrawable(AndroidExtensions.getIcon(getContext(), icon, ContextCompat.getColor(getContext(), Theme.iconActiveColor())));
         }
 
-        if (currentMode == MODE_ICON) {
-            textView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 56, 0, 16, 0));
+        if (currentMode == MODE_ICONS) {
+            textView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 56, 10, 16, 0));
+            valueText.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 56, 35, 16, 0));
         }
     }
 
@@ -145,57 +145,53 @@ public class TextCell extends FrameLayout {
         textView.setText(getContext().getText(textId));
     }
 
-    public void setChecked(boolean value) {
-        if (currentMode == MODE_SWITCH) {
-            switchCompat.setChecked(value);
-        }
-
-        if (currentMode == MODE_CHECKBOX) {
-            checkBox.setChecked(value);
-        }
-    }
-
-    public void setValue(@NonNull String value) {
-        valueText.setText(value);
+    public void setValue(@NonNull String text) {
+        valueText.setText(text);
     }
 
     public void setValue(@StringRes int textId) {
         valueText.setText(getContext().getText(textId));
     }
 
+    public void setChecked(boolean value) {
+        if (currentMode == MODE_SWITCH) {
+            switchCompat.setChecked(value);
+        } else if (currentMode == MODE_CHECKBOX) {
+            checkBox.setChecked(value);
+        }
+    }
+
+    public void setEndIcon(Drawable icon) {
+        endIconView.setImageDrawable(icon);
+    }
+
     public void setMode(@Mode int mode) {
         currentMode = mode;
 
         if (currentMode == MODE_DEFAULT) {
-            valueText.setVisibility(INVISIBLE);
-            switchCompat.setVisibility(INVISIBLE);
-            checkBox.setVisibility(INVISIBLE);
-            iconView.setVisibility(INVISIBLE);
-        } else if (currentMode == MODE_VALUE_TEXT) {
             valueText.setVisibility(VISIBLE);
             switchCompat.setVisibility(INVISIBLE);
             checkBox.setVisibility(INVISIBLE);
-            iconView.setVisibility(INVISIBLE);
+            endIconView.setVisibility(INVISIBLE);
+            startIconView.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_SWITCH) {
+            valueText.setVisibility(VISIBLE);
             switchCompat.setVisibility(VISIBLE);
-            valueText.setVisibility(INVISIBLE);
             checkBox.setVisibility(INVISIBLE);
-            iconView.setVisibility(INVISIBLE);
+            endIconView.setVisibility(INVISIBLE);
+            startIconView.setVisibility(INVISIBLE);
         } else if (currentMode == MODE_CHECKBOX) {
+            valueText.setVisibility(VISIBLE);
             checkBox.setVisibility(VISIBLE);
-            valueText.setVisibility(INVISIBLE);
             switchCompat.setVisibility(INVISIBLE);
-            iconView.setVisibility(INVISIBLE);
-        } else if (currentMode == MODE_COLOR) {
-            valueText.setVisibility(INVISIBLE);
-            switchCompat.setVisibility(INVISIBLE);
+            endIconView.setVisibility(INVISIBLE);
+            startIconView.setVisibility(INVISIBLE);
+        } else if (currentMode == MODE_ICONS) {
+            valueText.setVisibility(VISIBLE);
+            endIconView.setVisibility(VISIBLE);
+            startIconView.setVisibility(VISIBLE);
             checkBox.setVisibility(INVISIBLE);
-            iconView.setVisibility(INVISIBLE);
-        } else if (currentMode == MODE_ICON) {
-            iconView.setVisibility(VISIBLE);
-            valueText.setVisibility(INVISIBLE);
             switchCompat.setVisibility(INVISIBLE);
-            checkBox.setVisibility(INVISIBLE);
         }
     }
 
@@ -203,6 +199,26 @@ public class TextCell extends FrameLayout {
         this.divider = divider;
         setWillNotDraw(!divider);
     }
+
+    public void setTitleColor(@ColorRes int color) {
+        textView.setTextColor(ContextCompat.getColor(getContext(), color));
+    }
+
+    /*public void setMultiline(boolean value) {
+        multiline = value;
+
+        if (value) {
+            valueText.setLines(0);
+            valueText.setMaxLines(0);
+            valueText.setSingleLine(false);
+            valueText.setPadding(0, 0, 0, ScreenUtils.dp(12));
+        } else {
+            valueText.setLines(1);
+            valueText.setMaxLines(1);
+            valueText.setSingleLine();
+            valueText.setPadding(0, 0, 0, 0);
+        }
+    }*/
 
     public void changeLayoutParams() {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -221,40 +237,36 @@ public class TextCell extends FrameLayout {
         int trackOff = ContextCompat.getColor(getContext(), Theme.trackOffColor());
 
         DrawableCompat.setTintList(switchCompat.getThumbDrawable(), new ColorStateList(
-            new int[][] {
-                new int[]{android.R.attr.state_checked},
-                new int[]{}
-            },
-            new int[] {
-                thumbOn,
-                thumbOff
-            }));
+                new int[][]{
+                        new int[]{ android.R.attr.state_checked },
+                        new int[]{}
+                },
+                new int[]{
+                        thumbOn,
+                        thumbOff
+                }));
 
         DrawableCompat.setTintList(switchCompat.getTrackDrawable(), new ColorStateList(
-            new int[][] {
-                new int[]{android.R.attr.state_checked},
-                new int[]{}
-            },
-            new int[] {
-                trackOn,
-                trackOff
-            }));
-    }
-
-    public void setTextColor(@ColorRes int color) {
-        textView.setTextColor(ContextCompat.getColor(getContext(), color));
-    }
-
-    public TextCell setHeight(int height) {
-        cellHeight = height;
-        return this;
+                new int[][]{
+                        new int[]{ android.R.attr.state_checked  },
+                        new int[]{}
+                },
+                new int[]{
+                        trackOn,
+                        trackOff
+                }));
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY);
-        int height = cellHeight + (divider ? 1 : 0);
+        int width = MeasureSpec.makeMeasureSpec(widthMeasureSpec, MeasureSpec.EXACTLY);
+        int height = multiline ? getMeasuredHeight() : Extensions.dp(getContext(),64) + (divider ? 1 : 0);
+        /*if (multiline) {
+            height = getMeasuredHeight();
+        } else {
+            height = ScreenUtils.dp(64) + (dividerColor ? 1 : 0);
+        }*/
         setMeasuredDimension(width, height);
     }
 
@@ -276,6 +288,7 @@ public class TextCell extends FrameLayout {
                 getForeground().setHotspot(event.getX(), event.getY());
             }
         }
+
         return super.onTouchEvent(event);
     }
 }
