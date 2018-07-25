@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view.circleprogress;
+package org.michaelbel.youshows.ui.view.circleprogress;
 
 import android.animation.TimeInterpolator;
 import android.annotation.SuppressLint;
@@ -389,7 +389,7 @@ public class CircleProgressView extends View {
     }
 
     /**
-     * @param _contourColor The color of the background contour of the circle.
+     * @param _contourColor The color of the backgroundColor contour of the circle.
      */
     public void setOuterContourColor(@ColorInt int _contourColor) {
         mOuterContourColor = _contourColor;
@@ -401,7 +401,7 @@ public class CircleProgressView extends View {
     }
 
     /**
-     * @param _contourSize The size of the background contour of the circle.
+     * @param _contourSize The size of the backgroundColor contour of the circle.
      */
     public void setOuterContourSize(@FloatRange(from = 0.0) float _contourSize) {
         mOuterContourSize = _contourSize;
@@ -413,7 +413,7 @@ public class CircleProgressView extends View {
     }
 
     /**
-     * @param _contourColor The color of the background contour of the circle.
+     * @param _contourColor The color of the backgroundColor contour of the circle.
      */
     public void setInnerContourColor(@ColorInt int _contourColor) {
         mInnerContourColor = _contourColor;
@@ -425,7 +425,7 @@ public class CircleProgressView extends View {
     }
 
     /**
-     * @param _contourSize The size of the background contour of the circle.
+     * @param _contourSize The size of the backgroundColor contour of the circle.
      */
     public void setInnerContourSize(@FloatRange(from = 0.0) float _contourSize) {
         mInnerContourSize = _contourSize;
@@ -752,7 +752,7 @@ public class CircleProgressView extends View {
     }
 
     /**
-     * Sets the background color of the entire Progress Circle.
+     * Sets the backgroundColor color of the entire Progress Circle.
      * Set the color to 0x00000000 (Color.TRANSPARENT) to hide it.
      *
      * @param circleColor the color.
@@ -1599,7 +1599,7 @@ public class CircleProgressView extends View {
 
         float degrees = (360F / mMaxValue * mCurrentValue);
 
-        // Draw the background circle
+        // Draw the backgroundColor circle
         if (mBackgroundCircleColor != 0) {
             canvas.drawArc(mInnerCircleBound, 360, 360, false, mBackgroundCirclePaint);
         }

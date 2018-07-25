@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view.circleprogress;
+package org.michaelbel.youshows.ui.view.circleprogress;
 
 import android.graphics.Color;
 import android.support.annotation.ColorInt;

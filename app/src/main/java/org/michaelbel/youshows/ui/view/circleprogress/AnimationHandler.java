@@ -1,4 +1,4 @@
-package org.michaelbel.ui.view.circleprogress;
+package org.michaelbel.youshows.ui.view.circleprogress;
 
 import android.animation.TimeInterpolator;
 import android.os.Handler;
