@@ -1,4 +1,4 @@
-package org.michaelbel.ui;
+package org.michaelbel.youshows.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,12 +24,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.rest.model.Show;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.fragment.SearchFragment;
+import org.michaelbel.youshows.ui.fragment.SearchFragment;
 
 import java.util.List;
 import java.util.Locale;
@@ -74,7 +74,7 @@ public class SearchActivity extends AppCompatActivity {
         iconActionMode = MODE_ACTION_VOICE;
 
         FrameLayout toolbarLayout = new FrameLayout(context);
-        toolbarLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        toolbarLayout.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         toolbar.addView(toolbarLayout);
 
         searchEditText = new EditText(context);
@@ -90,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
         searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         searchEditText.setTextColor(ContextCompat.getColor(context, R.color.white));
         searchEditText.setHintTextColor(ContextCompat.getColor(context, R.color.n_disabledHintText));
-        searchEditText.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        searchEditText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

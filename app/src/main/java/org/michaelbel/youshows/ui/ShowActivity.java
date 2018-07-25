@@ -1,4 +1,4 @@
-package org.michaelbel.ui;
+package org.michaelbel.youshows.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,18 +22,18 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.YouShows;
-import org.michaelbel.app.eventbus.Events;
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.ApiFactory;
-import org.michaelbel.app.rest.ApiService;
-import org.michaelbel.app.rest.model.Season;
-import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.YouShows;
+import org.michaelbel.youshows.eventbus.Events;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.ApiFactory;
+import org.michaelbel.youshows.rest.ApiService;
+import org.michaelbel.youshows.rest.model.Season;
+import org.michaelbel.youshows.rest.model.Show;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.fragment.ShowFragment;
-import org.michaelbel.ui.view.BackdropView;
+import org.michaelbel.youshows.ui.fragment.ShowFragment;
+import org.michaelbel.youshows.ui.view.BackdropView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

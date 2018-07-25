@@ -1,4 +1,4 @@
-package org.michaelbel.ui;
+package org.michaelbel.youshows.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,17 +21,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.YouShows;
-import org.michaelbel.app.eventbus.Events;
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.YouShows;
+import org.michaelbel.youshows.eventbus.Events;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.model.Show;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget2.FragmentsPagerAdapter;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.fragment.FollowingShowsFragment;
-import org.michaelbel.ui.fragment.MyShowsFragment;
-import org.michaelbel.ui.view.SortView;
+import org.michaelbel.youshows.ui.fragment.FollowingShowsFragment;
+import org.michaelbel.youshows.ui.fragment.MyShowsFragment;
+import org.michaelbel.youshows.ui.view.SortView;
 
 /**
  * Date: 06 APR 2018

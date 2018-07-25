@@ -1,4 +1,4 @@
-package org.michaelbel.ui;
+package org.michaelbel.youshows.ui;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -12,11 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.realm.RealmDb;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.realm.RealmDb;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.fragment.EpisodesFragment;
+import org.michaelbel.youshows.ui.fragment.EpisodesFragment;
 
 /**
  * Date: 19 MAR 2018
