@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -19,20 +19,20 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.model.SearchItem;
-import org.michaelbel.app.realm.RealmDb;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.model.SearchItem;
+import org.michaelbel.youshows.realm.RealmDb;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.SettingsActivity;
-import org.michaelbel.ui.view.EmptyView;
-import org.michaelbel.ui.view.EmptyViewMode;
-import org.michaelbel.ui.view.cell.EmptyCell;
-import org.michaelbel.ui.view.cell.SearchItemCell;
-import org.michaelbel.ui.view.cell.TextCell;
+import org.michaelbel.youshows.ui.SettingsActivity;
+import org.michaelbel.youshows.ui.view.EmptyView;
+import org.michaelbel.youshows.ui.view.EmptyViewMode;
+import org.michaelbel.youshows.ui.view.cell.EmptyCell;
+import org.michaelbel.youshows.ui.view.cell.SearchItemCell;
+import org.michaelbel.youshows.ui.view.cell.TextCell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class SearchHistoryFragment extends Fragment {
         activity.toolbar.setNavigationOnClickListener(view -> activity.finishFragment());
 
         FrameLayout fragmentView = new FrameLayout(activity);
-        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentView.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         adapter = new SearchHistoryAdapter();
         linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
@@ -78,7 +78,7 @@ public class SearchHistoryFragment extends Fragment {
         recyclerView.setClipToPadding(false);
         recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (position == adapter.ROW_ENABLE_HISTORY) {
                 SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
@@ -108,8 +108,8 @@ public class SearchHistoryFragment extends Fragment {
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
                 }
             }
         });
@@ -118,7 +118,7 @@ public class SearchHistoryFragment extends Fragment {
         emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.VISIBLE);
         emptyView.setMode(EmptyViewMode.MODE_SEARCH_HISTORY);
-        emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 0, 52, 0, 0));
+        emptyView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 0, 52, 0, 0));
         fragmentView.addView(emptyView);
         return fragmentView;
     }

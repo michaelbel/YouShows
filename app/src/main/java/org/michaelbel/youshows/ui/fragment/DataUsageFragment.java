@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,19 +16,19 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.youshows.AndroidExtensions;
 import org.michaelbel.material.widget.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.realm.RealmDb;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.realm.RealmDb;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.SettingsActivity;
-import org.michaelbel.ui.view.cell.EmptyCell;
-import org.michaelbel.ui.view.cell.HeaderCell;
-import org.michaelbel.ui.view.cell.TextCell;
-import org.michaelbel.ui.view.cell.TextDetailCell;
+import org.michaelbel.youshows.ui.SettingsActivity;
+import org.michaelbel.youshows.ui.view.cell.EmptyCell;
+import org.michaelbel.youshows.ui.view.cell.HeaderCell;
+import org.michaelbel.youshows.ui.view.cell.TextCell;
+import org.michaelbel.youshows.ui.view.cell.TextDetailCell;
 
 /**
  * Date: 14 MAY 2018

@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,25 +21,25 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.model.SearchItem;
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.ApiFactory;
-import org.michaelbel.app.rest.ApiService;
-import org.michaelbel.app.rest.model.Show;
-import org.michaelbel.app.rest.response.ShowsResponse;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.model.SearchItem;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.ApiFactory;
+import org.michaelbel.youshows.rest.ApiService;
+import org.michaelbel.youshows.rest.model.Show;
+import org.michaelbel.youshows.rest.response.ShowsResponse;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.SearchActivity;
-import org.michaelbel.ui.adapter.PaginationShowsAdapter;
-import org.michaelbel.ui.view.EmptyView;
-import org.michaelbel.ui.view.EmptyViewMode;
-import org.michaelbel.ui.view.ShowView;
-import org.michaelbel.ui.view.cell.TextCell;
+import org.michaelbel.youshows.ui.SearchActivity;
+import org.michaelbel.youshows.ui.adapter.PaginationShowsAdapter;
+import org.michaelbel.youshows.ui.view.EmptyView;
+import org.michaelbel.youshows.ui.view.EmptyViewMode;
+import org.michaelbel.youshows.ui.view.ShowView;
+import org.michaelbel.youshows.ui.view.cell.TextCell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,13 +89,13 @@ public class SearchFragment extends Fragment {
 
         emptyView = new EmptyView(activity);
         emptyView.setMode(EmptyViewMode.MODE_NO_RESULTS);
-        emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
+        emptyView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
         fragmentView.addView(emptyView);
 
         progressBar = new ProgressBar(activity);
         progressBar.setVisibility(View.INVISIBLE);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
-        progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        progressBar.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentView.addView(progressBar);
 
         adapter = new PaginationShowsAdapter();
@@ -105,7 +105,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setEmptyView(emptyView);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof ShowView) {
                 Show show = adapter.getList().get(position);
@@ -139,7 +139,7 @@ public class SearchFragment extends Fragment {
         suggestionsRecyclerView.setAdapter(suggestionsAdapter);
         suggestionsRecyclerView.setElevation(Extensions.dp(activity, 2));
         suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-        suggestionsRecyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP));
+        suggestionsRecyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP));
         suggestionsRecyclerView.setOnItemClickListener((view, position) -> {
             SearchItem item = suggestionsAdapter.suggestions.get(position);
             searchFromSuggestion(item.query);
@@ -156,8 +156,8 @@ public class SearchFragment extends Fragment {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.dialogButtonText()));
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
             return true;
         });
         fragmentView.addView(suggestionsRecyclerView);

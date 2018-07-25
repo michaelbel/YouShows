@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -13,22 +13,22 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.YouShows;
-import org.michaelbel.app.eventbus.Events;
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.model.Company;
-import org.michaelbel.app.rest.model.Genre;
-import org.michaelbel.app.rest.model.Season;
-import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.YouShows;
+import org.michaelbel.youshows.eventbus.Events;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.model.Company;
+import org.michaelbel.youshows.rest.model.Genre;
+import org.michaelbel.youshows.rest.model.Season;
+import org.michaelbel.youshows.rest.model.Show;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.ShowActivity;
-import org.michaelbel.ui.view.InfoLayout;
-import org.michaelbel.ui.view.OverviewLayout;
-import org.michaelbel.ui.view.SeasonsLayout;
+import org.michaelbel.youshows.ui.ShowActivity;
+import org.michaelbel.youshows.ui.view.InfoLayout;
+import org.michaelbel.youshows.ui.view.OverviewLayout;
+import org.michaelbel.youshows.ui.view.SeasonsLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class ShowFragment extends Fragment {
         fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         overviewLayout = new OverviewLayout(activity);
-        overviewLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        overviewLayout.setLayoutParams(LayoutHelper.makeLinear(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         fragmentLayout.addView(overviewLayout);
 
         seasonsLayout = new SeasonsLayout(activity);
@@ -74,11 +74,11 @@ public class ShowFragment extends Fragment {
             Season season = seasonsLayout.getSeasons().get(position);
             activity.startSeason(season);
         });
-        seasonsLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 7, 0, 0));
+        seasonsLayout.setLayoutParams(LayoutHelper.makeLinear(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 7, 0, 0));
         fragmentLayout.addView(seasonsLayout);
 
         detailsLayout = new InfoLayout(activity);
-        detailsLayout.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 7, 0, 0));
+        detailsLayout.setLayoutParams(LayoutHelper.makeLinear(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 7, 0, 0));
         fragmentLayout.addView(detailsLayout);
         return fragmentLayout;
     }

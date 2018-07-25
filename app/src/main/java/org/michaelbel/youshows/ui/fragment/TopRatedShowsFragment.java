@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -17,18 +17,18 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.rest.ApiFactory;
-import org.michaelbel.app.rest.ApiService;
-import org.michaelbel.app.rest.model.Show;
-import org.michaelbel.app.rest.response.ShowsResponse;
+import org.michaelbel.youshows.LayoutHelper; // makeSwipeRefresh
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.rest.ApiFactory;
+import org.michaelbel.youshows.rest.ApiService;
+import org.michaelbel.youshows.rest.model.Show;
+import org.michaelbel.youshows.rest.response.ShowsResponse;
 import org.michaelbel.material.widget.RecyclerListView;
-import org.michaelbel.ui.ExploreActivity;
-import org.michaelbel.ui.adapter.PaginationShowsAdapter;
-import org.michaelbel.ui.view.EmptyView;
-import org.michaelbel.ui.view.EmptyViewMode;
-import org.michaelbel.ui.view.ShowView;
+import org.michaelbel.youshows.ui.ExploreActivity;
+import org.michaelbel.youshows.ui.adapter.PaginationShowsAdapter;
+import org.michaelbel.youshows.ui.view.EmptyView;
+import org.michaelbel.youshows.ui.view.EmptyViewMode;
+import org.michaelbel.youshows.ui.view.ShowView;
 
 import java.util.ArrayList;
 import java.util.List;

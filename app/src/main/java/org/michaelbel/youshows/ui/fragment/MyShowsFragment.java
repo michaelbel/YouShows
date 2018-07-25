@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -21,23 +21,22 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.YouShows;
-import org.michaelbel.app.eventbus.Events;
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.YouShows;
+import org.michaelbel.youshows.eventbus.Events;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.model.Show;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.RecyclerListView;
-import org.michaelbel.app.ScreenUtils;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.MainActivity;
-import org.michaelbel.ui.adapter.ShowsAdapter;
-import org.michaelbel.ui.view.MyShowView;
-import org.michaelbel.ui.view.ShowsEmptyView;
-import org.michaelbel.ui.view.SortView;
+import org.michaelbel.youshows.ui.MainActivity;
+import org.michaelbel.youshows.ui.adapter.ShowsAdapter;
+import org.michaelbel.youshows.ui.view.MyShowView;
+import org.michaelbel.youshows.ui.view.ShowsEmptyView;
+import org.michaelbel.youshows.ui.view.SortView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,7 +60,6 @@ public class MyShowsFragment extends Fragment {
     private int prevPosition;
     private boolean scrollUpdated;
     private boolean floatingHidden;
-    private final AccelerateDecelerateInterpolator floatingInterpolator = new AccelerateDecelerateInterpolator();
 
     private ShowsAdapter adapter;
     private MainActivity activity;
@@ -94,12 +92,12 @@ public class MyShowsFragment extends Fragment {
         });
 
         fragmentLayout = new FrameLayout(activity);
-        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+        fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
 
         emptyView = new ShowsEmptyView(activity);
         emptyView.setMode(ShowsEmptyView.MY_SHOWS_MODE);
         emptyView.setOnClickListener(v -> activity.startExplore());
-        emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        emptyView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(emptyView);
 
         adapter = new ShowsAdapter();
@@ -112,7 +110,7 @@ public class MyShowsFragment extends Fragment {
         recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setPadding(0, Extensions.dp(activity,6), 0, Extensions.dp(activity,6));
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setLayoutAnimation(AndroidExtensions.layoutAnimationController());
         recyclerView.setLayoutAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -137,13 +135,13 @@ public class MyShowsFragment extends Fragment {
                 Show show = adapter.getShows().get(position);
 
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
-                builder.setCellHeight(ScreenUtils.dp(52));
+                builder.setCellHeight(Extensions.dp(activity,52));
                 builder.setTitle(show.name);
                 builder.setTitleMultiline(true);
-                builder.setTitleTextColorRes(Theme.Color.secondaryTextColor());
-                builder.setItemTextColorRes(Theme.Color.primaryTextColor());
-                builder.setIconColorRes(Theme.Color.iconActiveColor());
-                builder.setBackgroundColorRes(Theme.Color.foreground());
+                builder.setTitleTextColorRes(Theme.secondaryTextColor());
+                builder.setItemTextColorRes(Theme.primaryTextColor());
+                builder.setIconColorRes(Theme.iconActiveColor());
+                builder.setBackgroundColorRes(Theme.foregroundColor());
                 builder.setItems(new int[]{R.string.Delete}, new int[]{R.drawable.ic_delete}, (dialog, whichRow) -> {
                     if (whichRow == 0) {
                         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity, Theme.alertDialogStyle());
@@ -157,8 +155,8 @@ public class MyShowsFragment extends Fragment {
                         });
                         AlertDialog alertDialog = alertBuilder.create();
                         alertDialog.show();
-                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accentColor()));
-                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.Color.accentColor()));
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.accentColor()));
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.accentColor()));
                     }
                 });
                 builder.show();
@@ -222,7 +220,7 @@ public class MyShowsFragment extends Fragment {
 
         ((YouShows) activity.getApplication()).bus().toObservable().subscribe(object -> {
             if (object instanceof Events.ChangeTheme) {
-                fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.Color.background()));
+                fragmentLayout.setBackgroundColor(ContextCompat.getColor(activity, Theme.backgroundColor()));
             }
         });
     }
@@ -273,13 +271,18 @@ public class MyShowsFragment extends Fragment {
         }
     }
 
+    public void changeEmptyViewTheme() {
+        emptyView.changeTheme();
+    }
+
     private void hideFloatingButton(boolean hide) {
         if (floatingHidden == hide) {
             return;
         }
+
         floatingHidden = hide;
-        ObjectAnimator animator = ObjectAnimator.ofFloat(activity.floatingButton, "translationY", floatingHidden ? ScreenUtils.dp(100) : 0).setDuration(300);
-        animator.setInterpolator(floatingInterpolator);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(activity.floatingButton, "translationY", floatingHidden ? Extensions.dp(activity,100) : 0).setDuration(300);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
         activity.floatingButton.setClickable(!hide);
         animator.start();
     }

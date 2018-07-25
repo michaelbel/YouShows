@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -16,13 +16,13 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.YouShows;
-import org.michaelbel.app.eventbus.Events;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.YouShows;
+import org.michaelbel.youshows.eventbus.Events;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.SettingsActivity;
-import org.michaelbel.ui.view.cell.ThemeCell;
+import org.michaelbel.youshows.ui.SettingsActivity;
+import org.michaelbel.youshows.ui.view.cell.ThemeCell;
 
 /**
  * Date: 08 MAY 2018

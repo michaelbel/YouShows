@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,20 +15,19 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Browser;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.YouShows;
-import org.michaelbel.app.model.Source;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.youshows.Browser;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.YouShows;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.SettingsActivity;
-import org.michaelbel.ui.view.cell.EmptyCell;
-import org.michaelbel.ui.view.cell.TextDetailCell;
+import org.michaelbel.youshows.ui.SettingsActivity;
+import org.michaelbel.youshows.ui.view.cell.EmptyCell;
+import org.michaelbel.youshows.ui.view.cell.TextDetailCell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +50,19 @@ public class LibsFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
 
     private RecyclerListView recyclerView;
+
+    private class Source {
+
+        private String url;
+        private String name;
+        private String license;
+
+        private Source(String name, String url, String license) {
+            this.url = url;
+            this.name = name;
+            this.license = license;
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,7 +96,7 @@ public class LibsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof EmptyCell) {
                 Browser.openUrl(activity, YouShows.TMDB_URL);

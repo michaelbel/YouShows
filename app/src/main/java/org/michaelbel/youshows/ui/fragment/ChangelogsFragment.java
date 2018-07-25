@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -24,14 +24,14 @@ import com.google.gson.annotations.SerializedName;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.michaelbel.app.Theme;
+import org.michaelbel.youshows.Theme;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.SettingsActivity;
-import org.michaelbel.ui.view.ChangelogView;
+import org.michaelbel.youshows.ui.SettingsActivity;
+import org.michaelbel.youshows.ui.view.ChangelogView;
 
 import java.io.IOException;
 import java.io.InputStream;

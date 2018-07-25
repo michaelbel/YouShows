@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,23 +21,23 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.Browser;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.YouShows;
-import org.michaelbel.app.eventbus.Events;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.youshows.Browser;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.YouShows;
+import org.michaelbel.youshows.eventbus.Events;
 import org.michaelbel.bottomsheet.BottomSheet;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.BuildConfig;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.SettingsActivity;
-import org.michaelbel.ui.view.cell.EmptyCell;
-import org.michaelbel.ui.view.cell.HeaderCell;
-import org.michaelbel.ui.view.cell.TextCell;
-import org.michaelbel.ui.view.cell.TextDetailCell;
+import org.michaelbel.youshows.ui.SettingsActivity;
+import org.michaelbel.youshows.ui.view.cell.EmptyCell;
+import org.michaelbel.youshows.ui.view.cell.HeaderCell;
+import org.michaelbel.youshows.ui.view.cell.TextCell;
+import org.michaelbel.youshows.ui.view.cell.TextDetailCell;
 
 /**
  * Date: 19 MAR 2018
@@ -136,7 +136,7 @@ public class SettingsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setOnItemClickListener((view, position) -> {
             if (position == themeRow) {
-                activity.startFragment(new ThemeFragment2(), R.string.Theme);
+                activity.startFragment(new ThemeFragment(), R.string.Theme);
             } else if (position == defaultTabRow) {
                 BottomSheet.Builder builder = new BottomSheet.Builder(activity);
                 builder.setCellHeight(Extensions.dp(activity,52));
@@ -264,7 +264,7 @@ public class SettingsFragment extends Fragment {
 
             return true;
         });
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         fragmentLayout.addView(recyclerView);
         return fragmentLayout;
     }

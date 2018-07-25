@@ -1,4 +1,4 @@
-package org.michaelbel.ui.fragment;
+package org.michaelbel.youshows.ui.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -25,25 +25,25 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import org.michaelbel.app.AndroidExtensions;
-import org.michaelbel.app.LayoutHelper;
-import org.michaelbel.app.Theme;
-import org.michaelbel.app.YouShows;
-import org.michaelbel.app.eventbus.Events;
-import org.michaelbel.app.realm.RealmDb;
-import org.michaelbel.app.rest.ApiFactory;
-import org.michaelbel.app.rest.ApiService;
-import org.michaelbel.app.rest.model.Episode;
-import org.michaelbel.app.rest.model.Season;
+import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.youshows.Theme;
+import org.michaelbel.youshows.YouShows;
+import org.michaelbel.youshows.eventbus.Events;
+import org.michaelbel.youshows.realm.RealmDb;
+import org.michaelbel.youshows.rest.ApiFactory;
+import org.michaelbel.youshows.rest.ApiService;
+import org.michaelbel.youshows.rest.model.Episode;
+import org.michaelbel.youshows.rest.model.Season;
 import org.michaelbel.material.widget.Holder;
 import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.shows.R;
-import org.michaelbel.ui.SeasonActivity;
-import org.michaelbel.ui.view.EmptyView;
-import org.michaelbel.ui.view.EmptyViewMode;
-import org.michaelbel.ui.view.EpisodeOverview;
-import org.michaelbel.ui.view.EpisodePeekView;
-import org.michaelbel.ui.view.EpisodeView;
+import org.michaelbel.youshows.ui.SeasonActivity;
+import org.michaelbel.youshows.ui.view.EmptyView;
+import org.michaelbel.youshows.ui.view.EmptyViewMode;
+import org.michaelbel.youshows.ui.view.EpisodeOverview;
+import org.michaelbel.youshows.ui.view.EpisodePeekView;
+import org.michaelbel.youshows.ui.view.EpisodeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,25 +98,25 @@ public class EpisodesFragment extends Fragment {
 
         progressBar = new ProgressBar(activity);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
-        progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        progressBar.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(progressBar);
 
         emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.GONE);
         emptyView.setOnClickListener(view -> showEpisodes());
-        emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        emptyView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         fragmentLayout.addView(emptyView);
 
         episodeLayout = new FrameLayout(activity);
         episodeLayout.setAlpha(0);
         episodeLayout.setVisibility(View.GONE);
         episodeLayout.setBackgroundColor(ContextCompat.getColor(activity, R.color.transparent50));
-        episodeLayout.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        episodeLayout.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         fragmentLayout.addView(episodeLayout);
 
         episodePeekView = new EpisodePeekView(activity);
         episodePeekView.setAlpha(0);
-        episodePeekView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 24, 56, 24, 56));
+        episodePeekView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 24, 56, 24, 56));
         episodeLayout.addView(episodePeekView);
 
         adapter = new SeasonAdapter();
@@ -162,7 +162,7 @@ public class EpisodesFragment extends Fragment {
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
         });
-        recyclerView.setLayoutParams(LayoutHelper.makeLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeLinear(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         contentLayout.addView(recyclerView);
         return fragmentLayout;
     }
