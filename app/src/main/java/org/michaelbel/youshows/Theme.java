@@ -1,4 +1,4 @@
-package org.michaelbel.app;
+package org.michaelbel.youshows;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,11 +1,11 @@
-package org.michaelbel.app;
+package org.michaelbel.youshows;
 
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
-import org.michaelbel.app.eventbus.RxBus;
-import org.michaelbel.app.realm.MyRealmMigration;
+import org.michaelbel.youshows.eventbus.RxBus;
+import org.michaelbel.youshows.realm.MyRealmMigration;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;

@@ -1,11 +1,10 @@
-package org.michaelbel.app;
+package org.michaelbel.youshows;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
@@ -29,19 +28,17 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
-import org.michaelbel.app.rest.model.Company;
-import org.michaelbel.app.rest.model.Genre;
 import org.michaelbel.material.extensions.Extensions;
 import org.michaelbel.shows.R;
+import org.michaelbel.youshows.rest.model.Company;
+import org.michaelbel.youshows.rest.model.Genre;
 
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 
 /**
  * Date: 19 MAR 2018
@@ -166,18 +163,7 @@ public class AndroidExtensions extends Extensions {
     }
 
     public static String getProperty(String key) {
-        try {
-            Properties properties = new Properties();
-            AssetManager assetManager = YouShows.AppContext.getAssets();
-            InputStream inputStream = assetManager.open("config.properties");
-            properties.load(inputStream);
-            return properties.getProperty(key);
-        } catch (Exception e) {
-            //FirebaseCrash.logcat(Log.ERROR, "e_message", "Error retrieving file asset");
-            //FirebaseCrash.report(e);
-        }
-
-        return null;
+        return loadProperty(YouShows.AppContext,"config.properties", key);
     }
 
     public static Point displaySize = new Point();
