@@ -1,4 +1,4 @@
-package org.michaelbel.app.model;
+package org.michaelbel.youshows.model;
 
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;

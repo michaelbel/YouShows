@@ -1,11 +1,11 @@
-package org.michaelbel.app.rest;
+package org.michaelbel.youshows.rest;
 
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.michaelbel.app.AndroidExtensions;
+import org.michaelbel.youshows.AndroidExtensions;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -26,8 +26,8 @@ public class ApiFactory {
     public static final String TMDB_MOVIE = "https://themoviedb.org/movie/%d";
 
     public static final String TMDB_EN_US = "en-US";
-    public static final String TMDB_DE_DE = "de-DE";
     public static final String TMDB_RU_RU = "ru-RU";
+    public static final String TMDB_DE_DE = "de-DE";
     public static final String TMDB_PT_BR = "pt-BR";
     public static final String TMDB_PT_PT = "pt-PT";
     public static final String TMDB_PT_US = "pt-US";

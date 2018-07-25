@@ -1,4 +1,4 @@
-package org.michaelbel.app.eventbus;
+package org.michaelbel.youshows.eventbus;
 
 /**
  * Date: 01 MAY 2018

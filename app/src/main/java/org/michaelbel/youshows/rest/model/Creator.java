@@ -1,8 +1,8 @@
-package org.michaelbel.app.rest.model;
+package org.michaelbel.youshows.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.michaelbel.app.rest.TmdbObject;
+import org.michaelbel.youshows.rest.TmdbObject;
 
 import java.io.Serializable;
 

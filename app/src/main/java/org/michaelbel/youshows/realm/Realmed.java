@@ -1,4 +1,4 @@
-package org.michaelbel.app.realm;
+package org.michaelbel.youshows.realm;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

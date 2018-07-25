@@ -1,8 +1,8 @@
-package org.michaelbel.app.rest;
+package org.michaelbel.youshows.rest;
 
-import org.michaelbel.app.rest.model.Season;
-import org.michaelbel.app.rest.model.Show;
-import org.michaelbel.app.rest.response.ShowsResponse;
+import org.michaelbel.youshows.rest.model.Season;
+import org.michaelbel.youshows.rest.model.Show;
+import org.michaelbel.youshows.rest.response.ShowsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

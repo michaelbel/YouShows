@@ -1,4 +1,4 @@
-package org.michaelbel.app.rest;
+package org.michaelbel.youshows.rest;
 
 /**
  * Date: 19 MAR 2018

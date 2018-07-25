@@ -1,11 +1,11 @@
-package org.michaelbel.app.realm;
+package org.michaelbel.youshows.realm;
 
-import org.michaelbel.app.model.SearchItem;
-import org.michaelbel.app.rest.model.Company;
-import org.michaelbel.app.rest.model.Episode;
-import org.michaelbel.app.rest.model.Genre;
-import org.michaelbel.app.rest.model.Season;
-import org.michaelbel.app.rest.model.Show;
+import org.michaelbel.youshows.model.SearchItem;
+import org.michaelbel.youshows.rest.model.Company;
+import org.michaelbel.youshows.rest.model.Episode;
+import org.michaelbel.youshows.rest.model.Genre;
+import org.michaelbel.youshows.rest.model.Season;
+import org.michaelbel.youshows.rest.model.Show;
 import org.michaelbel.material.annotation.Beta;
 import org.michaelbel.material.annotation.NotTested;
 

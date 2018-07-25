@@ -1,4 +1,4 @@
-package org.michaelbel.app.realm;
+package org.michaelbel.youshows.realm;
 
 import android.support.annotation.NonNull;
 

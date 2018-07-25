@@ -1,4 +1,4 @@
-package org.michaelbel.app.eventbus;
+package org.michaelbel.youshows.eventbus;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;

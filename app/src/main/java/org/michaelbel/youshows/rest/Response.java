@@ -1,4 +1,4 @@
-package org.michaelbel.app.rest;
+package org.michaelbel.youshows.rest;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
