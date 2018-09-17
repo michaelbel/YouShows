@@ -153,5 +153,14 @@
         "changes":[
             "Bug fixes"
         ]
+    },
+
+    {
+        "version":"1.1.6",
+        "build":24,
+        "date":"25 Jul 2018",
+        "changes":[
+            "Bug fixes"
+        ]
     }
 ]
