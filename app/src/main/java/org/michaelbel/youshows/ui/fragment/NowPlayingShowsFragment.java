@@ -17,13 +17,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import org.michaelbel.youshows.LayoutHelper; // makeSwipeRefresh
+import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.youshows.Theme;
 import org.michaelbel.youshows.rest.ApiFactory;
 import org.michaelbel.youshows.rest.ApiService;
 import org.michaelbel.youshows.rest.model.Show;
 import org.michaelbel.youshows.rest.response.ShowsResponse;
-import org.michaelbel.material.widget.RecyclerListView;
 import org.michaelbel.youshows.ui.ExploreActivity;
 import org.michaelbel.youshows.ui.adapter.PaginationShowsAdapter;
 import org.michaelbel.youshows.ui.view.EmptyView;
@@ -101,18 +101,18 @@ public class NowPlayingShowsFragment extends Fragment {
         });
 
         FrameLayout contentLayout = new FrameLayout(activity);
-        contentLayout.setLayoutParams(LayoutHelper.makeSwipeRefresh(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        contentLayout.setLayoutParams(LayoutHelper.makeSwipeRefresh(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         fragmentLayout.addView(contentLayout);
 
         progressBar = new ProgressBar(activity);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, Theme.accentColor()), PorterDuff.Mode.MULTIPLY);
-        progressBar.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        progressBar.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         contentLayout.addView(progressBar);
 
         emptyView = new EmptyView(activity);
         emptyView.setVisibility(View.GONE);
         emptyView.setOnClickListener(view -> loadFirstPage());
-        emptyView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
+        emptyView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 24, 0, 24, 0));
         contentLayout.addView(emptyView);
 
         adapter = new PaginationShowsAdapter();
@@ -122,7 +122,7 @@ public class NowPlayingShowsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener((view, position) -> {
             if (view instanceof ShowView) {
                 Show show = adapter.getList().get(position);

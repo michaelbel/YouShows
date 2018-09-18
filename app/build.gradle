@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'org.michaelbel:material:0.3.5'
+    implementation 'org.michaelbel:material:0.3.6'
     implementation 'org.michaelbel:bottomsheet:1.2.2'
     implementation 'io.realm:android-adapters:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'

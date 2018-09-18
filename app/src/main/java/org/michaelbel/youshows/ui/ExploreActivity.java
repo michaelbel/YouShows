@@ -17,18 +17,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 
-import org.michaelbel.youshows.AndroidExtensions;
+import org.michaelbel.material.extensions.Extensions;
+import org.michaelbel.material.widget.Holder;
+import org.michaelbel.shows.R;
 import org.michaelbel.youshows.Theme;
 import org.michaelbel.youshows.model.SearchItem;
 import org.michaelbel.youshows.rest.model.Show;
-import org.michaelbel.material.extensions.Extensions;
-import org.michaelbel.material.widget.Holder;
-import org.michaelbel.beta.searchview.Search;
-import org.michaelbel.beta.searchview.widget.SearchView;
-import org.michaelbel.shows.R;
 import org.michaelbel.youshows.ui.fragment.NowPlayingShowsFragment;
 import org.michaelbel.youshows.ui.fragment.PopularShowsFragment;
 import org.michaelbel.youshows.ui.fragment.TopRatedShowsFragment;
@@ -48,17 +44,13 @@ import java.util.Objects;
 
 public class ExploreActivity extends AppCompatActivity {
 
-    private static final int SPEECH_REQUEST_CODE = 101;
-
     private final int tab_now_playing = 0;
     private final int tab_popular = 1;
     private final int tab_top_rated = 2;
 
     private Context context;
-    private MenuItem searchItem;
 
     public TabLayout tabLayout;
-    private SearchView searchView;
     private FragmentsPagerAdapter adapter;
 
     private SuggestionsAdapter suggestionsAdapter;
@@ -136,72 +128,19 @@ public class ExploreActivity extends AppCompatActivity {
 
         suggestionsAdapter = new SuggestionsAdapter();
         showSuggestions();
-
-        searchView = findViewById(R.id.search_view);
-        searchView.setVersion(Search.Version.MENU_ITEM);
-        searchView.setVersionMargins(Search.VersionMargins.MENU_ITEM);
-        searchView.setBackgroundColor(ContextCompat.getColor(context, Theme.foregroundColor()));
-        searchView.setLogoIcon(AndroidExtensions.getIcon(context, R.drawable.ic_arrow_back, ContextCompat.getColor(context, Theme.iconActiveColor())));
-        searchView.setClearIcon(AndroidExtensions.getIcon(context, R.drawable.ic_clear, ContextCompat.getColor(context, Theme.iconActiveColor())));
-        searchView.setMicIcon(AndroidExtensions.getIcon(context, R.drawable.ic_mic_color, ContextCompat.getColor(context, Theme.iconActiveColor())));
-        searchView.setOnMicClickListener(new Search.OnMicClickListener() {
-            @Override
-            public void onMicClick() {
-
-            }
-        });
-        searchView.setHint(R.string.Search);
-        searchView.setTextColor(ContextCompat.getColor(context, Theme.primaryTextColor()));
-        searchView.setHintColor(ContextCompat.getColor(context, Theme.secondaryTextColor()));
-        searchView.setOnOpenCloseListener(new Search.OnOpenCloseListener() {
-            @Override
-            public void onOpen() {
-                tabLayout.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onClose() {
-                tabLayout.setVisibility(View.VISIBLE);
-            }
-        });
-        searchView.setAdapter(suggestionsAdapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        searchItem = menu.add(R.string.Search).setIcon(R.drawable.ic_search)
+        MenuItem searchItem = menu.add(R.string.Search).setIcon(R.drawable.ic_search)
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             .setOnMenuItemClickListener(item -> {
                 startActivity(new Intent(context, SearchActivity.class));
-                //searchView.open(searchItem);
                 return true;
             });
 
         return super.onCreateOptionsMenu(menu);
     }
-
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == SPEECH_REQUEST_CODE) {
-            if (resultCode == RESULT_OK && data != null) {
-                List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                if (results != null && results.size() > 0) {
-                    String textResults = results.get(0);
-                    if (!TextUtils.isEmpty(textResults)) {
-                        *//*if (searchEditText != null) {
-                            searchEditText.setText(textResults);
-                            searchEditText.setSelection(searchEditText.getText().length());
-                            changeActionIcon();
-                            searchFragment.search(textResults);
-                            searchFragment.addToSearchHistory(textResults, true);
-                        }*//*
-                    }
-                }
-            }
-        }
-    }*/
 
     @Override
     protected void onDestroy() {
