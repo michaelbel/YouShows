@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import org.michaelbel.shows.BuildConfig;
 import org.michaelbel.youshows.AndroidExtensions;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.youshows.Theme;
@@ -184,7 +185,7 @@ public class SearchFragment extends Fragment {
         }
 
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.search(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), searchQuery, page).enqueue(new Callback<ShowsResponse>() {
+        service.search(BuildConfig.TMDB_API_KEY, ApiFactory.getLanguage(), searchQuery, page).enqueue(new Callback<ShowsResponse>() {
             @Override
             public void onResponse(@NonNull Call<ShowsResponse> call, @NonNull Response<ShowsResponse> response) {
                 if (response.isSuccessful()) {
@@ -225,7 +226,7 @@ public class SearchFragment extends Fragment {
 
     private void loadNext() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.search(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), searchQuery, page).enqueue(new Callback<ShowsResponse>() {
+        service.search(BuildConfig.TMDB_API_KEY, ApiFactory.getLanguage(), searchQuery, page).enqueue(new Callback<ShowsResponse>() {
             @Override
             public void onResponse(@NonNull Call<ShowsResponse> call, @NonNull Response<ShowsResponse> response) {
                 if (response.isSuccessful()) {

@@ -1,6 +1,21 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
+def getProperty(String filename, String propName) {
+    def propsFile = rootProject.file(filename)
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        if (props[propName] != null) {
+            return props[propName]
+        } else {
+            print("No such property " + propName + " in file " + filename)
+        }
+    } else {
+        print(filename + " does not exist!")
+    }
+}
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -11,6 +26,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "VERSION_DATE", '"25 Jul 2018"'
         project.ext.set("archivesBaseName", "youshows-v" + versionName)
+        buildConfigField "String", "TMDB_API_KEY", "\"${getProperty("local.properties", "tmdb_api_key")}\""
+        buildConfigField "String", "TRAKT_CLIENT_ID", "\"${getProperty("local.properties", "tract_client_id")}\""
     }
 
     buildTypes {

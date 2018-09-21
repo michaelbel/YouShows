@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.RecyclerListView;
+import org.michaelbel.shows.BuildConfig;
 import org.michaelbel.youshows.Theme;
 import org.michaelbel.youshows.rest.ApiFactory;
 import org.michaelbel.youshows.rest.ApiService;
@@ -176,7 +177,7 @@ public class TopRatedShowsFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.topRated(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), page).enqueue(new Callback<ShowsResponse>() {
+        service.topRated(BuildConfig.TMDB_API_KEY, ApiFactory.getLanguage(), page).enqueue(new Callback<ShowsResponse>() {
             @Override
             public void onResponse(@NonNull Call<ShowsResponse> call, @NonNull Response<ShowsResponse> response) {
                 if (response.isSuccessful()) {
@@ -206,7 +207,7 @@ public class TopRatedShowsFragment extends Fragment {
 
     public void loadNextPage() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.topRated(ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage(), page).enqueue(new Callback<ShowsResponse>() {
+        service.topRated(BuildConfig.TMDB_API_KEY, ApiFactory.getLanguage(), page).enqueue(new Callback<ShowsResponse>() {
             @Override
             public void onResponse(@NonNull Call<ShowsResponse> call, @NonNull Response<ShowsResponse> response) {
                 if (response.isSuccessful()) {

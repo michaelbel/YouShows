@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import org.michaelbel.shows.BuildConfig;
 import org.michaelbel.youshows.AndroidExtensions;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.youshows.Theme;
@@ -241,7 +242,7 @@ public class EpisodesFragment extends Fragment {
         }
 
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.season(activity.showId, activity.seasonNumber, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Season>() {
+        service.season(activity.showId, activity.seasonNumber, BuildConfig.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Season>() {
             @Override
             public void onResponse(@NonNull Call<Season> call, @NonNull Response<Season> response) {
                 if (response.isSuccessful()) {

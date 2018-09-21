@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import org.michaelbel.shows.BuildConfig;
 import org.michaelbel.youshows.AndroidExtensions;
 import org.michaelbel.youshows.Theme;
 import org.michaelbel.youshows.YouShows;
@@ -243,7 +244,7 @@ public class ShowActivity extends AppCompatActivity {
 
     private void loadDetails() {
         ApiService service = ApiFactory.createService(ApiService.class, ApiFactory.TMDB_API_ENDPOINT);
-        service.details(extraId, ApiFactory.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Show>() {
+        service.details(extraId, BuildConfig.TMDB_API_KEY, ApiFactory.getLanguage()).enqueue(new Callback<Show>() {
             @Override
             public void onResponse(@NonNull Call<Show> call, @NonNull Response<Show> response) {
                 if (response.isSuccessful()) {

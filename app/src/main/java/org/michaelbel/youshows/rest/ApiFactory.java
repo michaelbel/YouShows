@@ -21,20 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiFactory {
 
     public static final String TMDB_API_ENDPOINT = "https://api.themoviedb.org/3/";
-    public static final String TMDB_API_KEY = AndroidExtensions.getProperty("tmdb_api_key");
     public static final String TMDB_IMAGE = "http://image.tmdb.org/t/p/%s/%s";
     public static final String TMDB_MOVIE = "https://themoviedb.org/movie/%d";
 
-    public static final String TMDB_EN_US = "en-US";
-    public static final String TMDB_RU_RU = "ru-RU";
-    public static final String TMDB_DE_DE = "de-DE";
-    public static final String TMDB_PT_BR = "pt-BR";
-    public static final String TMDB_PT_PT = "pt-PT";
-    public static final String TMDB_PT_US = "pt-US";
+    private static final String TMDB_EN_US = "en-US";
+    private static final String TMDB_RU_RU = "ru-RU";
 
     public static final int TRAKT_API_VERSION = 2;
     public static final String TRAKT_API_ENDPOINT = "https://api-v2launch.trakt.tv/";
-    public static final String TRAKT_CLIENT_ID = AndroidExtensions.getProperty("tract_client_id");
 
     private static Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 

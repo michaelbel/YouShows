@@ -162,10 +162,6 @@ public class AndroidExtensions extends Extensions {
         return YouShows.AppContext.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR;
     }
 
-    public static String getProperty(String key) {
-        return loadProperty(YouShows.AppContext,"config.properties", key);
-    }
-
     public static Point displaySize = new Point();
     public static boolean usingHardwareInput;
     public static DisplayMetrics displayMetrics = new DisplayMetrics();
