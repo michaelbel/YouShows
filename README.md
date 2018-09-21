@@ -44,6 +44,9 @@ Simple app to track and save your TV shows.
     <img style="margin-left:0px;" src="/images/render/9.png" width="33%">
 </div>
 
+## Build
+Take a look at <b>`local.properties`</b> and fill it with [your own][tmdb-introduction] <b>tmdb_api_key</b>.
+
 ## Features
 * Material design
 * Sorting shows
