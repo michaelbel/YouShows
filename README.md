@@ -46,7 +46,7 @@ Simple app to track and save your TV shows.
 
 ## Build
 [tmdb-introduction]: https://developers.themoviedb.org/3/getting-started/introduction
-Take a look at <b>`local.properties`</b> and fill it with [your own][tmdb-introduction] <b>tmdb_api_key</b>.
+Take a look at `local.properties` and fill it with [your own][tmdb-introduction] `tmdb_api_key`.
 
 ## Features
 * Material design
