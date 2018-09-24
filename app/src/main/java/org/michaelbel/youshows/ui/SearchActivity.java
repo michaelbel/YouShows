@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private Menu actionMenu;
     public EditText searchEditText;
-    private SearchFragment searchFragment;
+    private SearchFragment fragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence text, int start, int before, int count) {
                 /*if (!TextUtils.isEmpty(text)) {
-                    searchFragment.search(text.toString().trim());
+                    fragment.search(text.toString().trim());
                 }*/
                 changeActionIcon();
             }
@@ -110,8 +110,8 @@ public class SearchActivity extends AppCompatActivity {
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_SEARCH)) {
                 String text = view.getText().toString().trim();
                 if (!TextUtils.isEmpty(text)) {
-                    searchFragment.search(text);
-                    searchFragment.addToSearchHistory(text, false);
+                    fragment.search(text);
+                    fragment.addToSearchHistory(text, false);
                 }
                 hideKeyboard(searchEditText);
                 return true;
@@ -122,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
         toolbarLayout.addView(searchEditText);
         Extensions.clearCursorDrawable(searchEditText);
 
-        searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.searchFragment);
+        fragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.searchFragment);
     }
 
     @Override
@@ -168,8 +168,8 @@ public class SearchActivity extends AppCompatActivity {
                             searchEditText.setText(textResults);
                             searchEditText.setSelection(searchEditText.getText().length());
                             changeActionIcon();
-                            searchFragment.search(textResults);
-                            searchFragment.addToSearchHistory(textResults, true);
+                            fragment.search(textResults);
+                            fragment.addToSearchHistory(textResults, true);
                         }
                     }
                 }

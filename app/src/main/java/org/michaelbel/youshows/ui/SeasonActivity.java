@@ -37,7 +37,7 @@ public class SeasonActivity extends AppCompatActivity {
     private EpisodesFragment fragment;
 
     public TextView toolbarTitle;
-    public FloatingActionButton fabButton;
+    public FloatingActionButton fab;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,11 +63,11 @@ public class SeasonActivity extends AppCompatActivity {
         toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(seasonName);
 
-        fabButton = findViewById(R.id.fab);
-        fabButton.setClickable(false);
-        fabButton.setLongClickable(false);
-        fabButton.setVisibility(View.INVISIBLE);
-        fabButton.setOnClickListener(view -> markSeasonsAsWatched());
+        fab = findViewById(R.id.fab);
+        fab.setClickable(false);
+        fab.setLongClickable(false);
+        fab.setVisibility(View.INVISIBLE);
+        fab.setOnClickListener(view -> markSeasonsAsWatched());
         changeFabStyle(RealmDb.isSeasonWatched(showId, seasonId, seasonEpisodeCount));
 
         fragment = new EpisodesFragment();
@@ -88,12 +88,12 @@ public class SeasonActivity extends AppCompatActivity {
     }
 
     public void changeFabStyle(boolean watched) {
-        fabButton.setImageDrawable(watched ?
+        fab.setImageDrawable(watched ?
             AndroidExtensions.getIcon(context, R.drawable.ic_done, ContextCompat.getColor(context, R.color.white)) :
             AndroidExtensions.getIcon(context, R.drawable.ic_plus, ContextCompat.getColor(context, Theme.fabShowFollowIconColor()))
         );
 
-        fabButton.setBackgroundTintList(watched ?
+        fab.setBackgroundTintList(watched ?
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)) :
             ColorStateList.valueOf(ContextCompat.getColor(context, Theme.fabShowFollowColor()))
         );

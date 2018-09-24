@@ -232,7 +232,7 @@ public class EpisodesFragment extends Fragment {
             adapter.addEpisodes(RealmDb.getSeasonEpisodes(activity.showId, activity.seasonId));
             progressBar.setVisibility(View.GONE);
             emptyView.setVisibility(View.GONE);
-            activity.fabButton.show();
+            activity.fab.show();
 
             SharedPreferences prefs = activity.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
             if (prefs.getBoolean("season_scroll_position", true)) {
@@ -260,7 +260,7 @@ public class EpisodesFragment extends Fragment {
                             adapter.addEpisodes(season.episodes);
                             progressBar.setVisibility(View.GONE);
                             emptyView.setVisibility(View.GONE);
-                            activity.fabButton.show();
+                            activity.fab.show();
                         }
 
                         updateData(season);

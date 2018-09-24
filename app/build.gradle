@@ -17,11 +17,11 @@ def getProperty(String filename, String propName) {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 24
+        targetSdkVersion 28
+        versionCode 25
         versionName "1.1.6"
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "VERSION_DATE", '"25 Jul 2018"'
@@ -65,9 +65,9 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'org.michaelbel:material:0.3.6'
     implementation 'org.michaelbel:bottomsheet:1.2.2'
@@ -79,6 +79,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'at.blogc:expandabletextview:1.0.5'
+    //implementation 'com.google.android.material:material:1.0.0'
 }
 
 repositories {

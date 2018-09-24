@@ -78,7 +78,7 @@ public class MyShowsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        activity.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        activity.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {}
 
@@ -169,7 +169,7 @@ public class MyShowsFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
-                if (activity.floatingButton.getVisibility() != View.GONE) {
+                if (activity.fab.getVisibility() != View.GONE) {
                     final View topChild = recyclerView.getChildAt(0);
                     int firstViewTop = 0;
                     if (topChild != null) {
@@ -281,9 +281,9 @@ public class MyShowsFragment extends Fragment {
         }
 
         floatingHidden = hide;
-        ObjectAnimator animator = ObjectAnimator.ofFloat(activity.floatingButton, "translationY", floatingHidden ? Extensions.dp(activity,100) : 0).setDuration(300);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(activity.fab, "translationY", floatingHidden ? Extensions.dp(activity,100) : 0).setDuration(300);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        activity.floatingButton.setClickable(!hide);
+        activity.fab.setClickable(!hide);
         animator.start();
     }
 }

@@ -66,9 +66,9 @@ public class ShowActivity extends AppCompatActivity {
 
     public Toolbar toolbar;
     public TextView toolbarTitle;
-    public BackdropView collapsingView;
+    public FloatingActionButton fab;
+    public BackdropView backdropImage;
     public NestedScrollView scrollView;
-    public FloatingActionButton followButton;
     public CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
@@ -106,9 +106,9 @@ public class ShowActivity extends AppCompatActivity {
         toolbarTitle.setText(extraName);
         //toolbarTitle.setOnClickListener(view -> scrollView.fullScroll(NestedScrollView.FOCUS_UP));
 
-        collapsingView = findViewById(R.id.backdrop_image);
-        collapsingView.setImage(extraBackdrop);
-        collapsingView.labelView.setOnLongClickListener(view -> {
+        backdropImage = findViewById(R.id.backdrop_image);
+        backdropImage.setImage(extraBackdrop);
+        backdropImage.labelView.setOnLongClickListener(view -> {
             boolean label = prefs.getBoolean("collapsing_label", true);
             prefs.edit().putBoolean("collapsing_label", !label).apply();
             AndroidExtensions.vibrate(15);
@@ -117,18 +117,18 @@ public class ShowActivity extends AppCompatActivity {
         });
         setCollapsingLabel();
 
-        followButton = findViewById(R.id.follow_fab);
-        followButton.setClickable(false);
-        followButton.setLongClickable(false);
-        followButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, Theme.fabShowFollowColor())));
-        followButton.setOnClickListener(view -> {
+        fab = findViewById(R.id.follow_fab);
+        fab.setClickable(false);
+        fab.setLongClickable(false);
+        fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, Theme.fabShowFollowColor())));
+        fab.setOnClickListener(view -> {
             boolean follow = RealmDb.isShowFollow(extraId);
             followShow(!follow);
             changeFabStyle(!follow);
         });
-        followButton.setOnLongClickListener(v -> {
+        fab.setOnLongClickListener(v -> {
             boolean follow = RealmDb.isShowFollow(extraId);
-            collapsingView.showFollowHint(false, !follow);
+            backdropImage.showFollowHint(false, !follow);
             AndroidExtensions.vibrate(15);
             return true;
         });
@@ -191,11 +191,11 @@ public class ShowActivity extends AppCompatActivity {
         if (RealmDb.isShowExist(extraId)) {
             if (label) {
                 boolean production = RealmDb.getShowStatus(extraId);
-                collapsingView.setLabel(production ? getString(R.string.ShowInProduction) : getString(R.string.ShowIsFinished));
+                backdropImage.setLabel(production ? getString(R.string.ShowInProduction) : getString(R.string.ShowIsFinished));
             } else {
                 float progress = RealmDb.getProgress(extraId);
                 String formatted = new DecimalFormat("#0.00").format(progress);
-                collapsingView.setLabel(getString(R.string.Progress) + " " + formatted + "%");
+                backdropImage.setLabel(getString(R.string.Progress) + " " + formatted + "%");
             }
         }
     }
@@ -222,21 +222,21 @@ public class ShowActivity extends AppCompatActivity {
 
     private void followButtonSwapAnimation() {
         Drawable avd = AnimatedVectorDrawableCompat.create(context, Theme.fabProgressBar());
-        followButton.setImageDrawable(avd);
+        fab.setImageDrawable(avd);
         if (avd != null) {
             ((Animatable) avd).start();
         }
-        followButton.setFocusable(false);
-        followButton.setClickable(false);
-        followButton.setLongClickable(false);
+        fab.setFocusable(false);
+        fab.setClickable(false);
+        fab.setLongClickable(false);
     }
 
     private void changeFabStyle(boolean follow) {
-        followButton.setImageDrawable(follow ?
+        fab.setImageDrawable(follow ?
             AndroidExtensions.getIcon(context, R.drawable.ic_done, ContextCompat.getColor(context, R.color.white)) :
             AndroidExtensions.getIcon(context, R.drawable.ic_eye_plus, ContextCompat.getColor(context, Theme.fabShowFollowIconColor()))
         );
-        followButton.setBackgroundTintList(follow ?
+        fab.setBackgroundTintList(follow ?
             ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)) :
             ColorStateList.valueOf(ContextCompat.getColor(context, Theme.fabShowFollowColor()))
         );
@@ -301,8 +301,8 @@ public class ShowActivity extends AppCompatActivity {
 
     private void fragmentLoaded() {
         changeFabStyle(RealmDb.isShowFollow(extraId));
-        followButton.setClickable(true);
-        followButton.setLongClickable(true);
+        fab.setClickable(true);
+        fab.setLongClickable(true);
     }
 
     private void followShow(boolean status) {

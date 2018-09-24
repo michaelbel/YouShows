@@ -125,7 +125,8 @@ public class SortView extends FrameLayout {
         orderLinearLayout.addView(orderTextView);
 
         orderArrowIcon = new ImageView(context);
-        orderArrowIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_anim_expandcollapse));
+        //orderArrowIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_anim_expandcollapse));
+        orderArrowIcon.setImageDrawable(Extensions.getIcon(getContext(), R.drawable.ic_anim_expandcollapse, ContextCompat.getColor(getContext(), R.color.white)));
         orderArrowIcon.setLayoutParams(LayoutHelper.makeLinear(context, 24, 24, Gravity.CENTER_VERTICAL, 8, 0, 0, 0));
         orderLinearLayout.addView(orderArrowIcon);
     }
