@@ -194,7 +194,6 @@ public class MyShowsFragment extends Fragment {
             }
         });
         //reload: recyclerView.scheduleLayoutAnimation();
-
         /*ItemTouchHelper.SimpleCallback callback = new ItemTouchHelperSimpleCallback(
                 adapter,
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN,
