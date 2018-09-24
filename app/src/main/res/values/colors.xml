@@ -1,5 +1,5 @@
 <resources>
-    <!--LIGHT-->
+    <!--Light theme-->
     <color name="primary">#0097A7</color>
     <color name="primaryDark">#00717D</color>
     <color name="accent">#26C6DA</color>
@@ -7,7 +7,7 @@
     <color name="secondaryText">#777777</color>
     <color name="disabledHintText">#61000000</color>
     <color name="divider">#1F000000</color>
-    <color name="iconActive">#7d858f</color><!--7d7d7d-->
+    <color name="iconActive">#7d858f</color>
     <color name="iconInactive">#807D858F</color>
     <color name="statusBar">#E0E0E0</color>
     <color name="appBar">#F5F5F5</color>
@@ -21,7 +21,7 @@
 
     <color name="sortDivider">#408a92</color>
 
-    <!--NIGHT-->
+    <!--Night theme-->
     <color name="n_primary">#202E3B</color>
     <color name="n_primaryDark">#18222C</color>
     <color name="n_accent">#61a9e1</color>
@@ -53,6 +53,7 @@
     <color name="telegram">#2FADE6</color>
 
     <!--Transparent-->
+    <color name="transparent">#00000000</color>
     <color name="transparent10">#1A000000</color><!--10% opacity-->
     <color name="transparent20">#33000000</color><!--20% opacity-->
     <color name="transparent30">#4D000000</color><!--30% opacity-->

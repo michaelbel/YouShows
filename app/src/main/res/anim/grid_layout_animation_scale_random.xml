@@ -1,6 +1,0 @@
-<gridLayoutAnimation
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:animation="@anim/item_animation_scale"
-    android:animationOrder="random"
-    android:columnDelay="15%"
-    android:rowDelay="15%"/>

@@ -1,6 +1,5 @@
 <resources>
     <style name="Theme.YouShows.Start" parent="Theme.AppCompat.Light.NoActionBar">
-    <!--<style name="Theme.YouShows.Start" parent="Theme.MaterialComponents.Light.NoActionBar">-->
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primaryDark</item>
         <item name="android:colorAccent">@color/accent</item>
@@ -11,7 +10,6 @@
     </style>
 
     <style name="Theme.YouShows" parent="Theme.AppCompat.Light.NoActionBar">
-    <!--<style name="Theme.YouShows" parent="Theme.MaterialComponents.Light.NoActionBar">-->
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primaryDark</item>
         <item name="android:colorAccent">@color/accent</item>

@@ -1,5 +1,3 @@
-<!--Palette: https://material.io/guidelines/style/color.html#color-color-palette-->
-
 <resources>
     <!--Primary-->
     <color name="primary_red">@color/md_red_500</color>
