@@ -44,6 +44,10 @@ Simple app to track and save your TV shows.
     <img style="margin-left:0px;" src="/images/render/9.png" width="33%">
 </div>
 
+## Build
+[tmdb-introduction]: https://developers.themoviedb.org/3/getting-started/introduction
+Take a look at `local.properties` and fill it with [your own][tmdb-introduction] `tmdb_api_key`.
+
 ## Features
 * Material design
 * Sorting shows
