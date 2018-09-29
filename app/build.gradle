@@ -18,7 +18,6 @@ def getProperty(String filename, String propName) {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
 
     defaultConfig {
         minSdkVersion 21
