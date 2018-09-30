@@ -145,7 +145,7 @@ public class EpisodesFragment extends Fragment {
         });
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 episodePeekView.onTouchEvent(e);
 
                 if (e.getAction() == MotionEvent.ACTION_UP) {
@@ -158,7 +158,7 @@ public class EpisodesFragment extends Fragment {
             }
 
             @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {}
 
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
@@ -358,7 +358,7 @@ public class EpisodesFragment extends Fragment {
 
         public List<Episode> episodes = new ArrayList<>();
 
-        public void addOverview() {
+        private void addOverview() {
             episodes.add(new Episode());
             notifyItemInserted(episodes.size() - 1);
         }

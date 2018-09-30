@@ -200,9 +200,9 @@ public class TextDetailCell extends FrameLayout {
         setWillNotDraw(!divider);
     }
 
-    public void setTitleColor(@ColorRes int color) {
+    /*public void setTitleColor(@ColorRes int color) {
         textView.setTextColor(ContextCompat.getColor(getContext(), color));
-    }
+    }*/
 
     /*public void setMultiline(boolean value) {
         multiline = value;

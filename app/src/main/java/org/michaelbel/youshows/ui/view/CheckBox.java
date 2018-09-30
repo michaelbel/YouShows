@@ -98,7 +98,7 @@ public class CheckBox extends View {
         invalidate();
     }
 
-    public void setDrawBackground(boolean value) {
+    /*public void setDrawBackground(boolean value) {
         drawBackground = value;
     }
 
@@ -108,7 +108,7 @@ public class CheckBox extends View {
 
     public void setCheckOffset(int value) {
         checkOffset = value;
-    }
+    }*/
 
     public void setSize(int size) {
         this.size = size;
@@ -182,14 +182,14 @@ public class CheckBox extends View {
         setChecked(-1, checked, animated);
     }
 
-    public void setNum(int num) {
+    /*public void setNum(int num) {
         if (num >= 0) {
             checkedText = "" + (num + 1);
         } else if (checkAnimator == null) {
             checkedText = null;
         }
         invalidate();
-    }
+    }*/
 
     public void setChecked(int num, boolean checked, boolean animated) {
         if (num >= 0) {

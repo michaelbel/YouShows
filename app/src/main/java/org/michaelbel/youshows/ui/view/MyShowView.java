@@ -159,9 +159,7 @@ public class MyShowView extends FrameLayout {
     }
 
     public void setPoster(@NonNull String posterPath) {
-        Picasso.with(getContext())
-               .load(String.format(Locale.US, ApiFactory.TMDB_IMAGE, "w200", posterPath))
-               .into(posterImage);
+        Picasso.get().load(String.format(Locale.US, ApiFactory.TMDB_IMAGE, "w200", posterPath)).into(posterImage);
     }
 
     public void setName(String title) {

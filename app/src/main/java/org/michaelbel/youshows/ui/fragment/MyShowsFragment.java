@@ -167,7 +167,7 @@ public class MyShowsFragment extends Fragment {
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 int firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 if (activity.fab.getVisibility() != View.GONE) {
                     final View topChild = recyclerView.getChildAt(0);

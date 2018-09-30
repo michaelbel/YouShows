@@ -46,9 +46,6 @@ public class EpisodePeekView extends FrameLayout {
     private TextView airDateText;
     private TextView emptyImageText;
 
-    private ImageView noIconImage;
-    private ImageView yesIconImage;
-
     public FrameLayout noButtonLayout;
     public FrameLayout yesButtonLayout;
 
@@ -171,7 +168,7 @@ public class EpisodePeekView extends FrameLayout {
         noButtonLayout.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 1.0F));
         buttonsLayout.addView(noButtonLayout);
 
-        noIconImage = new ImageView(context);
+        ImageView noIconImage = new ImageView(context);
         noIconImage.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_clear, ContextCompat.getColor(context, R.color.red)));
         noIconImage.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         noButtonLayout.addView(noIconImage);
@@ -182,7 +179,7 @@ public class EpisodePeekView extends FrameLayout {
         yesButtonLayout.setLayoutParams(LayoutHelper.makeLinear(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 1.0F));
         buttonsLayout.addView(yesButtonLayout);
 
-        yesIconImage = new ImageView(context);
+        ImageView yesIconImage = new ImageView(context);
         yesIconImage.setImageDrawable(AndroidExtensions.getIcon(context, R.drawable.ic_done, ContextCompat.getColor(context, R.color.green)));
         yesIconImage.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         yesButtonLayout.addView(yesIconImage);
@@ -192,22 +189,21 @@ public class EpisodePeekView extends FrameLayout {
         progressBar.setVisibility(VISIBLE);
         emptyImageText.setVisibility(GONE);
 
-        Picasso.with(getContext())
-               .load(String.format(Locale.US, ApiFactory.TMDB_IMAGE, "original", path))
-               .into(stillImage, new Callback() {
-                   @Override
-                   public void onSuccess() {
-                       emptyImageText.setVisibility(GONE);
-                       stillImage.setVisibility(VISIBLE);
-                       progressBar.setVisibility(GONE);
-                   }
+        Picasso.get().load(String.format(Locale.US, ApiFactory.TMDB_IMAGE, "original", path))
+           .into(stillImage, new Callback() {
+               @Override
+               public void onSuccess() {
+                   emptyImageText.setVisibility(GONE);
+                   stillImage.setVisibility(VISIBLE);
+                   progressBar.setVisibility(GONE);
+               }
 
-                   @Override
-                   public void onError() {
-                       emptyImageText.setVisibility(VISIBLE);
-                       progressBar.setVisibility(GONE);
-                   }
-               });
+               @Override
+               public void onError(Exception e) {
+                   emptyImageText.setVisibility(VISIBLE);
+                   progressBar.setVisibility(GONE);
+               }
+           });
     }
 
     public void setTitle(String title) {

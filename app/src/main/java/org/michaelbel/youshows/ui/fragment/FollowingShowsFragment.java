@@ -166,7 +166,7 @@ public class FollowingShowsFragment extends Fragment {
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 int firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 if (activity.fab.getVisibility() != View.GONE) {
                     final View topChild = recyclerView.getChildAt(0);
@@ -241,7 +241,6 @@ public class FollowingShowsFragment extends Fragment {
             results = realm.where(Show.class).equalTo("isFollow", true).sort("progress", sort).findAll();
         } else if (sortFilter == SortView.SORT_BY_LAST_CHANGES) {
             results = realm.where(Show.class).equalTo("isFollow", true).sort("lastChangesDate", sort).findAll();
-            //Log.e("2580", "last changes date get: " + results.get(0).lastChangesDate);
         }
 
         if (results != null) {
@@ -270,18 +269,4 @@ public class FollowingShowsFragment extends Fragment {
         activity.fab.setClickable(!hide);
         animator.start();
     }
-
-    /*public void showSnackbar(boolean enable) {
-        Snackbar snackbar = Snackbar.make(fragmentLayout, enable ? "" : "", Snackbar.LENGTH_SHORT);
-        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.snackbar_action_text));
-        snackbar.setAction(R.string.Retry, view1 -> {
-            your action here
-        });
-        snackbar.addCallback(new Snackbar.Callback() {
-            @Override
-            public void onShown(Snackbar sb) {
-                super.onShown(sb);
-        });
-        snackbar.show();
-    }*/
 }

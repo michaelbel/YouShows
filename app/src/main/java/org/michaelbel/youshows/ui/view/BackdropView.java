@@ -98,9 +98,7 @@ public class BackdropView extends FrameLayout {
     }
 
     public void setImage(String path) {
-        Picasso.with(getContext())
-               .load("http://image.tmdb.org/t/p/original/" + path)
-               .into(backdropImage);
+        Picasso.get().load("http://image.tmdb.org/t/p/original/" + path).into(backdropImage);
     }
 
     public void setLabel(String text) {

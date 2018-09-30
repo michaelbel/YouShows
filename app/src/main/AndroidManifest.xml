@@ -17,7 +17,8 @@
         android:label="@string/AppName"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.YouShows.Start"
-        android:roundIcon="@mipmap/ic_launcher_round">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name="org.michaelbel.youshows.ui.MainActivity"

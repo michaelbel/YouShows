@@ -86,10 +86,10 @@ public interface ApiService {
         @Header("trakt-api-key") String apiKey
     );*/
 
-    @GET("show/{show_id}/next_episode?")
+    /*@GET("show/{show_id}/next_episode?")
     Call<?> nextEpisode(
         @Header("trakt-api-key") String apiKey,
         @Header("trakt-api-version") int apiVersion,
         @Path("show_id") int id
-    );
+    );*/
 }
