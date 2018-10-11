@@ -52,7 +52,7 @@ Take a look at `local.properties` and fill it with [your own][tmdb-introduction]
 * Material design
 * Sorting shows
 * Search history
-* Light and Night themes
+* Themes
 
 ## Permissions
 * android.permission.VIBRATE
@@ -84,7 +84,7 @@ Cangelog is available [here][cangelog].
   <img alt="Apache License 2.0" src="https://github.com/michaelbel/YouShows/blob/master/images/apache_software_foundation_logo.png" height="120"/>
 </a>
 
-    Copyright 2017-Present Michael Bel
+    Copyright 2017 Michael Bely
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
