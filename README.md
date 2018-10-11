@@ -52,7 +52,7 @@ Take a look at `local.properties` and fill it with [your own][tmdb-introduction]
 * Material design
 * Sorting shows
 * Search history
-* Light and Night themes
+* Themes
 
 ## Permissions
 * android.permission.VIBRATE
