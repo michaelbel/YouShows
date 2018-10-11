@@ -1,5 +1,11 @@
 ## YouShows Changelog
 
+### Version 1.1.6 (Build 24) 25 Jul 2018
+* Bugs fixes
+
+### Version 1.1.5 (Build 23) 7 Jul 2018
+* Bugs fixes
+
 ### Version 1.1.4 (Build 22) 11 Jun 2018
 * Bugs fixes
 
