@@ -1,4 +1,5 @@
 <resources>
+    <!--CircleProgressView-->
     <declare-styleable name="CircleProgressView">
         <!-- Text-->
         <attr name="cpv_text" format="string" />
