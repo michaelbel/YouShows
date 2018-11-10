@@ -6,7 +6,6 @@ import org.michaelbel.youshows.rest.response.ShowsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -28,12 +27,12 @@ public interface ApiService {
         /*@Query("first_air_date_year") int year*/
     );
 
-    @GET("tv/on_the_air?")
+    /*@GET("tv/on_the_air?")
     Call<ShowsResponse> trending(
         @Query("api_key") String apiKey,
         @Query("language") String lang,
         @Query("page") int page
-    );
+    );*/
 
     @GET("tv/airing_today?")
     Call<ShowsResponse> nowPlaying(

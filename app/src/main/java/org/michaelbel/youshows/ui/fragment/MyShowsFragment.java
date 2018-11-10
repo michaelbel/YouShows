@@ -193,15 +193,6 @@ public class MyShowsFragment extends Fragment {
                 }
             }
         });
-        //reload: recyclerView.scheduleLayoutAnimation();
-        /*ItemTouchHelper.SimpleCallback callback = new ItemTouchHelperSimpleCallback(
-                adapter,
-                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                ItemTouchHelper.START | ItemTouchHelper.END
-        );
-        ItemTouchHelper helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(recyclerView);*/
-
         fragmentLayout.addView(recyclerView);
         return fragmentLayout;
     }

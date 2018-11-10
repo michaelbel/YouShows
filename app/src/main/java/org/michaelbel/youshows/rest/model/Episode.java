@@ -25,13 +25,9 @@ public class Episode extends RealmObject implements Serializable {
     @SerializedName("air_date")
     public String airDate;
 
-    //@SerializedName("crew")
-
     @Response
     @SerializedName("episode_number")
     public int episodeNumber;
-
-    //@SerializedName("guest_stars")
 
     @Response
     @SerializedName("name")

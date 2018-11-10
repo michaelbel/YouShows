@@ -443,11 +443,13 @@ public class RealmDb {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
             Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
-            show.genresString.clear();
-            for (Genre genre : genres) {
-                show.genresString.add(genre.name);
+            if (show != null) {
+                show.genresString.clear();
+                for (Genre genre : genres) {
+                    show.genresString.add(genre.name);
+                }
+                realm.insertOrUpdate(show);
             }
-            realm.insertOrUpdate(show);
         });
         realmDb.close();
     }
@@ -462,11 +464,13 @@ public class RealmDb {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
             Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
-            show.countriesString.clear();
-            for (String country : countries) {
-                show.countriesString.add(country);
+            if (show != null) {
+                show.countriesString.clear();
+                for (String country : countries) {
+                    show.countriesString.add(country);
+                }
+                realm.insertOrUpdate(show);
             }
-            realm.insertOrUpdate(show);
         });
         realmDb.close();
     }
@@ -481,11 +485,13 @@ public class RealmDb {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
             Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
-            show.companiesString.clear();
-            for (Company company : companies) {
-                show.companiesString.add(company.name);
+            if (show != null) {
+                show.companiesString.clear();
+                for (Company company : companies) {
+                    show.companiesString.add(company.name);
+                }
+                realm.insertOrUpdate(show);
             }
-            realm.insertOrUpdate(show);
         });
         realmDb.close();
     }
@@ -500,13 +506,13 @@ public class RealmDb {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
             Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
-            show.seasonsList.clear();
-
-            for (Season season : seasons) {
-                show.seasonsList.add(season);
+            if (show != null) {
+                show.seasonsList.clear();
+                for (Season season : seasons) {
+                    show.seasonsList.add(season);
+                }
+                realm.insertOrUpdate(show);
             }
-
-            realm.insertOrUpdate(show);
         });
         realmDb.close();
     }
@@ -528,7 +534,7 @@ public class RealmDb {
     public static int getSeasonsInShow(int showId) {
         Realm realm = Realm.getDefaultInstance();
         Show show = realm.where(Show.class).equalTo("showId", showId).findFirst();
-        return show.numberSeasons;
+        return show != null ? show.numberSeasons : 0;
     }
 
     public static int getWatchedSeasonsInShow(int showId) {
@@ -591,13 +597,13 @@ public class RealmDb {
         Realm realmDb = Realm.getDefaultInstance();
         realmDb.executeTransaction(realm -> {
             Season season = realm.where(Season.class).equalTo("showId", showId).equalTo("seasonId", seasonId).findFirst();
-            season.episodesList.clear();
-
-            for (Episode episode : episodes) {
-                season.episodesList.add(episode);
+            if (season != null) {
+                season.episodesList.clear();
+                for (Episode episode : episodes) {
+                    season.episodesList.add(episode);
+                }
+                realm.insertOrUpdate(season);
             }
-
-            realm.insertOrUpdate(season);
         });
         realmDb.close();
     }

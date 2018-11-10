@@ -5,15 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import org.michaelbel.material.widget.Holder;
 import org.michaelbel.youshows.realm.RealmDb;
 import org.michaelbel.youshows.rest.model.Show;
-import org.michaelbel.material.annotation.Beta;
-import org.michaelbel.material.widget.Holder;
-import org.michaelbel.youshows.ui.adapter.TouchHelper.ItemBehavior;
 import org.michaelbel.youshows.ui.view.MyShowView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,7 +21,7 @@ import java.util.List;
  */
 
 @SuppressLint("CheckResult")
-public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
+public class ShowsAdapter extends RecyclerView.Adapter {
 
     private List<Show> shows;
 
@@ -84,17 +81,5 @@ public class ShowsAdapter extends RecyclerView.Adapter implements ItemBehavior {
     public void removeItem(int position) {
         shows.remove(position);
         notifyItemRemoved(position);
-    }
-
-    @Beta
-    @Override
-    public void onItemSwiped(int position) {}
-
-    @Beta
-    @Override
-    public boolean onItemMoved(int fromPosition, int toPosition) {
-        Collections.swap(shows, fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
-        return true;
     }
 }

@@ -234,7 +234,7 @@ public class SettingsFragment extends Fragment {
             } else if (position == donatePaypalRow) {
                 Browser.openUrl(activity, YouShows.PAYPAL_ME);
             } else if (position == changelogRow) {
-                activity.startFragment(new ChangelogsFragment(), R.string.Changelog);
+                activity.startFragment(new ChangelogFragment(), R.string.Changelog);
             }
         });
         recyclerView.setOnItemLongClickListener((view, position) -> {

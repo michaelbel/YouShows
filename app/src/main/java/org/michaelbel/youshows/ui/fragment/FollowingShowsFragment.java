@@ -61,7 +61,6 @@ public class FollowingShowsFragment extends Fragment {
     private final AccelerateDecelerateInterpolator floatingInterpolator = new AccelerateDecelerateInterpolator();
 
     private ShowsAdapter adapter;
-    //private FollowingAdapter adapter;
     private MainActivity activity;
     private LinearLayoutManager linearLayoutManager;
 
@@ -100,7 +99,6 @@ public class FollowingShowsFragment extends Fragment {
         fragmentLayout.addView(emptyView);
 
         adapter = new ShowsAdapter();
-        //adapter = new FollowingAdapter();
         linearLayoutManager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
 
         recyclerView = new RecyclerListView(activity);

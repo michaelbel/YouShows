@@ -68,7 +68,7 @@ public class Season extends RealmObject implements Serializable {
     @Realmed
     public int scrollPosition;
 
-//--@Deprecated-------------------------------------------------------------------------------------
+//--Deprecated (added to realm, can not be removed)-------------------------------------------------
 
     @Deprecated
     public boolean isWatched;

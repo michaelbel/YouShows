@@ -140,7 +140,7 @@ public class AndroidExtensions extends Extensions {
         String newPattern = prefs.getString("date_format", "d MMM yyyy");
 
         SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
-        SimpleDateFormat newFormat = new SimpleDateFormat(newPattern, Locale.US);
+        SimpleDateFormat newFormat = new SimpleDateFormat(newPattern, getCurrentLocal());
 
         Date date = null;
         try {
@@ -150,6 +150,19 @@ public class AndroidExtensions extends Extensions {
         }
 
         return newFormat.format(date);
+    }
+
+    public static Locale getCurrentLocal() {
+        String languageCode = YouShows.AppContext.getString(R.string.LanguageCode);
+
+        switch (languageCode) {
+            case "en":
+                return Locale.US;
+            case "ru":
+                return Locale.getDefault();
+            default:
+                return Locale.US;
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -200,12 +213,10 @@ public class AndroidExtensions extends Extensions {
                 if (display != null) {
                     display.getMetrics(displayMetrics);
                     display.getSize(displaySize);
-                    //FileLog.e("tmessages", "display size = " + displaySize.x + " " + displaySize.y + " " + displayMetrics.xdpi + "x" + displayMetrics.ydpi);
                 }
             }
         } catch (Exception e) {
-            //FirebaseCrash.logcat(Log.ERROR, "e_message", "Error check display size");
-            //FirebaseCrash.report(e);
+            e.printStackTrace();
         }
     }
 
@@ -282,11 +293,6 @@ public class AndroidExtensions extends Extensions {
         text.delete(text.toString().length() - 2, text.toString().length());
         return text.toString();
     }*/
-
-    public static int getLanguage() {
-        SharedPreferences prefs = YouShows.AppContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-        return prefs.getInt("language", 0);
-    }
 
     public static void vibrate(int milliseconds) {
         Vibrator vibrator = (Vibrator) YouShows.AppContext.getSystemService(Context.VIBRATOR_SERVICE);

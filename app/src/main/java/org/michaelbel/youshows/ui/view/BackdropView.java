@@ -66,12 +66,6 @@ public class BackdropView extends FrameLayout {
         backdropImage.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         addView(backdropImage);
 
-        /*ImageView playIcon = new ImageView(context);
-        playIcon.setScaleType(ImageView.ScaleType.FIT_XY);
-        playIcon.setImageDrawable(Theme.getIcon(R.drawable.ic_play_circle, 0x4DFFFFFF));
-        playIcon.setLayoutParams(LayoutHelper.makeFrame(42, 42, Gravity.CENTER));
-        addView(playIcon);*/
-
 //------Show Status Label---------------------------------------------------------------------------
 
         labelView = new CardView(context);
@@ -190,7 +184,6 @@ public class BackdropView extends FrameLayout {
             @Override
             public void onAnimationCancel(Animator animation) {
                 if (animation.equals(followHintAnimation)) {
-                    followHintHideRunnable = null;
                     followHintHideRunnable = null;
                 }
             }

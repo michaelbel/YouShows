@@ -120,9 +120,9 @@ public class DataUsageFragment extends Fragment {
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(activity, Theme.dialogButtonText()));
                 }
-            } else if (position == cachedRow) {
-                //activity.startFragment(new CachedShowsFragment(), "cachedFragment");
-            }
+            } /*else if (position == cachedRow) {
+                activity.startFragment(new CachedShowsFragment(), "cachedFragment");
+            }*/
         });
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(activity, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         fragmentLayout.addView(recyclerView);
@@ -188,9 +188,9 @@ public class DataUsageFragment extends Fragment {
                     cell.setMode(EmptyCell.MODE_DEFAULT);
                     cell.setHeight(Extensions.dp(activity,12));
                 }
-            } else if (type == 1) {
+            } /*else if (type == 1) {
                 HeaderCell cell = (HeaderCell) holder.itemView;
-            } else if (type == 2) {
+            }*/ else if (type == 2) {
                 TextDetailCell cell = (TextDetailCell) holder.itemView;
                 cell.setMode(TextDetailCell.MODE_DEFAULT);
                 cell.changeLayoutParams();

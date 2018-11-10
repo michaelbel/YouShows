@@ -46,7 +46,7 @@ import java.util.List;
  * @author Michael Bel
  */
 
-public class ChangelogsFragment extends Fragment {
+public class ChangelogFragment extends Fragment {
 
     public static final int MENU_ICON_DATES = 0;
     public static final String CHANGELOG_FILE_NAME = "changelog.json";
