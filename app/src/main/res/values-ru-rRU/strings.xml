@@ -1,0 +1,169 @@
+<resources>
+    <!--app-->
+    <string name="AppName">YouShows</string>
+    <string name="LanguageCode">ru</string>
+    <!--main-->
+    <string name="MyShows">Мои Сериалы</string>
+    <string name="Following">Подписки</string>
+    <string name="Sort">Сортировка</string>
+    <string name="SortOrder">Порядок</string>
+    <string name="Ok">OK</string>
+    <string name="Cancel">Отмена</string>
+    <string name="MyShowsEmpty">Ваш список сериалов пуст</string>
+    <string name="NoFollowingShows">Нет отслеживаемых сериалов</string>
+    <string name="FirstAndNoLastDates">%1$s - Наст. время</string>
+    <string name="DeleteShowMessage">Вы уверены, что хотите удалить этот сериал?</string>
+    <string name="UnfollowMessage">Вы уверены, что хотите отписаться от выбранного сериала?</string>
+    <string name="Delete">Удалить</string>
+    <string name="Unfollow">Отписаться</string>
+    <string name="ClickOn">Нажмите на </string>
+    <string name="ClickOn2"> чтобы показать сериалы</string>
+    <string name="ClickOn3"> чтобы подписаться на сериал</string>
+    <string name="ShowIsOverWatched">Полностью просмотрен</string>
+    <string name="Finished">Закончен</string>
+    <string name="NoEpisodesWatched">Нет просмотренных эпизодов</string>
+    <string-array name="Sorts">
+        <item>По умолчанию</item>
+        <item>По названию</item>
+        <item>По дате релиза</item>
+        <item>По дате последнего эфира</item>
+        <item>По статусу</item>
+        <item>По прогрессу просмотра</item>
+        <item>По последним изменениям</item>
+    </string-array>
+    <plurals name="Episodes">
+        <item quantity="zero">Нет просмотренных эпизодов</item>
+        <item quantity="one">%d Эпизод просмотрен</item>
+        <item quantity="two">%d Эпизода просмотрены</item>
+        <item quantity="few">%d Эпизодов просмотрено</item>
+        <item quantity="many">%d Эпизодов просмотрено</item>
+        <item quantity="other">%d Эпизодов просмотрено</item>
+    </plurals>
+    <plurals name="Seasons">
+        <item quantity="zero">Нет просмотренных сезонов</item>
+        <item quantity="one">%d Сезон просмотрен</item>
+        <item quantity="two">%d Сезона просмотрено</item>
+        <item quantity="few">%d Сезона просмотрено</item>
+        <item quantity="many">%d Сезонов просмотрено</item>
+        <item quantity="other">%d Сезонов просмотрено</item>
+    </plurals>
+    <!--show-->
+    <string name="ExploreShows">Найти сериалы</string>
+    <string name="Popular">Популярные</string>
+    <string name="NowPlaying">Сейчас в кино</string>
+    <string name="TopRated">Рейтинговые</string>
+    <string name="Share">Поделиться</string>
+    <string name="ShareVia">Поделиться с</string>
+    <string name="NoConnection">Нет подключения</string>
+    <string name="TapToFollow">Нажмите, чтобы подписаться на сериал</string>
+    <string name="TapToUnFollow">Нажмите, чтобы отписаться от сериала</string>
+    <string name="Details">Информация</string>
+    <string name="OriginalName">Оригинальное название</string>
+    <string name="OriginalCountry">Страна</string>
+    <string name="Status">Статус</string>
+    <string name="ShowType">Тип</string>
+    <string name="FirstAirDate">Дата релиза</string>
+    <string name="LastAirDate">Дата последнего эфира</string>
+    <string name="GenresTitle">Жанры</string>
+    <string name="CompaniesTitle">Компании</string>
+    <string name="HomepageTitle">Домашняя страница</string>
+    <string name="Loading">Загрузка…</string>
+    <string name="NoOverview">Описание отсутствует</string>
+    <string name="UnknownDate">Неизвестная дата</string>
+    <string name="Seasons">Сезоны</string>
+    <string name="SeasonsCount">Сезоны (%1$d)</string>
+    <string name="Progress">Прогресс:</string>
+    <string name="ShowInProduction">Сериал снимается</string>
+    <string name="ShowIsFinished">Сериал завершен</string>
+    <string name="EpisodeNumber">Эпизод #%1$d</string>
+    <string name="NoEpisodes">Нет эпизодов</string>
+    <string name="NoStillImage">Изображение отсутствует</string>
+    <string name="OverviewCopied">Скопировано в буфер обмена</string>
+    <string name="EpisodeCount">%1$d Эпизод</string>
+    <string name="EpisodesCount">%1$d Эпизодов</string>
+    <!--search-->
+    <string name="Search">Поиск</string>
+    <string name="NoResults">Результаты отсутствуют</string>
+    <string name="SpeakNow">Скажите что-нибудь</string>
+    <string name="NoShows">Нет сериалов</string>
+    <string name="ShowImageDesc">Постер</string>
+    <!--settings-->
+    <string name="Settings">Настройки</string>
+    <string name="DefaultTab">Вкладка по-умолчанию</string>
+    <string name="InAppBrowser">Встроенный браузер</string>
+    <string name="InAppBrowserInfo">Открывать внешние ссылки в приложении</string>
+    <string name="EnableSorting">Включить сортировку</string>
+    <string name="EnableSortingInfo">Показывать сортировочное меню на главной</string>
+    <string name="EnableAnimations">Анимация</string>
+    <string name="EnableAnimationsInfo">Управление всеми анимациями в приложении</string>
+    <string name="Theme">Тема</string>
+    <string name="DateFormat">Формат дат</string>
+    <string name="DataUsage">Использование данных</string>
+    <string name="DeleteAllShows">Удалить все мои сериалы</string>
+    <string name="UnfollowFromShows">Отписаться от всех моих сериалов</string>
+    <string name="CachedShows">Кэшированные сериалы</string>
+    <string name="AllCachedShows">Все кэшированные сериалы</string>
+    <string name="Calculating">Вычисление…</string>
+    <string name="DeleteAllShowsMessage">Вы уверены, что хотите удалить все ваши сериалы из локальной базы данных?\n\nВесь прогресс будет потерян.\n\nЭто действие нельзя будет отменить .</string>
+    <string name="UnfollowFromAllShowsMessage">Вы уверены, что хотите отписаться от всех ваших сериалов?\n\nЭто действие нельзя будет отменить.</string>
+    <string name="YourShowsListEmpty">Ваш список сериалов пуст!</string>
+    <string name="YouDoNotFollowShows">Вы не подписаны ни на один сериал</string>
+    <string name="Done">ОК</string>
+    <string name="SearchHistory">История поиска</string>
+    <string name="NoSearchHistory">История поиска пуста</string>
+    <string name="SearchHistoryEmpty">Ваша история поиска пуста</string>
+    <string name="EnableHistory">Сохранять запросы</string>
+    <string name="ShowSuggestions">Включить подсказки</string>
+    <string name="ClearHistory">Очистить историю</string>
+    <string name="ClearHistoryMessage">Вы уверены, что хотите очистить историю поиска?</string>
+    <string name="CurrentDateAndTime">%1$s в %2$s</string>
+    <string-array name="Tabs">
+        <item>Мои сериалы</item>
+        <item>Подписки</item>
+    </string-array>
+    <string-array name="ShowTabs">
+        <item>Сейчас в кино</item>
+        <item>Популярные</item>
+        <item>Рейтинговые</item>
+    </string-array>
+    <string-array name="Themes">
+        <item>Светлая</item>
+        <item>Темная</item>
+    </string-array>
+    <plurals name="SavedShows">
+        <item quantity="zero">Нет сохраненных сериалов</item>
+        <item quantity="one">%d сериал сохранен</item>
+        <item quantity="two">%d сериала сохранены</item>
+        <item quantity="few">%d сериалов сохранено</item>
+        <item quantity="many">%d сериалов сохранено</item>
+        <item quantity="other">%d сериалов сохранено</item>
+    </plurals>
+    <plurals name="FollowingShows">
+        <item quantity="zero">Нет отслеживаемых сериалов</item>
+        <item quantity="one">%d сериал отслеживается</item>
+        <item quantity="two">%d сериала отслеживаются</item>
+        <item quantity="few">%d сериалов отслеживаются</item>
+        <item quantity="many">%d сериалов отслеживаются</item>
+        <item quantity="other">%d сериалов отслеживаются</item>
+    </plurals>
+    <string name="SeasonScrollPosition">Список эпизодов</string>
+    <string name="SeasonScrollPositionInfo">Сохранять позицию списка</string>
+    <!--about-->
+    <string name="About">О приложении</string>
+    <string name="Changelog">История изменений</string>
+    <string name="Version">Версия %1$s</string>
+    <string name="EnableDates">Включить даты</string>
+    <string name="AppForAndroid">%1$s для Android</string>
+    <string name="VersionBuildDate">Версия %1$s (Сборка %2$d) от %3$s</string>
+    <string name="DonatePaypal">Пожертвовать с PayPal</string>
+    <string name="RateGooglePlay">Оценить на Google Play</string>
+    <string name="ForkGithub">Форкнуть на Github</string>
+    <string name="Feedback">Обратная связь</string>
+    <string name="OpenSourceLibs">Использованные библиотеки</string>
+    <string name="ShareWithFriends">Поделиться с друзьями</string>
+    <string name="CopyLink">Копировать ссылку</string>
+    <string name="Open">Открыть</string>
+    <string name="LinkCopied">Ссылка скопирована в буфер обмена</string>
+    <string name="Subject">Объект</string>
+    <string name="PoweredBy">Работает с помощью <![CDATA[<b>]]>Themoviedb.org<![CDATA[</b>]]></string>
+</resources>

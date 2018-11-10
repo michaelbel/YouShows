@@ -1,6 +1,7 @@
 <resources>
     <!--app-->
     <string name="AppName">YouShows</string>
+    <string name="LanguageCode">en</string>
     <!--main-->
     <string name="MyShows">My Shows</string>
     <string name="Following">Following</string>
@@ -78,10 +79,14 @@
     <string name="NoEpisodes">No Episodes</string>
     <string name="NoStillImage">No still image</string>
     <string name="OverviewCopied">Overview copied to clipboard</string>
+    <string name="EpisodeCount">%1$d Episode</string>
+    <string name="EpisodesCount">%1$d Episodes</string>
     <!--search-->
     <string name="Search">Search</string>
     <string name="NoResults">No results</string>
     <string name="SpeakNow">Speak Now</string>
+    <string name="NoShows">No Shows</string>
+    <string name="ShowImageDesc">Show Poster</string>
     <!--settings-->
     <string name="Settings">Settings</string>
     <string name="DefaultTab">Default Tab</string>
@@ -161,38 +166,4 @@
     <string name="LinkCopied">Link copied to clipboard</string>
     <string name="Subject">Subject</string>
     <string name="PoweredBy">Powered by <![CDATA[<b>]]>Themoviedb.org<![CDATA[</b>]]></string>
-
-
-
-    <string name="Retry">Retry</string>
-    <string name="EnableAnalytics">Enable Analytics</string>
-    <string name="SupportDevelopment">Support Development</string>
-    <string name="Language">Language</string>
-    <string name="ShowImageDesc">Show Poster</string>
-    <string name="NoShows">No Shows</string>
-    <string name="AnalyticsInfo">The application sends anonymous usage reports. You can disable this feature.</string>
-    <plurals name="Episodes2">
-        <item quantity="zero">No Episodes watched</item>
-        <item quantity="one">%1$d/%2$d Episode watched</item>
-        <item quantity="two">%1$d/%2$d Episodes watched</item>
-        <item quantity="few">%1$d/%2$d Episodes watched</item>
-        <item quantity="many">%1$d/%2$d Episodes watched</item>
-        <item quantity="other">No Episodes watched</item>
-    </plurals>
-    <plurals name="Seasons2">
-        <item quantity="zero">No Seasons watched</item>
-        <item quantity="one">%1$d/%2$d Season watched</item>
-        <item quantity="two">%1$d/%2$d Seasons watched</item>
-        <item quantity="few">%1$d/%2$d Seasons watched</item>
-        <item quantity="many">%1$d/%2$d Seasons watched</item>
-        <item quantity="other">%1$d/%2$d Seasons watched</item>
-    </plurals>
-    <string name="SeasonCount">%1$d Season</string>
-    <string name="EpisodeCount">%1$d Episode</string>
-    <string name="EpisodesCount">%1$d Episodes</string>
-    <string name="Episodes">Episodes</string>
-
-
-    <string name="search_app_name" translatable="false">SearchView</string>
-    <string name="search_behavior" translatable="false">com.lapism.searchview.widget.SearchBehavior</string>
 </resources>
