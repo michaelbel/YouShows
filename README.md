@@ -4,7 +4,6 @@
 [licence-url]:    http://www.apache.org/licenses/LICENSE-2.0
 [googleplay-url]: https://play.google.com/store/apps/details?id=org.michaelbel.shows
 [cangelog]:       https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
-[issue]:          https://github.com/michaelbel/YouShows/issues
 
 [launcher-path]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
 
@@ -53,7 +52,7 @@ Cangelog is available [here][cangelog].
 
 ## License
 <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">
-  <img alt="Apache License 2.0" src="https://github.com/michaelbel/YouShows/blob/master/images/apache_software_foundation_logo.png" height="120"/>
+  <img alt="Apache License 2.0" src="https://github.com/michaelbel/YouShows/blob/master/images/apache_software_foundation_logo.png" height="110"/>
 </a>
 
     Copyright 2017 Michael Bely
