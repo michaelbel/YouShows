@@ -1,27 +1,29 @@
-[apk-url]:        https://github.com/michaelbel/youshows/blob/master/app/release/shows-v1.0.2.apk
-[paypal-url]:     https://paypal.me/michaelbel
-[github-url]:     https://github.com/michaelbel/youshows
-[licence-url]:    http://www.apache.org/licenses/LICENSE-2.0
-[googleplay-url]: https://play.google.com/store/apps/details?id=org.michaelbel.shows
-[cangelog]:       https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
+[apk]:        https://github.com/michaelbel/youshows/blob/master/app/release/shows-v1.0.2.apk
+[tmdb]:       https://developers.themoviedb.org/3/getting-started/introduction
+[paypal]:     https://paypal.me/michaelbel
+[github]:     https://github.com/michaelbel/youshows
+[licence]:    http://www.apache.org/licenses/LICENSE-2.0
+[cangelog]:   https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
+[googleplay]: https://play.google.com/store/apps/details?id=org.michaelbel.shows
 
-[launcher-path]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+[launcher]: ..res/mipmap-xxxhdpi/ic_launcher.png
 
-[minsdk-badge]:       https://img.shields.io/badge/minSdkVersion-21-0097A7.svg
-[paypal-badge]:       https://img.shields.io/badge/Donate-Paypal-0097A7.svg
-[license-badge]:      https://img.shields.io/badge/License-Apache_v2.0-0097A7.svg
-[arsenal-badge]:      https://img.shields.io/badge/Android%20Arsenal-BottomSheet-0097A7.svg?style=flat
-[platform-badge]:     https://img.shields.io/badge/Platform-Android-0097A7.svg
-[googleplay-badge]:   https://img.shields.io/badge/Google_Play-Demo-0097A7.svg
+[minsdk-badge]:     https://img.shields.io/badge/minSdkVersion-21-0097A7.svg
+[paypal-badge]:     https://img.shields.io/badge/Donate-Paypal-0097A7.svg
+[license-badge]:    https://img.shields.io/badge/License-Apache_v2.0-0097A7.svg
+[arsenal-badge]:    https://img.shields.io/badge/Android%20Arsenal-BottomSheet-0097A7.svg?style=flat
+[platform-badge]:   https://img.shields.io/badge/Platform-Android-0097A7.svg
+[googleplay-badge]: https://img.shields.io/badge/Google_Play-Demo-0097A7.svg
 
-<!------------------------------------------------------------------------------------------------------------------------------------->
-[![Platform][platform-badge]][github-url]
-[![MinSdk][minsdk-badge]][github-url]
-[![License][license-badge]][licence-url]
-[![GooglePlay][googleplay-badge]][googleplay-url]
-[![Paypal][paypal-badge]][paypal-url]
+<!---------------------------------------------------------------------------------------------------->
 
-[![Launcher][Launcher-path]][googleplay-url]
+[![Platform][platform-badge]][github]
+[![MinSdk][minsdk-badge]][github]
+[![License][license-badge]][licence]
+[![GooglePlay][googleplay-badge]][googleplay]
+[![Paypal][paypal-badge]][paypal]
+
+[![Launcher][launcher]][googleplay]
 # YouShows
 Simple app to track and save your TV shows.
 
@@ -32,20 +34,20 @@ Simple app to track and save your TV shows.
 
 ## Screenshots
 <div style="dispaly:flex">
-    <img style="margin-left:0px;" src="/images/render/1.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/2.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/3.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/4.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/5.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/6.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/7.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/8.png" width="33%">
-    <img style="margin-left:0px;" src="/images/render/9.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/1.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/2.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/3.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/4.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/5.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/6.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/7.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/8.png" width="33%">
+    <img style="margin-left:0px;" src="screenshots/render/9.png" width="33%">
 </div>
 
 ## Build
-[tmdb-introduction]: https://developers.themoviedb.org/3/getting-started/introduction
-Take a look at `local.properties` and fill it with [your own][tmdb-introduction] `tmdb_api_key`.
+
+Take a look at `local.properties` and fill it with [your own][tmdb] `tmdb_api_key`.
 
 ## Changelog
 Cangelog is available [here][cangelog].
