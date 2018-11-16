@@ -6,12 +6,11 @@
 [cangelog]:   https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
 [googleplay]: https://play.google.com/store/apps/details?id=org.michaelbel.shows
 
-[launcher]: ..res/mipmap-xxxhdpi/ic_launcher.png
+[launcher]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
 
 [minsdk-badge]:     https://img.shields.io/badge/minSdkVersion-21-0097A7.svg
 [paypal-badge]:     https://img.shields.io/badge/Donate-Paypal-0097A7.svg
 [license-badge]:    https://img.shields.io/badge/License-Apache_v2.0-0097A7.svg
-[arsenal-badge]:    https://img.shields.io/badge/Android%20Arsenal-BottomSheet-0097A7.svg?style=flat
 [platform-badge]:   https://img.shields.io/badge/Platform-Android-0097A7.svg
 [googleplay-badge]: https://img.shields.io/badge/Google_Play-Demo-0097A7.svg
 
