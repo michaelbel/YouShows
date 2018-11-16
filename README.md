@@ -48,34 +48,6 @@ Simple app to track and save your TV shows.
 [tmdb-introduction]: https://developers.themoviedb.org/3/getting-started/introduction
 Take a look at `local.properties` and fill it with [your own][tmdb-introduction] `tmdb_api_key`.
 
-## Features
-* Material design
-* Sorting shows
-* Search history
-* Themes
-
-## Permissions
-* android.permission.VIBRATE
-* android.permission.INTERNET
-* android.permission.BODY_SENSORS
-* android.permission.ACCESS_WIFI_STATE
-* android.permission.ACCESS_NETWORK_STATE
-* android.permission.READ_EXTERNAL_STORAGE
-* android.permission.WRITE_EXTERNAL_STORAGE
-
-## Libraries
-* [BottomSheet](https://github.com/michaelbel/BottomSheet)
-* [Gson](https://github.com/google/gson)
-* [Retrofit](https://github.com/square/retrofit)
-* [Picasso](https://github.com/square/picasso)
-* [RxJava](https://github.com/ReactiveX/RxJava)
-* [Realm](https://github.com/realm/realm-java)
-* [ExpandableTextView](https://github.com/Blogcat/Android-ExpandableTextView)
-* [CircleProgressView](https://github.com/jakob-grabner/Circle-Progress-View)
-
-## Issues
-If you find any problems or would like to suggest a feature, please feel free to file an [issue][issue].
-
 ## Changelog
 Cangelog is available [here][cangelog].
 
