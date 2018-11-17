@@ -16,14 +16,17 @@
 
 <!---------------------------------------------------------------------------------------------------->
 
-[![Platform][platform-badge]][github]
-[![MinSdk][minsdk-badge]][github]
-[![License][license-badge]][licence]
-[![GooglePlay][googleplay-badge]][googleplay]
-[![Paypal][paypal-badge]][paypal]
+<img src="../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="192" align="left" hspace="20"/>
 
-[![Launcher][launcher]][googleplay]
-# YouShows
+YouShows
+======
+
+[![platform-badge]][github]
+[![minsdk-badge]][github]
+[![license-badge]][licence]
+[![googleplay-badge]][googleplay]
+[![paypal-badge]][paypal]
+
 Simple app to track and save your TV shows.
 
 ## Demo
