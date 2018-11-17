@@ -6,8 +6,6 @@
 [cangelog]:   https://github.com/michaelbel/YouShows/blob/master/CHANGELOG.md
 [googleplay]: https://play.google.com/store/apps/details?id=org.michaelbel.shows
 
-[launcher]: ../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
-
 [minsdk-badge]:     https://img.shields.io/badge/minSdkVersion-21-0097A7.svg
 [paypal-badge]:     https://img.shields.io/badge/Donate-Paypal-0097A7.svg
 [license-badge]:    https://img.shields.io/badge/License-Apache_v2.0-0097A7.svg
@@ -16,7 +14,7 @@
 
 <!---------------------------------------------------------------------------------------------------->
 
-<img src="../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="192" align="left" hspace="20"/>
+<img src="../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="192" align="left"/>
 
 YouShows
 ======
@@ -28,6 +26,7 @@ YouShows
 [![paypal-badge]][paypal]
 
 Simple app to track and save your TV shows.
+<br/><br/><br/>
 
 ## Demo
 <a href="https://play.google.com/store/apps/details?id=org.michaelbel.shows" target="_blank">
@@ -48,7 +47,6 @@ Simple app to track and save your TV shows.
 </div>
 
 ## Build
-
 Take a look at `local.properties` and fill it with [your own][tmdb] `tmdb_api_key`.
 
 ## Changelog
