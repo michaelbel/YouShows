@@ -23,7 +23,7 @@ public class YouShows extends Application {
     public static final String TELEGRAM_URL = "https://t.me/michaelbel";
     public static final String TELEGRAM_FDL = "t.me/michaelbel";
     public static final String PAYPAL_ME = "https://paypal.me/michaelbel";
-    public static final String GITHUB_URL = "https://github.com/michaelbel/shows";
+    public static final String GITHUB_URL = "https://github.com/michaelbel/youshows";
     public static final String APP_WEB = "https://play.google.com/store/apps/details?id=org.michaelbel.shows";
     public static final String APP_MARKET = "market://details?id=org.michaelbel.shows";
     public static final String TMDB_URL = "https://themoviedb.org";
