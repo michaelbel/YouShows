@@ -52,6 +52,16 @@ Take a look at `local.properties` and fill it with [your own][tmdb] `tmdb_api_ke
 ## Changelog
 Cangelog is available [here][cangelog].
 
+## Open-source libraries
+* [**Realm**](https://github.com/realm/realm-java) database
+* [**Picasso**](https://github.com/square/picasso) for image loading
+* [**Retrofit**](https://github.com/square/retrofit) for REST API communication
+* [**RxJava2**](https://github.com/ReactiveX/RxJava) for Retrofit & background threads
+* [**Gson**](https://github.com/google/gson) to convert Java Objects into JSON and back
+* [**BottomSheet**](https://github.com/michaelbel/bottomsheet) for bottom dialogs
+* [**ExpandableTextView**](https://github.com/Blogcat/Android-ExpandableTextView) for expnad/collapse text
+* [**CircleProgressView**](https://github.com/jakob-grabner/Circle-Progress-View) for progress view
+
 ## License
 <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">
   <img alt="Apache License 2.0" src="screenshots/apache.png" height="110"/>
