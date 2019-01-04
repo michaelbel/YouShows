@@ -12,7 +12,7 @@
 [platform-badge]:   https://img.shields.io/badge/Platform-Android-0097A7.svg
 [googleplay-badge]: https://img.shields.io/badge/Google_Play-Demo-0097A7.svg
 
-<!---------------------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------------------------------->
 
 <img src="../master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="192" align="left"/>
 
