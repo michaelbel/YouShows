@@ -158,19 +158,8 @@ public class TopRatedShowsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState == null) {
             loadFirstPage();
-        } /*else {
-            adapter.addAll(savedInstanceState.getParcelableArrayList("array_list"));
-            recyclerView.getLayoutManager().onRestoreInstanceState(savedInstanceState.getParcelable("recycler_state"));
-        }*/
+        }
     }
-
-    /*@Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        Parcelable state = recyclerView.getLayoutManager().onSaveInstanceState();
-        outState.putParcelable("recycler_state", state);
-        outState.putParcelableArrayList("array_list", adapter.getList());
-        super.onSaveInstanceState(outState);
-    }*/
 
     public void loadFirstPage() {
         emptyView.setVisibility(View.GONE);

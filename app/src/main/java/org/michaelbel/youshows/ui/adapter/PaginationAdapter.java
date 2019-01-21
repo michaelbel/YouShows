@@ -56,8 +56,8 @@ public class PaginationAdapter extends RecyclerView.Adapter {
         notifyItemInserted(objectList.size() - 1);
     }
 
-    private void remove(Show collection) {
-        int position = objectList.indexOf(collection);
+    private void remove(Show show) {
+        int position = objectList.indexOf(show);
 
         if (position > -1) {
             objectList.remove(position);
